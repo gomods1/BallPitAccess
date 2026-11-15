@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.14" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>BALL x PIT Access</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      color: light-dark(#1a1a1a, #fdfdfd);
+      background-color: #fdfdfd;
+      background-color: light-dark(#fdfdfd, #1a1a1a);
+      color-scheme: light dark;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a, a:visited {
+      color: inherit;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid;
+      border-color: #e6e6e6;
+      border-color: light-dark(#e6e6e6, #4c4c4c);
+      color: #606060;
+      color: light-dark(#606060, #b6b6b6);
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid currentColor;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+    }
+    th {
+      border-top: 1px solid currentColor;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    em, em em em, em em em em em {
+      font-style: italic;
+    }
+    em em, em em em em {
+      font-style: normal;
+    }
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    @media print {
+      html {
+        color-scheme: light only;
+      }
+      html, body, pre, code {
+        background-color: transparent;
+      }
+      body, a, a:visited, blockquote {
+        color: black;
+      }
+      pre, code {
+        padding: 0;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }  </style>
+</head>
+<body>
+<h1 id="ball-x-pit-access">BALL x PIT Access</h1>
+<p><strong>BALL x PIT</strong>（Kenny Sun / Devolver
+Digital）を、目が見えなくても遊べるようにするMODです。すべてのメニューを
+スクリーンリーダーで読み上げ、ゲーム全体をキーボードで操作できるようにし、戦場を音に変えます。敵、自分のボール、
+敵の弾、経験値ジェム、特殊アイテムには、それぞれ専用の音があり、あなたから見てその方向から聞こえます。</p>
+<p>バージョン0.5.0、ゲームバージョン1.308用で、DLC「昇天のボルビロン」にも対応しています。MODは<strong>ゲームが対応して
+いるすべての言語</strong>で話し、ゲームの言語設定に従います。</p>
+<!-- LANGS -->
+<p><a href="README.html">English</a> · <a
+href="README.es.html">Español</a> · <a
+href="README.fr.html">Français</a> · <a
+href="README.de.html">Deutsch</a> · <a
+href="README.it.html">Italiano</a> · <a
+href="README.pt-BR.html">Português (Brasil)</a> · <a
+href="README.pl.html">Polski</a> · <a href="README.tr.html">Türkçe</a> ·
+<a href="README.ru.html">Русский</a> · <a
+href="README.uk.html">Українська</a> · <strong>日本語</strong> · <a
+href="README.ko.html">한국어</a> · <a
+href="README.zh-CN.html">简体中文</a> · <a
+href="README.zh-TW.html">繁體中文</a> · <a href="README.th.html">ไทย</a>
+<!-- /LANGS --></p>
+<blockquote>
+<p><strong>状態：初期のテスト版です。</strong>
+メニュー、拠点、最初の数回のランはMODを使ってプレイ済みです。戦闘の音と
+最新の部分（ボールの連続音、キャッチアシスト、サウンドフィルター）は、まだプレイヤーと一緒に調整していません。
+うまく動く点と動かない点をぜひ報告してください（<a
+href="#reporting-a-problem">問題の報告</a>を参照）。</p>
+</blockquote>
+<h2 id="contents">目次</h2>
+<ul>
+<li><a href="#what-you-need">必要なもの</a></li>
+<li><a href="#installing">インストール</a></li>
+<li><a href="#removing-the-mod">MODの削除</a></li>
+<li><a href="#first-steps">はじめに</a></li>
+<li><a href="#keys-everywhere">どこでも使えるキー</a></li>
+<li><a href="#menus">メニュー</a></li>
+<li><a
+href="#the-base-new-ballbylon">拠点（ニュー・ボルビロン）</a></li>
+<li><a href="#battle">戦闘</a></li>
+<li><a href="#battle-sounds">戦闘の音</a></li>
+<li><a
+href="#sound-filters-number-keys">サウンドフィルター（数字キー）</a></li>
+<li><a href="#assists">アシスト</a></li>
+<li><a href="#mod-settings-f4">MOD設定（F4）</a></li>
+<li><a href="#tips-for-a-first-run">最初のランのコツ</a></li>
+<li><a href="#known-limits">既知の制限</a></li>
+<li><a href="#reporting-a-problem">問題の報告</a></li>
+<li><a href="#credits">クレジット</a></li>
+</ul>
+<h2 id="what-you-need">必要なもの</h2>
+<ul>
+<li>Windows版（Steam）のBALL x PIT、バージョン1.308。</li>
+<li>スクリーンリーダー：テスト済みなのはNVDAです。Prism音声ライブラリが対応しているほかのもの（JAWS、ナレーター、
+SAPI音声）も動くはずです。</li>
+<li>MODローダーの<strong>MelonLoader
+0.7.3</strong>（x64）。無料で、公式のGitHubリリースページから入手できます。</li>
+<li>ヘッドホンまたはステレオスピーカー：戦闘では左右の聞き分けがとても重要です。</li>
+</ul>
+<h2 id="installing">インストール</h2>
+<p><strong>インストーラーを使う（いちばん簡単）：</strong><a
+href="https://github.com/gomods1/BallPitAccess/releases/latest">最新リリース</a>から
+<code>BallPitAccessibilityInstaller.exe</code>
+をダウンロードして実行します。Steamからゲームを見つけ、MelonLoader
+0.7.3、音声ライブラリPrism、MODをインストールし、あとから更新や削除もできます。そのあとゲームを起動します。
+初回起動は数分かかり、MelonLoaderがゲームのファイルを準備している間は音が出ません。そのあとスクリーン
+リーダーが話し始めます。</p>
+<p><strong>手動で：</strong>同じページから
+<code>BallPitAccess-vX.Y.Z.zip</code>
+をダウンロードし、中身をすべてゲームフォルダー （初期設定では
+<code>C:\Program Files (x86)\Steam\steamapps\common\BALLxPIT</code>、<code>Balls.exe</code>
+が入っているフォルダー）に展開して、<code>version.dll</code> が
+<code>Balls.exe</code> の隣に
+来るようにします。zipにはMelonLoaderが含まれているので、別途インストールする必要はありません。ゲームを起動
+します。初回起動は上と同じく時間がかかり、音が出ません。</p>
+<h2 id="removing-the-mod">MODの削除</h2>
+<p>インストーラーの「アンインストール」ボタンはMODとMelonLoaderを削除し、設定は
+<code>UserData</code> に残します。 手動で行う場合：</p>
+<p><code>Mods\BallPitAccess.dll</code> と <code>prism.dll</code>
+を削除します。MelonLoaderも削除するには、ゲームフォルダーから
+<code>version.dll</code>
+と、<code>MelonLoader</code>、<code>Mods</code>、<code>Plugins</code>、<code>UserData</code>
+の各フォルダーを削除します。MODはゲームの
+ファイルを一切変更しません。</p>
+<h2 id="first-steps">はじめに</h2>
+<ul>
+<li>いつでも <strong>F1</strong>
+でヘルプを開けます。すべてのセクションが、今いる場所のセクションから順に並んでいます。
+上下矢印で1行ずつ読み、Tabで次のセクションへ移動し、Escで閉じます。</li>
+<li><strong>F4</strong>
+でMODの設定を開き、その中の<strong>サウンドガイド</strong>を開いてください。戦闘のすべての音を再生し、その意味を
+読み上げます。最初のランの前に一度聞いておくと、とても役に立ちます。</li>
+<li>ゲーム自体は、キーボードではマウス操作が前提です。MODを使えば、拠点にある放置用の発射台を除いて、マウスは
+まったく必要ありません（<a
+href="#known-limits">既知の制限</a>を参照）。</li>
+</ul>
+<h2 id="keys-everywhere">どこでも使えるキー</h2>
+<table>
+<thead>
+<tr>
+<th>キー</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td>ヘルプ（全セクション。Tab / Shift+Tabでセクション間を移動）</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>画面全体を読み上げ</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>最後に話した内容を繰り返す</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>MOD設定とサウンドガイド</td>
+</tr>
+<tr>
+<td>F5</td>
+<td>エイムアシストのモードを変更</td>
+</tr>
+<tr>
+<td>F6 / F7</td>
+<td>エイムを左 / 右に10度回す</td>
+</tr>
+<tr>
+<td>F8</td>
+<td>狙っている方向を読み上げ</td>
+</tr>
+<tr>
+<td>Ctrl+上矢印</td>
+<td>フォーカス中の項目の詳細を読む（Ctrl+下矢印で戻る）</td>
+</tr>
+<tr>
+<td>Ctrl+左矢印 / Ctrl+右矢印</td>
+<td>詳細と最近のイベントを切り替え</td>
+</tr>
+</tbody>
+</table>
+<p>MODのリスト（ヘルプ、設定、サウンドガイド）を開いている間は、ゲームにキーが送られません。</p>
+<h2 id="menus">メニュー</h2>
+<p>どの画面も<strong>分かりやすい順に並んだ1つのリスト</strong>です。まず選択肢、次にボタン、最後に「閉じる」が並びます。
+この順番は、画面上で物が描かれている位置には左右されません。</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>キー</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>上矢印 / 下矢印</td>
+<td>前 / 次の項目</td>
+</tr>
+<tr>
+<td>Enter</td>
+<td>選ぶ</td>
+</tr>
+<tr>
+<td>Tab / Shift+Tab</td>
+<td>画面の次 / 前のグループ</td>
+</tr>
+<tr>
+<td>Home / End</td>
+<td>グループの最初 / 最後の項目</td>
+</tr>
+<tr>
+<td>左矢印 / 右矢印</td>
+<td>リストやスライダーの設定を変更。ステージの上では難易度を変更</td>
+</tr>
+<tr>
+<td>Ctrl+Tab / Ctrl+Shift+Tab</td>
+<td>タブのある画面で次 / 前のタブ</td>
+</tr>
+<tr>
+<td>BackSpaceまたはEsc</td>
+<td>戻る</td>
+</tr>
+<tr>
+<td>PageUp / PageDown</td>
+<td>図鑑ではセット、ステージ一覧ではニューゲームプラスの段階を切り替え</td>
+</tr>
+<tr>
+<td>Shift+Enter</td>
+<td>ステージの上で：そのランキングを開く</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>キャラの上でEnterを押すと、その選択ボタンへ移動します。</li>
+<li>ガイド付きチュートリアルが何かを指すと、フォーカスがそこへ移ります。Enterを押してください。</li>
+<li>アップグレードの選択肢は、数値付きで読み上げられます（「10から15のダメージを与える」など）。</li>
+</ul>
+<h2 id="the-base-new-ballbylon">拠点（ニュー・ボルビロン）</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>キー</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>上矢印 / 下矢印、Enter</td>
+<td>サイドバーのボタン：バトル、回収、建築、拡張、配置換え、オプション</td>
+</tr>
+<tr>
+<td>Tab / Shift+Tab</td>
+<td>昇降機と建物を順に移動</td>
+</tr>
+<tr>
+<td>建物の上でEnter</td>
+<td>準備ができていれば、その建物を狙って回収を開始。そうでなければアップグレードを開く</td>
+</tr>
+<tr>
+<td>Shift+Enter</td>
+<td>建物のアップグレードを開く</td>
+</tr>
+<tr>
+<td>昇降機の上でEnter</td>
+<td>昇降機のアップグレードを開く（ピットを下る、または昇天のボルビロンへ）</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>建物を解体</td>
+</tr>
+<tr>
+<td>H</td>
+<td>資源と日数</td>
+</tr>
+<tr>
+<td>J</td>
+<td>回収と作業者</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>建築</strong>：矢印キーで建物を1マス動かし、置けるかどうかを読み上げます。Enterで建築、Rで回転、Homeで空いている
+場所へ移動、BackSpaceでキャンセルします。</li>
+<li><strong>回収</strong>：建物を狙った状態で始まります。Enterで作業者を送り出し、Tabで別の建物を狙い、左右矢印でエイムを回し、
+スペース長押しで加速、Escで終了します。</li>
+<li><strong>拡張</strong>：Tabで区画を選び、Enterで購入します。</li>
+<li><strong>配置換え</strong>：Tabで建物を選び、Enterで持ち上げ、矢印キーで動かし、Enterで置きます。</li>
+</ul>
+<h2 id="battle">戦闘</h2>
+<h3 id="ゲーム本来のキー">ゲーム本来のキー</h3>
+<table>
+<thead>
+<tr>
+<th>キー</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W A S D</td>
+<td>移動</td>
+</tr>
+<tr>
+<td>スペース</td>
+<td>発射（長押し）</td>
+</tr>
+<tr>
+<td>F</td>
+<td>自動攻撃のオン / オフ</td>
+</tr>
+<tr>
+<td>E</td>
+<td>レベルアップの準備ができたら開く</td>
+</tr>
+<tr>
+<td>イコール / マイナス</td>
+<td>ゲームスピードを速く / 遅く</td>
+</tr>
+<tr>
+<td>Esc</td>
+<td>一時停止</td>
+</tr>
+</tbody>
+</table>
+<h3 id="modのキー">MODのキー</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>キー</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>左矢印 / 右矢印</td>
+<td>エイムを手動で5度回す</td>
+</tr>
+<tr>
+<td>上矢印</td>
+<td>エイムをアシストに戻す</td>
+</tr>
+<tr>
+<td>下矢印</td>
+<td>狙っている方向を読み上げ</td>
+</tr>
+<tr>
+<td>Shift（長押し）</td>
+<td>キャッチアシスト（<a href="#assists">アシスト</a>を参照）</td>
+</tr>
+<tr>
+<td>1から7、0</td>
+<td>サウンドフィルター（<a
+href="#sound-filters-number-keys">サウンドフィルター</a>を参照）</td>
+</tr>
+<tr>
+<td>H</td>
+<td>体力とステータス効果</td>
+</tr>
+<tr>
+<td>J</td>
+<td>敵とボス</td>
+</tr>
+<tr>
+<td>K</td>
+<td>自分の位置</td>
+</tr>
+<tr>
+<td>G</td>
+<td>ゲームスピード</td>
+</tr>
+<tr>
+<td>L</td>
+<td>レベル、時間、ウェーブ、獲得した歯車</td>
+</tr>
+<tr>
+<td>B</td>
+<td>自分のボールとパッシブ</td>
+</tr>
+<tr>
+<td>P</td>
+<td>フィールド上のアイテム</td>
+</tr>
+<tr>
+<td>N</td>
+<td>危険（弾、レーザー、爆弾、床）</td>
+</tr>
+</tbody>
+</table>
+<p>戦闘中に読み上げられるもの：開始時のステージ、ボスの登場と体力75、50、25パーセントの時点、ダメージと体力、
+ステータス効果、特殊アイテムが落ちたとき、「レベルアップの準備ができました。Eを押してください」、ランの終了。</p>
+<h2 id="battle-sounds">戦闘の音</h2>
+<p>すべての音に共通する4つのルールがあります。</p>
+<ul>
+<li><strong>方向</strong>：音は、それが示すものの方向から聞こえます。</li>
+<li><strong>高さ</strong>：高い音ほど近くです。</li>
+<li><strong>こもった音</strong>は、後ろにあることを示します。</li>
+<li><strong>移動</strong>を促す音は、進むべき方向から聞こえます。</li>
+</ul>
+<p>常に動いているもの（自分のボール、敵の弾）は、それを追いかける<strong>連続音</strong>です。段階的に変わるもの（前進してくる敵、
+床に落ちているアイテム）は短い音です。</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>音</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ハンドドラム</td>
+<td>敵。高く速いほど近い。最も近い3体が順番に鳴ります。</td>
+</tr>
+<tr>
+<td>大きく低いドラム</td>
+<td>ボス。登場時はドラム、どら、ホルン。</td>
+</tr>
+<tr>
+<td>うなり声</td>
+<td>敵がもうすぐあなたに届きます。</td>
+</tr>
+<tr>
+<td>上がっていく甲高い音</td>
+<td>敵が攻撃の準備をしています。その敵の方向から聞こえます。</td>
+</tr>
+<tr>
+<td><strong>転がるようなハム音</strong>（連続）</td>
+<td>キャッチできるボール。その方向へ歩いてください。<strong>ボールの落下地点に近づくほど高くなり</strong>、ボールが迫るほど速く脈打ちます。ボールがまだ敵に跳ね返る可能性があるうちは小さく鳴ります。</td>
+</tr>
+<tr>
+<td>ハム音が一段上がるときのカチッという音</td>
+<td>ボールの真下にいます。そのまま待ってください。</td>
+</tr>
+<tr>
+<td>グローブのドスッという音</td>
+<td>ボールをキャッチ。</td>
+</tr>
+<tr>
+<td>沈んでいく鈍い音</td>
+<td>ボールを取り逃しました。</td>
+</tr>
+<tr>
+<td>銃のラックの音</td>
+<td>ボールが戻りました。発射できます（自動攻撃中は鳴りません）。</td>
+</tr>
+<tr>
+<td>ガラスのチンという音</td>
+<td>歩いて取りに行ける、最も近い経験値ジェム、金貨、資源。自動では集まりません。</td>
+</tr>
+<tr>
+<td>カリンバのきらめく音</td>
+<td>特殊アイテム：融合リアクター、設計図、タマゴ、歯車、体力回復、マグネット、ボム、ジェム袋。</td>
+</tr>
+<tr>
+<td><strong>空気のような口笛</strong>（連続）</td>
+<td>近くを飛ぶ敵の弾。近づくほど高くなります。当たるときは大きくなります。</td>
+</tr>
+<tr>
+<td>シュッという音とバチッという音</td>
+<td>弾が当たります。鳴っている方向へよけてください。</td>
+</tr>
+<tr>
+<td>電気のハム音 / 2回のバチバチ音</td>
+<td>レーザーが狙いを定めている /
+その射線上にいます。鳴っている方向へよけてください。</td>
+</tr>
+<tr>
+<td>落ちていく口笛 / 導火線のシューという音</td>
+<td>近くに爆弾が落ちてくる /
+自分の上に落ちます。鳴っている方向へよけてください。</td>
+</tr>
+<tr>
+<td>グチャッという音</td>
+<td>床の危険を踏みました（その名前が読み上げられます）。</td>
+</tr>
+<tr>
+<td>パンチの音 / ゴクッという音</td>
+<td>ダメージ / 回復。</td>
+</tr>
+<tr>
+<td>心音</td>
+<td>体力低下。非常に低いと速くなります。</td>
+</tr>
+<tr>
+<td>ふらふらと揺れる音</td>
+<td>ステータス効果を受けました。</td>
+</tr>
+<tr>
+<td>上がっていく2つのベルの音</td>
+<td>レベルアップの準備ができました（Eを押してください）。</td>
+</tr>
+<tr>
+<td>木をたたく音</td>
+<td>アリーナの横の端（メニューのリストの端でも鳴ります）。</td>
+</tr>
+<tr>
+<td>金属をたたく音</td>
+<td>移動エリアの前端または後端。</td>
+</tr>
+<tr>
+<td>スイッチのカチッという音</td>
+<td>エイムアシストが狙いを変えました。新しい目標の方向から聞こえます。</td>
+</tr>
+</tbody>
+</table>
+<p>これらはすべて <strong>F4 → サウンドガイド</strong>
+で聞くことができ、左右矢印でそれぞれの方向から聞けます。</p>
+<h2 id="sound-filters-number-keys">サウンドフィルター（数字キー）</h2>
+<p>戦闘中、数字キーで音のグループをミュートまたは解除して、集中できます。これらのキーはゲームでは使われていません。</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>キー</th>
+<th>グループ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>敵：ドラム、うなり声、攻撃の準備、ボスの登場</td>
+</tr>
+<tr>
+<td>2</td>
+<td>ボール：転がるようなハム音、カチッという音、キャッチ、ミス、銃のラック</td>
+</tr>
+<tr>
+<td>3</td>
+<td>報酬：ジェム、金貨、資源、特殊アイテム</td>
+</tr>
+<tr>
+<td>4</td>
+<td>弾と危険</td>
+</tr>
+<tr>
+<td>5</td>
+<td>アリーナの端</td>
+</tr>
+<tr>
+<td>6</td>
+<td>自分の体力：ダメージ、回復、心音、状態</td>
+</tr>
+<tr>
+<td>7</td>
+<td>エイムアシストのクリック音</td>
+</tr>
+<tr>
+<td>0</td>
+<td>すべて元に戻す</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>数字キーはそれぞれ自分のグループだけを切り替え、ほかのグループには影響しません。</li>
+<li><strong>Ctrl+数字</strong>
+で、そのグループだけを残します。例：敵と報酬だけにするには、Ctrl+1、続けて3。</li>
+<li>選んだ設定は次回も保持されます。何かをミュートした状態で戦闘が始まると、MODが何をミュート中か読み上げます。</li>
+<li>ミュートで変わるのは音だけです。H、J、P、Nのキーは引き続き応答し、キャッチアシストも引き続き弾をよけます。</li>
+</ul>
+<h2 id="assists">アシスト</h2>
+<p>アシストが行うことは、すべて耳だけでも行えます。アシストは、使いたいときのためにあります。</p>
+<ul>
+<li><strong>エイムアシスト</strong>（F5でモードを変更）：最も近い敵（初期設定）、最も強い敵、正面の敵、固定角度のいずれかを
+代わりに狙います。オフ（マウス）にもできます。矢印キーで微調整できます。</li>
+<li><strong>キャッチアシスト</strong>（Shift長押し）：主人公が、次に落ちてくるボールの下へ歩きます。ボールが来ていないときは、
+最も近いジェムやアイテムへ歩きます。弾が当たりそうなときは、まずそれをよけます。W
+/ Sでは引き続き前後に移動 でき、A /
+Dを押すと常にそちらが優先されます。F4では、オフ、「Shift長押し」（初期設定）、自動を選べます。</li>
+</ul>
+<h2 id="mod-settings-f4">MOD設定（F4）</h2>
+<p>上下矢印で移動、左右矢印かEnterで変更、Escで閉じます。設定は保存されます。</p>
+<ul>
+<li>エイムアシストのモード</li>
+<li>キャッチアシスト：オフ、Shift長押し、自動</li>
+<li>ガイド音のオン / オフ、ガイド音の音量</li>
+<li>敵のレーダー、ボールの音、アリーナの端、弾と危険（オン / オフ）</li>
+<li>アイテムの音：オフ、特殊アイテムのみ、すべて</li>
+<li>体力の音、エイムアシストのクリック音（オン / オフ）</li>
+<li>フォーカス時にアップグレードの説明を読む</li>
+<li>サウンドガイド（Enterで開く）</li>
+<li>デバッグログ</li>
+</ul>
+<h2 id="tips-for-a-first-run">最初のランのコツ</h2>
+<ul>
+<li><strong>ボールをキャッチしましょう。</strong>
+キャッチしたボールはすぐにまた発射できます。取り逃したボールは、戻ってくるまで
+2〜3秒かかります。カチッという音が聞こえるまで転がるようなハム音を追いかけ、聞こえたらそこにとどまります。</li>
+<li><strong>経験値ジェムを拾いましょう。</strong>
+自動では集まりません。ガラスのチンという音を追いかけてください。こもった音は
+後ろにあることを示します。</li>
+<li><strong>まずは生き残ること。</strong>
+ランの序盤は、ダメージよりも生き残ることのほうが大切です。</li>
+<li>レベルアップで提案されたら、ボールを<strong>融合・進化</strong>させましょう。選択肢には「融合」または「進化」と読み上げられます。</li>
+<li><strong>ボス戦ではマイナスキーで遅くしましょう。</strong>
+高いゲームスピードでボスが登場すると、MODが知らせてくれます。</li>
+<li>倒れるのは普通のことです。持ち帰った金貨でニュー・ボルビロンを発展させ、建物がその後のランを強くしてくれます。</li>
+</ul>
+<h2 id="known-limits">既知の制限</h2>
+<ul>
+<li>拠点にある放置用の発射台は、まだマウスが必要です。</li>
+<li>ランキングとTwitch投票は、基本的な読み上げにしか対応していません。クレジットはスキップできません。</li>
+<li>MOD設定はF4にあり、ゲーム本来のオプション画面の中にはありません。</li>
+<li>英語とスペイン語以外の言語のMOD独自のテキストは、まだネイティブスピーカーによる確認を経ずに翻訳されています。
+訂正を歓迎します。ゲーム由来の名前（建物、ボール、敵、アップグレード）は、常にゲーム自身の翻訳から取得されます。</li>
+<li>音量、音の間隔、キャッチの幅は、まだプレイヤーと一緒に調整していません。</li>
+</ul>
+<h2 id="reporting-a-problem">問題の報告</h2>
+<p>ゲームフォルダー内の役に立つファイル：</p>
+<ul>
+<li><code>UserData\BallPitAccess\speech.log</code>：MODが話したすべての内容。</li>
+<li><code>MelonLoader\Latest.log</code>：MODのログ（エラー、画面、キャッチとミス）。</li>
+<li>戦闘中に <strong>Ctrl+Shift+D</strong>
+を押すと、<code>UserData\BallPitAccess\threats.txt</code>（敵、ボール、弾、アイテムとその位置）
+を書き出し、開いている画面のリストを <code>Latest.log</code>
+に書き込みます。音が間違った方向を示すときや、メニューが
+間違った順番で読まれるときに役立ちます。</li>
+</ul>
+<p>何をしたか、何が聞こえたか、何を期待していたかを書いてください。</p>
+<h2 id="credits">クレジット</h2>
+<ul>
+<li>BALL x PIT：Kenny Sun制作、Devolver
+Digital発売。このMODは非公式です。</li>
+<li>MelonLoader（LavaGang）がMODを読み込みます。Prismが音声をスクリーンリーダーに送ります。</li>
+</ul>
+</body>
+</html>

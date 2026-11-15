@@ -1,0 +1,293 @@
+# BALL x PIT Access
+
+**BALL x PIT** oyununu (Kenny Sun / Devolver Digital) görmeden oynanabilir hâle getiren bir mod. Tüm
+menüleri ekran okuyucun aracılığıyla seslendirir, oyunun tamamını klavyeyle kullanmanı sağlar ve savaş
+alanını sese dönüştürür: düşmanların, toplarının, düşman atışlarının, TP kristallerinin ve özel eşyaların
+her birinin kendi sesi vardır ve bu ses, senin hangi tarafındaysa oradan gelir.
+
+Sürüm 0.5.0, oyunun 1.308 sürümü için, Yükselen Babil'in Sekme Bahçeleri (Risen Ballbylon) DLC'si dahil.
+Mod **oyunun sunduğu tüm dilleri** konuşur ve oyunun dil ayarını izler.
+
+<!-- LANGS -->
+[English](README.html) · [Español](README.es.html) · [Français](README.fr.html) · [Deutsch](README.de.html) · [Italiano](README.it.html) · [Português (Brasil)](README.pt-BR.html) · [Polski](README.pl.html) · **Türkçe** · [Русский](README.ru.html) · [Українська](README.uk.html) · [日本語](README.ja.html) · [한국어](README.ko.html) · [简体中文](README.zh-CN.html) · [繁體中文](README.zh-TW.html) · [ไทย](README.th.html)
+<!-- /LANGS -->
+
+> **Durum: erken test sürümü.** Menüler, üs ve ilk turlar modla oynandı. Savaş sesleri ve en yeni
+> bölümler (sürekli top sesi, yakalama yardımı, ses filtreleri) henüz oyuncularla birlikte ayarlanmadı.
+> Lütfen neyin çalışıp neyin çalışmadığını bildir (bkz. [Sorun bildirme](#reporting-a-problem)).
+
+## İçindekiler {#contents}
+
+- [Neye ihtiyacın var](#what-you-need)
+- [Kurulum](#installing)
+- [Modu kaldırma](#removing-the-mod)
+- [İlk adımlar](#first-steps)
+- [Her yerde geçerli tuşlar](#keys-everywhere)
+- [Menüler](#menus)
+- [Üs (Yeni Babil'in Sekme Bahçeleri)](#the-base-new-ballbylon)
+- [Savaş](#battle)
+- [Savaş sesleri](#battle-sounds)
+- [Ses filtreleri (rakam tuşları)](#sound-filters-number-keys)
+- [Yardımlar](#assists)
+- [Mod ayarları (F4)](#mod-settings-f4)
+- [İlk tur için ipuçları](#tips-for-a-first-run)
+- [Bilinen sınırlamalar](#known-limits)
+- [Sorun bildirme](#reporting-a-problem)
+- [Emeği geçenler](#credits)
+
+## Neye ihtiyacın var {#what-you-need}
+
+- Windows'ta (Steam) BALL x PIT, sürüm 1.308.
+- Bir ekran okuyucu: test edilen NVDA'dır. Prism konuşma kitaplığının desteklediği diğerleri (JAWS,
+  Ekran Okuyucu (Narrator), SAPI sesleri) de çalışmalıdır.
+- Mod yükleyicisi **MelonLoader 0.7.3** (x64). Ücretsizdir, resmî GitHub sürümler sayfasından indirilir.
+- Kulaklık ya da stereo hoparlör: savaşta sol ve sağ çok önemlidir.
+
+## Kurulum {#installing}
+
+**Yükleyiciyle (en kolayı):** `BallPitAccessibilityInstaller.exe` dosyasını
+[son sürümden](https://github.com/gomods1/BallPitAccess/releases/latest) indir ve çalıştır. Oyunu Steam üzerinden bulur, MelonLoader 0.7.3'ü, Prism konuşma
+kitaplığını ve modu kurar; daha sonra bunları günceller ya da kaldırır. Ardından oyunu başlat: ilk
+açılış birkaç dakika sürer ve MelonLoader oyunun dosyalarını hazırlarken sessizdir; sonra ekran
+okuyucun konuşmaya başlar.
+
+**Elle:** aynı sayfadan `BallPitAccess-vX.Y.Z.zip` dosyasını indir ve her şeyi oyun klasörüne çıkar
+(varsayılan olarak `C:\Program Files (x86)\Steam\steamapps\common\BALLxPIT`, `Balls.exe` dosyasının bulunduğu klasör); böylece `version.dll`, `Balls.exe`
+dosyasının yanına gelir. Zip zaten MelonLoader'ı içerir: ayrıca kurman gerekmez. Oyunu başlat; ilk
+açılış yukarıdaki gibi yavaş ve sessizdir.
+
+## Modu kaldırma {#removing-the-mod}
+
+Yükleyicinin Kaldır düğmesi modu ve MelonLoader'ı kaldırır, ayarlarını `UserData` içinde tutar.
+Elle:
+
+`Mods\BallPitAccess.dll` ve `prism.dll` dosyalarını sil. MelonLoader'ı da kaldırmak için oyun klasöründen
+`version.dll` dosyasını ve `MelonLoader`, `Mods`, `Plugins` ve `UserData` klasörlerini sil. Mod, oyunun
+hiçbir dosyasını değiştirmez.
+
+## İlk adımlar {#first-steps}
+
+- Yardım için istediğin zaman **F1** tuşuna bas: yardımın tüm bölümleri, bulunduğun yerle ilgili bölümden
+  başlayarak açılır. Yukarı ve aşağı oklar satır satır okur, Tab sonraki bölüme atlar, Esc kapatır.
+- Modun ayarları için **F4** tuşuna bas ve içinden **ses rehberini** aç: her savaş sesini çalar ve ne
+  anlama geldiğini söyler. İlk turundan önce bir kez dinlemek çok işe yarar.
+- Klavyeyle oynarken oyunun kendisi fareyle kullanılır; modla birlikte üsteki boşta fırlatıcı dışında
+  fareye hiç ihtiyacın olmaz (bkz. [Bilinen sınırlamalar](#known-limits)).
+
+## Her yerde geçerli tuşlar {#keys-everywhere}
+
+| Tuş | İşlev |
+|---|---|
+| F1 | Yardım (tüm bölümler; bölümler arasında Tab / Shift+Tab) |
+| F2 | Tüm ekranı oku |
+| F3 | Son söyleneni tekrarla |
+| F4 | Mod ayarları ve ses rehberi |
+| F5 | Nişan yardımının modunu değiştir |
+| F6 / F7 | Nişanı 10 derece sola / sağa çevir |
+| F8 | Nereye nişan aldığını söyle |
+| Ctrl+Yukarı ok | Odaklı ögenin ayrıntılarını oku (Ctrl+Aşağı ok geri döner) |
+| Ctrl+Sol ok / Ctrl+Sağ ok | Ayrıntılar ile son olaylar arasında geçiş yap |
+
+Bir mod listesi (yardım, ayarlar, ses rehberi) açıkken oyun tuşlarını almaz.
+
+## Menüler {#menus}
+
+Her ekran **mantıklı bir sırada tek bir listedir**: önce seçenekleri, sonra düğmeleri, en sonda Kapat.
+Sıra hiçbir zaman ögelerin ekranda nereye çizildiğine bağlı değildir.
+
+| Tuş | İşlev |
+|---|---|
+| Yukarı ok / Aşağı ok | Önceki / sonraki öge |
+| Enter | Seç |
+| Tab / Shift+Tab | Ekrandaki sonraki / önceki grup |
+| Home / End | Grubun ilk / son ögesi |
+| Sol ok / Sağ ok | Liste veya kaydırıcı ayarını değiştir; bir seviyede zorluğunu değiştir |
+| Ctrl+Tab / Ctrl+Shift+Tab | Sekmeli ekranlarda sonraki / önceki sekme |
+| Backspace veya Esc | Geri |
+| Page Up / Page Down | Ansiklopedide set; seviye listesinde yeni oyun artı (Yeni Oyun+) kademesi |
+| Shift+Enter | Bir seviyede: liderlik tablosunu aç |
+
+- Bir karakterin üzerinde Enter seni onun Seç düğmesine götürür.
+- Rehberli öğretici bir şeyi gösterdiğinde odak oraya atlar: Enter tuşuna bas.
+- Geliştirme seçenekleri sayılarıyla birlikte okunur ("10 ile 15 arası hasar verir").
+
+## Üs (Yeni Babil'in Sekme Bahçeleri) {#the-base-new-ballbylon}
+
+| Tuş | İşlev |
+|---|---|
+| Yukarı ok / Aşağı ok, Enter | Kenar çubuğu düğmeleri: Oyna, Hasat, İnşa et, Genişlet, Yeniden düzenle, Seçenekler |
+| Tab / Shift+Tab | Asansör ve binaların arasında gezin |
+| Bir binada Enter | Hazırsa ona nişan alan bir hasat başlat; değilse geliştirmesini aç |
+| Shift+Enter | Bir binanın geliştirmesini aç |
+| Asansörde Enter | Asansör geliştirmesini aç (çukurun dibine doğru ya da Yükselen Babil'in Sekme Bahçeleri'ne doğru) |
+| Delete | Bir binayı parçala |
+| H | Kaynaklar ve gün |
+| J | Hasat ve işçiler |
+
+- **İnşa**: oklar binayı bir kare taşır ve sığıp sığmadığını söyler, Enter inşa eder, R döndürür, Home boş
+  bir yere atlar, Backspace iptal eder.
+- **Hasat**: bir binaya nişan alarak başlar. Enter işçileri fırlatır, Tab başka bir binaya nişan alır,
+  Sol ok / Sağ ok nişanı çevirir, hızlandırmak için Boşluk tuşunu basılı tut, Esc çıkar.
+- **Genişletme**: Tab bir arsa seçer, Enter satın alır.
+- **Yeniden düzenleme**: Tab bir bina seçer, Enter onu kaldırır, oklar taşır, Enter bırakır.
+
+## Savaş {#battle}
+
+### Oyunun kendi tuşları {#the-games-own-keys}
+
+| Tuş | İşlev |
+|---|---|
+| W A S D | Hareket et |
+| Boşluk | Ateş et (basılı tut) |
+| F | Oto saldırı açık / kapalı |
+| E | Hazır olduğunda seviye atlamayı aç |
+| = / - (eşittir / eksi) | Oyun hızını artır / azalt |
+| Esc | Duraklat |
+
+### Mod tuşları {#mod-keys}
+
+| Tuş | İşlev |
+|---|---|
+| Sol ok / Sağ ok | Nişanı elle 5 derece çevir |
+| Yukarı ok | Nişanı yardıma geri ver |
+| Aşağı ok | Nereye nişan aldığını söyle |
+| Shift (basılı tut) | Yakalama yardımı (bkz. [Yardımlar](#assists)) |
+| 1 ile 7 arası, 0 | Ses filtreleri (bkz. [Ses filtreleri](#sound-filters-number-keys)) |
+| H | Can ve durum etkileri |
+| J | Düşmanlar ve patron |
+| K | Konumun |
+| G | Oyun hızı |
+| L | Seviye, süre, dalga, kazanılan dişliler |
+| B | Topların ve pasiflerin |
+| P | Sahadaki eşyalar |
+| N | Tehlikeler (atışlar, lazerler, bombalar, zemin) |
+
+Savaş sırasında seslendirilenler: başlangıçta seviye, patronlar ve yüzde 75, 50 ve 25'teki canları, hasar ve
+can, durum etkileri, düştüklerinde özel eşyalar, "seviye atlama hazır, E tuşuna bas" ve turun sonu.
+
+## Savaş sesleri {#battle-sounds}
+
+Her ses için dört kural geçerlidir:
+
+- **Taraf**: bir ses, ilgili olduğu şey hangi taraftaysa oradan gelir.
+- **Perde**: daha tiz ses daha yakın demektir.
+- **Boğuk** ses arkanda demektir.
+- **Hareket etmeni** isteyen bir ses, gitmen gereken taraftan gelir.
+
+Sürekli hareket eden şeyler (topun, düşman atışları) onları izleyen **sürekli seslerdir**; adım adım
+değişen şeyler (ilerleyen düşmanlar, yerde duran eşyalar) kısa seslerdir.
+
+| Ses | Anlamı |
+|---|---|
+| El davulu | Bir düşman. Daha tiz ve daha hızlı = daha yakın. En yakın üç düşman sırayla çalar. |
+| Büyük, derin davul | Bir patron. Patron geldiğinde davullar, gong ve boru. |
+| Hırlama | Bir düşman sana ulaşmak üzere. |
+| Yükselen inilti | Bir düşman, bulunduğu tarafta saldırıya hazırlanıyor. |
+| **Yuvarlanan uğultu** (sürekli) | Yakalayabileceğin top. Onun tarafına doğru yürü; **topun düşeceği yere yaklaştıkça tizleşir**, top sana yaklaştıkça daha hızlı titreşir ve top hâlâ bir düşmandan sekebilecekken daha yumuşaktır. |
+| Uğultu bir basamak yükselirken tık | Topun altındasın: orada kal. |
+| Eldivene tok vuruş | Top yakalandı. |
+| Batan boğuk güm | Bir top yanından geçip gitti. |
+| Silah doldurma sesi | Topların döndü: ateş edebilirsin (oto saldırı açıkken sessiz). |
+| Cam şıngırtısı | Yürüyerek ulaşabileceğin en yakın TP kristali, altın ya da kaynak. Kendiliğinden toplanmazlar. |
+| Kalimba pırıltısı | Özel bir eşya: füzyon reaktörü, taslak, yumurta, dişli, can, mıknatıs, bomba, mücevher kesesi. |
+| **Hafif hava ıslığı** (sürekli) | Yakınında uçan bir düşman atışı, yaklaştıkça tizleşir. Sana isabet edecekse daha gür çıkar. |
+| Vınlama ve şaklama | Bir atış sana isabet edecek: sesin geldiği tarafa adım at. |
+| Elektrik uğultusu / iki elektrik çıtırtısı | Bir lazer nişan alıyor / onun hattındasın: sesin geldiği tarafa adım at. |
+| Alçalan ıslık / fitil cızırtısı | Yakına bir bomba düşüyor / üstüne düşecek: sesin geldiği tarafa adım at. |
+| Şapırtı | Bir zemin tehlikesine bastın (adı seslendirilir). |
+| Yumruk / yudum | Hasar / iyileşme. |
+| Kalp atışı | Can düşük; çok düşükken daha hızlı. |
+| Sersem bir dalgalanma | Üstüne bir durum etkisi geldi. |
+| Yükselen iki çan notası | Seviye atlama hazır (E tuşuna bas). |
+| Tahtaya vuruş | Arenanın yan kenarı (aynı zamanda bir menü listesinin sonu). |
+| Metale vuruş | Yürüme alanının ön ya da arka sınırı. |
+| Şalter tıkı | Nişan yardımı hedef değiştirdi, yeni hedefin tarafından duyulur. |
+
+Bunların her biri **F4 → Ses rehberi** içinde dinlenebilir; Sol ok / Sağ ok ile her iki tarafta da
+duyabilirsin.
+
+## Ses filtreleri (rakam tuşları) {#sound-filters-number-keys}
+
+Savaşta rakam tuşları, dikkatini toplayabilmen için bir ses grubunu kapatır veya açar. Oyun bu tuşların
+hiçbirini kullanmaz.
+
+| Tuş | Grup |
+|---|---|
+| 1 | Düşmanlar: davullar, hırlama, saldırı hazırlığı, patronun gelişi |
+| 2 | Toplar: yuvarlanan uğultu, tık, yakalama, kaçırma, silah doldurma |
+| 3 | Ödüller: kristaller, altın, kaynaklar, özel eşyalar |
+| 4 | Atışlar ve tehlikeler |
+| 5 | Arena kenarları |
+| 6 | Canın: hasar, iyileşme, kalp atışı, durum |
+| 7 | Nişan yardımı tıkı |
+| 0 | Her şeyi yeniden aç |
+
+- Her rakam, diğerlerinden bağımsız olarak kendi grubunu açar veya kapatır.
+- **Ctrl+rakam** yalnızca o grubu açık bırakır. Örnek: yalnızca düşmanlar ve ödüller = Ctrl+1, sonra 3.
+- Seçimin bir sonraki oturum için saklanır. Bir savaş, kapalı bir şeyle başladığında mod neyin kapalı
+  olduğunu söyler.
+- Sesleri kapatmak yalnızca sesleri değiştirir: H, J, P, N tuşları yine yanıt verir ve yakalama yardımı
+  yine atışlardan kaçar.
+
+## Yardımlar {#assists}
+
+Bir yardımın yaptığı her şey kulakla da yapılabilir; yardımlar, istediğinde kullanman için oradadır.
+
+- **Nişan yardımı** (F5 modu değiştirir): senin yerine en yakın düşmana (varsayılan), en güçlü düşmana,
+  önündeki düşmana ya da sabit bir açıya nişan alır, ya da kapalıdır (fare). Oklarla ince ayar yapılır.
+- **Yakalama yardımı** (Shift basılı tut): kahraman aşağı inen sıradaki topun altına yürür; gelen top
+  yoksa en yakın kristale ya da eşyaya yürür; bir atış sana isabet etmek üzereyse önce yolundan çekilir.
+  W / S seni yine ileri ve geri götürür, A / D her zaman kontrolü devralır. F4 içinde kapalı, "Shift
+  basılı tutulunca" (varsayılan) ya da otomatik olarak ayarlanabilir.
+
+## Mod ayarları (F4) {#mod-settings-f4}
+
+Yukarı ok / Aşağı ok gezinir, Sol ok / Sağ ok veya Enter değiştirir, Esc kapatır. Ayarlar kaydedilir.
+
+- Nişan yardımı modu
+- Yakalama yardımı: kapalı, Shift basılı tutulunca, otomatik
+- Sesli ipuçları açık / kapalı, ipucu ses düzeyi
+- Düşman radarı, top sesleri, arena kenarları, atışlar ve tehlikeler (açık / kapalı)
+- Eşya sesleri: kapalı, yalnızca özel eşyalar, tümü
+- Can sesleri, nişan yardımı tıkı (açık / kapalı)
+- Odaklanınca geliştirme açıklamalarını oku
+- Ses rehberi (Enter açar)
+- Hata ayıklama kaydı
+
+## İlk tur için ipuçları {#tips-for-a-first-run}
+
+- **Toplarını yakala.** Yakalanan bir top hemen yeniden fırlatılabilir; kaçırılan bir topun geri gelmesi 2
+  ila 3 saniye sürer. Tıkı duyana kadar yuvarlanan uğultuyu izle, sonra olduğun yerde kal.
+- **TP kristallerini topla.** Kendiliğinden toplanmazlar. Cam şıngırtısını izle; boğuk ses arkanda demektir.
+- **Önce hayatta kal.** Turun başında hayatta kalmak hasardan daha önemlidir.
+- Seviye atlama sunduğunda toplarını **birleştir ve evrimleştir**: seçenekler "füzyon" ya da "evrim" der.
+- **Patronlarda yavaşla**: eksi tuşunu kullan. Bir patron yüksek hızda geldiğinde mod sana hatırlatır.
+- Ölmek normaldir: geri getirdiğin altın Yeni Babil'in Sekme Bahçeleri'ni inşa eder, binalar da sonraki
+  her turu güçlendirir.
+
+## Bilinen sınırlamalar {#known-limits}
+
+- Üsteki boşta fırlatıcı hâlâ fare gerektirir.
+- Liderlik tabloları ve Twitch oylaması yalnızca temel düzeyde okunur. Emeği geçenler ekranı geçilemez.
+- Mod ayarları oyunun kendi seçenekler ekranında değil, F4 tuşundadır.
+- Modun kendi metinleri, İngilizce ve İspanyolca dışındaki dillerde (Türkçe dahil), henüz anadili olan
+  biri tarafından gözden geçirilmeden çevrildi. Düzeltmeler memnuniyetle karşılanır. Oyundan gelen adlar
+  (binalar, toplar, düşmanlar, geliştirmeler) her zaman oyunun kendi çevirisinden alınır.
+- Ses düzeyleri, hızları ve yakalama genişliği henüz oyuncularla birlikte ayarlanmadı.
+
+## Sorun bildirme {#reporting-a-problem}
+
+Oyun klasöründeki yararlı dosyalar:
+
+- `UserData\BallPitAccess\speech.log`: modun söylediği her şey.
+- `MelonLoader\Latest.log`: modun günlüğü (hatalar, ekranlar, yakalamalar ve kaçırmalar).
+- Savaşta **Ctrl+Shift+D**, `UserData\BallPitAccess\threats.txt` dosyasını (konumlarıyla birlikte
+  düşmanlar, toplar, atışlar, eşyalar) yazar ve açık ekranın listesini `Latest.log` dosyasına ekler: bir
+  ses yanlış yönü gösterdiğinde ya da bir menü yanlış sırada okunduğunda işe yarar.
+
+Ne yaptığını, ne duyduğunu ve ne beklediğini anlat.
+
+## Emeği geçenler {#credits}
+
+- BALL x PIT, Kenny Sun tarafından yapıldı ve Devolver Digital tarafından yayımlandı. Bu mod resmî değildir.
+- Modu MelonLoader (LavaGang) yükler. Prism, konuşmayı ekran okuyucuna gönderir.

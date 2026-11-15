@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.14" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>BALL x PIT Access</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      color: light-dark(#1a1a1a, #fdfdfd);
+      background-color: #fdfdfd;
+      background-color: light-dark(#fdfdfd, #1a1a1a);
+      color-scheme: light dark;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a, a:visited {
+      color: inherit;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid;
+      border-color: #e6e6e6;
+      border-color: light-dark(#e6e6e6, #4c4c4c);
+      color: #606060;
+      color: light-dark(#606060, #b6b6b6);
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid currentColor;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+    }
+    th {
+      border-top: 1px solid currentColor;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    em, em em em, em em em em em {
+      font-style: italic;
+    }
+    em em, em em em em {
+      font-style: normal;
+    }
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    @media print {
+      html {
+        color-scheme: light only;
+      }
+      html, body, pre, code {
+        background-color: transparent;
+      }
+      body, a, a:visited, blockquote {
+        color: black;
+      }
+      pre, code {
+        padding: 0;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }  </style>
+</head>
+<body>
+<h1 id="ball-x-pit-access">BALL x PIT Access</h1>
+<p>Mod, który pozwala grać w <strong>BALL x PIT</strong> (Kenny Sun /
+Devolver Digital) bez wzroku. Odczytuje każde menu przez twój czytnik
+ekranu, pozwala obsłużyć całą grę z klawiatury i zamienia pole bitwy w
+dźwięk: wrogowie, twoje kule, wrogie pociski, kryształy PD i przedmioty
+specjalne mają własne dźwięki, dochodzące z tej strony, po której się
+znajdują.</p>
+<p>Wersja 0.5.0, dla wersji gry 1.308, razem z DLC Wyniesione Kulopolis
+(Risen Ballbylon). Mod mówi <strong>w każdym języku, który oferuje
+gra</strong>, i stosuje się do ustawienia języka w grze.</p>
+<!-- LANGS -->
+<p><a href="README.html">English</a> · <a
+href="README.es.html">Español</a> · <a
+href="README.fr.html">Français</a> · <a
+href="README.de.html">Deutsch</a> · <a
+href="README.it.html">Italiano</a> · <a
+href="README.pt-BR.html">Português (Brasil)</a> ·
+<strong>Polski</strong> · <a href="README.tr.html">Türkçe</a> · <a
+href="README.ru.html">Русский</a> · <a
+href="README.uk.html">Українська</a> · <a
+href="README.ja.html">日本語</a> · <a href="README.ko.html">한국어</a> ·
+<a href="README.zh-CN.html">简体中文</a> · <a
+href="README.zh-TW.html">繁體中文</a> · <a href="README.th.html">ไทย</a>
+<!-- /LANGS --></p>
+<blockquote>
+<p><strong>Stan: wczesna wersja testowa.</strong> Menu, baza i pierwsze
+rozgrywki zostały przetestowane z modem. Dźwięki walki i najnowsze
+elementy (ciągły dźwięk kuli, pomoc w łapaniu, filtry dźwięków) nie
+zostały jeszcze dostrojone z udziałem graczy. Zgłaszaj, co działa, a co
+nie (zobacz <a href="#reporting-a-problem">Zgłaszanie problemu</a>).</p>
+</blockquote>
+<h2 id="spis-treści">Spis treści</h2>
+<ul>
+<li><a href="#what-you-need">Czego potrzebujesz</a></li>
+<li><a href="#installing">Instalacja</a></li>
+<li><a href="#removing-the-mod">Usuwanie moda</a></li>
+<li><a href="#first-steps">Pierwsze kroki</a></li>
+<li><a href="#keys-everywhere">Klawisze dostępne wszędzie</a></li>
+<li><a href="#menus">Menu</a></li>
+<li><a href="#the-base-new-ballbylon">Baza (Nowe Kulopolis)</a></li>
+<li><a href="#battle">Walka</a></li>
+<li><a href="#battle-sounds">Dźwięki walki</a></li>
+<li><a href="#sound-filters-number-keys">Filtry dźwięków (klawisze
+cyfr)</a></li>
+<li><a href="#assists">Pomoce</a></li>
+<li><a href="#mod-settings-f4">Ustawienia moda (F4)</a></li>
+<li><a href="#tips-for-a-first-run">Wskazówki na pierwszą
+rozgrywkę</a></li>
+<li><a href="#known-limits">Znane ograniczenia</a></li>
+<li><a href="#reporting-a-problem">Zgłaszanie problemu</a></li>
+<li><a href="#credits">Autorzy</a></li>
+</ul>
+<h2 id="what-you-need">Czego potrzebujesz</h2>
+<ul>
+<li>BALL x PIT na Windows (Steam), wersja 1.308.</li>
+<li>Czytnik ekranu: przetestowany jest NVDA. Inne obsługiwane przez
+bibliotekę mowy Prism (JAWS, Narrator, głosy SAPI) też powinny
+działać.</li>
+<li><strong>MelonLoader 0.7.3</strong> (x64), program ładujący mody.
+Darmowy, do pobrania z oficjalnej strony wydań na GitHubie.</li>
+<li>Słuchawki lub głośniki stereo: lewa i prawa strona mają w walce
+ogromne znaczenie.</li>
+</ul>
+<h2 id="installing">Instalacja</h2>
+<p><strong>Instalatorem (najprościej):</strong> pobierz
+<code>BallPitAccessibilityInstaller.exe</code> z <a
+href="https://github.com/gomods1/BallPitAccess/releases/latest">najnowszego
+wydania</a> i uruchom go. Znajduje grę przez Steam, instaluje
+MelonLoader 0.7.3, bibliotekę mowy Prism i mod, a później je aktualizuje
+lub usuwa. Potem uruchom grę: pierwsze uruchomienie trwa kilka minut i
+jest ciche, gdy MelonLoader przygotowuje pliki gry; potem twój czytnik
+ekranu zaczyna mówić.</p>
+<p><strong>Ręcznie:</strong> pobierz
+<code>BallPitAccess-vX.Y.Z.zip</code> z tej samej strony i rozpakuj
+wszystko do folderu gry (domyślnie
+<code>C:\Program Files (x86)\Steam\steamapps\common\BALLxPIT</code>,
+folder, w którym jest <code>Balls.exe</code>), tak aby
+<code>version.dll</code> znalazł się obok <code>Balls.exe</code>. Zip
+zawiera już MelonLoader: nie trzeba go instalować osobno. Uruchom grę;
+pierwsze uruchomienie jest powolne i ciche, jak wyżej.</p>
+<h2 id="removing-the-mod">Usuwanie moda</h2>
+<p>Przycisk Odinstaluj w instalatorze usuwa mod i MelonLoader, a twoje
+ustawienia zostają w <code>UserData</code>. Ręcznie:</p>
+<p>Usuń <code>Mods\BallPitAccess.dll</code> i <code>prism.dll</code>.
+Aby usunąć także MelonLoadera, usuń z folderu gry
+<code>version.dll</code> oraz foldery <code>MelonLoader</code>,
+<code>Mods</code>, <code>Plugins</code> i <code>UserData</code>. Mod nie
+zmienia żadnego pliku gry.</p>
+<h2 id="first-steps">Pierwsze kroki</h2>
+<ul>
+<li>Naciśnij <strong>F1</strong> w dowolnej chwili, aby otworzyć pomoc:
+wszystkie jej części, zaczynając od tej dotyczącej miejsca, w którym
+jesteś. Strzałki w górę i w dół czytają ją wiersz po wierszu, Tab
+przechodzi do następnej części, Escape zamyka.</li>
+<li>Naciśnij <strong>F4</strong>, aby otworzyć ustawienia moda, a w nich
+otwórz <strong>przewodnik po dźwiękach</strong>: odtwarza każdy dźwięk
+walki i mówi, co oznacza. Przesłuchanie go raz przed pierwszą rozgrywką
+bardzo pomaga.</li>
+<li>Sama gra przy klawiaturze jest obsługiwana myszą; z modem mysz nie
+jest potrzebna nigdy, poza bezczynną wyrzutnią w bazie (zobacz <a
+href="#known-limits">Znane ograniczenia</a>).</li>
+</ul>
+<h2 id="keys-everywhere">Klawisze dostępne wszędzie</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Klawisz</th>
+<th>Działanie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td>Pomoc (wszystkie części; Tab / Shift+Tab między częściami)</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>Odczytaj cały ekran</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>Powtórz ostatni komunikat</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>Ustawienia moda i przewodnik po dźwiękach</td>
+</tr>
+<tr>
+<td>F5</td>
+<td>Zmień tryb pomocy w celowaniu</td>
+</tr>
+<tr>
+<td>F6 / F7</td>
+<td>Obróć celownik o 10 stopni w lewo / w prawo</td>
+</tr>
+<tr>
+<td>F8</td>
+<td>Powiedz, gdzie celujesz</td>
+</tr>
+<tr>
+<td>Ctrl+strzałka w górę</td>
+<td>Odczytaj szczegóły zaznaczonego elementu (Ctrl+strzałka w dół
+wraca)</td>
+</tr>
+<tr>
+<td>Ctrl+strzałka w lewo / Ctrl+strzałka w prawo</td>
+<td>Przełączaj między szczegółami a ostatnimi zdarzeniami</td>
+</tr>
+</tbody>
+</table>
+<p>Gdy otwarta jest lista moda (pomoc, ustawienia, przewodnik po
+dźwiękach), gra nie otrzymuje twoich klawiszy.</p>
+<h2 id="menus">Menu</h2>
+<p>Każdy ekran to <strong>jedna lista w sensownej kolejności</strong>:
+najpierw jego opcje, potem przyciski, na końcu Zamknij. Kolejność nigdy
+nie zależy od tego, gdzie elementy są narysowane na ekranie.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Klawisz</th>
+<th>Działanie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Strzałka w górę / w dół</td>
+<td>Poprzedni / następny element</td>
+</tr>
+<tr>
+<td>Enter</td>
+<td>Wybierz</td>
+</tr>
+<tr>
+<td>Tab / Shift+Tab</td>
+<td>Następna / poprzednia grupa ekranu</td>
+</tr>
+<tr>
+<td>Home / End</td>
+<td>Pierwszy / ostatni element grupy</td>
+</tr>
+<tr>
+<td>Strzałka w lewo / w prawo</td>
+<td>Zmień ustawienie typu lista lub suwak; na poziomie zmień jego
+trudność</td>
+</tr>
+<tr>
+<td>Ctrl+Tab / Ctrl+Shift+Tab</td>
+<td>Następna / poprzednia zakładka na ekranach z zakładkami</td>
+</tr>
+<tr>
+<td>Backspace lub Escape</td>
+<td>Wstecz</td>
+</tr>
+<tr>
+<td>Page Up / Page Down</td>
+<td>Zestaw w encyklopedii; poziom nowej gry plus na liście poziomów</td>
+</tr>
+<tr>
+<td>Shift+Enter</td>
+<td>Na poziomie: otwórz jego tablicę rekordów</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Enter na postaci przenosi cię na jej przycisk Wybierz.</li>
+<li>Gdy samouczek coś wskazuje, fokus przeskakuje na to miejsce:
+naciśnij Enter.</li>
+<li>Opcje ulepszeń są odczytywane razem z liczbami („Zadaje od 10 do 15
+obrażeń”).</li>
+</ul>
+<h2 id="the-base-new-ballbylon">Baza (Nowe Kulopolis)</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Klawisz</th>
+<th>Działanie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Strzałka w górę / w dół, Enter</td>
+<td>Przyciski panelu bocznego: Graj, Zbiory, Buduj, Powiększ, Układaj,
+Opcje</td>
+</tr>
+<tr>
+<td>Tab / Shift+Tab</td>
+<td>Przechodzenie po windzie i twoich budowlach</td>
+</tr>
+<tr>
+<td>Enter na budowli</td>
+<td>Rozpocznij zbiory wycelowane w nią, jeśli jest gotowa; w przeciwnym
+razie otwórz jej ulepszenie</td>
+</tr>
+<tr>
+<td>Shift+Enter</td>
+<td>Otwórz ulepszenie budowli</td>
+</tr>
+<tr>
+<td>Enter na windzie</td>
+<td>Otwórz ulepszenie windy (w głąb czeluści albo w górę do Wyniesionego
+Kulopolis)</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>Wyburz budowlę</td>
+</tr>
+<tr>
+<td>H</td>
+<td>Zasoby i dzień</td>
+</tr>
+<tr>
+<td>J</td>
+<td>Zbiory i robotnicy</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Budowanie</strong>: strzałki przesuwają budowlę o jedno pole
+i mówią, czy się mieści, Enter buduje, R obraca, Home przeskakuje na
+wolne miejsce, Backspace anuluje.</li>
+<li><strong>Zbiory</strong>: zaczynają się wycelowane w budowlę. Enter
+wysyła robotników, Tab celuje w inną budowlę, strzałki w lewo / w prawo
+obracają celownik, przytrzymanie spacji przyspiesza, Escape
+wychodzi.</li>
+<li><strong>Powiększanie</strong>: Tab wybiera działkę, Enter ją
+kupuje.</li>
+<li><strong>Układanie</strong>: Tab wybiera budowlę, Enter ją podnosi,
+strzałki ją przesuwają, Enter ją upuszcza.</li>
+</ul>
+<h2 id="battle">Walka</h2>
+<h3 id="klawisze-samej-gry">Klawisze samej gry</h3>
+<table>
+<thead>
+<tr>
+<th>Klawisz</th>
+<th>Działanie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W A S D</td>
+<td>Ruch</td>
+</tr>
+<tr>
+<td>Spacja</td>
+<td>Strzał (przytrzymaj)</td>
+</tr>
+<tr>
+<td>F</td>
+<td>Automatyczny ostrzał wł. / wył.</td>
+</tr>
+<tr>
+<td>E</td>
+<td>Otwórz nowy poziom, gdy jest gotowy</td>
+</tr>
+<tr>
+<td>= / -</td>
+<td>Szybsza / wolniejsza prędkość gry</td>
+</tr>
+<tr>
+<td>Escape</td>
+<td>Pauza</td>
+</tr>
+</tbody>
+</table>
+<h3 id="klawisze-moda">Klawisze moda</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Klawisz</th>
+<th>Działanie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Strzałka w lewo / w prawo</td>
+<td>Obróć celownik ręcznie o 5 stopni</td>
+</tr>
+<tr>
+<td>Strzałka w górę</td>
+<td>Oddaj celowanie pomocy</td>
+</tr>
+<tr>
+<td>Strzałka w dół</td>
+<td>Powiedz, gdzie celujesz</td>
+</tr>
+<tr>
+<td>Shift (przytrzymaj)</td>
+<td>Pomoc w łapaniu (zobacz <a href="#assists">Pomoce</a>)</td>
+</tr>
+<tr>
+<td>1 do 7, 0</td>
+<td>Filtry dźwięków (zobacz <a href="#sound-filters-number-keys">Filtry
+dźwięków</a>)</td>
+</tr>
+<tr>
+<td>H</td>
+<td>Zdrowie i efekty statusu</td>
+</tr>
+<tr>
+<td>J</td>
+<td>Wrogowie i boss</td>
+</tr>
+<tr>
+<td>K</td>
+<td>Twoja pozycja</td>
+</tr>
+<tr>
+<td>G</td>
+<td>Prędkość gry</td>
+</tr>
+<tr>
+<td>L</td>
+<td>Poziom, czas, fala, zdobyte koła zębate</td>
+</tr>
+<tr>
+<td>B</td>
+<td>Twoje kule i zdolności pasywne</td>
+</tr>
+<tr>
+<td>P</td>
+<td>Przedmioty na polu</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Zagrożenia (pociski, lasery, bomby, ziemia)</td>
+</tr>
+</tbody>
+</table>
+<p>W czasie walki mod mówi: poziom na początku, bossów i ich zdrowie
+przy 75, 50 i 25 procentach, obrażenia i zdrowie, efekty statusu,
+przedmioty specjalne, gdy wypadną, „gotowe nowe poziomy, naciśnij E”
+oraz koniec rozgrywki.</p>
+<h2 id="battle-sounds">Dźwięki walki</h2>
+<p>Każdy dźwięk podlega czterem zasadom:</p>
+<ul>
+<li><strong>Strona</strong>: dźwięk dochodzi z tej strony, po której
+jest to, czego dotyczy.</li>
+<li><strong>Wysokość</strong>: wyższy oznacza bliżej.</li>
+<li><strong>Stłumiony</strong> oznacza, że jest za tobą.</li>
+<li>Dźwięk, który każe ci się <strong>ruszyć</strong>, dochodzi ze
+strony, w którą masz iść.</li>
+</ul>
+<p>Rzeczy, które ciągle się poruszają (twoja kula, wrogie pociski), mają
+<strong>dźwięki ciągłe</strong>, które za nimi podążają; rzeczy, które
+zmieniają się skokowo (nacierający wrogowie, przedmioty leżące na
+ziemi), mają krótkie dźwięki.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Dźwięk</th>
+<th>Znaczenie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bębenek ręczny</td>
+<td>Wróg. Wyższy i szybszy = bliżej. Trzech najbliższych gra po
+kolei.</td>
+</tr>
+<tr>
+<td>Duży, głęboki bęben</td>
+<td>Boss. Bębny, gong i róg, gdy się pojawia.</td>
+</tr>
+<tr>
+<td>Warknięcie</td>
+<td>Wróg zaraz do ciebie dotrze.</td>
+</tr>
+<tr>
+<td>Narastający pisk</td>
+<td>Wróg szykuje atak, po swojej stronie.</td>
+</tr>
+<tr>
+<td><strong>Toczące się buczenie</strong> (ciągłe)</td>
+<td>Kula, którą możesz złapać. Idź w jego stronę; <strong>staje się
+wyższe, im bliżej jesteś miejsca, gdzie kula wyląduje</strong>, pulsuje
+szybciej, gdy kula się zbliża, i jest cichsze, dopóki kula może jeszcze
+odbić się od wroga.</td>
+</tr>
+<tr>
+<td>Kliknięcie, gdy buczenie wchodzi o stopień wyżej</td>
+<td>Jesteś pod kulą: zostań tam.</td>
+</tr>
+<tr>
+<td>Plaśnięcie rękawicy</td>
+<td>Kula złapana.</td>
+</tr>
+<tr>
+<td>Głuche, opadające uderzenie</td>
+<td>Kula cię minęła.</td>
+</tr>
+<tr>
+<td>Przeładowanie broni</td>
+<td>Twoje kule wróciły: możesz strzelać (ciche przy automatycznym
+ostrzale).</td>
+</tr>
+<tr>
+<td>Brzęk szkła</td>
+<td>Najbliższy kryształ PD, złoto lub zasób, do którego możesz dojść.
+Nie zbierają się same.</td>
+</tr>
+<tr>
+<td>Migotanie kalimby</td>
+<td>Przedmiot specjalny: reaktor fuzji, schemat, jajo, koło zębate,
+zdrowie, magnes, bomba, sakiewka klejnotów.</td>
+</tr>
+<tr>
+<td><strong>Powietrzny gwizd</strong> (ciągły)</td>
+<td>Wrogi pocisk lecący blisko ciebie, wyższy, gdy się zbliża.
+Głośniejszy, gdy cię trafi.</td>
+</tr>
+<tr>
+<td>Świst i trzask</td>
+<td>Pocisk cię trafi: przesuń się w stronę, z której go słychać.</td>
+</tr>
+<tr>
+<td>Elektryczne buczenie / dwa trzaski</td>
+<td>Laser celuje / jesteś na jego linii: przesuń się w stronę, z której
+go słychać.</td>
+</tr>
+<tr>
+<td>Opadający gwizd / syk lontu</td>
+<td>W pobliżu spada bomba / spadnie na ciebie: przesuń się w stronę, z
+której go słychać.</td>
+</tr>
+<tr>
+<td>Chlupot</td>
+<td>Stoisz na zagrożeniu na ziemi (mod mówi jego nazwę).</td>
+</tr>
+<tr>
+<td>Cios / łyk</td>
+<td>Obrażenia / leczenie.</td>
+</tr>
+<tr>
+<td>Bicie serca</td>
+<td>Mało zdrowia; szybsze, gdy zdrowia jest bardzo mało.</td>
+</tr>
+<tr>
+<td>Chwiejne falowanie</td>
+<td>Dotknął cię efekt statusu.</td>
+</tr>
+<tr>
+<td>Dwa rosnące dźwięki dzwonka</td>
+<td>Nowy poziom jest gotowy (naciśnij E).</td>
+</tr>
+<tr>
+<td>Drewniane stuknięcie</td>
+<td>Boczna krawędź areny (także koniec listy w menu).</td>
+</tr>
+<tr>
+<td>Metalowe stuknięcie</td>
+<td>Przednia lub tylna granica obszaru, po którym chodzisz.</td>
+</tr>
+<tr>
+<td>Kliknięcie przełącznika</td>
+<td>Pomoc w celowaniu zmieniła cel, po stronie nowego celu.</td>
+</tr>
+</tbody>
+</table>
+<p>Każdy z tych dźwięków można usłyszeć w <strong>F4 → Przewodnik po
+dźwiękach</strong>, a strzałkami w lewo / w prawo odtworzyć go po każdej
+stronie.</p>
+<h2 id="sound-filters-number-keys">Filtry dźwięków (klawisze cyfr)</h2>
+<p>W walce klawisze cyfr wyciszają lub przywracają grupę dźwięków, żeby
+łatwiej było się skupić. Gra nie używa żadnego z tych klawiszy.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Klawisz</th>
+<th>Grupa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Wrogowie: bębny, warknięcie, szykowanie ataku, pojawienie się
+bossa</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Kule: toczące się buczenie, kliknięcie, złapanie, chybienie,
+przeładowanie broni</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Nagrody: kryształy, złoto, zasoby, przedmioty specjalne</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Pociski i zagrożenia</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Krawędzie areny</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Twoje zdrowie: obrażenia, leczenie, bicie serca, stan</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Kliknięcie pomocy w celowaniu</td>
+</tr>
+<tr>
+<td>0</td>
+<td>Wszystko z powrotem włączone</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Każda cyfra przełącza swoją grupę, niezależnie od pozostałych.</li>
+<li><strong>Ctrl+cyfra</strong> zostawia tylko tę grupę. Przykład: tylko
+wrogowie i nagrody = Ctrl+1, potem 3.</li>
+<li>Twój wybór zostaje zapamiętany na następną sesję. Gdy walka zaczyna
+się z czymś wyciszonym, mod mówi, co jest wyciszone.</li>
+<li>Wyciszenie zmienia tylko dźwięki: klawisze H, J, P, N nadal
+odpowiadają, a pomoc w łapaniu nadal robi uniki.</li>
+</ul>
+<h2 id="assists">Pomoce</h2>
+<p>Wszystko, co robi pomoc, można też zrobić na słuch; pomoce są do
+dyspozycji, kiedy ich chcesz.</p>
+<ul>
+<li><strong>Pomoc w celowaniu</strong> (F5 zmienia tryb): celuje za
+ciebie w najbliższego wroga (domyślnie), najsilniejszego wroga, wroga
+przed tobą, pod stałym kątem albo jest wyłączona (mysz). Strzałki
+pozwalają ją dostroić.</li>
+<li><strong>Pomoc w łapaniu</strong> (przytrzymaj Shift): bohater idzie
+pod następną spadającą kulę; gdy żadna kula nie nadlatuje, idzie do
+najbliższego kryształu lub przedmiotu; jeśli pocisk zaraz cię trafi,
+najpierw schodzi mu z drogi. W / S nadal przesuwają cię do przodu i do
+tyłu, A / D zawsze przejmują sterowanie. W F4 można ją wyłączyć, ustawić
+na „przytrzymaj Shift” (domyślnie) albo na tryb automatyczny.</li>
+</ul>
+<h2 id="mod-settings-f4">Ustawienia moda (F4)</h2>
+<p>Strzałki w górę / w dół przechodzą, strzałki w lewo / w prawo lub
+Enter zmieniają, Escape zamyka. Ustawienia są zapisywane.</p>
+<ul>
+<li>Tryb pomocy w celowaniu</li>
+<li>Pomoc w łapaniu: wyłączona, przytrzymaj Shift, automatyczna</li>
+<li>Dźwięki pomocnicze wł. / wył., głośność dźwięków pomocniczych</li>
+<li>Radar wrogów, dźwięki kul, krawędzie areny, pociski i zagrożenia
+(wł. / wył.)</li>
+<li>Dźwięki przedmiotów: wyłączone, tylko przedmioty specjalne,
+wszystkie</li>
+<li>Dźwięki zdrowia, kliknięcie pomocy w celowaniu (wł. / wył.)</li>
+<li>Czytanie opisów ulepszeń po zaznaczeniu</li>
+<li>Przewodnik po dźwiękach (Enter otwiera)</li>
+<li>Dziennik debugowania</li>
+</ul>
+<h2 id="tips-for-a-first-run">Wskazówki na pierwszą rozgrywkę</h2>
+<ul>
+<li><strong>Łap swoje kule.</strong> Złapaną kulę można od razu
+wystrzelić ponownie; chybiona wraca po 2 do 3 sekund. Podążaj za
+toczącym się buczeniem, aż usłyszysz kliknięcie, a potem zostań na
+miejscu.</li>
+<li><strong>Zbieraj kryształy PD.</strong> Nie zbierają się same.
+Podążaj za brzękiem szkła; stłumiony oznacza, że kryształ jest za
+tobą.</li>
+<li><strong>Najpierw przetrwaj.</strong> Na początku rozgrywki
+pozostanie przy życiu jest ważniejsze niż obrażenia.</li>
+<li><strong>Łącz w fuzje i rozwijaj w ewolucje</strong> swoje kule, gdy
+nowy poziom to oferuje: opcje mówią „fuzja” albo „ewolucja”.</li>
+<li><strong>Zwolnij przy bossach</strong> klawiszem minus. Mod
+przypomina o tym, gdy boss pojawia się przy dużej prędkości.</li>
+<li>Śmierć to normalna rzecz: złoto, które przynosisz, rozbudowuje Nowe
+Kulopolis, a budowle wzmacniają każdą kolejną rozgrywkę.</li>
+</ul>
+<h2 id="known-limits">Znane ograniczenia</h2>
+<ul>
+<li>Bezczynna wyrzutnia w bazie nadal wymaga myszy.</li>
+<li>Tablice rekordów i głosowanie na Twitchu są odczytywane tylko w
+podstawowym zakresie. Nie da się pominąć napisów końcowych.</li>
+<li>Ustawienia moda są pod F4, a nie na ekranie opcji samej gry.</li>
+<li>Własne teksty moda w językach innych niż angielski i hiszpański
+zostały przetłumaczone bez sprawdzenia przez rodzimego użytkownika
+języka. Poprawki są mile widziane. Nazwy z gry (budowle, kule, wrogowie,
+ulepszenia) zawsze pochodzą z oficjalnego tłumaczenia gry.</li>
+<li>Głośność dźwięków, ich tempo i szerokość łapania nie zostały jeszcze
+dostrojone z udziałem graczy.</li>
+</ul>
+<h2 id="reporting-a-problem">Zgłaszanie problemu</h2>
+<p>Przydatne pliki w folderze gry:</p>
+<ul>
+<li><code>UserData\BallPitAccess\speech.log</code>: wszystko, co
+powiedział mod.</li>
+<li><code>MelonLoader\Latest.log</code>: dziennik moda (błędy, ekrany,
+złapania i chybienia).</li>
+<li>W walce <strong>Ctrl+Shift+D</strong> zapisuje
+<code>UserData\BallPitAccess\threats.txt</code> (wrogowie, kule,
+pociski, przedmioty wraz z pozycjami) oraz listę otwartego ekranu do
+<code>Latest.log</code>: przydatne, gdy dźwięk wskazuje zły kierunek
+albo menu czyta elementy w złej kolejności.</li>
+</ul>
+<p>Napisz, co zrobiłeś, co usłyszałeś i czego się spodziewałeś.</p>
+<h2 id="credits">Autorzy</h2>
+<ul>
+<li>BALL x PIT stworzył Kenny Sun, wydało Devolver Digital. Ten mod jest
+nieoficjalny.</li>
+<li>MelonLoader (LavaGang) ładuje mod. Prism przekazuje mowę do twojego
+czytnika ekranu.</li>
+</ul>
+</body>
+</html>

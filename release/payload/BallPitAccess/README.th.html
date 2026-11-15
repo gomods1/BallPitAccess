@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="th" xml:lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.14" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>BALL x PIT Access</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      color: light-dark(#1a1a1a, #fdfdfd);
+      background-color: #fdfdfd;
+      background-color: light-dark(#fdfdfd, #1a1a1a);
+      color-scheme: light dark;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a, a:visited {
+      color: inherit;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid;
+      border-color: #e6e6e6;
+      border-color: light-dark(#e6e6e6, #4c4c4c);
+      color: #606060;
+      color: light-dark(#606060, #b6b6b6);
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid currentColor;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+    }
+    th {
+      border-top: 1px solid currentColor;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    em, em em em, em em em em em {
+      font-style: italic;
+    }
+    em em, em em em em {
+      font-style: normal;
+    }
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    @media print {
+      html {
+        color-scheme: light only;
+      }
+      html, body, pre, code {
+        background-color: transparent;
+      }
+      body, a, a:visited, blockquote {
+        color: black;
+      }
+      pre, code {
+        padding: 0;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }  </style>
+</head>
+<body>
+<h1 id="ball-x-pit-access">BALL x PIT Access</h1>
+<p>ม็อดที่ทำให้เล่น <strong>BALL x PIT</strong> (Kenny Sun / Devolver
+Digital) ได้โดยไม่ต้องมองเห็น ม็อดจะอ่านทุกเมนูผ่าน โปรแกรมอ่านหน้าจอของคุณ
+ให้คุณเล่นทั้งเกมได้ด้วยคีย์บอร์ด และเปลี่ยนสนามรบให้เป็นเสียง: ศัตรู ลูกบอลของคุณ
+กระสุนของศัตรู อัญมณี XP และไอเท็มพิเศษ ต่างก็มีเสียงของตัวเอง
+ซึ่งดังมาจากฝั่งที่สิ่งนั้นอยู่เทียบกับตัวคุณ</p>
+<p>เวอร์ชัน 0.5.0 สำหรับเกมเวอร์ชัน 1.308 รวมถึง DLC ริเซนบอลบิลอน (Risen
+Ballbylon) ม็อดพูดได้<strong>ทุกภาษา ที่เกมมี</strong>
+และจะใช้ภาษาตามการตั้งค่าภาษาของเกม</p>
+<!-- LANGS -->
+<p><a href="README.html">English</a> · <a
+href="README.es.html">Español</a> · <a
+href="README.fr.html">Français</a> · <a
+href="README.de.html">Deutsch</a> · <a
+href="README.it.html">Italiano</a> · <a
+href="README.pt-BR.html">Português (Brasil)</a> · <a
+href="README.pl.html">Polski</a> · <a href="README.tr.html">Türkçe</a> ·
+<a href="README.ru.html">Русский</a> · <a
+href="README.uk.html">Українська</a> · <a
+href="README.ja.html">日本語</a> · <a href="README.ko.html">한국어</a> ·
+<a href="README.zh-CN.html">简体中文</a> · <a
+href="README.zh-TW.html">繁體中文</a> · <strong>ไทย</strong>
+<!-- /LANGS --></p>
+<blockquote>
+<p><strong>สถานะ: เวอร์ชันทดสอบช่วงแรก</strong> เมนู ฐาน และรอบแรกๆ
+ได้ลองเล่นกับม็อดแล้ว แต่เสียงในการต่อสู้และส่วนที่ใหม่ที่สุด (เสียงลูกบอลแบบต่อเนื่อง
+ตัวช่วยรับลูก ตัวกรองเสียง) ยังไม่ได้ปรับแต่งร่วมกับผู้เล่น
+โปรดแจ้งว่าอะไรใช้ได้และอะไรใช้ไม่ได้ (ดู <a
+href="#reporting-a-problem">การแจ้งปัญหา</a>)</p>
+</blockquote>
+<h2 id="contents">สารบัญ</h2>
+<ul>
+<li><a href="#what-you-need">สิ่งที่ต้องมี</a></li>
+<li><a href="#installing">การติดตั้ง</a></li>
+<li><a href="#removing-the-mod">การถอนม็อด</a></li>
+<li><a href="#first-steps">ขั้นตอนแรก</a></li>
+<li><a href="#keys-everywhere">ปุ่มที่ใช้ได้ทุกที่</a></li>
+<li><a href="#menus">เมนู</a></li>
+<li><a href="#the-base-new-ballbylon">ฐาน (บอลบิโลนใหม่)</a></li>
+<li><a href="#battle">การต่อสู้</a></li>
+<li><a href="#battle-sounds">เสียงในการต่อสู้</a></li>
+<li><a href="#sound-filters-number-keys">ตัวกรองเสียง (ปุ่มตัวเลข)</a></li>
+<li><a href="#assists">ตัวช่วย</a></li>
+<li><a href="#mod-settings-f4">การตั้งค่าม็อด (F4)</a></li>
+<li><a href="#tips-for-a-first-run">เคล็ดลับสำหรับรอบแรก</a></li>
+<li><a href="#known-limits">ข้อจำกัดที่ทราบ</a></li>
+<li><a href="#reporting-a-problem">การแจ้งปัญหา</a></li>
+<li><a href="#credits">เครดิต</a></li>
+</ul>
+<h2 id="what-you-need">สิ่งที่ต้องมี</h2>
+<ul>
+<li>BALL x PIT บน Windows (Steam) เวอร์ชัน 1.308</li>
+<li>โปรแกรมอ่านหน้าจอ: ทดสอบกับ NVDA แล้ว โปรแกรมอื่นที่ไลบรารีเสียงพูด Prism รองรับ
+(JAWS, Narrator, เสียง SAPI) ก็น่าจะใช้ได้เช่นกัน</li>
+<li><strong>MelonLoader 0.7.3</strong> (x64) ตัวโหลดม็อด ใช้ฟรี
+ดาวน์โหลดได้จากหน้ารีลีสอย่างเป็นทางการบน GitHub</li>
+<li>หูฟังหรือลำโพงสเตอริโอ: ซ้ายและขวามีความสำคัญมากในการต่อสู้</li>
+</ul>
+<h2 id="installing">การติดตั้ง</h2>
+<p><strong>ใช้ตัวติดตั้ง (ง่ายที่สุด):</strong> ดาวน์โหลด
+<code>BallPitAccessibilityInstaller.exe</code> จาก <a
+href="https://github.com/gomods1/BallPitAccess/releases/latest">รุ่นล่าสุด</a>
+แล้วเปิดใช้งาน ตัวติดตั้งจะหาเกมผ่าน Steam ติดตั้ง MelonLoader 0.7.3 ไลบรารีเสียงพูด
+Prism และม็อด และภายหลังสามารถอัปเดตหรือถอนออกได้ จากนั้นเปิดเกม
+การเปิดครั้งแรกจะใช้เวลาหลายนาทีและไม่มีเสียงขณะที่ MelonLoader เตรียมไฟล์ของเกม
+แล้วโปรแกรมอ่านหน้าจอจะเริ่มพูด</p>
+<p><strong>ติดตั้งเอง:</strong> ดาวน์โหลด
+<code>BallPitAccess-vX.Y.Z.zip</code> จากหน้าเดียวกัน
+แล้วแตกไฟล์ทั้งหมดลงในโฟลเดอร์เกม (ค่าเริ่มต้นคือ
+<code>C:\Program Files (x86)\Steam\steamapps\common\BALLxPIT</code>
+ซึ่งเป็นโฟลเดอร์ที่มี <code>Balls.exe</code>) ให้ <code>version.dll</code>
+อยู่ข้างๆ <code>Balls.exe</code> ไฟล์ zip มี MelonLoader อยู่แล้ว จึงไม่ต้องติดตั้งแยก
+เปิดเกม การเปิดครั้งแรกจะช้าและไม่มีเสียงเหมือนด้านบน</p>
+<h2 id="removing-the-mod">การถอนม็อด</h2>
+<p>ปุ่มถอนการติดตั้งของตัวติดตั้งจะลบม็อดและ MelonLoader และเก็บการตั้งค่าของคุณไว้ใน
+<code>UserData</code> หากต้องการถอนเอง:</p>
+<p>ลบ <code>Mods\BallPitAccess.dll</code> และ <code>prism.dll</code>
+หากต้องการถอน MelonLoader ด้วย ให้ลบ <code>version.dll</code> และ โฟลเดอร์
+<code>MelonLoader</code>, <code>Mods</code>, <code>Plugins</code> และ
+<code>UserData</code> ออกจากโฟลเดอร์เกม ม็อดไม่ได้เปลี่ยนแปลง ไฟล์ใดๆ
+ของเกม</p>
+<h2 id="first-steps">ขั้นตอนแรก</h2>
+<ul>
+<li>กด <strong>F1</strong> เมื่อใดก็ได้เพื่อดูวิธีใช้: มีครบทุกส่วน
+โดยเริ่มจากส่วนของที่ที่คุณอยู่ ลูกศรขึ้นและลงเพื่ออ่านทีละบรรทัด Tab เพื่อกระโดดไปส่วนถัดไป
+Escape เพื่อปิด</li>
+<li>กด <strong>F4</strong> เพื่อเปิดการตั้งค่าม็อด และในนั้นให้เปิด
+<strong>คู่มือเสียง</strong>: มันจะเล่นทุกเสียงในการต่อสู้ และบอกความหมาย
+การฟังสักครั้งก่อนเล่นรอบแรกจะช่วยได้มาก</li>
+<li>ตัวเกมเองเมื่อใช้คีย์บอร์ดจะต้องใช้เมาส์ แต่เมื่อมีม็อด คุณไม่ต้องใช้เมาส์เลย
+ยกเว้นเครื่องยิงแบบไอเดิล (idle launcher) ในฐาน (ดู <a
+href="#known-limits">ข้อจำกัดที่ทราบ</a>)</li>
+</ul>
+<h2 id="keys-everywhere">ปุ่มที่ใช้ได้ทุกที่</h2>
+<table>
+<thead>
+<tr>
+<th>ปุ่ม</th>
+<th>การทำงาน</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td>วิธีใช้ (ทุกส่วน; Tab / Shift+Tab เพื่อไปมาระหว่างส่วน)</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>อ่านทั้งหน้าจอ</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>พูดสิ่งที่พูดล่าสุดซ้ำ</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>การตั้งค่าม็อดและคู่มือเสียง</td>
+</tr>
+<tr>
+<td>F5</td>
+<td>เปลี่ยนโหมดตัวช่วยเล็ง</td>
+</tr>
+<tr>
+<td>F6 / F7</td>
+<td>หมุนการเล็งไปทางซ้าย / ขวา 10 องศา</td>
+</tr>
+<tr>
+<td>F8</td>
+<td>บอกว่าคุณกำลังเล็งไปทางไหน</td>
+</tr>
+<tr>
+<td>Ctrl+ลูกศรขึ้น</td>
+<td>อ่านรายละเอียดของรายการที่โฟกัสอยู่ (Ctrl+ลูกศรลงเพื่อย้อนกลับ)</td>
+</tr>
+<tr>
+<td>Ctrl+ลูกศรซ้าย / Ctrl+ลูกศรขวา</td>
+<td>สลับระหว่างรายละเอียดกับเหตุการณ์ล่าสุด</td>
+</tr>
+</tbody>
+</table>
+<p>ขณะที่รายการของม็อด (วิธีใช้ การตั้งค่า คู่มือเสียง) เปิดอยู่ เกมจะไม่ได้รับปุ่มที่คุณกด</p>
+<h2 id="menus">เมนู</h2>
+<p>ทุกหน้าจอเป็น<strong>รายการเดียวที่เรียงตามลำดับที่เข้าใจง่าย</strong>: ตัวเลือกก่อน
+จากนั้นปุ่มต่างๆ แล้วจึงเป็นปิด ลำดับนี้ไม่ขึ้นกับตำแหน่งที่สิ่งต่างๆ ถูกวาดบนหน้าจอ</p>
+<table>
+<thead>
+<tr>
+<th>ปุ่ม</th>
+<th>การทำงาน</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ลูกศรขึ้น / ลง</td>
+<td>รายการก่อนหน้า / ถัดไป</td>
+</tr>
+<tr>
+<td>Enter</td>
+<td>เลือก</td>
+</tr>
+<tr>
+<td>Tab / Shift+Tab</td>
+<td>กลุ่มถัดไป / ก่อนหน้าของหน้าจอ</td>
+</tr>
+<tr>
+<td>Home / End</td>
+<td>รายการแรก / สุดท้ายของกลุ่ม</td>
+</tr>
+<tr>
+<td>ลูกศรซ้าย / ขวา</td>
+<td>เปลี่ยนค่าตั้งค่าแบบรายการหรือแถบเลื่อน; บนด่าน เปลี่ยนความยาก</td>
+</tr>
+<tr>
+<td>Ctrl+Tab / Ctrl+Shift+Tab</td>
+<td>แท็บถัดไป / ก่อนหน้า บนหน้าจอที่มีแท็บ</td>
+</tr>
+<tr>
+<td>Backspace หรือ Escape</td>
+<td>ย้อนกลับ</td>
+</tr>
+<tr>
+<td>Page Up / Page Down</td>
+<td>ชุดในสารานุกรม; ระดับเกมใหม่พลัสในรายการด่าน</td>
+</tr>
+<tr>
+<td>Shift+Enter</td>
+<td>บนด่าน: เปิดกระดานผู้นำของด่าน</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Enter บนตัวละครจะพาคุณไปที่ปุ่มเลือกของตัวละครนั้น</li>
+<li>เมื่อบทสอนแนะนำชี้ไปที่สิ่งใด โฟกัสจะกระโดดไปที่สิ่งนั้น: กด Enter</li>
+<li>ตัวเลือกการอัปเกรดจะอ่านพร้อมตัวเลข (“สร้างดาเมจ 10 ถึง 15”)</li>
+</ul>
+<h2 id="the-base-new-ballbylon">ฐาน (บอลบิโลนใหม่)</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>ปุ่ม</th>
+<th>การทำงาน</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ลูกศรขึ้น / ลง, Enter</td>
+<td>ปุ่มในแถบด้านข้าง: เล่น, เก็บเกี่ยว, ปลูกสร้าง, ขยายพื้นที่, จัดเรียงใหม่,
+ตัวเลือก</td>
+</tr>
+<tr>
+<td>Tab / Shift+Tab</td>
+<td>ไล่ดูลิฟต์และสิ่งปลูกสร้างของคุณ</td>
+</tr>
+<tr>
+<td>Enter บนสิ่งปลูกสร้าง</td>
+<td>ถ้าพร้อมเก็บเกี่ยว จะเริ่มเก็บเกี่ยวโดยเล็งไปที่สิ่งปลูกสร้างนั้น; ถ้าไม่
+จะเปิดการอัปเกรด</td>
+</tr>
+<tr>
+<td>Shift+Enter</td>
+<td>เปิดการอัปเกรดของสิ่งปลูกสร้าง</td>
+</tr>
+<tr>
+<td>Enter บนลิฟต์</td>
+<td>เปิดการอัปเกรดลิฟต์ (ลงไปในหลุม หรือขึ้นไปยังริเซนบอลบิลอน)</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>รื้อถอนสิ่งปลูกสร้าง</td>
+</tr>
+<tr>
+<td>H</td>
+<td>ทรัพยากรและวัน</td>
+</tr>
+<tr>
+<td>J</td>
+<td>การเก็บเกี่ยวและคนงาน</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>การสร้าง</strong>:
+ลูกศรเพื่อเลื่อนสิ่งปลูกสร้างทีละช่องและบอกว่าวางได้หรือไม่ Enter เพื่อสร้าง R เพื่อหมุน Home
+เพื่อกระโดดไปยังที่ว่าง Backspace เพื่อยกเลิก</li>
+<li><strong>การเก็บเกี่ยว</strong>: เริ่มต้นโดยเล็งไปที่สิ่งปลูกสร้าง Enter
+เพื่อส่งคนงานออกไป Tab เพื่อเล็งไปที่สิ่งปลูกสร้างอื่น ลูกศรซ้าย / ขวาเพื่อหมุนการเล็ง กด
+Space ค้างไว้เพื่อเร่งความเร็ว Escape เพื่อออก</li>
+<li><strong>การขยายพื้นที่</strong>: Tab เพื่อเลือกที่ดิน Enter เพื่อซื้อ</li>
+<li><strong>การจัดเรียงใหม่</strong>: Tab เพื่อเลือกสิ่งปลูกสร้าง Enter เพื่อยกขึ้น
+ลูกศรเพื่อเลื่อน Enter เพื่อวางลง</li>
+</ul>
+<h2 id="battle">การต่อสู้</h2>
+<h3 id="the-games-own-keys">ปุ่มของตัวเกมเอง</h3>
+<table>
+<thead>
+<tr>
+<th>ปุ่ม</th>
+<th>การทำงาน</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W A S D</td>
+<td>เดิน</td>
+</tr>
+<tr>
+<td>Space</td>
+<td>ยิง (กดค้าง)</td>
+</tr>
+<tr>
+<td>F</td>
+<td>เปิด / ปิดโหมดยิงอัตโนมัติ</td>
+</tr>
+<tr>
+<td>E</td>
+<td>เปิดการเพิ่มเลเวลเมื่อพร้อม</td>
+</tr>
+<tr>
+<td>= / -</td>
+<td>ความเร็วเกม เร็วขึ้น / ช้าลง</td>
+</tr>
+<tr>
+<td>Escape</td>
+<td>หยุดชั่วคราว</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mod-keys">ปุ่มของม็อด</h3>
+<table>
+<thead>
+<tr>
+<th>ปุ่ม</th>
+<th>การทำงาน</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ลูกศรซ้าย / ขวา</td>
+<td>หมุนการเล็งเองทีละ 5 องศา</td>
+</tr>
+<tr>
+<td>ลูกศรขึ้น</td>
+<td>คืนการเล็งให้ตัวช่วย</td>
+</tr>
+<tr>
+<td>ลูกศรลง</td>
+<td>บอกว่าคุณเล็งไปทางไหน</td>
+</tr>
+<tr>
+<td>Shift (กดค้าง)</td>
+<td>ตัวช่วยรับลูก (ดู <a href="#assists">ตัวช่วย</a>)</td>
+</tr>
+<tr>
+<td>1 ถึง 7, 0</td>
+<td>ตัวกรองเสียง (ดู <a
+href="#sound-filters-number-keys">ตัวกรองเสียง</a>)</td>
+</tr>
+<tr>
+<td>H</td>
+<td>พลังชีวิตและเอฟเฟ็กต์สถานะ</td>
+</tr>
+<tr>
+<td>J</td>
+<td>ศัตรูและบอส</td>
+</tr>
+<tr>
+<td>K</td>
+<td>ตำแหน่งของคุณ</td>
+</tr>
+<tr>
+<td>G</td>
+<td>ความเร็วเกม</td>
+</tr>
+<tr>
+<td>L</td>
+<td>ด่าน เวลา ระลอก อุปกรณ์ลิฟต์ที่ได้</td>
+</tr>
+<tr>
+<td>B</td>
+<td>ลูกบอลและพาสซีฟของคุณ</td>
+</tr>
+<tr>
+<td>P</td>
+<td>ไอเท็มในสนาม</td>
+</tr>
+<tr>
+<td>N</td>
+<td>อันตราย (กระสุน เลเซอร์ ระเบิด พื้น)</td>
+</tr>
+</tbody>
+</table>
+<p>สิ่งที่พูดระหว่างการต่อสู้: ด่านตอนเริ่ม บอสและพลังชีวิตของบอสที่ 75, 50 และ 25
+เปอร์เซ็นต์ ดาเมจ และพลังชีวิต เอฟเฟ็กต์สถานะ ไอเท็มพิเศษเมื่อดรอป “เพิ่มเลเวลได้ กด E”
+และการจบรอบ</p>
+<h2 id="battle-sounds">เสียงในการต่อสู้</h2>
+<p>กฎสี่ข้อนี้ใช้กับทุกเสียง:</p>
+<ul>
+<li><strong>ฝั่ง</strong>: เสียงดังมาจากฝั่งของสิ่งที่มันบอก</li>
+<li><strong>ระดับเสียง</strong>: สูงขึ้นแปลว่าใกล้ขึ้น</li>
+<li><strong>อู้อี้</strong> แปลว่ามันอยู่ข้างหลังคุณ</li>
+<li>เสียงที่บอกให้คุณ<strong>เดิน</strong> จะดังมาจากฝั่งที่ต้องไป</li>
+</ul>
+<p>สิ่งที่เคลื่อนที่ตลอดเวลา (ลูกบอลของคุณ กระสุนศัตรู)
+เป็น<strong>เสียงต่อเนื่อง</strong>ที่ตามสิ่งนั้นไป ส่วนสิ่งที่ เปลี่ยนเป็นจังหวะ
+(ศัตรูที่เดินหน้า ไอเท็มที่วางอยู่บนพื้น) เป็นเสียงสั้นๆ</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>เสียง</th>
+<th>ความหมาย</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>กลองมือ</td>
+<td>ศัตรู เสียงสูงขึ้นและเร็วขึ้น = ใกล้ขึ้น สามตัวที่ใกล้ที่สุดจะเล่นสลับกัน</td>
+</tr>
+<tr>
+<td>กลองใหญ่เสียงทุ้ม</td>
+<td>บอส มีกลอง ฆ้อง และแตรเมื่อบอสมาถึง</td>
+</tr>
+<tr>
+<td>เสียงคำราม</td>
+<td>ศัตรูกำลังจะถึงตัวคุณ</td>
+</tr>
+<tr>
+<td>เสียงหวีดที่สูงขึ้นเรื่อยๆ</td>
+<td>ศัตรูกำลังเตรียมโจมตี อยู่ทางฝั่งนั้น</td>
+</tr>
+<tr>
+<td><strong>เสียงหึ่งกลิ้งๆ</strong> (ต่อเนื่อง)</td>
+<td>ลูกบอลที่คุณรับได้ เดินไปทางฝั่งของมัน
+มัน<strong>สูงขึ้นเมื่อคุณเข้าใกล้จุดที่ลูกบอลจะตก</strong> สั่นเร็วขึ้นเมื่อลูกบอลใกล้ถึงตัวคุณ
+และเบาลงขณะที่ลูกบอลยังอาจกระดอนจากศัตรูได้</td>
+</tr>
+<tr>
+<td>เสียงคลิกขณะเสียงหึ่งสูงขึ้นหนึ่งขั้น</td>
+<td>คุณอยู่ใต้ลูกบอล: อยู่ตรงนั้น</td>
+</tr>
+<tr>
+<td>เสียงตุบของถุงมือ</td>
+<td>รับลูกบอลได้</td>
+</tr>
+<tr>
+<td>เสียงตุบทึบที่จมลง</td>
+<td>ลูกบอลหลุดผ่านคุณไป</td>
+</tr>
+<tr>
+<td>เสียงขึ้นลำปืน</td>
+<td>ลูกบอลของคุณกลับมาแล้ว: คุณยิงได้ (ไม่มีเสียงเมื่อเปิดยิงอัตโนมัติ)</td>
+</tr>
+<tr>
+<td>เสียงแก้วกริ๊ง</td>
+<td>อัญมณี XP ทอง หรือทรัพยากรที่ใกล้ที่สุดที่คุณเดินไปถึงได้ ของพวกนี้ไม่ถูกเก็บเอง</td>
+</tr>
+<tr>
+<td>เสียงคาลิมบาระยิบระยับ</td>
+<td>ไอเท็มพิเศษ: เครื่องปฏิกรณ์หลอมรวม พิมพ์เขียว ไข่ อุปกรณ์ลิฟต์ พลังชีวิต แม่เหล็ก ระเบิด
+ถุงอัญมณี</td>
+</tr>
+<tr>
+<td><strong>เสียงหวีดลม</strong> (ต่อเนื่อง)</td>
+<td>กระสุนศัตรูที่บินอยู่ใกล้คุณ เสียงสูงขึ้นเมื่อเข้ามาใกล้ ดังขึ้นเมื่อมันจะโดนคุณ</td>
+</tr>
+<tr>
+<td>เสียงวูบตามด้วยเสียงแตก</td>
+<td>กระสุนจะโดนคุณ: ก้าวไปทางฝั่งที่เสียงดัง</td>
+</tr>
+<tr>
+<td>เสียงหึ่งไฟฟ้า / เสียงช็อตสองครั้ง</td>
+<td>เลเซอร์กำลังเล็ง / คุณอยู่ในแนวของมัน: ก้าวไปทางฝั่งที่เสียงดัง</td>
+</tr>
+<tr>
+<td>เสียงหวีดตกลงมา / เสียงฟู่ของชนวน</td>
+<td>ระเบิดกำลังตกลงมาใกล้ๆ / มันจะตกใส่คุณ: ก้าวไปทางฝั่งที่เสียงดัง</td>
+</tr>
+<tr>
+<td>เสียงแฉะ</td>
+<td>คุณเหยียบอันตรายบนพื้น (ม็อดจะพูดชื่อของมัน)</td>
+</tr>
+<tr>
+<td>เสียงต่อย / เสียงอึก</td>
+<td>ดาเมจ / การฟื้นฟู</td>
+</tr>
+<tr>
+<td>เสียงหัวใจเต้น</td>
+<td>พลังชีวิตต่ำ เต้นเร็วขึ้นเมื่อต่ำมาก</td>
+</tr>
+<tr>
+<td>เสียงโคลงเคลงมึนๆ</td>
+<td>คุณติดเอฟเฟ็กต์สถานะ</td>
+</tr>
+<tr>
+<td>เสียงระฆังสองโน้ตไล่ขึ้น</td>
+<td>เพิ่มเลเวลได้แล้ว (กด E)</td>
+</tr>
+<tr>
+<td>เสียงเคาะไม้</td>
+<td>ขอบด้านข้างของสนาม (และสุดรายการในเมนู)</td>
+</tr>
+<tr>
+<td>เสียงเคาะโลหะ</td>
+<td>ขอบด้านหน้าหรือด้านหลังของพื้นที่ที่คุณเดินได้</td>
+</tr>
+<tr>
+<td>เสียงคลิกสวิตช์</td>
+<td>ตัวช่วยเล็งเปลี่ยนเป้าหมาย ดังจากฝั่งของเป้าหมายใหม่</td>
+</tr>
+</tbody>
+</table>
+<p>ทุกเสียงเหล่านี้ฟังได้ใน <strong>F4 → คู่มือเสียง</strong> โดยใช้ลูกศรซ้าย /
+ขวาเพื่อฟังจากแต่ละฝั่ง</p>
+<h2 id="sound-filters-number-keys">ตัวกรองเสียง (ปุ่มตัวเลข)</h2>
+<p>ในการต่อสู้ ปุ่มตัวเลขจะปิดหรือเปิดเสียงแต่ละกลุ่ม เพื่อให้คุณมีสมาธิ
+เกมไม่ได้ใช้ปุ่มเหล่านี้เลย</p>
+<table>
+<thead>
+<tr>
+<th>ปุ่ม</th>
+<th>กลุ่ม</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>ศัตรู: กลอง เสียงคำราม การเตรียมโจมตี การมาถึงของบอส</td>
+</tr>
+<tr>
+<td>2</td>
+<td>ลูกบอล: เสียงหึ่งกลิ้งๆ เสียงคลิก การรับลูก การรับพลาด เสียงขึ้นลำปืน</td>
+</tr>
+<tr>
+<td>3</td>
+<td>รางวัล: อัญมณี ทอง ทรัพยากร ไอเท็มพิเศษ</td>
+</tr>
+<tr>
+<td>4</td>
+<td>กระสุนและอันตราย</td>
+</tr>
+<tr>
+<td>5</td>
+<td>ขอบสนาม</td>
+</tr>
+<tr>
+<td>6</td>
+<td>พลังชีวิตของคุณ: ดาเมจ การฟื้นฟู เสียงหัวใจเต้น สถานะ</td>
+</tr>
+<tr>
+<td>7</td>
+<td>เสียงคลิกตัวช่วยเล็ง</td>
+</tr>
+<tr>
+<td>0</td>
+<td>เปิดทุกอย่างกลับมา</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>แต่ละตัวเลขสลับกลุ่มของตัวเอง โดยไม่ขึ้นกับกลุ่มอื่น</li>
+<li><strong>Ctrl+ตัวเลข</strong> จะเหลือไว้แค่กลุ่มนั้น ตัวอย่าง: เฉพาะศัตรูและรางวัล
+= Ctrl+1 แล้วกด 3</li>
+<li>สิ่งที่คุณเลือกจะถูกเก็บไว้สำหรับครั้งถัดไป เมื่อการต่อสู้เริ่มขณะที่มีบางอย่างปิดเสียงอยู่
+ม็อดจะบอกว่า อะไรปิดเสียงอยู่</li>
+<li>การปิดเสียงเปลี่ยนแค่เสียงเท่านั้น: ปุ่ม H, J, P, N ยังตอบอยู่
+และตัวช่วยรับลูกยังหลบให้อยู่</li>
+</ul>
+<h2 id="assists">ตัวช่วย</h2>
+<p>ทุกอย่างที่ตัวช่วยทำ คุณก็ทำเองได้ด้วยการฟัง ตัวช่วยมีไว้ให้เมื่อคุณต้องการ</p>
+<ul>
+<li><strong>ตัวช่วยเล็ง</strong> (F5 เพื่อเปลี่ยนโหมด): เล็งให้คุณไปที่ศัตรูที่ใกล้ที่สุด
+(ค่าเริ่มต้น) ศัตรูที่แข็งแกร่ง ที่สุด ศัตรูที่อยู่ตรงหน้าคุณ มุมคงที่ หรือปิด (ใช้เมาส์)
+ลูกศรใช้ปรับอย่างละเอียด</li>
+<li><strong>ตัวช่วยรับลูก</strong> (กด Shift ค้างไว้):
+ตัวละครจะเดินไปอยู่ใต้ลูกบอลลูกถัดไปที่กำลังตกลงมา ถ้าไม่มีลูกบอลกำลังมา
+จะเดินไปยังอัญมณีหรือไอเท็มที่ใกล้ที่สุด ถ้ามีกระสุนกำลังจะโดนคุณ จะหลบออกไปก่อน W / S
+ยังใช้เดินไปข้างหน้าและถอยหลังได้ ส่วน A / D จะควบคุมแทนเสมอ ใน F4 ตั้งเป็นปิด “กด
+Shift ค้างไว้” (ค่าเริ่มต้น) หรืออัตโนมัติได้</li>
+</ul>
+<h2 id="mod-settings-f4">การตั้งค่าม็อด (F4)</h2>
+<p>ลูกศรขึ้น / ลงเพื่อเลื่อน ลูกศรซ้าย / ขวาหรือ Enter เพื่อเปลี่ยน Escape เพื่อปิด
+การตั้งค่าจะถูกบันทึกไว้</p>
+<ul>
+<li>โหมดตัวช่วยเล็ง</li>
+<li>ตัวช่วยรับลูก: ปิด, กด Shift ค้างไว้, อัตโนมัติ</li>
+<li>เสียงสัญญาณ เปิด / ปิด, ระดับเสียงสัญญาณ</li>
+<li>เรดาร์ศัตรู เสียงลูกบอล ขอบสนาม กระสุนและอันตราย (เปิด / ปิด)</li>
+<li>เสียงไอเท็ม: ปิด, เฉพาะไอเท็มพิเศษ, ทั้งหมด</li>
+<li>เสียงพลังชีวิต เสียงคลิกตัวช่วยเล็ง (เปิด / ปิด)</li>
+<li>อ่านคำอธิบายการอัปเกรดเมื่อโฟกัส</li>
+<li>คู่มือเสียง (Enter เพื่อเปิด)</li>
+<li>บันทึกดีบัก</li>
+</ul>
+<h2 id="tips-for-a-first-run">เคล็ดลับสำหรับรอบแรก</h2>
+<ul>
+<li><strong>รับลูกบอลของคุณให้ได้</strong> ลูกบอลที่รับได้จะยิงใหม่ได้ทันที
+ส่วนลูกที่พลาดจะใช้เวลา 2 ถึง 3 วินาทีกว่าจะ กลับมา ตามเสียงหึ่งกลิ้งๆ
+ไปจนกว่าจะได้ยินเสียงคลิก แล้วอยู่ตรงนั้น</li>
+<li><strong>เก็บอัญมณี XP ของคุณ</strong> ของพวกนี้ไม่ถูกเก็บเอง ตามเสียงแก้วกริ๊งไป
+ถ้าเสียงอู้อี้แปลว่ามัน อยู่ข้างหลังคุณ</li>
+<li><strong>เอาชีวิตรอดก่อน</strong> ช่วงต้นของรอบ
+การมีชีวิตรอดสำคัญกว่าดาเมจ</li>
+<li><strong>หลอมรวมและวิวัฒนาการ</strong>ลูกบอลของคุณเมื่อการเพิ่มเลเวลมีให้เลือก:
+ตัวเลือกจะบอกว่า “การหลอมรวม” หรือ “วิวัฒนาการ”</li>
+<li><strong>ลดความเร็วเมื่อเจอบอส</strong> ด้วยปุ่มลบ
+ม็อดจะเตือนคุณเมื่อบอสมาถึงขณะที่ความเร็วเกมสูง</li>
+<li>การตายเป็นเรื่องปกติ: ทองที่คุณนำกลับมาใช้สร้างบอลบิโลนใหม่
+และสิ่งปลูกสร้างจะทำให้ทุกรอบต่อจากนั้น แข็งแกร่งขึ้น</li>
+</ul>
+<h2 id="known-limits">ข้อจำกัดที่ทราบ</h2>
+<ul>
+<li>เครื่องยิงแบบไอเดิล (idle launcher) ในฐานยังต้องใช้เมาส์</li>
+<li>กระดานผู้นำและการโหวต Twitch อ่านได้แค่ขั้นพื้นฐาน ข้ามเครดิตไม่ได้</li>
+<li>การตั้งค่าม็อดอยู่ที่ F4 ไม่ได้อยู่ในหน้าจอตัวเลือกของเกมเอง</li>
+<li>ข้อความของม็อดเองในภาษาอื่นนอกจากภาษาอังกฤษและภาษาสเปน (รวมถึงภาษาไทย)
+ได้รับการแปลโดยยังไม่ได้รับการตรวจทาน จากเจ้าของภาษา ยินดีรับการแก้ไข ชื่อจากเกม
+(สิ่งปลูกสร้าง ลูกบอล ศัตรู การอัปเกรด) มาจากคำแปลของตัวเกมเองเสมอ</li>
+<li>ระดับเสียง ความถี่ของเสียง และความกว้างของการรับลูก
+ยังไม่ได้ปรับแต่งร่วมกับผู้เล่น</li>
+</ul>
+<h2 id="reporting-a-problem">การแจ้งปัญหา</h2>
+<p>ไฟล์ที่มีประโยชน์ ในโฟลเดอร์เกม:</p>
+<ul>
+<li><code>UserData\BallPitAccess\speech.log</code>: ทุกอย่างที่ม็อดพูด</li>
+<li><code>MelonLoader\Latest.log</code>: บันทึกของม็อด (ข้อผิดพลาด หน้าจอ
+การรับลูกได้และรับพลาด)</li>
+<li>ในการต่อสู้ <strong>Ctrl+Shift+D</strong> จะเขียน
+<code>UserData\BallPitAccess\threats.txt</code> (ศัตรู ลูกบอล กระสุน ไอเท็ม
+พร้อมตำแหน่ง) และรายการของหน้าจอที่เปิดอยู่ลงใน <code>Latest.log</code>:
+มีประโยชน์เมื่อเสียงชี้ ผิดทาง หรือเมนูอ่านผิดลำดับ</li>
+</ul>
+<p>บอกว่าคุณทำอะไร ได้ยินอะไร และคาดหวังอะไร</p>
+<h2 id="credits">เครดิต</h2>
+<ul>
+<li>BALL x PIT โดย Kenny Sun จัดจำหน่ายโดย Devolver Digital
+ม็อดนี้ไม่เป็นทางการ</li>
+<li>MelonLoader (LavaGang) ใช้โหลดม็อด Prism
+ส่งเสียงพูดไปยังโปรแกรมอ่านหน้าจอของคุณ</li>
+</ul>
+</body>
+</html>

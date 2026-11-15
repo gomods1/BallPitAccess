@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.14" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>BALL x PIT Access</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      color: light-dark(#1a1a1a, #fdfdfd);
+      background-color: #fdfdfd;
+      background-color: light-dark(#fdfdfd, #1a1a1a);
+      color-scheme: light dark;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a, a:visited {
+      color: inherit;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid;
+      border-color: #e6e6e6;
+      border-color: light-dark(#e6e6e6, #4c4c4c);
+      color: #606060;
+      color: light-dark(#606060, #b6b6b6);
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid currentColor;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+    }
+    th {
+      border-top: 1px solid currentColor;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    em, em em em, em em em em em {
+      font-style: italic;
+    }
+    em em, em em em em {
+      font-style: normal;
+    }
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    @media print {
+      html {
+        color-scheme: light only;
+      }
+      html, body, pre, code {
+        background-color: transparent;
+      }
+      body, a, a:visited, blockquote {
+        color: black;
+      }
+      pre, code {
+        padding: 0;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }  </style>
+</head>
+<body>
+<h1 id="ball-x-pit-access">BALL x PIT Access</h1>
+<p>这是一个让视障玩家无需视力也能游玩 <strong>BALL x PIT</strong>（Kenny
+Sun / Devolver Digital）的模组。它通过你的读屏软件朗读每一个
+菜单，让你只用键盘就能玩完整个游戏，并把战场变成声音：敌人、你的弹珠、敌人的子弹、经验宝石和特殊物品都有各自的声音，
+从它们相对你所在的那一侧传来。</p>
+<p>版本 0.5.0，适用于游戏版本 1.308，包括“升天球比伦”（Risen
+Ballbylon）DLC。模组支持<strong>游戏提供的所有语言</strong>，
+并跟随游戏的语言设置。</p>
+<!-- LANGS -->
+<p><a href="README.html">English</a> · <a
+href="README.es.html">Español</a> · <a
+href="README.fr.html">Français</a> · <a
+href="README.de.html">Deutsch</a> · <a
+href="README.it.html">Italiano</a> · <a
+href="README.pt-BR.html">Português (Brasil)</a> · <a
+href="README.pl.html">Polski</a> · <a href="README.tr.html">Türkçe</a> ·
+<a href="README.ru.html">Русский</a> · <a
+href="README.uk.html">Українська</a> · <a
+href="README.ja.html">日本語</a> · <a href="README.ko.html">한국어</a> ·
+<strong>简体中文</strong> · <a href="README.zh-TW.html">繁體中文</a> ·
+<a href="README.th.html">ไทย</a> <!-- /LANGS --></p>
+<blockquote>
+<p><strong>状态：早期测试版。</strong>
+菜单、基地和最初几轮游戏已经用这个模组实际玩过。战斗声音和最新加入的部分（连续的弹珠声音、
+接球辅助、声音过滤）还没有和玩家一起调校过。请告诉我们哪些好用、哪些不好用（见<a
+href="#reporting-a-problem">报告问题</a>）。</p>
+</blockquote>
+<h2 id="contents">目录</h2>
+<ul>
+<li><a href="#what-you-need">你需要什么</a></li>
+<li><a href="#installing">安装</a></li>
+<li><a href="#removing-the-mod">卸载模组</a></li>
+<li><a href="#first-steps">入门</a></li>
+<li><a href="#keys-everywhere">通用按键</a></li>
+<li><a href="#menus">菜单</a></li>
+<li><a href="#the-base-new-ballbylon">基地（新球比伦）</a></li>
+<li><a href="#battle">战斗</a></li>
+<li><a href="#battle-sounds">战斗声音</a></li>
+<li><a href="#sound-filters-number-keys">声音过滤（数字键）</a></li>
+<li><a href="#assists">辅助功能</a></li>
+<li><a href="#mod-settings-f4">模组设置（F4）</a></li>
+<li><a href="#tips-for-a-first-run">第一轮游戏的建议</a></li>
+<li><a href="#known-limits">已知限制</a></li>
+<li><a href="#reporting-a-problem">报告问题</a></li>
+<li><a href="#credits">致谢</a></li>
+</ul>
+<h2 id="what-you-need">你需要什么</h2>
+<ul>
+<li>Windows 版（Steam）BALL x PIT，版本 1.308。</li>
+<li>一款读屏软件：已测试的是 NVDA。Prism
+语音库支持的其他读屏软件（JAWS、讲述人、SAPI 语音）应该也能使用。</li>
+<li><strong>MelonLoader
+0.7.3</strong>（x64），模组加载器。免费，可从它的 GitHub
+官方发布页面下载。</li>
+<li>耳机或立体声音箱：在战斗中，左右声道非常重要。</li>
+</ul>
+<h2 id="installing">安装</h2>
+<p><strong>使用安装程序（最简单）：</strong>从<a
+href="https://github.com/gomods1/BallPitAccess/releases/latest">最新版本</a>下载
+<code>BallPitAccessibilityInstaller.exe</code> 并运行。 它会通过 Steam
+找到游戏，安装 MelonLoader 0.7.3、Prism
+语音库和模组，以后还能更新或卸载它们。然后启动游戏：
+第一次启动需要几分钟，MelonLoader
+准备游戏文件时没有声音；之后你的屏幕阅读器就会开始说话。</p>
+<p><strong>手动安装：</strong>从同一页面下载
+<code>BallPitAccess-vX.Y.Z.zip</code>，把全部内容解压到游戏文件夹（默认为
+<code>C:\Program Files (x86)\Steam\steamapps\common\BALLxPIT</code>，即包含
+<code>Balls.exe</code> 的文件夹），让 <code>version.dll</code> 位于
+<code>Balls.exe</code> 旁边。压缩包里已经包含
+MelonLoader，不需要另外安装。启动游戏；第一次启动和上面一样，较慢且没有声音。</p>
+<h2 id="removing-the-mod">卸载模组</h2>
+<p>安装程序的“卸载”按钮会删除模组和 MelonLoader，并保留你在
+<code>UserData</code> 中的设置。手动卸载：</p>
+<p>删除 <code>Mods\BallPitAccess.dll</code> 和
+<code>prism.dll</code>。如果也要卸载 MelonLoader，请从游戏文件夹中删除
+<code>version.dll</code>，以及
+<code>MelonLoader</code>、<code>Mods</code>、<code>Plugins</code> 和
+<code>UserData</code> 这几个文件夹。模组不会修改任何游戏文件。</p>
+<h2 id="first-steps">入门</h2>
+<ul>
+<li>随时按 <strong>F1</strong>
+打开帮助：包含全部内容，从你当前所在位置对应的部分开始。
+上下方向键逐行阅读，Tab 跳到下一部分，Esc 关闭。</li>
+<li>按 <strong>F4</strong>
+打开模组设置，在里面打开<strong>声音指南</strong>：它会播放每一个战斗声音并说明含义。在第一轮游戏前听一遍会很有帮助。</li>
+<li>游戏本身在使用键盘时依赖鼠标操作；有了这个模组，除了基地里的挂机发射器之外，你完全不需要鼠标
+（见<a href="#known-limits">已知限制</a>）。</li>
+</ul>
+<h2 id="keys-everywhere">通用按键</h2>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td>帮助（全部内容；Tab / Shift+Tab 在各部分之间切换）</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>朗读整个界面</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>重复上一句</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>模组设置和声音指南</td>
+</tr>
+<tr>
+<td>F5</td>
+<td>切换瞄准辅助模式</td>
+</tr>
+<tr>
+<td>F6 / F7</td>
+<td>把瞄准向左 / 向右转 10 度</td>
+</tr>
+<tr>
+<td>F8</td>
+<td>报告你瞄准的方向</td>
+</tr>
+<tr>
+<td>Ctrl+上方向键</td>
+<td>朗读焦点项目的详情（Ctrl+下方向键返回）</td>
+</tr>
+<tr>
+<td>Ctrl+左方向键 / Ctrl+右方向键</td>
+<td>在详情和最近事件之间切换</td>
+</tr>
+</tbody>
+</table>
+<p>模组列表（帮助、设置、声音指南）打开时，游戏不会收到你的按键。</p>
+<h2 id="menus">菜单</h2>
+<p>每个界面都是<strong>一个按合理顺序排列的列表</strong>：先是选项，然后是按钮，最后是关闭。这个顺序从不取决于各项内容在屏幕上的位置。</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>上方向键 / 下方向键</td>
+<td>上一项 / 下一项</td>
+</tr>
+<tr>
+<td>回车</td>
+<td>选择</td>
+</tr>
+<tr>
+<td>Tab / Shift+Tab</td>
+<td>界面的下一组 / 上一组</td>
+</tr>
+<tr>
+<td>Home / End</td>
+<td>本组的第一项 / 最后一项</td>
+</tr>
+<tr>
+<td>左方向键 / 右方向键</td>
+<td>调整列表或滑块类的设置；在关卡上调整难度</td>
+</tr>
+<tr>
+<td>Ctrl+Tab / Ctrl+Shift+Tab</td>
+<td>在有标签页的界面中切换到下一个 / 上一个标签页</td>
+</tr>
+<tr>
+<td>退格或 Esc</td>
+<td>返回</td>
+</tr>
+<tr>
+<td>Page Up / Page Down</td>
+<td>在图鉴中切换合集；在关卡列表中切换新游戏加的层级</td>
+</tr>
+<tr>
+<td>Shift+回车</td>
+<td>在关卡上：打开它的排行榜</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>在角色上按回车，会跳到它的选择按钮。</li>
+<li>新手教程指向某个东西时，焦点会跳到那里：按回车。</li>
+<li>升级选项会连同数字一起朗读（例如“造成 10 到 15 点伤害”）。</li>
+</ul>
+<h2 id="the-base-new-ballbylon">基地（新球比伦）</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>上方向键 / 下方向键，回车</td>
+<td>侧边栏按钮：游玩、采集、建造、扩张、重新调整、选项</td>
+</tr>
+<tr>
+<td>Tab / Shift+Tab</td>
+<td>浏览升降梯和你的建筑</td>
+</tr>
+<tr>
+<td>在建筑上按回车</td>
+<td>如果可以采集，就开始采集并瞄准这个建筑；否则打开它的升级</td>
+</tr>
+<tr>
+<td>Shift+回车</td>
+<td>打开建筑的升级</td>
+</tr>
+<tr>
+<td>在升降梯上按回车</td>
+<td>打开升降梯升级（向下往深坑，或向上往升天球比伦）</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>拆除建筑</td>
+</tr>
+<tr>
+<td>H</td>
+<td>资源和天数</td>
+</tr>
+<tr>
+<td>J</td>
+<td>采集和工人</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>建造</strong>：方向键把建筑移动一格，并告诉你能否放下；回车建造，R
+旋转，Home 跳到空位，退格取消。</li>
+<li><strong>采集</strong>：开始时会瞄准一个建筑。回车派出工人，Tab
+瞄准另一个建筑，左右方向键转动瞄准，按住空格加速，Esc 退出。</li>
+<li><strong>扩张</strong>：Tab 选择一块建造区域，回车购买。</li>
+<li><strong>重新调整</strong>：Tab
+选择一个建筑，回车拿起，方向键移动，回车放下。</li>
+</ul>
+<h2 id="battle">战斗</h2>
+<h3 id="游戏自带的按键">游戏自带的按键</h3>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W A S D</td>
+<td>移动</td>
+</tr>
+<tr>
+<td>空格</td>
+<td>射击（按住）</td>
+</tr>
+<tr>
+<td>F</td>
+<td>开启 / 关闭自动开火</td>
+</tr>
+<tr>
+<td>E</td>
+<td>有升级可用时打开升级</td>
+</tr>
+<tr>
+<td>= / -</td>
+<td>加快 / 减慢游戏速度</td>
+</tr>
+<tr>
+<td>Esc</td>
+<td>暂停</td>
+</tr>
+</tbody>
+</table>
+<h3 id="模组按键">模组按键</h3>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>左方向键 / 右方向键</td>
+<td>手动把瞄准转动 5 度</td>
+</tr>
+<tr>
+<td>上方向键</td>
+<td>把瞄准交还给辅助</td>
+</tr>
+<tr>
+<td>下方向键</td>
+<td>报告你瞄准的方向</td>
+</tr>
+<tr>
+<td>Shift（按住）</td>
+<td>接球辅助（见<a href="#assists">辅助功能</a>）</td>
+</tr>
+<tr>
+<td>1 到 7，0</td>
+<td>声音过滤（见<a href="#sound-filters-number-keys">声音过滤</a>）</td>
+</tr>
+<tr>
+<td>H</td>
+<td>生命值和状态效果</td>
+</tr>
+<tr>
+<td>J</td>
+<td>敌人和 Boss</td>
+</tr>
+<tr>
+<td>K</td>
+<td>你的位置</td>
+</tr>
+<tr>
+<td>G</td>
+<td>游戏速度</td>
+</tr>
+<tr>
+<td>L</td>
+<td>等级、时间、波次、获得的齿轮</td>
+</tr>
+<tr>
+<td>B</td>
+<td>你的弹珠和被动物品</td>
+</tr>
+<tr>
+<td>P</td>
+<td>场上的拾取物</td>
+</tr>
+<tr>
+<td>N</td>
+<td>危险（子弹、激光、炸弹、地面）</td>
+</tr>
+</tbody>
+</table>
+<p>战斗中会朗读的内容：开始时的关卡、Boss 以及它们生命值降到百分之
+75、50 和 25 时的提示、受到的伤害和生命值、
+状态效果、掉落的特殊物品、“有升级可用，按 E”，以及本轮结束。</p>
+<h2 id="battle-sounds">战斗声音</h2>
+<p>以下四条规则适用于所有声音：</p>
+<ul>
+<li><strong>方向</strong>：声音来自它所指的东西所在的那一侧。</li>
+<li><strong>音调</strong>：越高表示越近。</li>
+<li><strong>发闷</strong>表示在你身后。</li>
+<li>要你<strong>移动</strong>的声音，来自你应该去的那一侧。</li>
+</ul>
+<p>一直在移动的东西（你的弹珠、敌人的子弹）是跟随它们的<strong>连续声音</strong>；按步骤变化的东西（前进的敌人、掉在地上的物品）
+是短促的声音。</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>声音</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>手鼓</td>
+<td>一个敌人。越高越快 = 越近。最近的三个敌人轮流发声。</td>
+</tr>
+<tr>
+<td>低沉的大鼓</td>
+<td>一个 Boss。Boss 到来时会响起鼓、锣和号角。</td>
+</tr>
+<tr>
+<td>咆哮</td>
+<td>有敌人马上就要到你面前。</td>
+</tr>
+<tr>
+<td>上升的呜呜声</td>
+<td>一个敌人正在蓄力攻击，声音在它那一侧。</td>
+</tr>
+<tr>
+<td><strong>滚动的嗡嗡声</strong>（连续）</td>
+<td>你能接住的弹珠。朝它那一侧走；<strong>离弹珠落点越近，音调越高</strong>；弹珠越接近你，跳动越快；弹珠还可能被敌人弹开时，声音较轻。</td>
+</tr>
+<tr>
+<td>嗡嗡声升高一级时的咔嗒声</td>
+<td>你在弹珠正下方：待在那里。</td>
+</tr>
+<tr>
+<td>手套闷响</td>
+<td>接住了弹珠。</td>
+</tr>
+<tr>
+<td>沉闷下坠的闷响</td>
+<td>一颗弹珠从你身边漏过去了。</td>
+</tr>
+<tr>
+<td>上膛声</td>
+<td>你的弹珠都回来了：可以射击（开启自动开火时不发声）。</td>
+</tr>
+<tr>
+<td>玻璃叮声</td>
+<td>你可以走过去拾取的最近的经验宝石、金币或资源。它们不会自动收集。</td>
+</tr>
+<tr>
+<td>卡林巴琴闪亮音</td>
+<td>一个特殊物品：融合核心、蓝图、蛋、齿轮、生命值、磁铁、炸弹、宝石袋。</td>
+</tr>
+<tr>
+<td><strong>轻柔的呼啸声</strong>（连续）</td>
+<td>一发在你附近飞行的敌人子弹，越近音调越高。会打中你时声音更响。</td>
+</tr>
+<tr>
+<td>嗖的一声加爆裂声</td>
+<td>一发子弹会打中你：往声音响起的那一侧躲。</td>
+</tr>
+<tr>
+<td>电流嗡嗡声 / 两声电击滋滋声</td>
+<td>激光正在瞄准 / 你在它的射线上：往声音响起的那一侧躲。</td>
+</tr>
+<tr>
+<td>下落的哨声 / 引信嘶嘶声</td>
+<td>附近有炸弹正在落下 / 它会落在你身上：往声音响起的那一侧躲。</td>
+</tr>
+<tr>
+<td>噗叽声</td>
+<td>你踩到了地面危险（会朗读它的名称）。</td>
+</tr>
+<tr>
+<td>一拳 / 咕嘟声</td>
+<td>受到伤害 / 得到治疗。</td>
+</tr>
+<tr>
+<td>心跳</td>
+<td>生命值低；非常低时更快。</td>
+</tr>
+<tr>
+<td>晕乎乎的摇晃声</td>
+<td>你中了一个状态效果。</td>
+</tr>
+<tr>
+<td>两个上升的铃声</td>
+<td>有升级可用（按 E）。</td>
+</tr>
+<tr>
+<td>木头敲击声</td>
+<td>场地的侧边（也表示菜单列表的末尾）。</td>
+</tr>
+<tr>
+<td>金属敲击声</td>
+<td>你活动区域的前方或后方边界。</td>
+</tr>
+<tr>
+<td>开关咔嗒声</td>
+<td>瞄准辅助换了目标，声音在新目标那一侧。</td>
+</tr>
+</tbody>
+</table>
+<p>以上每一个声音都可以在 <strong>F4 →
+声音指南</strong>中试听，用左右方向键分别在两侧收听。</p>
+<h2 id="sound-filters-number-keys">声音过滤（数字键）</h2>
+<p>在战斗中，数字键可以静音或恢复一组声音，让你集中注意力。游戏本身不使用这些按键。</p>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>声音组</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>敌人：鼓声、咆哮、蓄力、Boss 到来</td>
+</tr>
+<tr>
+<td>2</td>
+<td>弹珠：滚动的嗡嗡声、咔嗒声、接住、漏接、上膛声</td>
+</tr>
+<tr>
+<td>3</td>
+<td>奖励：经验宝石、金币、资源、特殊物品</td>
+</tr>
+<tr>
+<td>4</td>
+<td>子弹和危险</td>
+</tr>
+<tr>
+<td>5</td>
+<td>场地边缘</td>
+</tr>
+<tr>
+<td>6</td>
+<td>你的生命值：受伤、治疗、心跳、状态</td>
+</tr>
+<tr>
+<td>7</td>
+<td>瞄准辅助提示音</td>
+</tr>
+<tr>
+<td>0</td>
+<td>全部恢复</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>每个数字键只切换自己那一组，与其他组互不影响。</li>
+<li><strong>Ctrl+数字键</strong>只保留那一组。例如：只听敌人和奖励 =
+先按 Ctrl+1，再按 3。</li>
+<li>你的选择会保留到下次游戏。战斗开始时如果有声音被静音，模组会告诉你哪些被静音了。</li>
+<li>静音只影响声音：H、J、P、N 键仍然会回答，接球辅助也仍然会躲避。</li>
+</ul>
+<h2 id="assists">辅助功能</h2>
+<p>辅助功能做的每一件事，你也都可以靠耳朵自己完成；辅助功能只是在你需要时提供帮助。</p>
+<ul>
+<li><strong>瞄准辅助</strong>（F5
+切换模式）：替你瞄准最近的敌人（默认）、最强的敌人、你正前方的敌人、一个固定角度，或者关闭（用鼠标）。
+方向键可以微调。</li>
+<li><strong>接球辅助</strong>（按住
+Shift）：英雄会走到下一颗落下的弹珠下方；没有弹珠飞来时，会走到最近的经验宝石或物品；
+如果有子弹马上要打中你，会先躲开。W / S 仍然可以让你向前和向后移动，A /
+D 始终会接管控制。在 F4 中可以设为关闭、 “按住
+Shift”（默认）或自动。</li>
+</ul>
+<h2 id="mod-settings-f4">模组设置（F4）</h2>
+<p>上下方向键移动，左右方向键或回车修改，Esc 关闭。设置会自动保存。</p>
+<ul>
+<li>瞄准辅助模式</li>
+<li>接球辅助：关闭、按住 Shift、自动</li>
+<li>音效提示开启 / 关闭，提示音音量</li>
+<li>敌人雷达、弹珠声音、场地边缘、子弹和危险（开启 / 关闭）</li>
+<li>拾取物音效：关闭、仅特殊物品、全部</li>
+<li>生命值音效、瞄准辅助提示音（开启 / 关闭）</li>
+<li>聚焦时朗读升级描述</li>
+<li>声音指南（回车打开）</li>
+<li>调试日志</li>
+</ul>
+<h2 id="tips-for-a-first-run">第一轮游戏的建议</h2>
+<ul>
+<li><strong>接住你的弹珠。</strong>
+接住的弹珠可以立刻再次射出；漏接的弹珠要 2 到 3
+秒才会回来。跟着滚动的嗡嗡声走，直到听见咔嗒声， 然后站住不动。</li>
+<li><strong>拾取你的经验宝石。</strong>
+它们不会自动收集。跟着玻璃叮声走；声音发闷表示在你身后。</li>
+<li><strong>先活下来。</strong>
+在一轮游戏的前期，活着比输出伤害更重要。</li>
+<li>升级提供选项时，记得<strong>融合和进化</strong>你的弹珠：选项会说“融合”或“进化”。</li>
+<li><strong>遇到 Boss 时减速</strong>，用减号键。如果 Boss
+到来时游戏速度较快，模组会提醒你。</li>
+<li>死亡很正常：你带回来的金币用来建设新球比伦，而建筑会让之后的每一轮都更强。</li>
+</ul>
+<h2 id="known-limits">已知限制</h2>
+<ul>
+<li>基地里的挂机发射器仍然需要鼠标。</li>
+<li>排行榜和 Twitch 投票只能做基本的朗读。制作人员名单无法跳过。</li>
+<li>模组设置在 F4 中，不在游戏自己的选项界面里。</li>
+<li>除英语和西班牙语外，模组自身在其他语言中的文本是翻译的，尚未经过母语者审校。欢迎指正。游戏中的名称（建筑、弹珠、
+敌人、升级）始终来自游戏自己的翻译。</li>
+<li>声音的音量、频率以及接球范围还没有和玩家一起调校过。</li>
+</ul>
+<h2 id="reporting-a-problem">报告问题</h2>
+<p>游戏文件夹中有用的文件：</p>
+<ul>
+<li><code>UserData\BallPitAccess\speech.log</code>：模组朗读过的所有内容。</li>
+<li><code>MelonLoader\Latest.log</code>：模组的日志（错误、界面、接住和漏接）。</li>
+<li>在战斗中，<strong>Ctrl+Shift+D</strong> 会把
+<code>UserData\BallPitAccess\threats.txt</code>（敌人、弹珠、子弹、拾取物及其位置）写入文件，
+并把当前界面的列表写入
+<code>Latest.log</code>：当某个声音指错方向，或者菜单朗读顺序不对时，这很有用。</li>
+</ul>
+<p>请说明你做了什么、听到了什么，以及你原本期望听到什么。</p>
+<h2 id="credits">致谢</h2>
+<ul>
+<li>BALL x PIT 由 Kenny Sun 开发，Devolver Digital
+发行。本模组为非官方模组。</li>
+<li>MelonLoader（LavaGang）负责加载模组。Prism
+负责把语音发送到你的读屏软件。</li>
+</ul>
+</body>
+</html>

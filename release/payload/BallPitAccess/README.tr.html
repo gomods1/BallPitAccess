@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="tr" xml:lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.14" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>BALL x PIT Access</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      color: light-dark(#1a1a1a, #fdfdfd);
+      background-color: #fdfdfd;
+      background-color: light-dark(#fdfdfd, #1a1a1a);
+      color-scheme: light dark;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a, a:visited {
+      color: inherit;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid;
+      border-color: #e6e6e6;
+      border-color: light-dark(#e6e6e6, #4c4c4c);
+      color: #606060;
+      color: light-dark(#606060, #b6b6b6);
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid currentColor;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+    }
+    th {
+      border-top: 1px solid currentColor;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    em, em em em, em em em em em {
+      font-style: italic;
+    }
+    em em, em em em em {
+      font-style: normal;
+    }
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    @media print {
+      html {
+        color-scheme: light only;
+      }
+      html, body, pre, code {
+        background-color: transparent;
+      }
+      body, a, a:visited, blockquote {
+        color: black;
+      }
+      pre, code {
+        padding: 0;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }  </style>
+</head>
+<body>
+<h1 id="ball-x-pit-access">BALL x PIT Access</h1>
+<p><strong>BALL x PIT</strong> oyununu (Kenny Sun / Devolver Digital)
+görmeden oynanabilir hâle getiren bir mod. Tüm menüleri ekran okuyucun
+aracılığıyla seslendirir, oyunun tamamını klavyeyle kullanmanı sağlar ve
+savaş alanını sese dönüştürür: düşmanların, toplarının, düşman
+atışlarının, TP kristallerinin ve özel eşyaların her birinin kendi sesi
+vardır ve bu ses, senin hangi tarafındaysa oradan gelir.</p>
+<p>Sürüm 0.5.0, oyunun 1.308 sürümü için, Yükselen Babil’in Sekme
+Bahçeleri (Risen Ballbylon) DLC’si dahil. Mod <strong>oyunun sunduğu tüm
+dilleri</strong> konuşur ve oyunun dil ayarını izler.</p>
+<!-- LANGS -->
+<p><a href="README.html">English</a> · <a
+href="README.es.html">Español</a> · <a
+href="README.fr.html">Français</a> · <a
+href="README.de.html">Deutsch</a> · <a
+href="README.it.html">Italiano</a> · <a
+href="README.pt-BR.html">Português (Brasil)</a> · <a
+href="README.pl.html">Polski</a> · <strong>Türkçe</strong> · <a
+href="README.ru.html">Русский</a> · <a
+href="README.uk.html">Українська</a> · <a
+href="README.ja.html">日本語</a> · <a href="README.ko.html">한국어</a> ·
+<a href="README.zh-CN.html">简体中文</a> · <a
+href="README.zh-TW.html">繁體中文</a> · <a href="README.th.html">ไทย</a>
+<!-- /LANGS --></p>
+<blockquote>
+<p><strong>Durum: erken test sürümü.</strong> Menüler, üs ve ilk turlar
+modla oynandı. Savaş sesleri ve en yeni bölümler (sürekli top sesi,
+yakalama yardımı, ses filtreleri) henüz oyuncularla birlikte
+ayarlanmadı. Lütfen neyin çalışıp neyin çalışmadığını bildir (bkz. <a
+href="#reporting-a-problem">Sorun bildirme</a>).</p>
+</blockquote>
+<h2 id="contents">İçindekiler</h2>
+<ul>
+<li><a href="#what-you-need">Neye ihtiyacın var</a></li>
+<li><a href="#installing">Kurulum</a></li>
+<li><a href="#removing-the-mod">Modu kaldırma</a></li>
+<li><a href="#first-steps">İlk adımlar</a></li>
+<li><a href="#keys-everywhere">Her yerde geçerli tuşlar</a></li>
+<li><a href="#menus">Menüler</a></li>
+<li><a href="#the-base-new-ballbylon">Üs (Yeni Babil’in Sekme
+Bahçeleri)</a></li>
+<li><a href="#battle">Savaş</a></li>
+<li><a href="#battle-sounds">Savaş sesleri</a></li>
+<li><a href="#sound-filters-number-keys">Ses filtreleri (rakam
+tuşları)</a></li>
+<li><a href="#assists">Yardımlar</a></li>
+<li><a href="#mod-settings-f4">Mod ayarları (F4)</a></li>
+<li><a href="#tips-for-a-first-run">İlk tur için ipuçları</a></li>
+<li><a href="#known-limits">Bilinen sınırlamalar</a></li>
+<li><a href="#reporting-a-problem">Sorun bildirme</a></li>
+<li><a href="#credits">Emeği geçenler</a></li>
+</ul>
+<h2 id="what-you-need">Neye ihtiyacın var</h2>
+<ul>
+<li>Windows’ta (Steam) BALL x PIT, sürüm 1.308.</li>
+<li>Bir ekran okuyucu: test edilen NVDA’dır. Prism konuşma kitaplığının
+desteklediği diğerleri (JAWS, Ekran Okuyucu (Narrator), SAPI sesleri) de
+çalışmalıdır.</li>
+<li>Mod yükleyicisi <strong>MelonLoader 0.7.3</strong> (x64).
+Ücretsizdir, resmî GitHub sürümler sayfasından indirilir.</li>
+<li>Kulaklık ya da stereo hoparlör: savaşta sol ve sağ çok
+önemlidir.</li>
+</ul>
+<h2 id="installing">Kurulum</h2>
+<p><strong>Yükleyiciyle (en kolayı):</strong>
+<code>BallPitAccessibilityInstaller.exe</code> dosyasını <a
+href="https://github.com/gomods1/BallPitAccess/releases/latest">son
+sürümden</a> indir ve çalıştır. Oyunu Steam üzerinden bulur, MelonLoader
+0.7.3’ü, Prism konuşma kitaplığını ve modu kurar; daha sonra bunları
+günceller ya da kaldırır. Ardından oyunu başlat: ilk açılış birkaç
+dakika sürer ve MelonLoader oyunun dosyalarını hazırlarken sessizdir;
+sonra ekran okuyucun konuşmaya başlar.</p>
+<p><strong>Elle:</strong> aynı sayfadan
+<code>BallPitAccess-vX.Y.Z.zip</code> dosyasını indir ve her şeyi oyun
+klasörüne çıkar (varsayılan olarak
+<code>C:\Program Files (x86)\Steam\steamapps\common\BALLxPIT</code>,
+<code>Balls.exe</code> dosyasının bulunduğu klasör); böylece
+<code>version.dll</code>, <code>Balls.exe</code> dosyasının yanına
+gelir. Zip zaten MelonLoader’ı içerir: ayrıca kurman gerekmez. Oyunu
+başlat; ilk açılış yukarıdaki gibi yavaş ve sessizdir.</p>
+<h2 id="removing-the-mod">Modu kaldırma</h2>
+<p>Yükleyicinin Kaldır düğmesi modu ve MelonLoader’ı kaldırır,
+ayarlarını <code>UserData</code> içinde tutar. Elle:</p>
+<p><code>Mods\BallPitAccess.dll</code> ve <code>prism.dll</code>
+dosyalarını sil. MelonLoader’ı da kaldırmak için oyun klasöründen
+<code>version.dll</code> dosyasını ve <code>MelonLoader</code>,
+<code>Mods</code>, <code>Plugins</code> ve <code>UserData</code>
+klasörlerini sil. Mod, oyunun hiçbir dosyasını değiştirmez.</p>
+<h2 id="first-steps">İlk adımlar</h2>
+<ul>
+<li>Yardım için istediğin zaman <strong>F1</strong> tuşuna bas: yardımın
+tüm bölümleri, bulunduğun yerle ilgili bölümden başlayarak açılır.
+Yukarı ve aşağı oklar satır satır okur, Tab sonraki bölüme atlar, Esc
+kapatır.</li>
+<li>Modun ayarları için <strong>F4</strong> tuşuna bas ve içinden
+<strong>ses rehberini</strong> aç: her savaş sesini çalar ve ne anlama
+geldiğini söyler. İlk turundan önce bir kez dinlemek çok işe yarar.</li>
+<li>Klavyeyle oynarken oyunun kendisi fareyle kullanılır; modla birlikte
+üsteki boşta fırlatıcı dışında fareye hiç ihtiyacın olmaz (bkz. <a
+href="#known-limits">Bilinen sınırlamalar</a>).</li>
+</ul>
+<h2 id="keys-everywhere">Her yerde geçerli tuşlar</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tuş</th>
+<th>İşlev</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td>Yardım (tüm bölümler; bölümler arasında Tab / Shift+Tab)</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>Tüm ekranı oku</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>Son söyleneni tekrarla</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>Mod ayarları ve ses rehberi</td>
+</tr>
+<tr>
+<td>F5</td>
+<td>Nişan yardımının modunu değiştir</td>
+</tr>
+<tr>
+<td>F6 / F7</td>
+<td>Nişanı 10 derece sola / sağa çevir</td>
+</tr>
+<tr>
+<td>F8</td>
+<td>Nereye nişan aldığını söyle</td>
+</tr>
+<tr>
+<td>Ctrl+Yukarı ok</td>
+<td>Odaklı ögenin ayrıntılarını oku (Ctrl+Aşağı ok geri döner)</td>
+</tr>
+<tr>
+<td>Ctrl+Sol ok / Ctrl+Sağ ok</td>
+<td>Ayrıntılar ile son olaylar arasında geçiş yap</td>
+</tr>
+</tbody>
+</table>
+<p>Bir mod listesi (yardım, ayarlar, ses rehberi) açıkken oyun tuşlarını
+almaz.</p>
+<h2 id="menus">Menüler</h2>
+<p>Her ekran <strong>mantıklı bir sırada tek bir listedir</strong>: önce
+seçenekleri, sonra düğmeleri, en sonda Kapat. Sıra hiçbir zaman ögelerin
+ekranda nereye çizildiğine bağlı değildir.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tuş</th>
+<th>İşlev</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Yukarı ok / Aşağı ok</td>
+<td>Önceki / sonraki öge</td>
+</tr>
+<tr>
+<td>Enter</td>
+<td>Seç</td>
+</tr>
+<tr>
+<td>Tab / Shift+Tab</td>
+<td>Ekrandaki sonraki / önceki grup</td>
+</tr>
+<tr>
+<td>Home / End</td>
+<td>Grubun ilk / son ögesi</td>
+</tr>
+<tr>
+<td>Sol ok / Sağ ok</td>
+<td>Liste veya kaydırıcı ayarını değiştir; bir seviyede zorluğunu
+değiştir</td>
+</tr>
+<tr>
+<td>Ctrl+Tab / Ctrl+Shift+Tab</td>
+<td>Sekmeli ekranlarda sonraki / önceki sekme</td>
+</tr>
+<tr>
+<td>Backspace veya Esc</td>
+<td>Geri</td>
+</tr>
+<tr>
+<td>Page Up / Page Down</td>
+<td>Ansiklopedide set; seviye listesinde yeni oyun artı (Yeni Oyun+)
+kademesi</td>
+</tr>
+<tr>
+<td>Shift+Enter</td>
+<td>Bir seviyede: liderlik tablosunu aç</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Bir karakterin üzerinde Enter seni onun Seç düğmesine götürür.</li>
+<li>Rehberli öğretici bir şeyi gösterdiğinde odak oraya atlar: Enter
+tuşuna bas.</li>
+<li>Geliştirme seçenekleri sayılarıyla birlikte okunur (“10 ile 15 arası
+hasar verir”).</li>
+</ul>
+<h2 id="the-base-new-ballbylon">Üs (Yeni Babil’in Sekme Bahçeleri)</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tuş</th>
+<th>İşlev</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Yukarı ok / Aşağı ok, Enter</td>
+<td>Kenar çubuğu düğmeleri: Oyna, Hasat, İnşa et, Genişlet, Yeniden
+düzenle, Seçenekler</td>
+</tr>
+<tr>
+<td>Tab / Shift+Tab</td>
+<td>Asansör ve binaların arasında gezin</td>
+</tr>
+<tr>
+<td>Bir binada Enter</td>
+<td>Hazırsa ona nişan alan bir hasat başlat; değilse geliştirmesini
+aç</td>
+</tr>
+<tr>
+<td>Shift+Enter</td>
+<td>Bir binanın geliştirmesini aç</td>
+</tr>
+<tr>
+<td>Asansörde Enter</td>
+<td>Asansör geliştirmesini aç (çukurun dibine doğru ya da Yükselen
+Babil’in Sekme Bahçeleri’ne doğru)</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>Bir binayı parçala</td>
+</tr>
+<tr>
+<td>H</td>
+<td>Kaynaklar ve gün</td>
+</tr>
+<tr>
+<td>J</td>
+<td>Hasat ve işçiler</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>İnşa</strong>: oklar binayı bir kare taşır ve sığıp
+sığmadığını söyler, Enter inşa eder, R döndürür, Home boş bir yere
+atlar, Backspace iptal eder.</li>
+<li><strong>Hasat</strong>: bir binaya nişan alarak başlar. Enter
+işçileri fırlatır, Tab başka bir binaya nişan alır, Sol ok / Sağ ok
+nişanı çevirir, hızlandırmak için Boşluk tuşunu basılı tut, Esc
+çıkar.</li>
+<li><strong>Genişletme</strong>: Tab bir arsa seçer, Enter satın
+alır.</li>
+<li><strong>Yeniden düzenleme</strong>: Tab bir bina seçer, Enter onu
+kaldırır, oklar taşır, Enter bırakır.</li>
+</ul>
+<h2 id="battle">Savaş</h2>
+<h3 id="the-games-own-keys">Oyunun kendi tuşları</h3>
+<table>
+<thead>
+<tr>
+<th>Tuş</th>
+<th>İşlev</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W A S D</td>
+<td>Hareket et</td>
+</tr>
+<tr>
+<td>Boşluk</td>
+<td>Ateş et (basılı tut)</td>
+</tr>
+<tr>
+<td>F</td>
+<td>Oto saldırı açık / kapalı</td>
+</tr>
+<tr>
+<td>E</td>
+<td>Hazır olduğunda seviye atlamayı aç</td>
+</tr>
+<tr>
+<td>= / - (eşittir / eksi)</td>
+<td>Oyun hızını artır / azalt</td>
+</tr>
+<tr>
+<td>Esc</td>
+<td>Duraklat</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mod-keys">Mod tuşları</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tuş</th>
+<th>İşlev</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sol ok / Sağ ok</td>
+<td>Nişanı elle 5 derece çevir</td>
+</tr>
+<tr>
+<td>Yukarı ok</td>
+<td>Nişanı yardıma geri ver</td>
+</tr>
+<tr>
+<td>Aşağı ok</td>
+<td>Nereye nişan aldığını söyle</td>
+</tr>
+<tr>
+<td>Shift (basılı tut)</td>
+<td>Yakalama yardımı (bkz. <a href="#assists">Yardımlar</a>)</td>
+</tr>
+<tr>
+<td>1 ile 7 arası, 0</td>
+<td>Ses filtreleri (bkz. <a href="#sound-filters-number-keys">Ses
+filtreleri</a>)</td>
+</tr>
+<tr>
+<td>H</td>
+<td>Can ve durum etkileri</td>
+</tr>
+<tr>
+<td>J</td>
+<td>Düşmanlar ve patron</td>
+</tr>
+<tr>
+<td>K</td>
+<td>Konumun</td>
+</tr>
+<tr>
+<td>G</td>
+<td>Oyun hızı</td>
+</tr>
+<tr>
+<td>L</td>
+<td>Seviye, süre, dalga, kazanılan dişliler</td>
+</tr>
+<tr>
+<td>B</td>
+<td>Topların ve pasiflerin</td>
+</tr>
+<tr>
+<td>P</td>
+<td>Sahadaki eşyalar</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Tehlikeler (atışlar, lazerler, bombalar, zemin)</td>
+</tr>
+</tbody>
+</table>
+<p>Savaş sırasında seslendirilenler: başlangıçta seviye, patronlar ve
+yüzde 75, 50 ve 25’teki canları, hasar ve can, durum etkileri,
+düştüklerinde özel eşyalar, “seviye atlama hazır, E tuşuna bas” ve turun
+sonu.</p>
+<h2 id="battle-sounds">Savaş sesleri</h2>
+<p>Her ses için dört kural geçerlidir:</p>
+<ul>
+<li><strong>Taraf</strong>: bir ses, ilgili olduğu şey hangi taraftaysa
+oradan gelir.</li>
+<li><strong>Perde</strong>: daha tiz ses daha yakın demektir.</li>
+<li><strong>Boğuk</strong> ses arkanda demektir.</li>
+<li><strong>Hareket etmeni</strong> isteyen bir ses, gitmen gereken
+taraftan gelir.</li>
+</ul>
+<p>Sürekli hareket eden şeyler (topun, düşman atışları) onları izleyen
+<strong>sürekli seslerdir</strong>; adım adım değişen şeyler (ilerleyen
+düşmanlar, yerde duran eşyalar) kısa seslerdir.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Ses</th>
+<th>Anlamı</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>El davulu</td>
+<td>Bir düşman. Daha tiz ve daha hızlı = daha yakın. En yakın üç düşman
+sırayla çalar.</td>
+</tr>
+<tr>
+<td>Büyük, derin davul</td>
+<td>Bir patron. Patron geldiğinde davullar, gong ve boru.</td>
+</tr>
+<tr>
+<td>Hırlama</td>
+<td>Bir düşman sana ulaşmak üzere.</td>
+</tr>
+<tr>
+<td>Yükselen inilti</td>
+<td>Bir düşman, bulunduğu tarafta saldırıya hazırlanıyor.</td>
+</tr>
+<tr>
+<td><strong>Yuvarlanan uğultu</strong> (sürekli)</td>
+<td>Yakalayabileceğin top. Onun tarafına doğru yürü; <strong>topun
+düşeceği yere yaklaştıkça tizleşir</strong>, top sana yaklaştıkça daha
+hızlı titreşir ve top hâlâ bir düşmandan sekebilecekken daha
+yumuşaktır.</td>
+</tr>
+<tr>
+<td>Uğultu bir basamak yükselirken tık</td>
+<td>Topun altındasın: orada kal.</td>
+</tr>
+<tr>
+<td>Eldivene tok vuruş</td>
+<td>Top yakalandı.</td>
+</tr>
+<tr>
+<td>Batan boğuk güm</td>
+<td>Bir top yanından geçip gitti.</td>
+</tr>
+<tr>
+<td>Silah doldurma sesi</td>
+<td>Topların döndü: ateş edebilirsin (oto saldırı açıkken sessiz).</td>
+</tr>
+<tr>
+<td>Cam şıngırtısı</td>
+<td>Yürüyerek ulaşabileceğin en yakın TP kristali, altın ya da kaynak.
+Kendiliğinden toplanmazlar.</td>
+</tr>
+<tr>
+<td>Kalimba pırıltısı</td>
+<td>Özel bir eşya: füzyon reaktörü, taslak, yumurta, dişli, can,
+mıknatıs, bomba, mücevher kesesi.</td>
+</tr>
+<tr>
+<td><strong>Hafif hava ıslığı</strong> (sürekli)</td>
+<td>Yakınında uçan bir düşman atışı, yaklaştıkça tizleşir. Sana isabet
+edecekse daha gür çıkar.</td>
+</tr>
+<tr>
+<td>Vınlama ve şaklama</td>
+<td>Bir atış sana isabet edecek: sesin geldiği tarafa adım at.</td>
+</tr>
+<tr>
+<td>Elektrik uğultusu / iki elektrik çıtırtısı</td>
+<td>Bir lazer nişan alıyor / onun hattındasın: sesin geldiği tarafa adım
+at.</td>
+</tr>
+<tr>
+<td>Alçalan ıslık / fitil cızırtısı</td>
+<td>Yakına bir bomba düşüyor / üstüne düşecek: sesin geldiği tarafa adım
+at.</td>
+</tr>
+<tr>
+<td>Şapırtı</td>
+<td>Bir zemin tehlikesine bastın (adı seslendirilir).</td>
+</tr>
+<tr>
+<td>Yumruk / yudum</td>
+<td>Hasar / iyileşme.</td>
+</tr>
+<tr>
+<td>Kalp atışı</td>
+<td>Can düşük; çok düşükken daha hızlı.</td>
+</tr>
+<tr>
+<td>Sersem bir dalgalanma</td>
+<td>Üstüne bir durum etkisi geldi.</td>
+</tr>
+<tr>
+<td>Yükselen iki çan notası</td>
+<td>Seviye atlama hazır (E tuşuna bas).</td>
+</tr>
+<tr>
+<td>Tahtaya vuruş</td>
+<td>Arenanın yan kenarı (aynı zamanda bir menü listesinin sonu).</td>
+</tr>
+<tr>
+<td>Metale vuruş</td>
+<td>Yürüme alanının ön ya da arka sınırı.</td>
+</tr>
+<tr>
+<td>Şalter tıkı</td>
+<td>Nişan yardımı hedef değiştirdi, yeni hedefin tarafından
+duyulur.</td>
+</tr>
+</tbody>
+</table>
+<p>Bunların her biri <strong>F4 → Ses rehberi</strong> içinde
+dinlenebilir; Sol ok / Sağ ok ile her iki tarafta da duyabilirsin.</p>
+<h2 id="sound-filters-number-keys">Ses filtreleri (rakam tuşları)</h2>
+<p>Savaşta rakam tuşları, dikkatini toplayabilmen için bir ses grubunu
+kapatır veya açar. Oyun bu tuşların hiçbirini kullanmaz.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tuş</th>
+<th>Grup</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Düşmanlar: davullar, hırlama, saldırı hazırlığı, patronun
+gelişi</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Toplar: yuvarlanan uğultu, tık, yakalama, kaçırma, silah
+doldurma</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Ödüller: kristaller, altın, kaynaklar, özel eşyalar</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Atışlar ve tehlikeler</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Arena kenarları</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Canın: hasar, iyileşme, kalp atışı, durum</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Nişan yardımı tıkı</td>
+</tr>
+<tr>
+<td>0</td>
+<td>Her şeyi yeniden aç</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Her rakam, diğerlerinden bağımsız olarak kendi grubunu açar veya
+kapatır.</li>
+<li><strong>Ctrl+rakam</strong> yalnızca o grubu açık bırakır. Örnek:
+yalnızca düşmanlar ve ödüller = Ctrl+1, sonra 3.</li>
+<li>Seçimin bir sonraki oturum için saklanır. Bir savaş, kapalı bir
+şeyle başladığında mod neyin kapalı olduğunu söyler.</li>
+<li>Sesleri kapatmak yalnızca sesleri değiştirir: H, J, P, N tuşları
+yine yanıt verir ve yakalama yardımı yine atışlardan kaçar.</li>
+</ul>
+<h2 id="assists">Yardımlar</h2>
+<p>Bir yardımın yaptığı her şey kulakla da yapılabilir; yardımlar,
+istediğinde kullanman için oradadır.</p>
+<ul>
+<li><strong>Nişan yardımı</strong> (F5 modu değiştirir): senin yerine en
+yakın düşmana (varsayılan), en güçlü düşmana, önündeki düşmana ya da
+sabit bir açıya nişan alır, ya da kapalıdır (fare). Oklarla ince ayar
+yapılır.</li>
+<li><strong>Yakalama yardımı</strong> (Shift basılı tut): kahraman aşağı
+inen sıradaki topun altına yürür; gelen top yoksa en yakın kristale ya
+da eşyaya yürür; bir atış sana isabet etmek üzereyse önce yolundan
+çekilir. W / S seni yine ileri ve geri götürür, A / D her zaman kontrolü
+devralır. F4 içinde kapalı, “Shift basılı tutulunca” (varsayılan) ya da
+otomatik olarak ayarlanabilir.</li>
+</ul>
+<h2 id="mod-settings-f4">Mod ayarları (F4)</h2>
+<p>Yukarı ok / Aşağı ok gezinir, Sol ok / Sağ ok veya Enter değiştirir,
+Esc kapatır. Ayarlar kaydedilir.</p>
+<ul>
+<li>Nişan yardımı modu</li>
+<li>Yakalama yardımı: kapalı, Shift basılı tutulunca, otomatik</li>
+<li>Sesli ipuçları açık / kapalı, ipucu ses düzeyi</li>
+<li>Düşman radarı, top sesleri, arena kenarları, atışlar ve tehlikeler
+(açık / kapalı)</li>
+<li>Eşya sesleri: kapalı, yalnızca özel eşyalar, tümü</li>
+<li>Can sesleri, nişan yardımı tıkı (açık / kapalı)</li>
+<li>Odaklanınca geliştirme açıklamalarını oku</li>
+<li>Ses rehberi (Enter açar)</li>
+<li>Hata ayıklama kaydı</li>
+</ul>
+<h2 id="tips-for-a-first-run">İlk tur için ipuçları</h2>
+<ul>
+<li><strong>Toplarını yakala.</strong> Yakalanan bir top hemen yeniden
+fırlatılabilir; kaçırılan bir topun geri gelmesi 2 ila 3 saniye sürer.
+Tıkı duyana kadar yuvarlanan uğultuyu izle, sonra olduğun yerde
+kal.</li>
+<li><strong>TP kristallerini topla.</strong> Kendiliğinden toplanmazlar.
+Cam şıngırtısını izle; boğuk ses arkanda demektir.</li>
+<li><strong>Önce hayatta kal.</strong> Turun başında hayatta kalmak
+hasardan daha önemlidir.</li>
+<li>Seviye atlama sunduğunda toplarını <strong>birleştir ve
+evrimleştir</strong>: seçenekler “füzyon” ya da “evrim” der.</li>
+<li><strong>Patronlarda yavaşla</strong>: eksi tuşunu kullan. Bir patron
+yüksek hızda geldiğinde mod sana hatırlatır.</li>
+<li>Ölmek normaldir: geri getirdiğin altın Yeni Babil’in Sekme
+Bahçeleri’ni inşa eder, binalar da sonraki her turu güçlendirir.</li>
+</ul>
+<h2 id="known-limits">Bilinen sınırlamalar</h2>
+<ul>
+<li>Üsteki boşta fırlatıcı hâlâ fare gerektirir.</li>
+<li>Liderlik tabloları ve Twitch oylaması yalnızca temel düzeyde okunur.
+Emeği geçenler ekranı geçilemez.</li>
+<li>Mod ayarları oyunun kendi seçenekler ekranında değil, F4
+tuşundadır.</li>
+<li>Modun kendi metinleri, İngilizce ve İspanyolca dışındaki dillerde
+(Türkçe dahil), henüz anadili olan biri tarafından gözden geçirilmeden
+çevrildi. Düzeltmeler memnuniyetle karşılanır. Oyundan gelen adlar
+(binalar, toplar, düşmanlar, geliştirmeler) her zaman oyunun kendi
+çevirisinden alınır.</li>
+<li>Ses düzeyleri, hızları ve yakalama genişliği henüz oyuncularla
+birlikte ayarlanmadı.</li>
+</ul>
+<h2 id="reporting-a-problem">Sorun bildirme</h2>
+<p>Oyun klasöründeki yararlı dosyalar:</p>
+<ul>
+<li><code>UserData\BallPitAccess\speech.log</code>: modun söylediği her
+şey.</li>
+<li><code>MelonLoader\Latest.log</code>: modun günlüğü (hatalar,
+ekranlar, yakalamalar ve kaçırmalar).</li>
+<li>Savaşta <strong>Ctrl+Shift+D</strong>,
+<code>UserData\BallPitAccess\threats.txt</code> dosyasını (konumlarıyla
+birlikte düşmanlar, toplar, atışlar, eşyalar) yazar ve açık ekranın
+listesini <code>Latest.log</code> dosyasına ekler: bir ses yanlış yönü
+gösterdiğinde ya da bir menü yanlış sırada okunduğunda işe yarar.</li>
+</ul>
+<p>Ne yaptığını, ne duyduğunu ve ne beklediğini anlat.</p>
+<h2 id="credits">Emeği geçenler</h2>
+<ul>
+<li>BALL x PIT, Kenny Sun tarafından yapıldı ve Devolver Digital
+tarafından yayımlandı. Bu mod resmî değildir.</li>
+<li>Modu MelonLoader (LavaGang) yükler. Prism, konuşmayı ekran okuyucuna
+gönderir.</li>
+</ul>
+</body>
+</html>

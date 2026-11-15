@@ -1,0 +1,1831 @@
+{
+ "out_dir": "C:\\Users\\Nitropc\\code\\mods\\ballpit\\src\\BallPitAccess\\Sounds",
+ "sr": 48000,
+ "sounds": [
+  {
+   "out": "enemy0.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "conga",
+     "params": {
+      "tune": 150,
+      "slap": 0.35
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.04
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -9,
+   "duration": 0.16
+  },
+  {
+   "out": "boss0.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "taiko",
+     "params": {
+      "tune": 55,
+      "decay": 0.3
+     }
+    },
+    {
+     "type": "drum",
+     "kind": "tom",
+     "params": {
+      "tune": 110,
+      "decay": 0.12
+     },
+     "gain": 0.5
+    },
+    {
+     "type": "drum",
+     "kind": "rim",
+     "gain": 0.25
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.06
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -5,
+   "duration": 0.3
+  },
+  {
+   "out": "enemy1.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "conga",
+     "params": {
+      "tune": 168,
+      "slap": 0.35
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.04
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -9,
+   "duration": 0.16
+  },
+  {
+   "out": "boss1.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "taiko",
+     "params": {
+      "tune": 60,
+      "decay": 0.3
+     }
+    },
+    {
+     "type": "drum",
+     "kind": "tom",
+     "params": {
+      "tune": 120,
+      "decay": 0.12
+     },
+     "gain": 0.5
+    },
+    {
+     "type": "drum",
+     "kind": "rim",
+     "gain": 0.25
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.06
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -5,
+   "duration": 0.3
+  },
+  {
+   "out": "enemy2.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "conga",
+     "params": {
+      "tune": 189,
+      "slap": 0.35
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.04
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -9,
+   "duration": 0.16
+  },
+  {
+   "out": "boss2.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "taiko",
+     "params": {
+      "tune": 66,
+      "decay": 0.3
+     }
+    },
+    {
+     "type": "drum",
+     "kind": "tom",
+     "params": {
+      "tune": 132,
+      "decay": 0.12
+     },
+     "gain": 0.5
+    },
+    {
+     "type": "drum",
+     "kind": "rim",
+     "gain": 0.25
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.06
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -5,
+   "duration": 0.3
+  },
+  {
+   "out": "enemy3.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "conga",
+     "params": {
+      "tune": 212,
+      "slap": 0.35
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.04
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -9,
+   "duration": 0.16
+  },
+  {
+   "out": "boss3.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "taiko",
+     "params": {
+      "tune": 73,
+      "decay": 0.3
+     }
+    },
+    {
+     "type": "drum",
+     "kind": "tom",
+     "params": {
+      "tune": 146,
+      "decay": 0.12
+     },
+     "gain": 0.5
+    },
+    {
+     "type": "drum",
+     "kind": "rim",
+     "gain": 0.25
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.06
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -5,
+   "duration": 0.3
+  },
+  {
+   "out": "enemy4.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "conga",
+     "params": {
+      "tune": 238,
+      "slap": 0.35
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.04
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -9,
+   "duration": 0.16
+  },
+  {
+   "out": "boss4.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "taiko",
+     "params": {
+      "tune": 80,
+      "decay": 0.3
+     }
+    },
+    {
+     "type": "drum",
+     "kind": "tom",
+     "params": {
+      "tune": 160,
+      "decay": 0.12
+     },
+     "gain": 0.5
+    },
+    {
+     "type": "drum",
+     "kind": "rim",
+     "gain": 0.25
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.06
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -5,
+   "duration": 0.3
+  },
+  {
+   "out": "enemy5.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "conga",
+     "params": {
+      "tune": 267,
+      "slap": 0.35
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.04
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -9,
+   "duration": 0.16
+  },
+  {
+   "out": "boss5.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "taiko",
+     "params": {
+      "tune": 87,
+      "decay": 0.3
+     }
+    },
+    {
+     "type": "drum",
+     "kind": "tom",
+     "params": {
+      "tune": 174,
+      "decay": 0.12
+     },
+     "gain": 0.5
+    },
+    {
+     "type": "drum",
+     "kind": "rim",
+     "gain": 0.25
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.06
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -5,
+   "duration": 0.3
+  },
+  {
+   "out": "enemy6.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "conga",
+     "params": {
+      "tune": 300,
+      "slap": 0.35
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.04
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -9,
+   "duration": 0.16
+  },
+  {
+   "out": "boss6.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "taiko",
+     "params": {
+      "tune": 96,
+      "decay": 0.3
+     }
+    },
+    {
+     "type": "drum",
+     "kind": "tom",
+     "params": {
+      "tune": 192,
+      "decay": 0.12
+     },
+     "gain": 0.5
+    },
+    {
+     "type": "drum",
+     "kind": "rim",
+     "gain": 0.25
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.06
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -5,
+   "duration": 0.3
+  },
+  {
+   "out": "enemy7.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "conga",
+     "params": {
+      "tune": 337,
+      "slap": 0.35
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.04
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -9,
+   "duration": 0.16
+  },
+  {
+   "out": "boss7.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "taiko",
+     "params": {
+      "tune": 105,
+      "decay": 0.3
+     }
+    },
+    {
+     "type": "drum",
+     "kind": "tom",
+     "params": {
+      "tune": 210,
+      "decay": 0.12
+     },
+     "gain": 0.5
+    },
+    {
+     "type": "drum",
+     "kind": "rim",
+     "gain": 0.25
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.06
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -5,
+   "duration": 0.3
+  },
+  {
+   "out": "enemy8.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "conga",
+     "params": {
+      "tune": 378,
+      "slap": 0.35
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.04
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -9,
+   "duration": 0.16
+  },
+  {
+   "out": "boss8.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "taiko",
+     "params": {
+      "tune": 115,
+      "decay": 0.3
+     }
+    },
+    {
+     "type": "drum",
+     "kind": "tom",
+     "params": {
+      "tune": 230,
+      "decay": 0.12
+     },
+     "gain": 0.5
+    },
+    {
+     "type": "drum",
+     "kind": "rim",
+     "gain": 0.25
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.06
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -5,
+   "duration": 0.3
+  },
+  {
+   "out": "enemy9.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "conga",
+     "params": {
+      "tune": 424,
+      "slap": 0.35
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.04
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -9,
+   "duration": 0.16
+  },
+  {
+   "out": "boss9.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "taiko",
+     "params": {
+      "tune": 126,
+      "decay": 0.3
+     }
+    },
+    {
+     "type": "drum",
+     "kind": "tom",
+     "params": {
+      "tune": 252,
+      "decay": 0.12
+     },
+     "gain": 0.5
+    },
+    {
+     "type": "drum",
+     "kind": "rim",
+     "gain": 0.25
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.06
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -5,
+   "duration": 0.3
+  },
+  {
+   "out": "danger.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "growl",
+     "params": {
+      "dur": 0.45,
+      "size": 0.55,
+      "seed": 3
+     }
+    },
+    {
+     "type": "drum",
+     "kind": "conga",
+     "params": {
+      "tune": 420,
+      "slap": 1.0
+     },
+     "gain": 0.6
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.08
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -1
+  },
+  {
+   "out": "charge.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "charge",
+     "params": {
+      "dur": 0.4,
+      "seed": 2
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "lowpass",
+     "cutoff": 3500
+    },
+    {
+     "type": "fade",
+     "out": 0.05
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -6
+  },
+  {
+   "out": "boss.wav",
+   "layers": [
+    {
+     "type": "drum",
+     "kind": "taiko",
+     "params": {
+      "tune": 55,
+      "decay": 0.9
+     }
+    },
+    {
+     "type": "drum",
+     "kind": "taiko",
+     "params": {
+      "tune": 50,
+      "decay": 1.0
+     },
+     "at": 0.28
+    },
+    {
+     "type": "drum",
+     "kind": "gong",
+     "params": {
+      "tune": 80,
+      "decay": 2.0
+     },
+     "at": 0.28,
+     "gain": 0.5
+    },
+    {
+     "type": "seq",
+     "inst": "french_horn",
+     "steps": "D3:0.25 -:0.03 A2:0.9",
+     "at": 0.05,
+     "gain": 0.55
+    }
+   ],
+   "fx": [
+    {
+     "type": "reverb",
+     "mix": 0.2,
+     "size": 0.6
+    },
+    {
+     "type": "fade",
+     "out": 0.4
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -2,
+   "duration": 1.8
+  },
+  {
+   "out": "ball.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "steel_ball",
+     "params": {
+      "surface": "metal",
+      "force": 0.45,
+      "seed": 4
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "highpass",
+     "cutoff": 900
+    },
+    {
+     "type": "lowpass",
+     "cutoff": 4500
+    },
+    {
+     "type": "fade",
+     "out": 0.03
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -4,
+   "duration": 0.09
+  },
+  {
+   "out": "ball_inline.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "steel_ball",
+     "params": {
+      "surface": "metal",
+      "force": 0.9,
+      "seed": 5
+     }
+    },
+    {
+     "type": "sfx",
+     "kind": "steel_ball",
+     "params": {
+      "surface": "metal",
+      "force": 0.9,
+      "seed": 6
+     },
+     "at": 0.045
+    }
+   ],
+   "fx": [
+    {
+     "type": "highpass",
+     "cutoff": 700
+    },
+    {
+     "type": "lowpass",
+     "cutoff": 5000
+    },
+    {
+     "type": "fade",
+     "out": 0.03
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -2,
+   "duration": 0.13
+  },
+  {
+   "out": "loop_ball.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "ball_roll",
+     "params": {
+      "speed": 0.75,
+      "dur": 2.6,
+      "seed": 4
+     },
+     "gain": 0.8
+    },
+    {
+     "type": "synth",
+     "inst": "synth",
+     "notes": "E4",
+     "dur": 2.6,
+     "vel": 0.6,
+     "params": {
+      "wave": "triangle",
+      "attack": 0.01,
+      "decay": 0.05,
+      "sustain": 1.0,
+      "release": 0.3,
+      "cutoff": 2400,
+      "detune": 0.0
+     }
+    },
+    {
+     "type": "synth",
+     "inst": "sine",
+     "notes": "E5",
+     "dur": 2.6,
+     "vel": 0.25
+    }
+   ],
+   "fx": [
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -8,
+   "duration": 2.05
+  },
+  {
+   "out": "loop_shot.wav",
+   "layers": [
+    {
+     "type": "synth",
+     "inst": "flute",
+     "notes": "B5",
+     "dur": 2.6,
+     "vel": 0.6,
+     "params": {
+      "breath": 0.35
+     }
+    },
+    {
+     "type": "sfx",
+     "kind": "wind_howl",
+     "params": {
+      "dur": 2.6,
+      "gust": 0.2,
+      "seed": 3
+     },
+     "gain": 0.5
+    }
+   ],
+   "fx": [
+    {
+     "type": "highpass",
+     "cutoff": 400
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -10,
+   "duration": 2.05
+  },
+  {
+   "out": "ball_miss.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "steel_ball",
+     "params": {
+      "surface": "wood",
+      "force": 0.6,
+      "seed": 12
+     }
+    },
+    {
+     "type": "sfx",
+     "kind": "sweep_down",
+     "params": {
+      "start": 500,
+      "end": 160,
+      "dur": 0.25,
+      "wave": "triangle"
+     },
+     "at": 0.03,
+     "gain": 0.35
+    }
+   ],
+   "fx": [
+    {
+     "type": "lowpass",
+     "cutoff": 1800
+    },
+    {
+     "type": "fade",
+     "out": 0.08
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -5,
+   "duration": 0.32
+  },
+  {
+   "out": "catch.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "steel_ball",
+     "params": {
+      "surface": "rubber",
+      "force": 1.0,
+      "seed": 2
+     }
+    },
+    {
+     "type": "sfx",
+     "kind": "punch",
+     "params": {
+      "dur": 0.12
+     },
+     "gain": 0.5
+    },
+    {
+     "type": "sfx",
+     "kind": "steel_ball",
+     "params": {
+      "surface": "metal",
+      "force": 0.3,
+      "seed": 9
+     },
+     "at": 0.03,
+     "gain": 0.4
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.05
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -2
+  },
+  {
+   "out": "ready.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "reload",
+     "params": {
+      "action": "rack",
+      "seed": 26
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.05
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -2
+  },
+  {
+   "out": "pickup0.wav",
+   "layers": [
+    {
+     "type": "synth",
+     "inst": "glass",
+     "notes": "A5",
+     "dur": 0.08,
+     "vel": 0.6
+    },
+    {
+     "type": "sfx",
+     "kind": "water_drip",
+     "params": {
+      "pitch": 1.6,
+      "seed": 0
+     },
+     "gain": 0.25
+    }
+   ],
+   "fx": [
+    {
+     "type": "lowpass",
+     "cutoff": 6000
+    },
+    {
+     "type": "fade",
+     "out": 0.08
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -7,
+   "duration": 0.3
+  },
+  {
+   "out": "pickup1.wav",
+   "layers": [
+    {
+     "type": "synth",
+     "inst": "glass",
+     "notes": "D6",
+     "dur": 0.08,
+     "vel": 0.6
+    },
+    {
+     "type": "sfx",
+     "kind": "water_drip",
+     "params": {
+      "pitch": 1.6,
+      "seed": 1
+     },
+     "gain": 0.25
+    }
+   ],
+   "fx": [
+    {
+     "type": "lowpass",
+     "cutoff": 6000
+    },
+    {
+     "type": "fade",
+     "out": 0.08
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -7,
+   "duration": 0.3
+  },
+  {
+   "out": "pickup2.wav",
+   "layers": [
+    {
+     "type": "synth",
+     "inst": "glass",
+     "notes": "G6",
+     "dur": 0.08,
+     "vel": 0.6
+    },
+    {
+     "type": "sfx",
+     "kind": "water_drip",
+     "params": {
+      "pitch": 1.6,
+      "seed": 2
+     },
+     "gain": 0.25
+    }
+   ],
+   "fx": [
+    {
+     "type": "lowpass",
+     "cutoff": 6000
+    },
+    {
+     "type": "fade",
+     "out": 0.08
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -7,
+   "duration": 0.3
+  },
+  {
+   "out": "treasure0.wav",
+   "layers": [
+    {
+     "type": "seq",
+     "inst": "kalimba",
+     "steps": "72:0.05 76:0.05 79:0.05 84:0.15",
+     "vel": 0.75
+    },
+    {
+     "type": "sfx",
+     "kind": "keys",
+     "params": {
+      "dur": 0.2,
+      "shakes": 1,
+      "seed": 12
+     },
+     "gain": 0.3
+    }
+   ],
+   "fx": [
+    {
+     "type": "reverb",
+     "mix": 0.12,
+     "size": 0.3
+    },
+    {
+     "type": "fade",
+     "out": 0.1
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -6,
+   "duration": 0.42
+  },
+  {
+   "out": "treasure1.wav",
+   "layers": [
+    {
+     "type": "seq",
+     "inst": "kalimba",
+     "steps": "77:0.05 81:0.05 84:0.05 89:0.15",
+     "vel": 0.75
+    },
+    {
+     "type": "sfx",
+     "kind": "keys",
+     "params": {
+      "dur": 0.2,
+      "shakes": 1,
+      "seed": 13
+     },
+     "gain": 0.3
+    }
+   ],
+   "fx": [
+    {
+     "type": "reverb",
+     "mix": 0.12,
+     "size": 0.3
+    },
+    {
+     "type": "fade",
+     "out": 0.1
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -6,
+   "duration": 0.42
+  },
+  {
+   "out": "treasure2.wav",
+   "layers": [
+    {
+     "type": "seq",
+     "inst": "kalimba",
+     "steps": "82:0.05 86:0.05 89:0.05 94:0.15",
+     "vel": 0.75
+    },
+    {
+     "type": "sfx",
+     "kind": "keys",
+     "params": {
+      "dur": 0.2,
+      "shakes": 1,
+      "seed": 14
+     },
+     "gain": 0.3
+    }
+   ],
+   "fx": [
+    {
+     "type": "reverb",
+     "mix": 0.12,
+     "size": 0.3
+    },
+    {
+     "type": "fade",
+     "out": 0.1
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -6,
+   "duration": 0.42
+  },
+  {
+   "out": "shot.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "whoosh",
+     "params": {
+      "dur": 0.16,
+      "low": 500,
+      "high": 2800,
+      "direction": "down"
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "lowpass",
+     "cutoff": 4000
+    },
+    {
+     "type": "fade",
+     "out": 0.04
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -8
+  },
+  {
+   "out": "shot_hit.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "whoosh",
+     "params": {
+      "dur": 0.14,
+      "low": 800,
+      "high": 5000,
+      "direction": "up"
+     }
+    },
+    {
+     "type": "drum",
+     "kind": "snap",
+     "at": 0.1
+    },
+    {
+     "type": "sfx",
+     "kind": "hit",
+     "params": {
+      "dur": 0.1,
+      "tone": 300,
+      "crunch": 0.6
+     },
+     "at": 0.1,
+     "gain": 0.6
+    }
+   ],
+   "fx": [
+    {
+     "type": "lowpass",
+     "cutoff": 4500
+    },
+    {
+     "type": "fade",
+     "out": 0.04
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -2
+  },
+  {
+   "out": "beam.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "zap",
+     "params": {
+      "dur": 0.3,
+      "freq": 90
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "lowpass",
+     "cutoff": 3000
+    },
+    {
+     "type": "fade",
+     "in": 0.05,
+     "out": 0.08
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -8
+  },
+  {
+   "out": "beam_hit.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "zap",
+     "params": {
+      "dur": 0.1,
+      "freq": 160
+     }
+    },
+    {
+     "type": "sfx",
+     "kind": "zap",
+     "params": {
+      "dur": 0.1,
+      "freq": 160
+     },
+     "at": 0.13
+    }
+   ],
+   "fx": [
+    {
+     "type": "lowpass",
+     "cutoff": 4000
+    },
+    {
+     "type": "fade",
+     "out": 0.03
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -3
+  },
+  {
+   "out": "bomb.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "sweep_down",
+     "params": {
+      "start": 1700,
+      "end": 700,
+      "dur": 0.32,
+      "wave": "sine"
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "vibrato",
+     "rate": 7,
+     "depth": 0.2
+    },
+    {
+     "type": "fade",
+     "out": 0.06
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -12,
+   "max_loudness": -14
+  },
+  {
+   "out": "bomb_hit.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "fire",
+     "params": {
+      "dur": 0.22,
+      "crackle": 1.0,
+      "seed": 4
+     }
+    },
+    {
+     "type": "sfx",
+     "kind": "static",
+     "params": {
+      "dur": 0.2,
+      "color": "white"
+     },
+     "gain": 0.35,
+     "fx": [
+      {
+       "type": "bandpass",
+       "center": 4500,
+       "q": 2
+      }
+     ]
+    },
+    {
+     "type": "drum",
+     "kind": "kick",
+     "params": {
+      "tune": 50,
+      "decay": 0.2
+     },
+     "at": 0.18
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.05
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -3
+  },
+  {
+   "out": "floor.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "footfall",
+     "params": {
+      "surface": "water",
+      "steps": 1,
+      "weight": 0.8
+     }
+    },
+    {
+     "type": "sfx",
+     "kind": "bubble",
+     "params": {
+      "freq": 180
+     },
+     "at": 0.04,
+     "gain": 0.5
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.06
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -2
+  },
+  {
+   "out": "hurt.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "punch",
+     "params": {
+      "dur": 0.2
+     }
+    },
+    {
+     "type": "sfx",
+     "kind": "hit",
+     "params": {
+      "dur": 0.22,
+      "tone": 140,
+      "crunch": 0.4
+     },
+     "gain": 0.6
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.05
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -2
+  },
+  {
+   "out": "heal.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "gulp",
+     "params": {
+      "seed": 1
+     }
+    },
+    {
+     "type": "sfx",
+     "kind": "magic",
+     "params": {
+      "dur": 0.35,
+      "density": 6,
+      "freq": "E5"
+     },
+     "at": 0.2,
+     "gain": 0.4
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.08
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -3
+  },
+  {
+   "out": "heart.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "heartbeat",
+     "params": {
+      "rate": 1.4,
+      "dur": 0.6
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "lowpass",
+     "cutoff": 900
+    },
+    {
+     "type": "fade",
+     "out": 0.08
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -2
+  },
+  {
+   "out": "status.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "sweep_down",
+     "params": {
+      "start": 700,
+      "end": 250,
+      "dur": 0.35,
+      "wave": "sine"
+     }
+    },
+    {
+     "type": "sfx",
+     "kind": "bubble",
+     "params": {
+      "freq": 300
+     },
+     "gain": 0.4
+    }
+   ],
+   "fx": [
+    {
+     "type": "vibrato",
+     "rate": 9,
+     "depth": 0.8
+    },
+    {
+     "type": "lowpass",
+     "cutoff": 2500
+    },
+    {
+     "type": "fade",
+     "out": 0.08
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -6
+  },
+  {
+   "out": "xp.wav",
+   "layers": [
+    {
+     "type": "seq",
+     "inst": "vibraphone",
+     "steps": "G5:0.09 C6:0.3",
+     "vel": 0.7
+    }
+   ],
+   "fx": [
+    {
+     "type": "reverb",
+     "mix": 0.15,
+     "size": 0.35
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -6,
+   "duration": 0.6
+  },
+  {
+   "out": "levelup.wav",
+   "layers": [
+    {
+     "type": "seq",
+     "inst": "harp",
+     "steps": "C5:0.035 E5:0.035 G5:0.035 C6:0.035 E6:0.3",
+     "vel": 0.7
+    }
+   ],
+   "fx": [
+    {
+     "type": "reverb",
+     "mix": 0.2,
+     "size": 0.45
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -6,
+   "duration": 0.8
+  },
+  {
+   "out": "win.wav",
+   "layers": [
+    {
+     "type": "seq",
+     "inst": "brass",
+     "steps": "C4:0.12 E4:0.12 G4:0.12 [C4,E4,G4,C5]:0.9",
+     "vel": 0.85
+    },
+    {
+     "type": "drum",
+     "kind": "taiko",
+     "params": {
+      "tune": 65,
+      "decay": 0.8
+     },
+     "at": 0.36,
+     "gain": 0.6
+    },
+    {
+     "type": "drum",
+     "kind": "crash",
+     "at": 0.36,
+     "gain": 0.3
+    }
+   ],
+   "fx": [
+    {
+     "type": "reverb",
+     "mix": 0.22,
+     "size": 0.6
+    },
+    {
+     "type": "fade",
+     "out": 0.4
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -2,
+   "duration": 2.0
+  },
+  {
+   "out": "lose.wav",
+   "layers": [
+    {
+     "type": "seq",
+     "inst": "felt_piano",
+     "steps": "G4:0.3 D#4:0.3 C4:0.3 [G3,C4,D#4]:1.2",
+     "vel": 0.75
+    },
+    {
+     "type": "drum",
+     "kind": "gong",
+     "params": {
+      "tune": 70,
+      "decay": 2.0
+     },
+     "at": 0.9,
+     "gain": 0.4
+    }
+   ],
+   "fx": [
+    {
+     "type": "reverb",
+     "mix": 0.25,
+     "size": 0.7
+    },
+    {
+     "type": "fade",
+     "out": 0.5
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -2,
+   "duration": 2.4
+  },
+  {
+   "out": "wall.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "knock",
+     "params": {
+      "count": 1,
+      "surface": "wood",
+      "force": 0.7,
+      "seed": 10
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.05
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -5,
+   "duration": 0.25
+  },
+  {
+   "out": "wall_v.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "knock",
+     "params": {
+      "count": 1,
+      "surface": "metal",
+      "force": 0.6,
+      "seed": 11
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.05
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -6,
+   "duration": 0.3
+  },
+  {
+   "out": "retarget.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "switch",
+     "params": {
+      "state": "on",
+      "seed": 7
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -6
+  },
+  {
+   "out": "tick.wav",
+   "layers": [
+    {
+     "type": "sfx",
+     "kind": "solenoid",
+     "params": {
+      "size": 0.0,
+      "metal": 0.2,
+      "thump": 0.3
+     }
+    }
+   ],
+   "fx": [
+    {
+     "type": "fade",
+     "out": 0.03
+    },
+    {
+     "type": "mono"
+    }
+   ],
+   "normalize": -2,
+   "duration": 0.12
+  }
+ ]
+}

@@ -1,0 +1,8 @@
+bin/
+obj/
+# Decompiled game code and game text: never published.
+/game/
+/shots/
+__pycache__/
+*.user
+.vs/

@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.14" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>BALL x PIT Access</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      color: light-dark(#1a1a1a, #fdfdfd);
+      background-color: #fdfdfd;
+      background-color: light-dark(#fdfdfd, #1a1a1a);
+      color-scheme: light dark;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a, a:visited {
+      color: inherit;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid;
+      border-color: #e6e6e6;
+      border-color: light-dark(#e6e6e6, #4c4c4c);
+      color: #606060;
+      color: light-dark(#606060, #b6b6b6);
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid currentColor;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+    }
+    th {
+      border-top: 1px solid currentColor;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    em, em em em, em em em em em {
+      font-style: italic;
+    }
+    em em, em em em em {
+      font-style: normal;
+    }
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    @media print {
+      html {
+        color-scheme: light only;
+      }
+      html, body, pre, code {
+        background-color: transparent;
+      }
+      body, a, a:visited, blockquote {
+        color: black;
+      }
+      pre, code {
+        padding: 0;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }  </style>
+</head>
+<body>
+<h1 id="ball-x-pit-access">BALL x PIT Access</h1>
+<p>Un mod qui rend <strong>BALL x PIT</strong> (Kenny Sun / Devolver
+Digital) jouable sans la vue. Il lit tous les menus avec votre lecteur
+d’écran, vous permet d’utiliser tout le jeu au clavier et transforme le
+champ de bataille en sons : les ennemis, vos boules, les tirs ennemis,
+les cristaux d’EXP et les objets spéciaux ont chacun leur son, qui vient
+du côté où ils se trouvent par rapport à vous.</p>
+<p>Version 0.5.0, pour la version 1.308 du jeu, DLC Baboulone émergée
+compris. Le mod parle <strong>toutes les langues proposées par le
+jeu</strong> et suit la langue choisie dans le jeu.</p>
+<!-- LANGS -->
+<p><a href="README.html">English</a> · <a
+href="README.es.html">Español</a> · <strong>Français</strong> · <a
+href="README.de.html">Deutsch</a> · <a
+href="README.it.html">Italiano</a> · <a
+href="README.pt-BR.html">Português (Brasil)</a> · <a
+href="README.pl.html">Polski</a> · <a href="README.tr.html">Türkçe</a> ·
+<a href="README.ru.html">Русский</a> · <a
+href="README.uk.html">Українська</a> · <a
+href="README.ja.html">日本語</a> · <a href="README.ko.html">한국어</a> ·
+<a href="README.zh-CN.html">简体中文</a> · <a
+href="README.zh-TW.html">繁體中文</a> · <a href="README.th.html">ไทย</a>
+<!-- /LANGS --></p>
+<blockquote>
+<p><strong>État : première version de test.</strong> Les menus, la base
+et les premières expéditions ont été joués avec le mod. Les sons de
+combat et les parties les plus récentes (son continu de la boule, aide
+au rattrapage, filtres de son) n’ont pas encore été réglés avec des
+joueurs. Dites-nous ce qui marche et ce qui ne marche pas (voir <a
+href="#reporting-a-problem">Signaler un problème</a>).</p>
+</blockquote>
+<h2 id="contents">Sommaire</h2>
+<ul>
+<li><a href="#what-you-need">Ce qu’il vous faut</a></li>
+<li><a href="#installing">Installation</a></li>
+<li><a href="#removing-the-mod">Désinstaller le mod</a></li>
+<li><a href="#first-steps">Premiers pas</a></li>
+<li><a href="#keys-everywhere">Touches valables partout</a></li>
+<li><a href="#menus">Menus</a></li>
+<li><a href="#the-base-new-ballbylon">La base
+(Nouvelle-Baboulone)</a></li>
+<li><a href="#battle">Combat</a></li>
+<li><a href="#battle-sounds">Sons de combat</a></li>
+<li><a href="#sound-filters-number-keys">Filtres de son (touches
+numériques)</a></li>
+<li><a href="#assists">Aides</a></li>
+<li><a href="#mod-settings-f4">Paramètres du mod (F4)</a></li>
+<li><a href="#tips-for-a-first-run">Conseils pour une première
+expédition</a></li>
+<li><a href="#known-limits">Limites connues</a></li>
+<li><a href="#reporting-a-problem">Signaler un problème</a></li>
+<li><a href="#credits">Crédits</a></li>
+</ul>
+<h2 id="what-you-need">Ce qu’il vous faut</h2>
+<ul>
+<li>BALL x PIT sous Windows (Steam), version 1.308.</li>
+<li>Un lecteur d’écran : NVDA est celui qui a été testé. Les autres pris
+en charge par la bibliothèque de synthèse vocale Prism (JAWS, Narrateur,
+voix SAPI) devraient aussi fonctionner.</li>
+<li><strong>MelonLoader 0.7.3</strong> (x64), le chargeur de mods.
+Gratuit, sur sa page officielle de versions GitHub.</li>
+<li>Un casque ou des enceintes stéréo : la gauche et la droite comptent
+beaucoup en combat.</li>
+</ul>
+<h2 id="installing">Installation</h2>
+<p><strong>Avec l’installateur (le plus simple) :</strong> téléchargez
+<code>BallPitAccessibilityInstaller.exe</code> depuis la <a
+href="https://github.com/gomods1/BallPitAccess/releases/latest">dernière
+version</a> et lancez-le. Il trouve le jeu via Steam, installe
+MelonLoader 0.7.3, la bibliothèque vocale Prism et le mod, puis les met
+à jour ou les retire plus tard. Lancez ensuite le jeu : le premier
+lancement prend quelques minutes et reste silencieux pendant que
+MelonLoader prépare les fichiers du jeu, puis votre lecteur d’écran se
+met à parler.</p>
+<p><strong>À la main :</strong> téléchargez
+<code>BallPitAccess-vX.Y.Z.zip</code> sur la même page et extrayez tout
+dans le dossier du jeu (par défaut
+<code>C:\Program Files (x86)\Steam\steamapps\common\BALLxPIT</code>, le
+dossier qui contient <code>Balls.exe</code>), de sorte que
+<code>version.dll</code> se retrouve à côté de <code>Balls.exe</code>.
+Le zip contient déjà MelonLoader : inutile de l’installer à part. Lancez
+le jeu ; le premier lancement est lent et silencieux, comme
+ci-dessus.</p>
+<h2 id="removing-the-mod">Désinstaller le mod</h2>
+<p>Le bouton Désinstaller de l’installateur retire le mod et MelonLoader
+et garde vos réglages dans <code>UserData</code>. À la main :</p>
+<p>Supprimez <code>Mods\BallPitAccess.dll</code> et
+<code>prism.dll</code>. Pour enlever aussi MelonLoader, supprimez
+<code>version.dll</code> et les dossiers <code>MelonLoader</code>,
+<code>Mods</code>, <code>Plugins</code> et <code>UserData</code> du
+dossier du jeu. Le mod ne modifie aucun fichier du jeu.</p>
+<h2 id="first-steps">Premiers pas</h2>
+<ul>
+<li>Appuyez sur <strong>F1</strong> à tout moment pour l’aide : toutes
+ses parties, en commençant par celle qui correspond à l’endroit où vous
+êtes. Les flèches haut et bas la lisent ligne par ligne, Tab passe à la
+partie suivante, Échap ferme.</li>
+<li>Appuyez sur <strong>F4</strong> pour les paramètres du mod, et
+ouvrez-y le <strong>guide des sons</strong> : il joue chaque son de
+combat et dit ce qu’il signifie. L’écouter une fois avant votre première
+expédition aide beaucoup.</li>
+<li>Au clavier, le jeu lui-même se joue à la souris ; avec le mod, vous
+n’avez jamais besoin de la souris, sauf pour le lanceur automatique de
+la base (voir <a href="#known-limits">Limites connues</a>).</li>
+</ul>
+<h2 id="keys-everywhere">Touches valables partout</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Touche</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td>Aide (toutes les parties ; Tab / Maj+Tab pour passer d’une partie à
+l’autre)</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>Lire tout l’écran</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>Répéter la dernière annonce</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>Paramètres du mod et guide des sons</td>
+</tr>
+<tr>
+<td>F5</td>
+<td>Changer le mode de l’aide à la visée</td>
+</tr>
+<tr>
+<td>F6 / F7</td>
+<td>Tourner la visée de 10 degrés à gauche / à droite</td>
+</tr>
+<tr>
+<td>F8</td>
+<td>Dire où vous visez</td>
+</tr>
+<tr>
+<td>Ctrl+flèche haut</td>
+<td>Lire les détails de l’élément sélectionné (Ctrl+flèche bas revient
+en arrière)</td>
+</tr>
+<tr>
+<td>Ctrl+flèche gauche / Ctrl+flèche droite</td>
+<td>Passer des détails aux événements récents et inversement</td>
+</tr>
+</tbody>
+</table>
+<p>Tant qu’une liste du mod (aide, paramètres, guide des sons) est
+ouverte, le jeu ne reçoit pas vos touches.</p>
+<h2 id="menus">Menus</h2>
+<p>Chaque écran est <strong>une seule liste dans un ordre
+logique</strong> : d’abord ses choix, puis ses boutons, puis Fermer.
+L’ordre ne dépend jamais de l’endroit où les éléments sont dessinés à
+l’écran.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Touche</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flèche haut / flèche bas</td>
+<td>Élément précédent / suivant</td>
+</tr>
+<tr>
+<td>Entrée</td>
+<td>Choisir</td>
+</tr>
+<tr>
+<td>Tab / Maj+Tab</td>
+<td>Groupe suivant / précédent de l’écran</td>
+</tr>
+<tr>
+<td>Début / Fin</td>
+<td>Premier / dernier élément du groupe</td>
+</tr>
+<tr>
+<td>Flèche gauche / flèche droite</td>
+<td>Changer un réglage de type liste ou curseur ; sur un niveau, changer
+sa difficulté</td>
+</tr>
+<tr>
+<td>Ctrl+Tab / Ctrl+Maj+Tab</td>
+<td>Onglet suivant / précédent sur les écrans à onglets</td>
+</tr>
+<tr>
+<td>Retour arrière ou Échap</td>
+<td>Retour</td>
+</tr>
+<tr>
+<td>Page précédente / Page suivante</td>
+<td>Série dans l’encyclopédie ; palier de Nouvelle partie plus dans la
+liste des niveaux</td>
+</tr>
+<tr>
+<td>Maj+Entrée</td>
+<td>Sur un niveau : ouvrir son classement</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Entrée sur un personnage vous place sur son bouton
+Sélectionner.</li>
+<li>Quand le tutoriel guidé montre quelque chose, le focus y saute :
+appuyez sur Entrée.</li>
+<li>Les choix d’amélioration sont lus avec leurs chiffres (« Inflige de
+10 à 15 dégâts »).</li>
+</ul>
+<h2 id="the-base-new-ballbylon">La base (Nouvelle-Baboulone)</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Touche</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flèche haut / flèche bas, Entrée</td>
+<td>Boutons de la barre latérale : Jouer, Récolter, Construire,
+Agrandir, Disposition, Options</td>
+</tr>
+<tr>
+<td>Tab / Maj+Tab</td>
+<td>Parcourir l’ascenseur et vos bâtiments</td>
+</tr>
+<tr>
+<td>Entrée sur un bâtiment</td>
+<td>Lancer une récolte visant ce bâtiment s’il est prêt ; sinon, ouvrir
+son amélioration</td>
+</tr>
+<tr>
+<td>Maj+Entrée</td>
+<td>Ouvrir l’amélioration d’un bâtiment</td>
+</tr>
+<tr>
+<td>Entrée sur l’ascenseur</td>
+<td>Ouvrir l’amélioration de l’ascenseur (vers le fond de la fosse, ou
+vers Baboulone émergée)</td>
+</tr>
+<tr>
+<td>Suppr</td>
+<td>Démonter un bâtiment</td>
+</tr>
+<tr>
+<td>H</td>
+<td>Ressources et jour</td>
+</tr>
+<tr>
+<td>J</td>
+<td>Récolte et ouvriers</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Construction</strong> : les flèches déplacent le bâtiment
+d’une case et disent s’il rentre, Entrée construit, R fait pivoter,
+Début va à un emplacement libre, Retour arrière annule.</li>
+<li><strong>Récolte</strong> : elle commence en visant un bâtiment.
+Entrée lance les ouvriers, Tab vise un autre bâtiment, flèche gauche /
+flèche droite tournent la visée, maintenez Espace pour accélérer, Échap
+quitte.</li>
+<li><strong>Extension</strong> : Tab choisit une parcelle, Entrée
+l’achète.</li>
+<li><strong>Disposition</strong> : Tab choisit un bâtiment, Entrée le
+soulève, les flèches le déplacent, Entrée le pose.</li>
+</ul>
+<h2 id="battle">Combat</h2>
+<h3 id="the-games-own-keys">Les touches du jeu</h3>
+<table>
+<thead>
+<tr>
+<th>Touche</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W A S D</td>
+<td>Se déplacer</td>
+</tr>
+<tr>
+<td>Espace</td>
+<td>Tirer (maintenir)</td>
+</tr>
+<tr>
+<td>F</td>
+<td>Tir auto activé / désactivé</td>
+</tr>
+<tr>
+<td>E</td>
+<td>Ouvrir un gain de niveau quand il y en a un de prêt</td>
+</tr>
+<tr>
+<td>= / -</td>
+<td>Vitesse du jeu plus rapide / plus lente</td>
+</tr>
+<tr>
+<td>Échap</td>
+<td>Pause</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mod-keys">Les touches du mod</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Touche</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flèche gauche / flèche droite</td>
+<td>Tourner la visée de 5 degrés à la main</td>
+</tr>
+<tr>
+<td>Flèche haut</td>
+<td>Rendre la visée à l’aide</td>
+</tr>
+<tr>
+<td>Flèche bas</td>
+<td>Dire où vous visez</td>
+</tr>
+<tr>
+<td>Maj (maintenir)</td>
+<td>Aide au rattrapage (voir <a href="#assists">Aides</a>)</td>
+</tr>
+<tr>
+<td>1 à 7, 0</td>
+<td>Filtres de son (voir <a href="#sound-filters-number-keys">Filtres de
+son</a>)</td>
+</tr>
+<tr>
+<td>H</td>
+<td>Vie et effets d’état</td>
+</tr>
+<tr>
+<td>J</td>
+<td>Ennemis et boss</td>
+</tr>
+<tr>
+<td>K</td>
+<td>Votre position</td>
+</tr>
+<tr>
+<td>G</td>
+<td>Vitesse du jeu</td>
+</tr>
+<tr>
+<td>L</td>
+<td>Niveau, temps, vague, rouages gagnés</td>
+</tr>
+<tr>
+<td>B</td>
+<td>Vos boules et passifs</td>
+</tr>
+<tr>
+<td>P</td>
+<td>Objets sur le terrain</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Dangers (tirs, lasers, bombes, sol)</td>
+</tr>
+</tbody>
+</table>
+<p>Annoncé pendant le combat : le niveau au début, les boss et leur vie
+à 75, 50 et 25 pour cent, les dégâts et les soins, les effets d’état,
+les objets spéciaux quand ils tombent, « gains de niveau prêts, appuyez
+sur E », la fin de l’expédition.</p>
+<h2 id="battle-sounds">Sons de combat</h2>
+<p>Quatre règles valent pour tous les sons :</p>
+<ul>
+<li><strong>Côté</strong> : un son vient du côté de ce qu’il
+annonce.</li>
+<li><strong>Hauteur</strong> : plus aigu veut dire plus proche.</li>
+<li><strong>Étouffé</strong> veut dire que c’est derrière vous.</li>
+<li>Un son qui vous demande de <strong>bouger</strong> vient du côté où
+aller.</li>
+</ul>
+<p>Ce qui bouge tout le temps (votre boule, les tirs ennemis) a un
+<strong>son continu</strong> qui le suit ; ce qui change par étapes (les
+ennemis qui avancent, les objets posés au sol) a des sons courts.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Son</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tambour à main</td>
+<td>Un ennemi. Plus aigu et plus rapide = plus proche. Les trois plus
+proches jouent à tour de rôle.</td>
+</tr>
+<tr>
+<td>Gros tambour grave</td>
+<td>Un boss. Tambours, gong et cor quand il arrive.</td>
+</tr>
+<tr>
+<td>Grognement</td>
+<td>Un ennemi est sur le point de vous atteindre.</td>
+</tr>
+<tr>
+<td>Gémissement montant</td>
+<td>Un ennemi prépare une attaque, de son côté.</td>
+</tr>
+<tr>
+<td><strong>Bourdonnement roulant</strong> (continu)</td>
+<td>La boule que vous pouvez rattraper. Marchez vers son côté ; il
+<strong>monte quand vous approchez de l’endroit où la boule va
+tomber</strong>, pulse plus vite quand la boule arrive sur vous, et il
+est plus doux tant que la boule peut encore rebondir sur un ennemi.</td>
+</tr>
+<tr>
+<td>Clic, le bourdonnement monte d’un cran</td>
+<td>Vous êtes sous la boule : restez là.</td>
+</tr>
+<tr>
+<td>Choc dans un gant</td>
+<td>Boule rattrapée.</td>
+</tr>
+<tr>
+<td>Choc sourd qui retombe</td>
+<td>Une boule vous a échappé.</td>
+</tr>
+<tr>
+<td>Bruit de culasse</td>
+<td>Vos boules sont revenues : vous pouvez tirer (silencieux avec le tir
+auto).</td>
+</tr>
+<tr>
+<td>Tintement de verre</td>
+<td>Le cristal d’EXP, l’or ou la ressource le plus proche vers lequel
+vous pouvez marcher. Ils ne se ramassent pas tout seuls.</td>
+</tr>
+<tr>
+<td>Scintillement de kalimba</td>
+<td>Un objet spécial : réacteur nucléaire, plan, œuf, rouage, soin,
+aimant, bombe, sac de gemmes.</td>
+</tr>
+<tr>
+<td><strong>Sifflement aérien</strong> (continu)</td>
+<td>Un tir ennemi qui vole près de vous, plus aigu à mesure qu’il
+approche. Plus fort quand il va vous toucher.</td>
+</tr>
+<tr>
+<td>Souffle et claquement</td>
+<td>Un tir va vous toucher : allez vers le côté où il sonne.</td>
+</tr>
+<tr>
+<td>Bourdonnement électrique / deux décharges</td>
+<td>Un laser vise / vous êtes dans son axe : allez vers le côté où il
+sonne.</td>
+</tr>
+<tr>
+<td>Sifflement descendant / grésillement de mèche</td>
+<td>Une bombe tombe tout près / elle va tomber sur vous : allez vers le
+côté où il sonne.</td>
+</tr>
+<tr>
+<td>Bruit visqueux</td>
+<td>Vous avez marché sur un danger au sol (son nom est annoncé).</td>
+</tr>
+<tr>
+<td>Coup de poing / gorgée</td>
+<td>Dégâts / soin.</td>
+</tr>
+<tr>
+<td>Battement de cœur</td>
+<td>Vie basse ; plus rapide quand elle est très basse.</td>
+</tr>
+<tr>
+<td>Ondulation vertigineuse</td>
+<td>Un effet d’état vous a touché.</td>
+</tr>
+<tr>
+<td>Deux notes de cloche montantes</td>
+<td>Un gain de niveau est prêt (appuyez sur E).</td>
+</tr>
+<tr>
+<td>Toc sur du bois</td>
+<td>Bord latéral de l’arène (aussi la fin d’une liste de menu).</td>
+</tr>
+<tr>
+<td>Toc sur du métal</td>
+<td>Limite avant ou arrière de votre zone de déplacement.</td>
+</tr>
+<tr>
+<td>Clic d’interrupteur</td>
+<td>L’aide à la visée a changé de cible, du côté de la nouvelle.</td>
+</tr>
+</tbody>
+</table>
+<p>Chacun de ces sons peut s’écouter dans <strong>F4 → Guide des
+sons</strong>, avec flèche gauche / flèche droite pour l’entendre de
+chaque côté.</p>
+<h2 id="sound-filters-number-keys">Filtres de son (touches
+numériques)</h2>
+<p>En combat, les touches numériques coupent ou rétablissent un groupe
+de sons pour vous aider à vous concentrer. Le jeu n’utilise aucune de
+ces touches.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Touche</th>
+<th>Groupe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Ennemis : tambours, grognement, préparation d’attaque, arrivée d’un
+boss</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Boules : bourdonnement roulant, clic, rattrapage, boule manquée,
+bruit de culasse</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Récompenses : cristaux, or, ressources, objets spéciaux</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Tirs et dangers</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Bords de l’arène</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Votre vie : dégâts, soin, battements de cœur, états</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Clic de l’aide à la visée</td>
+</tr>
+<tr>
+<td>0</td>
+<td>Tout rétablir</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Chaque chiffre active ou coupe son propre groupe, indépendamment des
+autres.</li>
+<li><strong>Ctrl+chiffre</strong> ne garde que ce groupe. Exemple :
+seulement les ennemis et les récompenses = Ctrl+1, puis 3.</li>
+<li>Votre choix est conservé pour la session suivante. Quand un combat
+commence avec des sons coupés, le mod dit lesquels.</li>
+<li>Couper ne change que les sons : les touches H, J, P, N répondent
+toujours et l’aide au rattrapage esquive toujours.</li>
+</ul>
+<h2 id="assists">Aides</h2>
+<p>Tout ce que fait une aide peut aussi se faire à l’oreille ; les aides
+sont là quand vous en voulez.</p>
+<ul>
+<li><strong>Aide à la visée</strong> (F5 change le mode) : vise pour
+vous l’ennemi le plus proche (par défaut), l’ennemi le plus fort,
+l’ennemi devant vous, un angle fixe, ou désactivée (souris). Les flèches
+l’ajustent.</li>
+<li><strong>Aide au rattrapage</strong> (maintenir Maj) : votre
+personnage va sous la prochaine boule qui descend ; si aucune boule
+n’arrive, il va au cristal ou à l’objet le plus proche ; si un tir est
+sur le point de vous toucher, il s’écarte d’abord. W / S vous font
+toujours avancer et reculer, A / D reprennent toujours la main. Dans F4,
+elle peut être désactivée, sur « maintenir Maj » (par défaut) ou
+automatique.</li>
+</ul>
+<h2 id="mod-settings-f4">Paramètres du mod (F4)</h2>
+<p>Flèche haut / flèche bas pour se déplacer, flèche gauche / flèche
+droite ou Entrée pour modifier, Échap ferme. Les paramètres sont
+enregistrés.</p>
+<ul>
+<li>Mode de l’aide à la visée</li>
+<li>Aide au rattrapage : désactivée, maintenir Maj, automatique</li>
+<li>Signaux sonores activés / désactivés, volume des signaux</li>
+<li>Radar des ennemis, sons des boules, bords de l’arène, tirs et
+dangers (activé / désactivé)</li>
+<li>Sons des objets à ramasser : désactivés, objets spéciaux seulement,
+tous</li>
+<li>Sons de vie, clic de l’aide à la visée (activé / désactivé)</li>
+<li>Lire la description des améliorations au focus</li>
+<li>Guide des sons (Entrée l’ouvre)</li>
+<li>Journal de débogage</li>
+</ul>
+<h2 id="tips-for-a-first-run">Conseils pour une première expédition</h2>
+<ul>
+<li><strong>Rattrapez vos boules.</strong> Une boule rattrapée peut être
+relancée aussitôt ; une boule manquée met 2 à 3 secondes à revenir.
+Suivez le bourdonnement roulant jusqu’au clic, puis ne bougez plus.</li>
+<li><strong>Ramassez vos cristaux d’EXP.</strong> Ils ne se ramassent
+pas tout seuls. Suivez le tintement de verre ; étouffé veut dire que
+c’est derrière vous.</li>
+<li><strong>Survivez d’abord.</strong> En début d’expédition, rester en
+vie compte plus que les dégâts.</li>
+<li><strong>Fusionnez et faites évoluer</strong> vos boules quand le
+gain de niveau le propose : les choix disent « fusion » ou « évolution
+».</li>
+<li><strong>Ralentissez pour les boss</strong> avec la touche moins. Le
+mod vous le rappelle quand un boss arrive à une vitesse élevée.</li>
+<li>Mourir est normal : l’or que vous rapportez sert à construire
+Nouvelle-Baboulone, et les bâtiments rendent chaque expédition suivante
+plus forte.</li>
+</ul>
+<h2 id="known-limits">Limites connues</h2>
+<ul>
+<li>Le lanceur automatique de la base demande encore la souris.</li>
+<li>Les classements et les votes Twitch ne sont lus que de façon
+basique. On ne peut pas passer les crédits.</li>
+<li>Les paramètres du mod sont sur F4, pas dans l’écran d’options du
+jeu.</li>
+<li>Les textes propres au mod dans les langues autres que l’anglais et
+l’espagnol ont été traduits sans relecture par une personne de langue
+maternelle pour l’instant, le français compris. Les corrections sont les
+bienvenues. Les noms venant du jeu (bâtiments, boules, ennemis,
+améliorations) viennent toujours de la traduction du jeu lui-même.</li>
+<li>Les volumes des sons, leurs rythmes et la largeur de rattrapage
+n’ont pas encore été réglés avec des joueurs.</li>
+</ul>
+<h2 id="reporting-a-problem">Signaler un problème</h2>
+<p>Fichiers utiles, dans le dossier du jeu :</p>
+<ul>
+<li><code>UserData\BallPitAccess\speech.log</code> : tout ce que le mod
+a dit.</li>
+<li><code>MelonLoader\Latest.log</code> : le journal du mod (erreurs,
+écrans, boules rattrapées et manquées).</li>
+<li>En combat, <strong>Ctrl+Maj+D</strong> écrit
+<code>UserData\BallPitAccess\threats.txt</code> (ennemis, boules, tirs,
+objets avec leurs positions) et la liste de l’écran ouvert dans
+<code>Latest.log</code> : utile quand un son indique la mauvaise
+direction ou qu’un menu se lit dans le mauvais ordre.</li>
+</ul>
+<p>Dites ce que vous avez fait, ce que vous avez entendu et ce à quoi
+vous vous attendiez.</p>
+<h2 id="credits">Crédits</h2>
+<ul>
+<li>BALL x PIT de Kenny Sun, édité par Devolver Digital. Ce mod n’est
+pas officiel.</li>
+<li>MelonLoader (LavaGang) charge le mod. Prism envoie la parole à votre
+lecteur d’écran.</li>
+</ul>
+</body>
+</html>

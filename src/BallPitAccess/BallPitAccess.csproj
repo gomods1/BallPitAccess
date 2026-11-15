@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>BallPitAccess</AssemblyName>
+    <RootNamespace>BallPitAccess</RootNamespace>
+    <NoWarn>CS0618;CS8632</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sounds\*.wav" LogicalName="Sounds.%(Filename).wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="$(MLDir)\Il2CppAssemblies\*.dll" Private="false" />
+  </ItemGroup>
+</Project>
