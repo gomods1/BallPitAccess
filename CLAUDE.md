@@ -115,6 +115,14 @@ Blind accessibility mod for **BALL x PIT** (Kenny Sun / Devolver), following
 ## Build, deploy, test
 
 - `tools/deploy.sh [nolaunch]`: build, stop the game, copy, relaunch. `tools/launch.ps1`.
+- **Release** (public repo `gomods1/BallPitAccess`): bump the version in `Main.cs` (MelonInfo), the
+  version line of every README and a `## X.Y.Z` section in `CHANGELOG.md` (the release notes), run
+  `tools/release.sh` (stages `release/payload`, committed because CI cannot build against the game's
+  assemblies), commit, `git tag vX.Y.Z && git push --follow-tags`. The workflow adds MelonLoader 0.7.3 and
+  Prism 0.18.3 (checked by SHA-256) and attaches `installer/BallPitAccessibilityInstaller.exe`, built in
+  `../installer` (game index 10; `tools/release.sh installer` copies a new build). If the installer's
+  wxWidgets build fails on a missing `link.exe` 14.51, delete the stale `CMakeCache.txt` under
+  `target/*/wxdragon_sys_cmake_build/build` and build inside `vcvars64.bat`.
 - `tools/check_loc.py`: duplicate / missing mod strings (a duplicate key crashes the mod at load).
 - `tools/keys.py`: SendInput by scan code. **It brings the game window to the front: tell the user first.**
 - `tools/shot.ps1`: window screenshot → `shots/latest.png`. `tools/api.py Class...`: member summary from
