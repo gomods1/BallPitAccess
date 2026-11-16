@@ -1,7 +1,7 @@
 #!/bin/sh
 # Stage a release: build the mod, check the strings, rebuild the READMEs and copy what ships into
 # release/payload (committed; GitHub cannot build the mod, it references the game's own assemblies).
-# Then:  git commit -am "Release X.Y.Z" && git tag vX.Y.Z && git push --follow-tags
+# Then:  git commit -am "Release X.Y.Z" && git tag -a vX.Y.Z -m vX.Y.Z && git push --follow-tags
 # The Release workflow adds MelonLoader 0.7.3 and Prism 0.18.3 (official downloads, checked by
 # SHA-256), zips it as BallPitAccess-vX.Y.Z.zip and attaches installer/BallPitAccessibilityInstaller.exe.
 # The installer is built in ../installer (build_installer.bat) and only needs copying when it changes:
