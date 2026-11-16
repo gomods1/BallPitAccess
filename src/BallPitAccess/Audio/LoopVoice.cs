@@ -19,6 +19,7 @@ namespace BallPitAccess.Audio
         // Set from the game thread.
         public volatile float Pan, Pitch = 1f, Gain, Muffle, Pulse;
         internal volatile bool Stopped;
+        internal string Name;          // cue name, for "what was that?"
 
         // Audio thread state.
         internal float[] Samples;

@@ -26,6 +26,7 @@ namespace BallPitAccess.Game
         internal static Mode Current => (Mode)Math.Max(0, Math.Min((int)Mode.Count - 1, Config.CatchMode));
 
         private static bool _active, _logged, _useSetPos;
+        internal static bool Active => _active;
         private static float _pushSince = -1f, _pushStartX;
         private static float _speed = 6f;          // world units per game second; learned from the player's own walking
         private static float _lastX, _lastT = -1f;
@@ -53,7 +54,7 @@ namespace BallPitAccess.Game
             bool fwd = Keys.Down('W'), back = Keys.Down('S');
             LearnSpeed(p, left || right);
 
-            bool held = Keys.Shift && !Keys.Ctrl && !Keys.Alt;
+            bool held = Bindings.Down("catch") && !Keys.Ctrl && !Keys.Alt;
             bool want = Current == Mode.Hold ? held : held || (!left && !right);
             if (!want || left || right) { Release(); return; }
 
@@ -61,6 +62,12 @@ namespace BallPitAccess.Game
             Vector3 pos = Battle.PlayerPos;
             if (Hazards.Dodging)
                 x = Hazards.DodgeDir;
+            else if (held && Battle.Hurt && Pickups.NearestHealth(out var heal))
+            {
+                // Hurt and a health item is lying in reach: it matters more than one catch.
+                x = Steer(heal.x - pos.x);
+                if (y == 0f) y = Steer(heal.y - pos.y);
+            }
             else if (Battle.BallComing)
             {
                 float off = Battle.BallLandX - pos.x;

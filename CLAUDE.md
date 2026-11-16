@@ -65,7 +65,9 @@ Blind accessibility mod for **BALL x PIT** (Kenny Sun / Devolver), following
   - `Audio/`: `AudioEngine` (winmm waveOut, own stream), `Cues` (loads the genny WAVs embedded from
     `Sounds/`, made by `tools/make_cues.py`; `UserData/BallPitAccess/sounds/*.wav` overrides; see CUES.md).
     One physical family per cue category: never make two categories out of the same kind of blip.
-  - `Input/`: `Keys` (GetAsyncKeyState, only while the game window is in front), `ModKeys` (F-keys,
+  - `Input/`: `Keys` (GetAsyncKeyState, only while the game window is in front; `Name(vk)` = Windows key
+    name), `Bindings` (every mod hotkey is remappable from F4 → Keys: read keys as `Bindings.Pressed("id")`,
+    never a hard-coded letter or F-key; a new key = a new `Add` + `key_<id>` string), `ModKeys` (F-keys,
     Ctrl+arrows, HUD letters, battle arrows = aim, help / settings / sound guide lists; mutes Rewired
     keyboard maps while a mod list is open).
   - `Game/`: `Battle` (state, radar, ball cues, edges, boss, status, level ups, HUD keys), `Hazards`
@@ -89,8 +91,8 @@ Blind accessibility mod for **BALL x PIT** (Kenny Sun / Devolver), following
   The list of each screen is logged at `List (ScreenClass): …` when the screen opens, and Ctrl+Shift+D
   logs `List (dump)` for the screen as it is now.
 - `prism.dll` (x64, Prism 0.18.3) lives in the game folder next to `Balls.exe`.
-- Cue rules: pan = side, pitch = closeness, **muffled = behind** (`Battle.Muffle`), and a cue that asks
-  the player to walk points the way to go (`Battle.GuidePan`; `_hit` cues = side to step to). Things that
+- Cue rules: pan = side, pitch = closeness, **muffled = behind** (`Battle.Muffle`), always **relative to the hero, where the thing is**
+  (`Battle.PanFor`): never pan a cue to "the side to go to" (user, 2026-11-16, the guide pan was removed). Things that
   move continuously (balls, shots) are continuous loops (`Audio/LoopVoice`, `loop_*` WAVs) updated every
   frame; things that change in steps stay one-shots. CUES.md.
 - Assists are optional helpers, never the way to play (user, 2026-11-15: "not fun if all you do is
@@ -123,6 +125,10 @@ Blind accessibility mod for **BALL x PIT** (Kenny Sun / Devolver), following
   `../installer` (game index 10; `tools/release.sh installer` copies a new build). If the installer's
   wxWidgets build fails on a missing `link.exe` 14.51, delete the stale `CMakeCache.txt` under
   `target/*/wxdragon_sys_cmake_build/build` and build inside `vcvars64.bat`.
+- **Telemetry**: F4 → "Record battles" (or `Telemetry = true` under `[BallPitAccess]` in
+  `UserData/MelonPreferences.cfg`) records every battle to `UserData/BallPitAccess/telemetry.tsv`; `python tools/telemetry_report.py [file]` and
+  `tools/ball_lifecycle.py` analyse it. Measure before tuning a cue. MelonLoader saves preferences on quit:
+  edit the cfg only while the game is closed.
 - `tools/check_loc.py`: duplicate / missing mod strings (a duplicate key crashes the mod at load).
 - `tools/keys.py`: SendInput by scan code. **It brings the game window to the front: tell the user first.**
 - `tools/shot.ps1`: window screenshot → `shots/latest.png`. `tools/api.py Class...`: member summary from
@@ -165,7 +171,9 @@ No game file was replaced.
   buttons stay clickable beside a popup (battle speed buttons) and are not part of it.
 - The level-up details panel's visible texts are objects named `TxUpgName` / `TxUpgDesc` / `TxUpgTitle`
   (`LevelUpUI.LocDetailsDesc` is not the one shown); a bare translation loses its numbers because the
-  `{[PARAM]}` placeholders are dropped. `FocusReadout.Retry` makes `MenuReader` look again shortly.
+  `{[PARAM]}` placeholders are dropped. `FocusReadout.Retry` makes `MenuReader` look again shortly. Every details panel that follows
+  the hover lags the same way: a reader that copies one calls `Readers.PanelBehind` (panel still shows
+  what it showed for another item → `Retry`; logged as `Panel behind the focus`).
 - `MenuReader` waits while `Navigator.Settling` (a screen or page announcement is pending) and stays
   quiet in a battle unless a screen is open.
 - Ctrl+Shift+D writes `List (dump)` with the raw texts of the open screen to `Latest.log`.

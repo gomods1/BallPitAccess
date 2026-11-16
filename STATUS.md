@@ -204,6 +204,88 @@ the 14 language links checked. Final pass: the fuser pickup uses the game's own 
 glyph is now `key_escape` per language. Open: en / es still say "fuser" / "fusionador" while the game
 says "Fusion Reactor" / "Reactor de fusión" (left for the user to decide).
 
+### Session 7 (2026-11-15): feedback from a public player (voice note, Mexican Spanish), written, not run
+Transcribed with whisper (medium, es). The player: sounds get confused and they cannot tell which to
+mute because all are useful; wants to remap at least the mod's keys; the speed keys do not work on a
+Mexican Spanish layout ("=" is Shift+0 there; the game's Rewired binds kEqual / kMinus); cannot pick up
+"health crystals" by walking. Likes the base and the theme.
+- **Remappable mod keys** (`Input/Bindings.cs`, MelonPreferences `[BallPitAccess_Keys]`, VK codes): every
+  F-key, HUD letter, filter digit, the catch hold key, and the new keys below. F4 → Keys: Enter + new key,
+  Delete = default, last line = reset all; a taken key swaps; reserved keys (navigation, game keys
+  W A S D F E R X Space) are refused. F1 ends with a generated "keys as set now" section. Key names from
+  `GetKeyNameTextW` (Windows language). Arrows / Enter / Tab / Backspace stay fixed.
+- **Speed keys** Num + / Num - in battle (`Battle.StepSpeed`): click the active HUD `GameSpeedBtn` next to
+  the current speed; fallback steps `GameSpeed` via `PlayerPrefsMgr.SetGameSpeed`. Boss hint names it.
+- **Pickups, verified in GameAssembly.dll** (Cpp2IL dummy DLLs in
+  `MelonLoader/Dependencies/Il2CppAssemblyGenerator/Cpp2IL/cpp2il_out` carry `[Address(RVA=…)]`; disassemble
+  with capstone + pefile, code is in the `il2cpp` section, not `.text`): **every item is collected by
+  walking**. `GridUtl.IsPlayerPickup` is a shared `return true` stub; `Player.MyUpdate` collects every
+  pickup collider within range (no type check); `PickupObj.StartPlayerPickUp` only acts in `kIdle` (not
+  while `kDropping`); `PickupMgr.BallHitPickup` calls `ArrowObj.Damage` (balls vs enemy shots), so balls
+  never collect items. `GetMaxPickupY` = `Player.GetMaxY() - 2.125`, `GetMinPickupY` = `GetMinY() - 0.33`:
+  items always land inside the walking area. A "hit it with a ball" feature written on a wrong guess was
+  removed the same day. Likely cause of the player's trouble: the catch assist went to items only when no
+  ball was coming; now, when hurt (`Battle.Hurt`), it fetches a `kHealth` item first.
+- **Aim assist** (second voice note: "drifts a little", "autofire takes long to kill, I have to shoot
+  myself, bad with bosses"): aims at a clear point of the target's `GridPieceObj.Col` bounds (centre, then
+  further along its width; line checked against every other enemy's bounds + 0.22 ball margin; boss parts
+  do not hide the boss), skips targets whose direction `ClampAimDir` would change by over 3°, and the
+  default mode ("closest enemy, boss first") prefers a boss unless a non-boss is within 1.5 rows of the
+  attack line. `Aim drift:` lines in Latest.log (max 40) when `BallMgr.GetCurAimDir` stays >3° off the
+  assist's direction: tells whether the game turns the aim slowly. Not run yet.
+- **Q = what was that**: `Cues` remembers one-shots (4 s) and live loops; Q speaks up to four distinct
+  kinds, newest first, with the first sentence of their sound-guide line and side / behind.
+- 36 new strings in all 15 tables; README in every language: new keys, "Changing the keys" section,
+  the assists' new behaviour.
+Not done: the sound design itself (the player's "more clarity") beyond Q; ask them which sounds blur.
+
+### Session 7, later: telemetry runs (verified in the running game, driven by script)
+`Game/Telemetry.cs` (MelonPreferences `Telemetry = true`, off by default) writes `telemetry.tsv`: every cue,
+spoken line, loop state, ball / enemy / item / shot positions every 0.1 s, ball state changes (`BallObj.SetState`
+patch, telemetry only) and removals. `tools/telemetry_report.py` (density, overlaps, warned hits, catching,
+items, speech, aim) and `tools/ball_lifecycle.py` (how balls end, catch width). Three auto-played runs of
+El Campo x Santo with the Warrior, catch assist automatic, autofire, all cue groups on; the driver
+(scratchpad `drive_run.py`, not in the repo) answers popups from the `ev state` records.
+**Facts learned:**
+- **Catching** (verified): the game never uses `BallReturnType.kCatch`. A ball that touches the hero turns
+  `kReturning` right at the hero; one that gets past flies on to the floor ~4 units below the hero and turns
+  there; both fly home in ~0.65 s and are removed with `kNormal`. Catch width: crossing the hero row within
+  ~0.4 of its centre (67 of 105 catches; 8 of 150 misses). The mod counted every ball as missed and never
+  played the catch cue. Fixed in `Battle.PredictBall` (catch = turned home within 1.2 below the hero row),
+  `CatchHalfWidth` 0.65 → 0.45. Auto-play catches 56%.
+- Fuser / treasure result screen: Enter on a result item did nothing (Continue "Wow" is in the next group);
+  Enter there now presses it (`Navigator.Activate`). Not re-run after the change.
+**Cue changes from the data** (run 1 → run 3, ~3.5 min each): cues 2642 → 1237; one-shots/s median 9 → 5,
+seconds with 8+ 59% → 21%; `shot_hit` 316 → 40 (one per shot, within 1.5 s of impact; 255 were repeats
+< 400 ms); masked alarms 302/348 → 34/61; wall knocks 139 → 0 (dodge side kept while dodging; knock
+re-arms after 0.3 away, silent while the assist walks); radar 394 → 206/min (sweep 0.35 + rows × 0.18 up to
+2.2 s, extra drums only within 4 rows, no sweep within 0.6 s of an alarm); crystal tink silent while a ball
+is coming; aim target sticky (switch only for 1.5 rows better), retarget 36 → 27/min.
+**Still open (from run 3):** radar is still the most frequent cue (206/min) and lands on the crystal tinks
+(126 overlaps); retarget clicks follow kills (~1 per kill); XP crystals pile up (16 on the field on
+average: nothing collects them while balls keep coming; the assist walks to them only on Shift with no ball
+coming); the auto-player dies at ~4 min with 8 hits, all but one warned ~2.2 s ahead.
+
+### Session 7, offline follow-up (built, not run: the user needed the machine)
+From run 3's recording, without launching the game:
+- **Radar**: enemies were within 4 rows 74% of the battle (median nearest 2.7 rows), so 2.5 drums a sweep at
+  65 sweeps/min. Now: sweep 0.45 + rows × 0.2 (0.5–2.2 s); second / third drum only within 3 rows and not
+  when it repeats an earlier drum's (pitch step, side); a sweep whose (boss, step, side) list equals the last
+  one plays only the nearest drum (a full sweep at least every 4 s). Replaying run 3's enemy records through
+  old and new rules (scratchpad `radar_sim.py`): 146 → 62 drums/min (run 1: 85 → 41). `Battle.RadarBusyUntil`
+  / `NextSweep`: the crystal tink and the special-item beacon wait for a sweep.
+- **Crystals**: they never expire in a run (oldest seen 87 s) and lie mostly 1–4 rows ahead of the hero, in
+  heaps where enemies died; idle ones vanish only when the hero walks over them. `Pickups.BestPlain`: the
+  tink and the catch assist go for the nearest, or a heap a little further (each neighbour within 1 unit =
+  0.7 units less walking).
+- **Retarget**: 85 of 93 target changes followed a kill; the next target was a median 2.25 units away. After
+  a kill the click is now silent with autofire, and by hand only when the aim moves > 1.5 columns.
+- **Telemetry in the mod menu**: F4 → last item ("Record battles…"), `Telemetry.Toggle` opens / closes the
+  file at once (appends mid-session); each launch starts a new file and copies the last to
+  `telemetry.prev.tsv`. README settings and "Reporting a problem" list it.
+**To check in game:** the radar still tells a new enemy arriving (a full sweep on any change), no tink lands
+on a drum, the catch assist does not dither between two heaps, and the F4 toggle creates the file mid-battle.
+
 ### Guesses to confirm in game (highest risk first)
 0. Catch assist: does `InputXOverride` move the hero (log line above)? Does the hero stop under the ball
    and catch it (glove thud)? Does it dodge before catching?
@@ -238,3 +320,13 @@ says "Fusion Reactor" / "Reactor de fusión" (left for the user to decide).
 3. Settle the eight guesses above; delete or correct each in this file.
 4. Idle launcher aim; leaderboard rows; a "BALL x PIT Access" entry in the game's settings.
 5. Remaining languages; README; a full blindfold run from main menu to a boss.
+
+### Session 8 (2026-11-16): every cue relative to the hero, the guide pan removed
+The user read the README line "a sound that asks you to move comes from the side to go to" and rejected
+it: a sound has to come from where its thing is, relative to the hero (left = left, behind = behind), pan
+and pitch by the distance to it. `Battle.GuidePan` is gone; the ball hum, both pickup beacons and the
+`_hit` cues use `Battle.PanFor` + `Battle.Muffle` of the thing (ball: where the ball is now, pitch = its distance,
+at the user's request: "the player can tell roughly where it will go"; the landing spot is only the click;
+shot: the shot; laser: its emitter; bomb: where it lands). Pickup pitch is now by straight-line distance.
+`Hazards.DodgePan` survives only to pick `DodgeDir` for the catch assist. Help, sound guide and READMEs
+rewritten in every language. Built, not run.

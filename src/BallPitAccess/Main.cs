@@ -22,6 +22,8 @@ namespace BallPitAccess
             Log.Info("BALL x PIT Access " + Info.Version + " build " + System.IO.File.GetLastWriteTime(typeof(Main).Assembly.Location).ToString("yyyy-MM-dd HH:mm:ss") +
                      ", " + (IntPtr.Size * 8) + "-bit, exe " + System.Diagnostics.Process.GetCurrentProcess().MainModule?.FileName);
             Config.Init();
+            Input.Bindings.Init();
+            Game.Telemetry.Init();
             string bisect = "";
             try { bisect = System.IO.File.ReadAllText(System.IO.Path.Combine(Log.Dir, "bisect.txt")); } catch { }
             if (bisect.Length > 0) Log.Info("bisect: " + bisect);
@@ -78,6 +80,7 @@ namespace BallPitAccess
                     Tutorial.Update();
                     Navigator.Update();
                     if (!ModKeys.ListOpen) MenuReader.Update();
+                    Telemetry.Update();
                     if (!_gameLogged) Log.Info("game steps ok");
                     _gameLogged = true;
                 }
@@ -95,6 +98,7 @@ namespace BallPitAccess
         {
             Audio.AudioEngine.Stop();
             Speech.Shutdown();
+            Telemetry.Close();
         }
     }
 }

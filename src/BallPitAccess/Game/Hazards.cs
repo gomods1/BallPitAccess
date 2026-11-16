@@ -36,7 +36,15 @@ namespace BallPitAccess.Game
 
         private static void MarkDodge(float x)
         {
-            DodgeDir = Math.Sign(DodgePan(x));
+            // Keep the side chosen for this dodge while it lasts, unless the hero has run out of room there:
+            // recomputing every scan flipped it near a wall and the hero bounced off the wall (135 knocks a run).
+            int dir = Math.Sign(DodgePan(x));
+            if (Dodging && DodgeDir != 0)
+            {
+                float room = DodgeDir > 0 ? Battle.RightX - Battle.PlayerPos.x : Battle.PlayerPos.x - Battle.LeftX;
+                if (room > 0.3f) dir = DodgeDir;
+            }
+            DodgeDir = dir;
             _dodgeAt = Time.unscaledTime;
         }
 
@@ -68,9 +76,9 @@ namespace BallPitAccess.Game
 
         /// <summary>Every hazard sound goes through here: muted by the hazard filter (number key 4), while the
         /// scan goes on for the catch assist and the N key.</summary>
-        private static void Play(string name, float pan = 0f, float gain = 1f)
+        private static void Play(string name, float pan = 0f, float gain = 1f, float muffle = 0f)
         {
-            if (Config.HazardCues) Cues.Play(name, pan, gain);
+            if (Config.HazardCues) Cues.Play(name, pan, gain, muffle);
         }
 
         internal static void Update()
@@ -93,7 +101,7 @@ namespace BallPitAccess.Game
                 hit |= ScanLasers(now);
                 hit |= ScanBombs(now);
                 if (now >= _nextFloor) { _nextFloor = now + 0.3f; ScanFloor(); }
-                if (hit && now >= _nextHit) _nextHit = now + 0.28f;
+                if (hit && now >= _nextHit) _nextHit = now + 0.5f;
             }
             catch (Exception ex)
             {
@@ -110,12 +118,28 @@ namespace BallPitAccess.Game
             return Vector2.Distance(closest, p);
         }
 
+        private static readonly List<Vector4> ShotList = new List<Vector4>();
+        // Shot speed from its movement between scans, and the shots already announced as "will hit".
+        private struct ShotSeen { public Vector2 Pos; public float T; public float Speed; }
+        private static readonly Dictionary<IntPtr, ShotSeen> ShotsSeen = new Dictionary<IntPtr, ShotSeen>();
+        private static readonly HashSet<IntPtr> ShotsWarned = new HashSet<IntPtr>();
+        private static readonly HashSet<IntPtr> ShotsNow = new HashSet<IntPtr>();
+
+        /// <summary>When the last "will hit" alarm sounded (the radar keeps quiet around it so it is not masked).</summary>
+        internal static float LastAlarm { get; private set; } = -10f;
+
+        /// <summary>Enemy shots of the last scan: x, y, direction x, direction y (telemetry).</summary>
+        internal static List<Vector4> ShotPositions() => ShotList;
+
         private static bool ScanShots(float now)
         {
             var arrows = UnityEngine.Object.FindObjectsOfType<ArrowObj>();
             _shots = 0;
-            float bestAlong = float.MaxValue, bestMiss = 0, bestX = 0, realAlong = 0;
+            ShotList.Clear();
+            float bestAlong = float.MaxValue, bestMiss = 0, bestX = 0, realAlong = 0, bestSpeed = 0;
             Vector3 bestPos = Vector3.zero;
+            IntPtr bestPtr = IntPtr.Zero;
+            ShotsNow.Clear();
             bool any = false;
             foreach (var a in arrows)
             {
@@ -124,7 +148,14 @@ namespace BallPitAccess.Game
                 try { friendly = a.IsFriendly() || a.IsReflected; } catch { friendly = false; }
                 if (friendly) continue;
                 _shots++;
+                ShotsNow.Add(a.Pointer);
+                Vector2 pos2 = a.transform.position;
+                float spd = 0f;
+                if (ShotsSeen.TryGetValue(a.Pointer, out var seen) && now - seen.T > 0.01f)
+                    spd = Mathf.Lerp(seen.Speed > 0f ? seen.Speed : Vector2.Distance(pos2, seen.Pos) / (now - seen.T), Vector2.Distance(pos2, seen.Pos) / (now - seen.T), 0.5f);
+                ShotsSeen[a.Pointer] = new ShotSeen { Pos = pos2, T = now, Speed = spd };
                 Vector3 d3 = a.AimDir;
+                if (ShotList.Count < 40) { var ap = a.transform.position; ShotList.Add(new Vector4(ap.x, ap.y, d3.x, d3.y)); }
                 Vector2 dir = new Vector2(d3.x, d3.y);
                 if (dir.sqrMagnitude < 0.0001f) continue;
                 dir.Normalize();
@@ -136,8 +167,15 @@ namespace BallPitAccess.Game
                 if (rank < bestAlong)
                 {
                     bestAlong = rank; bestMiss = miss; bestX = hits ? a.transform.position.x : closest.x; any = true;
-                    realAlong = along; bestPos = a.transform.position;
+                    realAlong = along; bestPos = a.transform.position; bestPtr = a.Pointer; bestSpeed = spd;
                 }
+            }
+            // Forget shots that are gone.
+            if (ShotsSeen.Count > ShotsNow.Count)
+            {
+                var gone = new List<IntPtr>();
+                foreach (var k in ShotsSeen.Keys) if (!ShotsNow.Contains(k)) gone.Add(k);
+                foreach (var k in gone) { ShotsSeen.Remove(k); ShotsWarned.Remove(k); }
             }
             if (!any) { ShotLoopOff(); return false; }
             bool willHit = bestAlong < 100f;
@@ -145,7 +183,10 @@ namespace BallPitAccess.Game
             if (willHit)
             {
                 MarkDodge(bestX);
-                if (now >= _nextHit) Play("shot_hit", DodgePan(bestX), 1f);
+                // One alarm per shot (telemetry: the same shot re-alarmed every 0.28 s, 316 alarms for 8 hits),
+                // and only once it is close: within 1.5 s of reaching the hero, or 4 rows if its speed is unknown.
+                bool soon = bestSpeed > 0.1f ? realAlong / bestSpeed < 1.5f : realAlong < Battle.RowH * 4f;
+                if (soon && ShotsWarned.Add(bestPtr)) { Play("shot_hit", Battle.PanFor(bestPos.x), 1f, Battle.Muffle(bestPos.y)); LastAlarm = now; }
                 return true;
             }
             return false;
@@ -175,9 +216,9 @@ namespace BallPitAccess.Game
         }
 
         /// <summary>
-        /// Pan for a thing about to hit the hero: the side to step to (every cue points where to go, CUES.md),
-        /// never dead centre. Away from the threat; dead on, or when that side has less than a column of room,
-        /// toward the side with more room.
+        /// The side the catch assist steps to out of a hit. Not a sound pan: every cue sounds where its thing
+        /// is, relative to the hero (CUES.md). Away from the threat; dead on, or when that side has less than a
+        /// column of room, toward the side with more room.
         /// </summary>
         private static float DodgePan(float x)
         {
@@ -200,6 +241,7 @@ namespace BallPitAccess.Game
             _lasers = 0;
             bool inBeam = false;
             float beamX = 0;
+            Vector3 beamFrom = Vector3.zero;
             foreach (var l in lasers)
             {
                 if (l == null || !l.isActiveAndEnabled) continue;
@@ -215,13 +257,13 @@ namespace BallPitAccess.Game
                 float len = l.Length > 0.1f ? l.Length : 100f;
                 bool reaches = along > 0f && along < len + 0.5f;
                 bool hits = reaches && miss < l.Width * 0.5f + Player.kColHalfWidth + 0.15f;
-                if (hits) { inBeam = true; beamX = closest.x; }
+                if (hits) { inBeam = true; beamX = closest.x; beamFrom = start; }
                 if (LasersSeen.Add(l.Pointer) && !hits)
                     Play("beam", Battle.PanFor(reaches ? closest.x : start.x), 0.9f);
             }
             LasersSeen.IntersectWith(LasersNow);
             if (inBeam) MarkDodge(beamX);
-            if (inBeam && now >= _nextHit) Play("beam_hit", DodgePan(beamX), 1f);
+            if (inBeam && now >= _nextHit) { Play("beam_hit", Battle.PanFor(beamFrom.x), 1f, Battle.Muffle(beamFrom.y)); LastAlarm = now; }
             return inBeam;
         }
 
@@ -229,6 +271,7 @@ namespace BallPitAccess.Game
         {
             bool inBlast = false;
             float blastX = 0;
+            Vector3 blastAt = Vector3.zero;
             lock (Bombs)
             {
                 for (int i = Bombs.Count - 1; i >= 0; i--)
@@ -237,7 +280,7 @@ namespace BallPitAccess.Game
                     if (now > b.Until) { Bombs.RemoveAt(i); continue; }
                     float d = Vector2.Distance(b.Target, Battle.PlayerPos);
                     bool hits = d < b.Radius + Player.kColHalfWidth + 0.2f;
-                    if (hits) { inBlast = true; blastX = b.Target.x; }
+                    if (hits) { inBlast = true; blastX = b.Target.x; blastAt = b.Target; }
                     if (!b.Announced)
                     {
                         b.Announced = true;
@@ -246,7 +289,7 @@ namespace BallPitAccess.Game
                 }
             }
             if (inBlast) MarkDodge(blastX);
-            if (inBlast && now >= _nextHit) Play("bomb_hit", DodgePan(blastX), 1f);
+            if (inBlast && now >= _nextHit) { Play("bomb_hit", Battle.PanFor(blastAt.x), 1f, Battle.Muffle(blastAt.y)); LastAlarm = now; }
             return inBlast;
         }
 

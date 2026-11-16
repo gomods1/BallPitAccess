@@ -30,6 +30,7 @@ Mod **oyunun sunduğu tüm dilleri** konuşur ve oyunun dil ayarını izler.
 - [Ses filtreleri (rakam tuşları)](#sound-filters-number-keys)
 - [Yardımlar](#assists)
 - [Mod ayarları (F4)](#mod-settings-f4)
+- [Tuşları değiştirme](#changing-keys)
 - [İlk tur için ipuçları](#tips-for-a-first-run)
 - [Bilinen sınırlamalar](#known-limits)
 - [Sorun bildirme](#reporting-a-problem)
@@ -141,7 +142,7 @@ Sıra hiçbir zaman ögelerin ekranda nereye çizildiğine bağlı değildir.
 | Boşluk | Ateş et (basılı tut) |
 | F | Oto saldırı açık / kapalı |
 | E | Hazır olduğunda seviye atlamayı aç |
-| = / - (eşittir / eksi) | Oyun hızını artır / azalt |
+| = / - (eşittir / eksi) | Oyun hızını artır / azalt (bazı klavye düzenlerinde bulunmaz: modun aşağıdaki Num + / Num - tuşlarını kullan) |
 | Esc | Duraklat |
 
 ### Mod tuşları {#mod-keys}
@@ -161,39 +162,43 @@ Sıra hiçbir zaman ögelerin ekranda nereye çizildiğine bağlı değildir.
 | B | Topların ve pasiflerin |
 | P | Sahadaki eşyalar |
 | N | Tehlikeler (atışlar, lazerler, bombalar, zemin) |
+| Q | O ses neydi? Şu an çalan sesler ve son birkaç ses, her birinin anlamı ve tarafıyla |
+| Num + / Num - | Oyun hızını artır / azalt, her klavye düzeninde |
+
+Her mod tuşu değiştirilebilir: bkz. [Tuşları değiştirme](#changing-keys).
 
 Savaş sırasında seslendirilenler: başlangıçta seviye, patronlar ve yüzde 75, 50 ve 25'teki canları, hasar ve
 can, durum etkileri, düştüklerinde özel eşyalar, "seviye atlama hazır, E tuşuna bas" ve turun sonu.
 
 ## Savaş sesleri {#battle-sounds}
 
-Her ses için dört kural geçerlidir:
+Her ses için, her zaman kahramanına göre, üç kural geçerlidir:
 
-- **Taraf**: bir ses, ilgili olduğu şey hangi taraftaysa oradan gelir.
+- **Taraf**: bir ses, ilgili olduğu şey neredeyse oradan gelir: solundaki soldan, sağındaki sağdan,
+  dümdüz ilerideki ortadan duyulur.
 - **Perde**: daha tiz ses daha yakın demektir.
 - **Boğuk** ses arkanda demektir.
-- **Hareket etmeni** isteyen bir ses, gitmen gereken taraftan gelir.
 
 Sürekli hareket eden şeyler (topun, düşman atışları) onları izleyen **sürekli seslerdir**; adım adım
 değişen şeyler (ilerleyen düşmanlar, yerde duran eşyalar) kısa seslerdir.
 
 | Ses | Anlamı |
 |---|---|
-| El davulu | Bir düşman. Daha tiz ve daha hızlı = daha yakın. En yakın üç düşman sırayla çalar. |
+| El davulu | Bir düşman. Daha tiz ve daha hızlı = daha yakın. Düşmanlar hareket edince en yakınları sırayla çalar; hiçbir şey değişmezken yalnızca en yakını çalar. |
 | Büyük, derin davul | Bir patron. Patron geldiğinde davullar, gong ve boru. |
 | Hırlama | Bir düşman sana ulaşmak üzere. |
 | Yükselen inilti | Bir düşman, bulunduğu tarafta saldırıya hazırlanıyor. |
-| **Yuvarlanan uğultu** (sürekli) | Yakalayabileceğin top. Onun tarafına doğru yürü; **topun düşeceği yere yaklaştıkça tizleşir**, top sana yaklaştıkça daha hızlı titreşir ve top hâlâ bir düşmandan sekebilecekken daha yumuşaktır. |
-| Uğultu bir basamak yükselirken tık | Topun altındasın: orada kal. |
+| **Yuvarlanan uğultu** (sürekli) | Yakalayabileceğin top. **Topun bulunduğu yerden** duyulur ve **top sana yaklaştıkça tizleşir**, böylece nereye gittiğini duyarsın; top senin sırana yaklaştıkça daha hızlı titreşir ve top hâlâ bir düşmandan sekebilecekken daha yumuşaktır. |
+| Tık | Topun düşeceği yerde duruyorsun: orada kal. |
 | Eldivene tok vuruş | Top yakalandı. |
 | Batan boğuk güm | Bir top yanından geçip gitti. |
 | Silah doldurma sesi | Topların döndü: ateş edebilirsin (oto saldırı açıkken sessiz). |
-| Cam şıngırtısı | Yürüyerek ulaşabileceğin en yakın TP kristali, altın ya da kaynak. Kendiliğinden toplanmazlar. |
+| Cam şıngırtısı | Yürüyerek gideceğin TP kristali, altın ya da kaynak: en yakını ya da biraz ötedeki bir yığın. Kendiliğinden toplanmazlar. |
 | Kalimba pırıltısı | Özel bir eşya: füzyon reaktörü, taslak, yumurta, dişli, can, mıknatıs, bomba, mücevher kesesi. |
 | **Hafif hava ıslığı** (sürekli) | Yakınında uçan bir düşman atışı, yaklaştıkça tizleşir. Sana isabet edecekse daha gür çıkar. |
-| Vınlama ve şaklama | Bir atış sana isabet edecek: sesin geldiği tarafa adım at. |
-| Elektrik uğultusu / iki elektrik çıtırtısı | Bir lazer nişan alıyor / onun hattındasın: sesin geldiği tarafa adım at. |
-| Alçalan ıslık / fitil cızırtısı | Yakına bir bomba düşüyor / üstüne düşecek: sesin geldiği tarafa adım at. |
+| Vınlama ve şaklama | Bir atış sana isabet edecek; ses atıştan gelir: yolundan çekil. |
+| Elektrik uğultusu / iki elektrik çıtırtısı | Bir lazer nişan alıyor / onun hattındasın; ikisi de lazerden gelir: hattan çekil. |
+| Alçalan ıslık / fitil cızırtısı | Yakına bir bomba düşüyor / üstüne düşecek; ikisi de düşeceği yerden gelir: oradan uzaklaş. |
 | Şapırtı | Bir zemin tehlikesine bastın (adı seslendirilir). |
 | Yumruk / yudum | Hasar / iyileşme. |
 | Kalp atışı | Can düşük; çok düşükken daha hızlı. |
@@ -201,10 +206,11 @@ değişen şeyler (ilerleyen düşmanlar, yerde duran eşyalar) kısa seslerdir.
 | Yükselen iki çan notası | Seviye atlama hazır (E tuşuna bas). |
 | Tahtaya vuruş | Arenanın yan kenarı (aynı zamanda bir menü listesinin sonu). |
 | Metale vuruş | Yürüme alanının ön ya da arka sınırı. |
-| Şalter tıkı | Nişan yardımı hedef değiştirdi, yeni hedefin tarafından duyulur. |
+| Şalter tıkı | Nişan yardımı başka bir hedefe geçti, yeni hedefin tarafından duyulur. Otomatik ateş açıkken bir öldürmeden sonra çalmaz. |
 
 Bunların her biri **F4 → Ses rehberi** içinde dinlenebilir; Sol ok / Sağ ok ile her iki tarafta da
 duyabilirsin.
+Savaşta **Q**, az önce duyduğun sesleri söyler.
 
 ## Ses filtreleri (rakam tuşları) {#sound-filters-number-keys}
 
@@ -234,11 +240,11 @@ hiçbirini kullanmaz.
 Bir yardımın yaptığı her şey kulakla da yapılabilir; yardımlar, istediğinde kullanman için oradadır.
 
 - **Nişan yardımı** (F5 modu değiştirir): senin yerine en yakın düşmana (varsayılan), en güçlü düşmana,
-  önündeki düşmana ya da sabit bir açıya nişan alır, ya da kapalıdır (fare). Oklarla ince ayar yapılır.
+  önündeki düşmana ya da sabit bir açıya nişan alır, ya da kapalıdır (fare). Oklarla ince ayar yapılır. Düşmanın başka hiçbir düşmanın örtmediği bir yerine nişan alır, kahramanının ateş edemediği bir açıdaki düşmanları atlar ve varsayılan modda, başka bir düşman sana ulaşmak üzere değilse önce patrona gider.
 - **Yakalama yardımı** (Shift basılı tut): kahraman aşağı inen sıradaki topun altına yürür; gelen top
   yoksa en yakın kristale ya da eşyaya yürür; bir atış sana isabet etmek üzereyse önce yolundan çekilir.
   W / S seni yine ileri ve geri götürür, A / D her zaman kontrolü devralır. F4 içinde kapalı, "Shift
-  basılı tutulunca" (varsayılan) ya da otomatik olarak ayarlanabilir.
+  basılı tutulunca" (varsayılan) ya da otomatik olarak ayarlanabilir. Yaralıysan önce bir can eşyasına gider.
 
 ## Mod ayarları (F4) {#mod-settings-f4}
 
@@ -251,8 +257,18 @@ Yukarı ok / Aşağı ok gezinir, Sol ok / Sağ ok veya Enter değiştirir, Esc 
 - Eşya sesleri: kapalı, yalnızca özel eşyalar, tümü
 - Can sesleri, nişan yardımı tıkı (açık / kapalı)
 - Odaklanınca geliştirme açıklamalarını oku
+- Tuşlar (Enter açar): bkz. [Tuşları değiştirme](#changing-keys)
 - Ses rehberi (Enter açar)
 - Hata ayıklama kaydı
+- Savaşları kaydet (varsayılan kapalı): her savaş `UserData\BallPitAccess\telemetry.tsv` dosyasına yazılır, sesleri ayarlamak için
+
+## Tuşları değiştirme {#changing-keys}
+
+**F4 → Tuşlar** her mod tuşunu şu an bulunduğu tuşla birlikte listeler. Yukarı ok / Aşağı ok ile seç,
+**Enter** tuşuna bas ve ardından yeni tuşa bas (Esc iptal eder); **Delete** varsayılan tuşu geri getirir,
+son satır ise hepsini sıfırlar. Yeni tuş zaten başka bir mod eylemine aitse ikisi yer değiştirir ve mod
+diğerinin nereye gittiğini söyler. Menülerin veya oyunun ihtiyaç duyduğu tuşlar (oklar, Enter, Tab, Esc,
+Backspace, Boşluk, W A S D F E R X) alınamaz. F1 yardımı, tuşların şu anki haliyle biter.
 
 ## İlk tur için ipuçları {#tips-for-a-first-run}
 
@@ -261,7 +277,8 @@ Yukarı ok / Aşağı ok gezinir, Sol ok / Sağ ok veya Enter değiştirir, Esc 
 - **TP kristallerini topla.** Kendiliğinden toplanmazlar. Cam şıngırtısını izle; boğuk ses arkanda demektir.
 - **Önce hayatta kal.** Turun başında hayatta kalmak hasardan daha önemlidir.
 - Seviye atlama sunduğunda toplarını **birleştir ve evrimleştir**: seçenekler "füzyon" ya da "evrim" der.
-- **Patronlarda yavaşla**: eksi tuşunu kullan. Bir patron yüksek hızda geldiğinde mod sana hatırlatır.
+- **Patronlarda yavaşla**: Num - tuşunu (ya da oyunun eksi tuşunu) kullan. Bir patron yüksek hızda
+  geldiğinde mod sana hatırlatır.
 - Ölmek normaldir: geri getirdiğin altın Yeni Babil'in Sekme Bahçeleri'ni inşa eder, binalar da sonraki
   her turu güçlendirir.
 
@@ -284,6 +301,8 @@ Oyun klasöründeki yararlı dosyalar:
 - Savaşta **Ctrl+Shift+D**, `UserData\BallPitAccess\threats.txt` dosyasını (konumlarıyla birlikte
   düşmanlar, toplar, atışlar, eşyalar) yazar ve açık ekranın listesini `Latest.log` dosyasına ekler: bir
   ses yanlış yönü gösterdiğinde ya da bir menü yanlış sırada okunduğunda işe yarar.
+- `UserData\BallPitAccess\telemetry.tsv`, F4 → Savaşları kaydet açıksa: savaşlarındaki her ses, düşman, top ve
+  atış. Sesleri takip etmek zor olduğunda en iyi yardım.
 
 Ne yaptığını, ne duyduğunu ve ne beklediğini anlat.
 

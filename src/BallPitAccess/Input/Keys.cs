@@ -35,6 +35,27 @@ namespace BallPitAccess.Input
             return (int)vk;
         }
 
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)] private static extern int GetKeyNameTextW(int lParam, System.Text.StringBuilder buf, int size);
+
+        /// <summary>A key's name as Windows says it in its own language ("H", "F5", "Num +", "Mayús").</summary>
+        internal static string Name(int vk)
+        {
+            if (vk >= '0' && vk <= '9' || vk >= 'A' && vk <= 'Z') return ((char)vk).ToString();
+            try
+            {
+                uint sc = MapVirtualKeyW((uint)vk, 4 /* MAPVK_VK_TO_VSC_EX */);
+                if (sc != 0)
+                {
+                    int lp = (int)((sc & 0xFF) << 16);
+                    if ((sc & 0xFF00) == 0xE000) lp |= 1 << 24;
+                    var sb = new System.Text.StringBuilder(64);
+                    if (GetKeyNameTextW(lp, sb, sb.Capacity) > 0) return sb.ToString();
+                }
+            }
+            catch { }
+            return "#" + vk;
+        }
+
         internal static bool GameHasFocus()
         {
             IntPtr fg = GetForegroundWindow();

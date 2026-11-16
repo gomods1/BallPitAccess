@@ -26,6 +26,8 @@ namespace BallPitAccess.Input
             public string Closed = "help_closed";
             public int Index;
             public List<int> Sections;        // first line of each section: Tab / Shift+Tab jump between them
+            public Action<int> Delete;        // Delete on an item
+            public bool NoEcho;               // Change speaks for itself: do not read the item again after it
         }
 
         private static ModList _open;
@@ -37,12 +39,13 @@ namespace BallPitAccess.Input
 
         internal static void Update()
         {
-            if (_unmute && _open == null && !Keys.Down(Keys.VK_ESCAPE) && !Keys.Down(Keys.VK_RETURN) && !Keys.Down(Keys.VK_F1) && !Keys.Down(Keys.VK_F1 + 3))
+            if (_unmute && _open == null && !Keys.Down(Keys.VK_ESCAPE) && !Keys.Down(Keys.VK_RETURN) && !Bindings.Down("help") && !Bindings.Down("settings") && !_heldAfterCapture())
             {
                 _unmute = false;
                 MuteGame(false);
             }
             if (!Keys.GameHasFocus() || Keys.ScreenReaderModifier) return;
+            if (_capture != null) { UpdateCapture(); return; }
             if (_open != null) { UpdateList(); return; }
 
             if (Keys.Ctrl)
@@ -57,16 +60,22 @@ namespace BallPitAccess.Input
             }
             if (Keys.Alt) return;
 
-            if (Keys.Pressed(Keys.VK_F1)) OpenHelp();
-            else if (Keys.Pressed(Keys.VK_F1 + 1)) MenuReader.ReadScreen();
-            else if (Keys.Pressed(Keys.VK_F1 + 2)) MenuReader.Repeat();
-            else if (Keys.Pressed(Keys.VK_F1 + 3)) OpenSettings();
-            else if (Keys.Pressed(Keys.VK_F1 + 4)) AimAssist.CycleMode();
-            else if (Keys.Pressed(Keys.VK_F1 + 5)) AimAssist.Turn(10f);
-            else if (Keys.Pressed(Keys.VK_F1 + 6)) AimAssist.Turn(-10f);
-            else if (Keys.Pressed(Keys.VK_F1 + 7)) AimAssist.SayAim();
+            if (Bindings.Pressed("help")) OpenHelp();
+            else if (Bindings.Pressed("screen")) MenuReader.ReadScreen();
+            else if (Bindings.Pressed("repeat")) MenuReader.Repeat();
+            else if (Bindings.Pressed("settings")) OpenSettings();
+            else if (Bindings.Pressed("aim_mode")) AimAssist.CycleMode();
+            else if (Bindings.Pressed("aim_left")) AimAssist.Turn(10f);
+            else if (Bindings.Pressed("aim_right")) AimAssist.Turn(-10f);
+            else if (Bindings.Pressed("aim_say")) AimAssist.SayAim();
             else if (Battle.InBattle)
             {
+                // Game speed: the game's own = and - keys do not exist on some layouts (Latin American Spanish).
+                if (!Navigator.Typing)
+                {
+                    if (Bindings.Pressed("speed_up")) { Keys.Consume(); Battle.StepSpeed(1); return; }
+                    if (Bindings.Pressed("speed_down")) { Keys.Consume(); Battle.StepSpeed(-1); return; }
+                }
                 // Typing a pet's name or a menu on top: letters are not HUD keys there.
                 if (Battle.Playing && !Navigator.HasOverlay && !Navigator.FtueShowing)
                 {
@@ -79,21 +88,87 @@ namespace BallPitAccess.Input
                 // Number keys: sound filters (the game binds none of them). Also in the pause and level up menus.
                 if (CueFilters.Update(false)) return;
                 if (Navigator.HasOverlay && !Battle.Playing) return;
-                if (Keys.Pressed('H')) Battle.SayHealth();
-                else if (Keys.Pressed('J')) Battle.SayEnemies();
-                else if (Keys.Pressed('K')) Battle.SayPosition();
-                else if (Keys.Pressed('G')) Battle.SaySpeed();
-                else if (Keys.Pressed('L')) Battle.SayProgress();
-                else if (Keys.Pressed('B')) Battle.SayEquipment();
-                else if (Keys.Pressed('P')) Pickups.Say();
-                else if (Keys.Pressed('N')) Hazards.Say();
+                if (Bindings.Pressed("health")) Battle.SayHealth();
+                else if (Bindings.Pressed("enemies")) Battle.SayEnemies();
+                else if (Bindings.Pressed("position")) Battle.SayPosition();
+                else if (Bindings.Pressed("speed")) Battle.SaySpeed();
+                else if (Bindings.Pressed("progress")) Battle.SayProgress();
+                else if (Bindings.Pressed("equipment")) Battle.SayEquipment();
+                else if (Bindings.Pressed("pickups")) Pickups.Say();
+                else if (Bindings.Pressed("hazards")) Hazards.Say();
+                else if (Bindings.Pressed("last_sound")) Audio.Cues.SayRecent();
             }
             else if (BaseNav.InBase && !Navigator.Typing)
             {
                 // Resources everywhere in the base: its menus (build, upgrades, market), build and harvest modes.
-                if (Keys.Pressed('H')) BaseNav.SayResources();
-                else if (Keys.Pressed('J') && !Navigator.HasOverlay) BaseNav.SayHarvest();
+                if (Bindings.Pressed("health")) BaseNav.SayResources();
+                else if (Bindings.Pressed("enemies") && !Navigator.HasOverlay) BaseNav.SayHarvest();
             }
+        }
+
+        // ---------------- Key capture (F4 → Keys → Enter) ----------------
+
+        private static Bindings.Binding _capture;
+        private static int _captured;   // the key just taken: the game keys come back only once it is released
+
+        private static bool _heldAfterCapture() => _captured > 0 && Keys.Down(_captured);
+
+        private static void UpdateCapture()
+        {
+            var b = _capture;
+            if (Keys.Pressed(Keys.VK_ESCAPE))
+            {
+                _capture = null;
+                Speech.SayMenu(Loc.Get("key_cancel"));
+                return;
+            }
+            int vk = 0;
+            for (int k = 7; k < 256; k++)
+            {
+                if (k >= 0xA0 && k <= 0xA5) continue;                 // left / right Shift Ctrl Alt: the plain one is taken instead
+                if (k == Keys.VK_CONTROL || k == Keys.VK_MENU) continue;   // modifiers, not keys
+                if (Keys.Pressed(k)) { vk = k; break; }
+            }
+            if (vk == 0) return;
+            if (Bindings.Reserved(vk)) { Speech.SayMenu(Loc.F("key_reserved", Keys.Name(vk))); return; }
+            _capture = null;
+            _captured = vk;
+            var moved = Bindings.Assign(b, vk);
+            string msg = Loc.F("key_line", b.Name, Keys.Name(vk));
+            if (moved != null) msg += ". " + Loc.F("key_swapped", moved.Name, Keys.Name(moved.Vk));
+            Speech.SayMenu(msg);
+        }
+
+        private static void OpenKeys()
+        {
+            var all = Bindings.All;
+            Open(new ModList
+            {
+                Title = "keys", Closed = "settings_closed",
+                Items = () =>
+                {
+                    var lines = new List<string>();
+                    foreach (var b in all) lines.Add(Loc.F("key_line", b.Name, Keys.Name(b.Vk)));
+                    lines.Add(Loc.Get("key_reset_all"));
+                    return lines;
+                },
+                Change = (i, dir) =>
+                {
+                    if (dir != 0) return;
+                    if (i >= all.Count) { Bindings.ResetAll(); Speech.SayMenu(Loc.Get("key_reset_done")); return; }
+                    _capture = all[i];
+                    Speech.SayMenu(Loc.F("key_press", all[i].Name));
+                },
+                Delete = i =>
+                {
+                    if (i >= all.Count) return;
+                    var moved = Bindings.ResetOne(all[i]);
+                    string msg = Loc.F("key_line", all[i].Name, Keys.Name(all[i].Vk));
+                    if (moved != null) msg += ". " + Loc.F("key_swapped", moved.Name, Keys.Name(moved.Vk));
+                    Speech.SayMenu(msg);
+                },
+                NoEcho = true,
+            }, Loc.Get("keys_list"));
         }
 
         // ---------------- Mod lists ----------------
@@ -120,7 +195,7 @@ namespace BallPitAccess.Input
         {
             var l = _open;
             var items = l.Items();
-            if (Keys.Pressed(Keys.VK_ESCAPE) || Keys.Pressed(Keys.VK_F1) || Keys.Pressed(Keys.VK_F1 + 3))
+            if (Keys.Pressed(Keys.VK_ESCAPE) || Bindings.Pressed("help") || Bindings.Pressed("settings"))
             {
                 Close(Loc.Get(l.Closed));
                 return;
@@ -143,9 +218,10 @@ namespace BallPitAccess.Input
             {
                 int dir = Keys.Pressed(Keys.VK_LEFT) ? -1 : Keys.Pressed(Keys.VK_RIGHT) ? 1 : 0;
                 l.Change(i, dir);
-                if (_open == l) Speech.SayMenu(l.Items()[i]);
+                if (_open == l && !l.NoEcho) Speech.SayMenu(l.Items()[i]);
                 return;
             }
+            else if (l.Delete != null && Keys.Pressed(Keys.VK_DELETE)) { l.Delete(i); return; }
             else return;
             l.Index = i;
             Speech.SayMenu(items[i]);
@@ -231,7 +307,16 @@ namespace BallPitAccess.Input
                 sections.Add(lines.Count);
                 foreach (var l in HelpLines(Loc.Get(part)))
                     lines.Add(l);
+                if (part == "help_battle")
+                {
+                    lines.Add(Loc.F("help_speed_keys", Bindings.KeyOf("speed_up"), Bindings.KeyOf("speed_down")));
+                    lines.Add(Loc.F("help_last_sound", Bindings.KeyOf("last_sound")));
+                }
             }
+            // The keys as they are set now (they can be changed, so the texts above give the defaults).
+            sections.Add(lines.Count);
+            lines.Add(Loc.F("help_keys", Bindings.KeyOf("settings")));
+            foreach (var b in Bindings.All) lines.Add(Loc.F("key_line", b.Name, Keys.Name(b.Vk)));
             Open(new ModList { Title = "help", Items = () => lines, Sections = sections }, Loc.Get("help"));
         }
 
@@ -268,8 +353,10 @@ namespace BallPitAccess.Input
                     Loc.F("set_health", OnOff(Config.HealthCues)),
                     Loc.F("set_aimcues", OnOff(Config.AimCues)),
                     Loc.F("set_descriptions", OnOff(Config.ReadDescriptions)),
+                    Loc.Get("set_keys"),
                     Loc.Get("set_sounds"),
                     Loc.F("set_debug", OnOff(Config.Debug)),
+                    Loc.F("set_telemetry", OnOff(Config.Telemetry)),
                 },
                 Closed = "settings_closed",
                 Change = (i, dir) =>
@@ -296,8 +383,10 @@ namespace BallPitAccess.Input
                         case 9: Config.HealthCues = !Config.HealthCues; break;
                         case 10: Config.AimCues = !Config.AimCues; break;
                         case 11: Config.ReadDescriptions = !Config.ReadDescriptions; break;
-                        case 12: if (dir == 0) OpenSounds(); break;
-                        case 13: Config.Debug = !Config.Debug; break;
+                        case 12: if (dir == 0) OpenKeys(); break;
+                        case 13: if (dir == 0) OpenSounds(); break;
+                        case 14: Config.Debug = !Config.Debug; break;
+                        case 15: Game.Telemetry.Toggle(); break;
                     }
                 },
             };

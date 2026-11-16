@@ -234,6 +234,7 @@ href="#reporting-a-problem">Signaler un problème</a>).</p>
 numériques)</a></li>
 <li><a href="#assists">Aides</a></li>
 <li><a href="#mod-settings-f4">Paramètres du mod (F4)</a></li>
+<li><a href="#changing-keys">Changer les touches</a></li>
 <li><a href="#tips-for-a-first-run">Conseils pour une première
 expédition</a></li>
 <li><a href="#known-limits">Limites connues</a></li>
@@ -478,6 +479,10 @@ soulève, les flèches le déplacent, Entrée le pose.</li>
 <h2 id="battle">Combat</h2>
 <h3 id="the-games-own-keys">Les touches du jeu</h3>
 <table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
 <tr>
 <th>Touche</th>
@@ -503,7 +508,8 @@ soulève, les flèches le déplacent, Entrée le pose.</li>
 </tr>
 <tr>
 <td>= / -</td>
-<td>Vitesse du jeu plus rapide / plus lente</td>
+<td>Vitesse du jeu plus rapide / plus lente (absentes de certaines
+dispositions de clavier : utilisez Num + / Num - du mod, plus bas)</td>
 </tr>
 <tr>
 <td>Échap</td>
@@ -577,21 +583,33 @@ son</a>)</td>
 <td>N</td>
 <td>Dangers (tirs, lasers, bombes, sol)</td>
 </tr>
+<tr>
+<td>Q</td>
+<td>Quel était ce son ? Les sons qui jouent maintenant et les derniers,
+avec le sens de chacun et son côté</td>
+</tr>
+<tr>
+<td>Num + / Num -</td>
+<td>Vitesse du jeu plus rapide / plus lente, quelle que soit la
+disposition du clavier</td>
+</tr>
 </tbody>
 </table>
+<p>Chaque touche du mod peut être changée : voir <a
+href="#changing-keys">Changer les touches</a>.</p>
 <p>Annoncé pendant le combat : le niveau au début, les boss et leur vie
 à 75, 50 et 25 pour cent, les dégâts et les soins, les effets d’état,
 les objets spéciaux quand ils tombent, « gains de niveau prêts, appuyez
 sur E », la fin de l’expédition.</p>
 <h2 id="battle-sounds">Sons de combat</h2>
-<p>Quatre règles valent pour tous les sons :</p>
+<p>Trois règles valent pour tous les sons, toujours par rapport à votre
+personnage :</p>
 <ul>
-<li><strong>Côté</strong> : un son vient du côté de ce qu’il
-annonce.</li>
+<li><strong>Côté</strong> : un son vient de l’endroit où se trouve ce
+qu’il annonce : à votre gauche il sonne à gauche, à votre droite il
+sonne à droite, au centre quand c’est droit devant.</li>
 <li><strong>Hauteur</strong> : plus aigu veut dire plus proche.</li>
 <li><strong>Étouffé</strong> veut dire que c’est derrière vous.</li>
-<li>Un son qui vous demande de <strong>bouger</strong> vient du côté où
-aller.</li>
 </ul>
 <p>Ce qui bouge tout le temps (votre boule, les tirs ennemis) a un
 <strong>son continu</strong> qui le suit ; ce qui change par étapes (les
@@ -610,8 +628,9 @@ ennemis qui avancent, les objets posés au sol) a des sons courts.</p>
 <tbody>
 <tr>
 <td>Tambour à main</td>
-<td>Un ennemi. Plus aigu et plus rapide = plus proche. Les trois plus
-proches jouent à tour de rôle.</td>
+<td>Un ennemi. Plus aigu et plus rapide = plus proche. Quand les ennemis
+bougent, les plus proches jouent à tour de rôle ; tant que rien ne
+change, seul le plus proche joue.</td>
 </tr>
 <tr>
 <td>Gros tambour grave</td>
@@ -627,14 +646,16 @@ proches jouent à tour de rôle.</td>
 </tr>
 <tr>
 <td><strong>Bourdonnement roulant</strong> (continu)</td>
-<td>La boule que vous pouvez rattraper. Marchez vers son côté ; il
-<strong>monte quand vous approchez de l’endroit où la boule va
-tomber</strong>, pulse plus vite quand la boule arrive sur vous, et il
-est plus doux tant que la boule peut encore rebondir sur un ennemi.</td>
+<td>La boule que vous pouvez rattraper. Il sonne depuis
+<strong>l’endroit où se trouve la boule</strong> et <strong>monte à
+mesure qu’elle se rapproche de vous</strong>, pour que vous entendiez où
+elle va ; il pulse plus vite quand la boule arrive sur votre ligne, et
+il est plus doux tant que la boule peut encore rebondir sur un
+ennemi.</td>
 </tr>
 <tr>
-<td>Clic, le bourdonnement monte d’un cran</td>
-<td>Vous êtes sous la boule : restez là.</td>
+<td>Clic</td>
+<td>Vous êtes là où la boule va tomber : restez là.</td>
 </tr>
 <tr>
 <td>Choc dans un gant</td>
@@ -651,8 +672,9 @@ auto).</td>
 </tr>
 <tr>
 <td>Tintement de verre</td>
-<td>Le cristal d’EXP, l’or ou la ressource le plus proche vers lequel
-vous pouvez marcher. Ils ne se ramassent pas tout seuls.</td>
+<td>Le cristal d’EXP, l’or ou la ressource vers lequel marcher : le plus
+proche, ou un tas un peu plus loin. Ils ne se ramassent pas tout
+seuls.</td>
 </tr>
 <tr>
 <td>Scintillement de kalimba</td>
@@ -666,17 +688,18 @@ approche. Plus fort quand il va vous toucher.</td>
 </tr>
 <tr>
 <td>Souffle et claquement</td>
-<td>Un tir va vous toucher : allez vers le côté où il sonne.</td>
+<td>Un tir va vous toucher ; le son vient du tir : écartez-vous de sa
+trajectoire.</td>
 </tr>
 <tr>
 <td>Bourdonnement électrique / deux décharges</td>
-<td>Un laser vise / vous êtes dans son axe : allez vers le côté où il
-sonne.</td>
+<td>Un laser vise / vous êtes dans son axe ; les deux viennent du laser
+: sortez de l’axe.</td>
 </tr>
 <tr>
 <td>Sifflement descendant / grésillement de mèche</td>
-<td>Une bombe tombe tout près / elle va tomber sur vous : allez vers le
-côté où il sonne.</td>
+<td>Une bombe tombe tout près / elle va tomber sur vous ; les deux
+viennent de l’endroit où elle tombe : éloignez-vous-en.</td>
 </tr>
 <tr>
 <td>Bruit visqueux</td>
@@ -708,13 +731,15 @@ côté où il sonne.</td>
 </tr>
 <tr>
 <td>Clic d’interrupteur</td>
-<td>L’aide à la visée a changé de cible, du côté de la nouvelle.</td>
+<td>L’aide à la visée est passée à une autre cible, du côté de la
+nouvelle. Avec le tir automatique, pas après une élimination.</td>
 </tr>
 </tbody>
 </table>
 <p>Chacun de ces sons peut s’écouter dans <strong>F4 → Guide des
 sons</strong>, avec flèche gauche / flèche droite pour l’entendre de
-chaque côté.</p>
+chaque côté. En combat, <strong>Q</strong> nomme les sons que vous venez
+d’entendre.</p>
 <h2 id="sound-filters-number-keys">Filtres de son (touches
 numériques)</h2>
 <p>En combat, les touches numériques coupent ou rétablissent un groupe
@@ -785,14 +810,18 @@ sont là quand vous en voulez.</p>
 <li><strong>Aide à la visée</strong> (F5 change le mode) : vise pour
 vous l’ennemi le plus proche (par défaut), l’ennemi le plus fort,
 l’ennemi devant vous, un angle fixe, ou désactivée (souris). Les flèches
-l’ajustent.</li>
+l’ajustent. Elle vise une partie de l’ennemi qu’aucun autre ne cache,
+ignore les ennemis à un angle où votre héros ne peut pas tirer et, dans
+le mode par défaut, vise d’abord le boss, sauf si un autre ennemi est
+sur le point de vous atteindre.</li>
 <li><strong>Aide au rattrapage</strong> (maintenir Maj) : votre
 personnage va sous la prochaine boule qui descend ; si aucune boule
 n’arrive, il va au cristal ou à l’objet le plus proche ; si un tir est
 sur le point de vous toucher, il s’écarte d’abord. W / S vous font
 toujours avancer et reculer, A / D reprennent toujours la main. Dans F4,
 elle peut être désactivée, sur « maintenir Maj » (par défaut) ou
-automatique.</li>
+automatique. Si vous êtes blessé, elle va d’abord chercher un objet de
+soin.</li>
 </ul>
 <h2 id="mod-settings-f4">Paramètres du mod (F4)</h2>
 <p>Flèche haut / flèche bas pour se déplacer, flèche gauche / flèche
@@ -808,9 +837,25 @@ dangers (activé / désactivé)</li>
 tous</li>
 <li>Sons de vie, clic de l’aide à la visée (activé / désactivé)</li>
 <li>Lire la description des améliorations au focus</li>
+<li>Touches (Entrée ouvre la liste) : voir <a
+href="#changing-keys">Changer les touches</a></li>
 <li>Guide des sons (Entrée l’ouvre)</li>
 <li>Journal de débogage</li>
+<li>Enregistrer les combats (désactivé par défaut) : chaque combat est
+écrit dans <code>UserData\BallPitAccess\telemetry.tsv</code>, pour
+régler les sons</li>
 </ul>
+<h2 id="changing-keys">Changer les touches</h2>
+<p><strong>F4 → Touches</strong> liste chaque touche du mod avec la
+touche qu’elle utilise maintenant. Flèche haut / flèche bas pour
+choisir, <strong>Entrée</strong> puis appuyez sur la nouvelle touche
+(Échap annule), <strong>Suppr</strong> remet la touche par défaut, et la
+dernière ligne les remet toutes. Si la nouvelle touche appartient déjà à
+une autre action du mod, les deux s’échangent et le mod dit où l’autre
+est partie. Les touches dont les menus ou le jeu ont besoin (flèches,
+Entrée, Tab, Échap, Retour arrière, Espace, W A S D F E R X) ne peuvent
+pas être prises. L’aide F1 se termine par les touches telles qu’elles
+sont réglées maintenant.</p>
 <h2 id="tips-for-a-first-run">Conseils pour une première expédition</h2>
 <ul>
 <li><strong>Rattrapez vos boules.</strong> Une boule rattrapée peut être
@@ -824,8 +869,9 @@ vie compte plus que les dégâts.</li>
 <li><strong>Fusionnez et faites évoluer</strong> vos boules quand le
 gain de niveau le propose : les choix disent « fusion » ou « évolution
 ».</li>
-<li><strong>Ralentissez pour les boss</strong> avec la touche moins. Le
-mod vous le rappelle quand un boss arrive à une vitesse élevée.</li>
+<li><strong>Ralentissez pour les boss</strong> avec Num - (ou la touche
+moins du jeu). Le mod vous le rappelle quand un boss arrive à une
+vitesse élevée.</li>
 <li>Mourir est normal : l’or que vous rapportez sert à construire
 Nouvelle-Baboulone, et les bâtiments rendent chaque expédition suivante
 plus forte.</li>
@@ -857,6 +903,10 @@ a dit.</li>
 objets avec leurs positions) et la liste de l’écran ouvert dans
 <code>Latest.log</code> : utile quand un son indique la mauvaise
 direction ou qu’un menu se lit dans le mauvais ordre.</li>
+<li><code>UserData\BallPitAccess\telemetry.tsv</code>, si vous avez
+activé F4 → Enregistrer les combats : chaque son, ennemi, boule et tir
+de vos combats. La meilleure aide quand les sons sont difficiles à
+suivre.</li>
 </ul>
 <p>Dites ce que vous avez fait, ce que vous avez entendu et ce à quoi
 vous vous attendiez.</p>

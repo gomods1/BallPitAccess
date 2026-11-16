@@ -994,6 +994,14 @@ namespace BallPitAccess.UI
                 Log.Info("FTUE continue clicked");
                 return;
             }
+            // Fission / treasure results: the items only show what each one got, and Enter on them did nothing
+            // (a playtest driver got stuck there); their Continue ("Wow") is a group away: Enter presses it.
+            if (cur.GetComponentInParent<FreeUpgradeItem>() != null)
+            {
+                var lu = cur.GetComponentInParent<LevelUpUI>();
+                var cont = lu != null ? FuseButton(lu) : null;
+                if (cont != null && cont.IsInteractable()) { Click(cont); return; }
+            }
             var input = cur.GetComponent<TMP_InputField>();
             if (input != null) { try { input.ActivateInputField(); } catch { } return; }
             var sel = cur.GetComponent<CoolSelectable>();

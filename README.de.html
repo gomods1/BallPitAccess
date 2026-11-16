@@ -234,6 +234,7 @@ Problem melden</a>).</p>
 (Zifferntasten)</a></li>
 <li><a href="#assists">Hilfen</a></li>
 <li><a href="#mod-settings-f4">Mod-Einstellungen (F4)</a></li>
+<li><a href="#changing-keys">Die Tasten ändern</a></li>
 <li><a href="#tips-for-a-first-run">Tipps für den ersten
 Durchlauf</a></li>
 <li><a href="#known-limits">Bekannte Einschränkungen</a></li>
@@ -476,6 +477,10 @@ es auf, die Pfeiltasten bewegen es, Eingabe setzt es ab.</li>
 <h2 id="battle">Kampf</h2>
 <h3 id="die-tasten-des-spiels">Die Tasten des Spiels</h3>
 <table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
 <tr>
 <th>Taste</th>
@@ -501,7 +506,8 @@ es auf, die Pfeiltasten bewegen es, Eingabe setzt es ab.</li>
 </tr>
 <tr>
 <td>= / -</td>
-<td>Schnellere / langsamere Spielgeschwindigkeit</td>
+<td>Schnellere / langsamere Spielgeschwindigkeit (fehlen auf manchen
+Tastaturlayouts: nimm Num + / Num - des Mods, unten)</td>
 </tr>
 <tr>
 <td>Esc</td>
@@ -575,21 +581,33 @@ href="#sound-filters-number-keys">Soundfilter</a>)</td>
 <td>N</td>
 <td>Gefahren (Schüsse, Laser, Bomben, Boden)</td>
 </tr>
+<tr>
+<td>Q</td>
+<td>Was war das für ein Geräusch? Die Geräusche, die gerade laufen, und
+die letzten, jeweils mit Bedeutung und Seite</td>
+</tr>
+<tr>
+<td>Num + / Num -</td>
+<td>Schnellere / langsamere Spielgeschwindigkeit, mit jedem
+Tastaturlayout</td>
+</tr>
 </tbody>
 </table>
+<p>Jede Mod-Taste lässt sich ändern: siehe <a href="#changing-keys">Die
+Tasten ändern</a>.</p>
 <p>Im Kampf wird angesagt: das Level zu Beginn, Bosse und ihr Leben bei
 75, 50 und 25 Prozent, Schaden und Leben, Statuseffekte, besondere
 Gegenstände, wenn sie fallen, „Stufenaufstiege bereit, drücke E“, das
 Ende des Durchlaufs.</p>
 <h2 id="battle-sounds">Kampfgeräusche</h2>
-<p>Vier Regeln gelten für jedes Geräusch:</p>
+<p>Drei Regeln gelten für jedes Geräusch, immer von deiner Figur aus
+gesehen:</p>
 <ul>
-<li><strong>Seite</strong>: Ein Geräusch kommt von der Seite des Dings,
-um das es geht.</li>
+<li><strong>Seite</strong>: Ein Geräusch kommt von dort, wo das Ding
+ist, um das es geht: links von dir von links, rechts von dir von rechts,
+aus der Mitte, wenn es geradeaus vor dir ist.</li>
 <li><strong>Tonhöhe</strong>: Höher heißt näher.</li>
 <li><strong>Gedämpft</strong> heißt, es ist hinter dir.</li>
-<li>Ein Geräusch, das dich zum <strong>Gehen</strong> auffordert, kommt
-von der Seite, zu der du gehen sollst.</li>
 </ul>
 <p>Dinge, die sich ständig bewegen (dein Ball, gegnerische Schüsse),
 sind <strong>durchgehende Geräusche</strong>, die ihnen folgen; Dinge,
@@ -609,8 +627,9 @@ Gegenstände), sind kurze Geräusche.</p>
 <tbody>
 <tr>
 <td>Handtrommel</td>
-<td>Ein Gegner. Höher und schneller = näher. Die drei nächsten spielen
-abwechselnd.</td>
+<td>Ein Gegner. Höher und schneller = näher. Wenn sich die Gegner
+bewegen, spielen die nächsten abwechselnd; solange sich nichts ändert,
+nur der nächste.</td>
 </tr>
 <tr>
 <td>Große, tiefe Trommel</td>
@@ -626,14 +645,15 @@ abwechselnd.</td>
 </tr>
 <tr>
 <td><strong>Rollendes Summen</strong> (durchgehend)</td>
-<td>Der Ball, den du fangen kannst. Geh zu seiner Seite; es
-<strong>steigt, je näher du der Stelle kommst, an der der Ball landen
-wird</strong>, pulsiert schneller, je näher der Ball dir kommt, und ist
-leiser, solange der Ball noch von einem Gegner abprallen kann.</td>
+<td>Der Ball, den du fangen kannst. Es klingt von dort, <strong>wo der
+Ball gerade ist</strong>, und <strong>steigt, je näher der Ball dir
+kommt</strong>, so hörst du, wohin er fliegt; es pulsiert schneller, je
+näher der Ball deiner Linie kommt, und ist leiser, solange der Ball noch
+von einem Gegner abprallen kann.</td>
 </tr>
 <tr>
-<td>Klick, wenn das Summen eine Stufe steigt</td>
-<td>Du bist unter dem Ball: Bleib dort.</td>
+<td>Klick</td>
+<td>Du stehst dort, wo der Ball landen wird: Bleib dort.</td>
 </tr>
 <tr>
 <td>Handschuh-Plumps</td>
@@ -650,8 +670,9 @@ Autoschuss).</td>
 </tr>
 <tr>
 <td>Glasklingen</td>
-<td>Das nächste EP-Juwel, Gold oder der nächste Rohstoff, zu dem du
-gehen kannst. Sie sammeln sich nicht von selbst ein.</td>
+<td>Das EP-Juwel, Gold oder der Rohstoff, zu dem du gehen sollst: das
+nächste oder ein Haufen etwas weiter weg. Sie sammeln sich nicht von
+selbst ein.</td>
 </tr>
 <tr>
 <td>Kalimba-Funkeln</td>
@@ -665,18 +686,18 @@ näher er kommt. Lauter, wenn er dich treffen wird.</td>
 </tr>
 <tr>
 <td>Rauschen und Knall</td>
-<td>Ein Schuss wird dich treffen: Geh zu der Seite, auf der es
-klingt.</td>
+<td>Ein Schuss wird dich treffen; es klingt vom Schuss her: Geh ihm aus
+dem Weg.</td>
 </tr>
 <tr>
 <td>Elektrisches Brummen / zweimal Knistern</td>
-<td>Ein Laser zielt / du bist in seiner Linie: Geh zu der Seite, auf der
-es klingt.</td>
+<td>Ein Laser zielt / du bist in seiner Linie; beides klingt vom Laser
+her: Geh aus der Linie.</td>
 </tr>
 <tr>
 <td>Fallendes Pfeifen / Zündschnurzischen</td>
-<td>Eine Bombe fällt in der Nähe / sie wird auf dir landen: Geh zu der
-Seite, auf der es klingt.</td>
+<td>Eine Bombe fällt in der Nähe / sie wird auf dir landen; beides
+klingt von der Stelle, an der sie landet: Geh von dort weg.</td>
 </tr>
 <tr>
 <td>Quatschen</td>
@@ -708,14 +729,15 @@ Seite, auf der es klingt.</td>
 </tr>
 <tr>
 <td>Schalterklick</td>
-<td>Die Zielhilfe hat das Ziel gewechselt, auf der Seite des neuen
-Ziels.</td>
+<td>Die Zielhilfe hat zu einem anderen Ziel gewechselt, auf der Seite
+des neuen Ziels. Mit Dauerfeuer nicht nach einem Abschuss.</td>
 </tr>
 </tbody>
 </table>
 <p>Jedes dieser Geräusche kannst du unter <strong>F4 →
 Klangführer</strong> hören, mit Pfeil nach links / rechts auf jeder
-Seite.</p>
+Seite. Im Kampf sagt <strong>Q</strong>, welche Geräusche du gerade
+gehört hast.</p>
 <h2 id="sound-filters-number-keys">Soundfilter (Zifferntasten)</h2>
 <p>Im Kampf schalten die Zifferntasten eine Gruppe von Geräuschen stumm
 oder wieder ein, damit du dich konzentrieren kannst. Das Spiel benutzt
@@ -779,13 +801,17 @@ sind da, wenn du sie willst.</p>
 <li><strong>Zielhilfe</strong> (F5 wechselt den Modus): zielt für dich
 auf den nächsten Gegner (Standard), den stärksten Gegner, den Gegner vor
 dir, einen festen Winkel, oder ist aus (Maus). Die Pfeiltasten justieren
-sie.</li>
+sie. Sie zielt auf einen Teil des Gegners, den kein anderer verdeckt,
+überspringt Gegner in einem Winkel, in den dein Held nicht schießen
+kann, und nimmt im Standardmodus zuerst den Boss, außer ein anderer
+Gegner erreicht dich gleich.</li>
 <li><strong>Fanghilfe</strong> (Umschalt halten): Deine Figur läuft
 unter den nächsten herunterkommenden Ball; wenn kein Ball kommt, läuft
 sie zum nächsten Juwel oder Gegenstand; wenn dich gleich ein Schuss
 trifft, weicht sie zuerst aus. W / S bewegen dich weiterhin nach vorn
 und hinten, A / D übernehmen immer. In F4 kann sie aus, „Umschalt
-halten“ (Standard) oder automatisch sein.</li>
+halten“ (Standard) oder automatisch sein. Bist du verletzt, holt sie
+zuerst einen Heilgegenstand.</li>
 </ul>
 <h2 id="mod-settings-f4">Mod-Einstellungen (F4)</h2>
 <p>Pfeil nach oben / unten bewegen, Pfeil nach links / rechts oder
@@ -799,9 +825,25 @@ aus)</li>
 <li>Geräusche für Gegenstände: aus, nur besondere Gegenstände, alle</li>
 <li>Lebensgeräusche, Klick der Zielhilfe (an / aus)</li>
 <li>Aufwertungsbeschreibungen beim Fokus vorlesen</li>
+<li>Tasten (Eingabe öffnet): siehe <a href="#changing-keys">Die Tasten
+ändern</a></li>
 <li>Klangführer (Eingabe öffnet)</li>
 <li>Debug-Protokoll</li>
+<li>Kämpfe aufzeichnen (standardmäßig aus): jeder Kampf wird in
+<code>UserData\BallPitAccess\telemetry.tsv</code> geschrieben, zum
+Abstimmen der Klänge</li>
 </ul>
+<h2 id="changing-keys">Die Tasten ändern</h2>
+<p><strong>F4 → Tasten</strong> listet jede Mod-Taste mit der Taste, auf
+der sie gerade liegt. Pfeil nach oben / unten wählen,
+<strong>Eingabe</strong> und dann die neue Taste drücken (Esc bricht
+ab), <strong>Entf</strong> stellt die Standardtaste wieder her, und die
+letzte Zeile setzt alle zurück. Gehört die neue Taste schon zu einer
+anderen Mod-Aktion, tauschen die beiden, und der Mod sagt, wohin die
+andere gewandert ist. Tasten, die die Menüs oder das Spiel brauchen
+(Pfeiltasten, Eingabe, Tab, Esc, Rücktaste, Leertaste, W A S D F E R X),
+können nicht belegt werden. Die F1-Hilfe endet mit den Tasten, wie sie
+gerade belegt sind.</p>
 <h2 id="tips-for-a-first-run">Tipps für den ersten Durchlauf</h2>
 <ul>
 <li><strong>Fang deine Bälle.</strong> Ein gefangener Ball kann sofort
@@ -816,9 +858,9 @@ Leben bleiben wichtiger als Schaden.</li>
 <li><strong>Fusioniere und entwickle</strong> deine Bälle, wenn der
 Stufenaufstieg es anbietet: Die Auswahl sagt „Fusion“ oder
 „Evolution“.</li>
-<li><strong>Werde bei Bossen langsamer</strong>, mit der Minustaste. Der
-Mod erinnert dich daran, wenn ein Boss bei hoher Geschwindigkeit
-erscheint.</li>
+<li><strong>Werde bei Bossen langsamer</strong>, mit Num - (oder der
+Minustaste des Spiels). Der Mod erinnert dich daran, wenn ein Boss bei
+hoher Geschwindigkeit erscheint.</li>
 <li>Sterben ist normal: Das Gold, das du mitbringst, baut Neu-Ballbylon
 auf, und Gebäude machen jeden späteren Durchlauf stärker.</li>
 </ul>
@@ -850,6 +892,10 @@ Gegenstände mit Positionen) und die Liste des offenen Bildschirms in
 <code>Latest.log</code>: nützlich, wenn ein Geräusch in die falsche
 Richtung zeigt oder ein Menü in der falschen Reihenfolge vorgelesen
 wird.</li>
+<li><code>UserData\BallPitAccess\telemetry.tsv</code>, wenn du F4 →
+Kämpfe aufzeichnen eingeschaltet hast: jeder Klang, Gegner, Ball und
+Schuss deiner Kämpfe. Die beste Hilfe, wenn die Klänge schwer zu
+verfolgen sind.</li>
 </ul>
 <p>Sag, was du getan hast, was du gehört hast und was du erwartet
 hast.</p>

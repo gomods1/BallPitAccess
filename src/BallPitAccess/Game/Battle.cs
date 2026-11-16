@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using BallPitAccess.Audio;
 using BallPitAccess.Core;
 using Il2Cpp;
@@ -41,7 +42,12 @@ namespace BallPitAccess.Game
         private static float _lastSpeed = -1f;
         private static bool _lastAutofire;
         private static bool _loggedGeometry;
-        private static float _nextDanger;
+        private static float _nextDanger, _lastFullSweep = -10f;
+        private static string _lastSweepSig = "";
+        /// <summary>Until when the radar's current sweep is sounding: other beacons wait for it.</summary>
+        internal static float RadarBusyUntil { get; private set; }
+        /// <summary>When the next radar sweep is due.</summary>
+        internal static float NextSweep => _nextSweep;
         private static int _lastLevelUps = -1;
         private static BallState _lastBallState = BallState.kNum;
         private static readonly HashSet<int> StatusSeen = new HashSet<int>();
@@ -192,7 +198,63 @@ namespace BallPitAccess.Game
             catch { }
         }
 
+        /// <summary>The hero has lost health (the catch assist then fetches a health item before a ball).</summary>
+        internal static bool Hurt
+        {
+            get
+            {
+                try { var s = BattleSaveData.I; return s != null && _maxHealth > 0f && s.CurHealth < _maxHealth - 0.5f; }
+                catch { return false; }
+            }
+        }
+
         internal static string FormatSpeed(float sp) => sp.ToString("0.##") + "x";
+
+        /// <summary>
+        /// The mod's own speed keys (numpad + and - by default): one step faster or slower. The game's = and
+        /// - keys are missing on some layouts (Latin American Spanish has = on Shift+0). It presses the HUD
+        /// speed button next to the current speed, so only speeds the game offers right now are used; with no
+        /// button on screen it steps through the game's speed list (the slower ones only when the game's
+        /// "slower speeds" option is on). The new speed is spoken by AnnounceSettings.
+        /// </summary>
+        internal static void StepSpeed(int dir)
+        {
+            try
+            {
+                float cur = PlayerPrefsMgr.sGameSpeed;
+                GameSpeedBtn best = null;
+                float bestSp = 0f;
+                var btns = UnityEngine.Object.FindObjectsOfType<GameSpeedBtn>();
+                if (btns != null)
+                    foreach (var b in btns)
+                    {
+                        if (b == null || !b.isActiveAndEnabled) continue;
+                        float sp = PlayerPrefsMgr.GetGameSpeed(b.TgtSpeed);
+                        if (dir > 0 ? sp <= cur + 0.001f : sp >= cur - 0.001f) continue;
+                        if (best == null || (dir > 0 ? sp < bestSp : sp > bestSp)) { best = b; bestSp = sp; }
+                    }
+                if (best != null) { best.OnClicked(); return; }
+                if (btns == null || btns.Length == 0)
+                {
+                    // No HUD buttons: the game's list of speeds.
+                    GameSpeed? pick = null;
+                    float pickSp = 0f;
+                    bool slow = PlayerPrefsMgr.sSlowerSpeedOptions;
+                    for (var s = GameSpeed.kQuarter; s <= GameSpeed.kFastest; s++)
+                    {
+                        if (!slow && s < GameSpeed.kNormal) continue;
+                        float sp = PlayerPrefsMgr.GetGameSpeed(s);
+                        if (dir > 0 ? sp <= cur + 0.001f : sp >= cur - 0.001f) continue;
+                        if (pick == null || (dir > 0 ? sp < pickSp : sp > pickSp)) { pick = s; pickSp = sp; }
+                    }
+                    if (pick != null) { PlayerPrefsMgr.SetGameSpeed(pick.Value); return; }
+                }
+                // Already the fastest (or slowest) the game allows.
+                Cues.Play("wall", 0f, 0.5f);
+                Speech.SayMenu(Loc.F("speed", FormatSpeed(cur)));
+            }
+            catch (Exception ex) { Log.Warn("StepSpeed: " + ex.Message); }
+        }
 
         private static void CollectThreats(BattleSaveData save, GridMgr grid)
         {
@@ -354,7 +416,7 @@ namespace BallPitAccess.Game
                 Speech.Event(Loc.F("boss_arrives", Names.Enemy(boss.Inst)));
                 // Boss attacks are far easier to dodge by ear at a slower speed.
                 float sp = PlayerPrefsMgr.sGameSpeed;
-                if (sp > 1.01f) Speech.Event(Loc.F("boss_slow_hint", FormatSpeed(sp), ActionKey(GameActionType.kDecreaseSpeed)));
+                if (sp > 1.01f) Speech.Event(Loc.F("boss_slow_hint", FormatSpeed(sp), Input.Bindings.KeyOf("speed_down")));
                 return;
             }
             int q = Mathf.Clamp(Mathf.CeilToInt(pct * 4f), 0, 4);
@@ -389,15 +451,40 @@ namespace BallPitAccess.Game
         private static void Radar(float now)
         {
             if (Threats.Count == 0 || now < _nextSweep) return;
+            // Telemetry (2026-11-15): three drums every 0.3 to 1.6 s made 394 enemy cues a minute, two thirds of
+            // all sound, and fell on top of the "will hit" alarms. Then: slower sweeps while enemies are far, the
+            // second and third drum only for close enemies, no sweep around a hazard alarm. Run 3 still had 162
+            // drums a minute (enemies were within 4 rows 74% of the time, 2.5 drums a sweep). Now a sweep that
+            // would sound exactly like the last one plays only the nearest drum (a full one every 4 s), and a
+            // second drum that repeats an earlier one's side and pitch is left out.
+            if (now - Hazards.LastAlarm < 0.6f) { _nextSweep = Hazards.LastAlarm + 0.6f; return; }
             float nearest = Threats[0].Rows;
-            _nextSweep = now + Mathf.Clamp(0.3f + nearest * 0.12f, 0.3f, 1.6f);
-            int n = Math.Min(3, Threats.Count);
-            for (int i = 0; i < n; i++)
+            _nextSweep = now + Mathf.Clamp(0.45f + nearest * 0.2f, 0.5f, 2.2f);
+            var drums = new List<(int step, int side, Threat t)>(3);
+            var sig = new StringBuilder();
+            for (int i = 0; i < Math.Min(3, Threats.Count); i++)
             {
                 var t = Threats[i];
+                if (i > 0 && t.Rows >= 3f) break;
                 int step = Mathf.Clamp(Cues.EnemySteps - 1 - (int)(t.Rows * 0.9f), 0, Cues.EnemySteps - 1);
-                Schedule(now + i * 0.09f, (t.Boss ? "boss" : "enemy") + step, PanFor(t.Center.x), i == 0 ? 1f : 0.7f, Muffle(t.Center.y));
+                float pan = PanFor(t.Center.x);
+                int side = pan < -0.25f ? -1 : pan > 0.25f ? 1 : 0;
+                bool dup = false;
+                foreach (var d in drums) if (d.step == step && d.side == side) dup = true;
+                if (dup) continue;
+                drums.Add((step, side, t));
+                sig.Append(t.Boss ? 'b' : 'e').Append(step).Append(side).Append(' ');
             }
+            string sg = sig.ToString();
+            int n = drums.Count;
+            if (sg == _lastSweepSig && now - _lastFullSweep < 4f) n = 1;
+            else { _lastSweepSig = sg; _lastFullSweep = now; }
+            for (int i = 0; i < n; i++)
+            {
+                var t = drums[i].t;
+                Schedule(now + i * 0.09f, (t.Boss ? "boss" : "enemy") + drums[i].step, PanFor(t.Center.x), i == 0 ? 1f : 0.7f, Muffle(t.Center.y));
+            }
+            RadarBusyUntil = now + n * 0.09f + 0.15f;
             if ((nearest < 1.5f || Threats[0].Line < 1f) && now >= _nextDanger)
             {
                 _nextDanger = now + 2.5f;
@@ -409,20 +496,6 @@ namespace BallPitAccess.Game
         {
             float half = Math.Max(0.5f, (RightX - LeftX) * 0.5f);
             return Mathf.Clamp((x - PlayerPos.x) / half, -1f, 1f);
-        }
-
-        /// <summary>
-        /// Pan for something the hero should walk to (a pickup, where a ball lands): never vague. Inside
-        /// <paramref name="dead"/> columns of the hero it is centred (walk straight ahead or back); outside it
-        /// is at least half way to that side, so even one column off is clearly left or right.
-        /// </summary>
-        internal static float GuidePan(float x, float dead)
-        {
-            float off = x - PlayerPos.x;
-            if (Math.Abs(off) <= dead) return 0f;
-            float half = Math.Max(0.5f, (RightX - LeftX) * 0.5f);
-            float t = Mathf.Clamp01((Math.Abs(off) - dead) / half);
-            return Math.Sign(off) * (0.5f + 0.5f * t);
         }
 
         /// <summary>
@@ -455,6 +528,8 @@ namespace BallPitAccess.Game
         /// enemies (no more bounces but the walls, so the landing spot is final). Updated every frame.</summary>
         internal static bool BallComing { get; private set; }
         internal static float BallLandX { get; private set; }
+        /// <summary>Where that ball is now (the hum sounds from here).</summary>
+        internal static Vector3 BallPos { get; private set; }
         internal static float BallEta { get; private set; }
         internal static bool BallClear { get; private set; }
 
@@ -470,6 +545,7 @@ namespace BallPitAccess.Game
             if (bm == null || bm.ActiveBalls == null) return;
             float now = Time.unscaledTime;
             float py = PlayerPos.y, best = float.MaxValue, landX = 0, ballY = 0;
+            Vector3 ballPos = Vector3.zero;
             for (int i = 0; i < bm.ActiveBalls.Count; i++)
             {
                 var b = bm.ActiveBalls[i];
@@ -479,16 +555,21 @@ namespace BallPitAccess.Game
                 if (baby) continue;
                 Vector3 p = b.transform.position, d = b.AimDir;
                 var st = b.CurState;
-                // A main ball that went from flying to flying home near the hero's line got past: a miss.
+                // How the game ends a flight (telemetry, 2026-11-15): a ball that touches the hero turns home at
+                // once (kNormal -> kReturning right at the hero): that is a catch. One that gets past flies on to
+                // the arena floor, about 4 units below the hero, and turns home there: a miss. kCatch is never used.
                 if (Balls.TryGetValue(b.Pointer, out var prev) && prev.State == BallObjState.kNormal
                     && st == BallObjState.kReturning && prev.Pos.y < py + RowH * 1.5f)
-                    OnBallMissed(prev.Pos);
+                {
+                    if (prev.Pos.y > py - 1.2f) OnBallCaught(prev.Pos);
+                    else OnBallMissed(prev.Pos);
+                }
                 Balls[b.Pointer] = new BallSeen { State = st, Pos = p, Seen = now };
                 if (st != BallObjState.kNormal) continue;
                 if (d.y >= -0.05f || p.y <= py) continue;
                 float k = (py - p.y) / d.y;
                 float tta = k / Math.Max(0.1f, b.GetSpeed());
-                if (tta < best) { best = tta; landX = Fold(p.x + d.x * k); ballY = p.y; }
+                if (tta < best) { best = tta; landX = Fold(p.x + d.x * k); ballY = p.y; ballPos = p; }
             }
             // Forget balls not seen for a second (caught, destroyed).
             BallsGone.Clear();
@@ -497,6 +578,7 @@ namespace BallPitAccess.Game
             if (best == float.MaxValue) return;
             BallComing = true;
             BallLandX = landX;
+            BallPos = ballPos;
             BallEta = best;
             float lowest = float.MaxValue;
             foreach (var t in Threats) if (t.BotY < lowest) lowest = t.BotY;
@@ -506,14 +588,15 @@ namespace BallPitAccess.Game
 
         private static LoopVoice _ballLoop;
         private static bool _ballWant, _wasInline;
-        private static float _bGain, _bPan, _bPitch, _bPulse;
+        private static float _bGain, _bPan, _bPitch, _bPulse, _bMuffle;
 
         /// <summary>
         /// The ball you should catch, by ear (the catch assist is optional), as one continuous sound (a steel
         /// ball rolling with a hum) that follows it every frame:
-        /// - pan: the side to walk to, graded (further off = further over; centred = stay);
-        /// - pitch: how close you are to where it lands, an octave low at 3 columns off, rising as you close in,
-        ///   a step up and a click when you are under it;
+        /// - pan and muffle: where the ball is now, relative to the hero (left of you = left, ahead = centred,
+        ///   behind = muffled), like every cue (CUES.md);
+        /// - pitch: how far the ball is from the hero, an octave low at 12 rows or more, rising as it comes;
+        /// - a click (one-shot) when you stand where it will land;
         /// - throb: 3 a second while it is far in time, up to 13 a second just before it reaches your line;
         /// - volume: softer while it is still among the enemies (the spot can still change), full once clear.
         /// </summary>
@@ -525,11 +608,12 @@ namespace BallPitAccess.Game
             bool inline = Math.Abs(off) < dead;
             if (inline && !_wasInline) Cues.Play("ball_inline", 0f, 0.6f);
             _wasInline = inline;
-            float cols = Mathf.Clamp01((Math.Abs(off) - dead) / (ColW * 3f));
+            float far = Mathf.Clamp01((Vector2.Distance(BallPos, PlayerPos) - RowH) / (RowH * 11f));
             _ballWant = true;
             _bGain = BallClear ? 0.7f : 0.4f;
-            _bPan = GuidePan(BallLandX, dead);
-            _bPitch = inline ? 1f : 0.89f * Mathf.Pow(2f, -cols);
+            _bPan = PanFor(BallPos.x);
+            _bMuffle = Muffle(BallPos.y);
+            _bPitch = Mathf.Pow(2f, -far);
             _bPulse = 3f + 10f * (1f - Mathf.Clamp01(real / 1.5f));
         }
 
@@ -546,12 +630,15 @@ namespace BallPitAccess.Game
             if (!_ballWant) { _ballLoop.Gain = 0f; return; }
             _ballLoop.Pan = _bPan;
             _ballLoop.Pitch = _bPitch;
+            _ballLoop.Muffle = _bMuffle;
             _ballLoop.Pulse = _bPulse;
             _ballLoop.Gain = _bGain;
         }
 
         /// <summary>How far from the hero's centre a ball still lands on it (tuned from the catch / miss log lines).</summary>
-        internal static float CatchHalfWidth => Player.kColHalfWidth + 0.15f;
+        /// <summary>Measured: balls crossing the hero's row within about 0.4 of its centre are caught, further
+        /// off they fly on (28 of 35 catches within 0.4, 4 of 43 misses). 0.45 keeps a small margin.</summary>
+        internal static float CatchHalfWidth => 0.45f;
 
         private static void OnBallMissed(Vector3 at)
         {
@@ -571,8 +658,12 @@ namespace BallPitAccess.Game
 
         internal static void OnBallRemoved(BallReturnType type)
         {
-            if (type != BallReturnType.kCatch) return;
-            Log.Info($"Ball caught: predicted off {_lastBallOff:+0.00;-0.00}, catch half width {CatchHalfWidth:0.00}");
+            // The game does not use kCatch (see PredictBall): catches are found from the ball's state.
+        }
+
+        private static void OnBallCaught(Vector3 at)
+        {
+            Log.Info($"Ball caught: {at.x - PlayerPos.x:+0.00;-0.00} from the hero, predicted off {_lastBallOff:+0.00;-0.00}");
             if (Config.BallCues) Cues.Play("catch", 0f, 0.8f);
         }
 
@@ -580,19 +671,26 @@ namespace BallPitAccess.Game
 
         private static void WallCue(Player player)
         {
+            // Knock once on reaching an edge; it re-arms only after stepping 0.3 away (the hero jittering at the
+            // edge knocked again and again), and stays quiet while the catch assist walks the hero: the player did
+            // not choose that step (telemetry: 135 of 139 knocks came from the assist dodging into a wall).
             float x = PlayerPos.x, y = PlayerPos.y;
-            bool atL, atR;
-            try { atL = x <= player.GetMinX() + 0.05f; atR = x >= player.GetMaxX() - 0.05f; }
+            float minX, maxX;
+            try { minX = player.GetMinX(); maxX = player.GetMaxX(); }
             catch { return; }
-            if (atL && !_atLeft) Cues.Play("wall", -1f);
-            if (atR && !_atRight) Cues.Play("wall", 1f);
-            _atLeft = atL; _atRight = atR;
+            bool quiet = CatchAssist.Active;
+            bool atL = x <= minX + 0.05f, atR = x >= maxX - 0.05f;
+            if (atL && !_atLeft && !quiet) Cues.Play("wall", -1f);
+            if (atR && !_atRight && !quiet) Cues.Play("wall", 1f);
+            if (atL) _atLeft = true; else if (x > minX + 0.3f) _atLeft = false;
+            if (atR) _atRight = true; else if (x < maxX - 0.3f) _atRight = false;
             if (MaxY - MinY > 0.2f)
             {
                 bool atF = y >= MaxY - 0.05f, atB = y <= MinY + 0.05f;
-                if (atF && !_atFront) Cues.Play("wall_v", 0f, 1f);
-                if (atB && !_atBack) Cues.Play("wall_v", 0f, 0.6f);
-                _atFront = atF; _atBack = atB;
+                if (atF && !_atFront && !quiet) Cues.Play("wall_v", 0f, 1f);
+                if (atB && !_atBack && !quiet) Cues.Play("wall_v", 0f, 0.6f);
+                if (atF) _atFront = true; else if (y < MaxY - 0.3f) _atFront = false;
+                if (atB) _atBack = true; else if (y > MinY + 0.3f) _atBack = false;
             }
         }
 

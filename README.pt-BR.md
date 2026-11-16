@@ -31,6 +31,7 @@ Versão 0.5.0, para a versão 1.308 do jogo, incluindo o DLC Bolalônia Elevada 
 - [Filtros de som (teclas de número)](#sound-filters-number-keys)
 - [Assistências](#assists)
 - [Configurações do mod (F4)](#mod-settings-f4)
+- [Mudar as teclas](#changing-keys)
 - [Dicas para a primeira partida](#tips-for-a-first-run)
 - [Limitações conhecidas](#known-limits)
 - [Relatar um problema](#reporting-a-problem)
@@ -145,7 +146,7 @@ Fechar. A ordem nunca depende de onde as coisas estão desenhadas na tela.
 | Espaço | Disparar (segurar) |
 | F | Disparo automático ligado / desligado |
 | E | Abrir uma subida de nível quando houver uma pronta |
-| = / - | Velocidade do jogo mais rápida / mais lenta |
+| = / - | Velocidade do jogo mais rápida / mais lenta (não existem em alguns layouts de teclado: use Num + / Num - do mod, abaixo) |
 | Esc | Pausar |
 
 ### Teclas do mod
@@ -165,6 +166,10 @@ Fechar. A ordem nunca depende de onde as coisas estão desenhadas na tela.
 | B | Suas esferas e passivas |
 | P | Itens no campo |
 | N | Perigos (disparos, lasers, bombas, chão) |
+| Q | Que som foi esse? Os sons tocando agora e os últimos, com o que cada um significa e o seu lado |
+| Num + / Num - | Velocidade do jogo mais rápida / mais lenta, em qualquer layout de teclado |
+
+Todas as teclas do mod podem ser mudadas: veja [Mudar as teclas](#changing-keys).
 
 Falado durante a batalha: o nível no começo, os chefes e a vida deles em 75, 50 e 25 por cento, dano e
 vida, efeitos de status, itens especiais quando caem, "subidas de nível prontas, pressione E", o fim da
@@ -172,33 +177,33 @@ partida.
 
 ## Sons de batalha {#battle-sounds}
 
-Quatro regras valem para todos os sons:
+Três regras valem para todos os sons, sempre em relação ao seu herói:
 
-- **Lado**: um som vem do lado da coisa de que ele fala.
+- **Lado**: um som vem de onde está a coisa de que ele fala: da esquerda se ela está à sua esquerda, da
+  direita se está à sua direita, do centro quando está bem à frente.
 - **Altura**: mais agudo significa mais perto.
 - **Abafado** significa que está atrás de você.
-- Um som que pede para você **se mover** vem do lado para onde ir.
 
 As coisas que se movem o tempo todo (a sua esfera, os disparos inimigos) são **sons contínuos** que as
 seguem; as coisas que mudam aos poucos (inimigos avançando, itens no chão) são sons curtos.
 
 | Som | Significado |
 |---|---|
-| Tambor de mão | Um inimigo. Mais agudo e mais rápido = mais perto. Os três mais próximos tocam um de cada vez. |
+| Tambor de mão | Um inimigo. Mais agudo e mais rápido = mais perto. Quando os inimigos se movem, os mais próximos tocam em sequência; enquanto nada muda, só o mais próximo. |
 | Tambor grande e grave | Um chefe. Tambores, gongo e trompa quando um chega. |
 | Rosnado | Um inimigo está prestes a alcançar você. |
 | Gemido que sobe | Um inimigo prepara um ataque, do lado em que ele está. |
-| **Zumbido rolante** (contínuo) | A esfera que você pode pegar. Ande na direção do lado dela; ele **sobe conforme você se aproxima de onde a esfera vai cair**, pulsa mais rápido conforme a esfera chega perto de você e fica mais suave enquanto a esfera ainda pode quicar em um inimigo. |
-| Clique quando o zumbido sobe um degrau | Você está embaixo da esfera: fique aí. |
+| **Zumbido rolante** (contínuo) | A esfera que você pode pegar. Ele soa de **onde a esfera está** e **sobe conforme a esfera se aproxima de você**, então você ouve para onde ela vai; pulsa mais rápido conforme a esfera chega perto da sua linha e fica mais suave enquanto a esfera ainda pode quicar em um inimigo. |
+| Clique | Você está parado onde a esfera vai cair: fique aí. |
 | Baque de luva | Esfera pega. |
 | Baque surdo que afunda | Uma esfera passou por você. |
 | Engatilhar de arma | Suas esferas voltaram: você pode disparar (em silêncio com o disparo automático). |
-| Tilintar de vidro | O cristal de EXP, ouro ou recurso mais próximo até o qual você pode andar. Eles não são coletados sozinhos. |
+| Tilintar de vidro | O cristal de XP, ouro ou recurso até o qual andar: o mais próximo, ou um monte deles um pouco mais longe. Eles não são coletados sozinhos. |
 | Brilho de kalimba | Um item especial: reator de fusão, diagrama, ovo, engrenagem, vida, ímã, bomba, saco de gemas. |
 | **Assobio de ar** (contínuo) | Um disparo inimigo voando perto de você, mais agudo conforme se aproxima. Mais alto quando vai acertar você. |
-| Sopro e estalo | Um disparo vai acertar você: dê um passo para o lado em que ele soa. |
-| Zumbido elétrico / dois choques | Um laser está mirando / você está na linha dele: dê um passo para o lado em que ele soa. |
-| Assobio que cai / chiado de pavio | Uma bomba está caindo perto / ela vai cair em você: dê um passo para o lado em que ele soa. |
+| Sopro e estalo | Um disparo vai acertar você; ele soa do disparo: saia do caminho dele. |
+| Zumbido elétrico / dois choques | Um laser está mirando / você está na linha dele; os dois soam do laser: saia da linha. |
+| Assobio que cai / chiado de pavio | Uma bomba está caindo perto / ela vai cair em você; os dois soam de onde ela cai: afaste-se de lá. |
 | Chapinhar | Você pisou em um perigo no chão (o nome dele é falado). |
 | Soco / gole | Dano / cura. |
 | Batimento cardíaco | Vida baixa; mais rápido quando está muito baixa. |
@@ -206,10 +211,11 @@ seguem; as coisas que mudam aos poucos (inimigos avançando, itens no chão) sã
 | Duas notas de sino subindo | Uma subida de nível está pronta (pressione E). |
 | Batida de madeira | Borda lateral da arena (também o fim de uma lista de menu). |
 | Batida de metal | Limite da frente ou de trás da sua área de movimento. |
-| Clique de interruptor | A assistência de mira mudou de alvo, do lado do novo alvo. |
+| Clique de interruptor | A assistência de mira trocou para outro alvo, do lado do novo. Com o disparo automático, não depois de um abate. |
 
 Todos esses sons podem ser ouvidos em **F4 → Guia de sons**, com as setas para a esquerda e para a direita
 para ouvi-los de cada lado.
+Na batalha, **Q** diz quais sons você acabou de ouvir.
 
 ## Filtros de som (teclas de número) {#sound-filters-number-keys}
 
@@ -241,11 +247,11 @@ você quiser.
 
 - **Assistência de mira** (F5 muda o modo): mira por você no inimigo mais próximo (padrão), no inimigo
   mais forte, no inimigo à sua frente, em um ângulo fixo, ou fica desativada (mouse). As setas fazem o
-  ajuste fino.
+  ajuste fino. Ela mira numa parte do inimigo que nenhum outro esconde, ignora inimigos num ângulo em que seu herói não pode atirar e, no modo padrão, vai primeiro no chefe, a menos que outro inimigo esteja prestes a alcançar você.
 - **Assistência para pegar** (segurar Shift): o herói anda até ficar embaixo da próxima esfera que está
   descendo; sem nenhuma esfera vindo, ele anda até o cristal ou item mais próximo; se um disparo está
   prestes a acertar você, antes ele sai do caminho. W / S ainda movem você para a frente e para trás, A / D
-  sempre assumem o controle. Em F4 ela pode ficar desativada, em "segurar Shift" (padrão) ou automática.
+  sempre assumem o controle. Em F4 ela pode ficar desativada, em "segurar Shift" (padrão) ou automática. Se você estiver ferido, ela busca primeiro um item de vida.
 
 ## Configurações do mod (F4) {#mod-settings-f4}
 
@@ -259,8 +265,19 @@ fecha. As configurações são salvas.
 - Sons de itens: desativados, só itens especiais, todos
 - Sons de vida, clique da assistência de mira (ativado / desativado)
 - Ler as descrições das melhorias ao focar
+- Teclas (Enter abre): veja [Mudar as teclas](#changing-keys)
 - Guia de sons (Enter abre)
 - Registro de depuração
+- Gravar batalhas (desligado por padrão): cada batalha é gravada em `UserData\BallPitAccess\telemetry.tsv`, para ajustar os sons
+
+## Mudar as teclas {#changing-keys}
+
+**F4 → Teclas** lista cada tecla do mod com a tecla que ela usa agora. Seta para cima / seta para baixo
+escolhem, **Enter** e depois pressione a nova tecla (Esc cancela), **Delete** volta para a tecla padrão, e
+a última linha restaura todas. Se a nova tecla já pertence a outra ação do mod, as duas trocam de lugar e
+o mod diz para onde a outra foi. As teclas de que os menus ou o jogo precisam (setas, Enter, Tab, Esc,
+Backspace, Espaço, W A S D F E R X) não podem ser usadas. A ajuda do F1 termina com as teclas como estão
+agora.
 
 ## Dicas para a primeira partida {#tips-for-a-first-run}
 
@@ -271,8 +288,8 @@ fecha. As configurações são salvas.
 - **Primeiro, sobreviva.** No começo de uma partida, ficar vivo importa mais do que o dano.
 - **Funda e evolua** suas esferas quando a subida de nível oferecer isso: as opções dizem "fusão" ou
   "evolução".
-- **Desacelere para os chefes** com a tecla de menos. O mod avisa quando um chefe chega com a velocidade
-  alta.
+- **Desacelere para os chefes** com Num - (ou a tecla de menos do jogo). O mod avisa quando um chefe chega
+  com a velocidade alta.
 - Morrer é normal: o ouro que você traz de volta constrói a Nova Bolalônia, e as edificações deixam cada
   partida seguinte mais forte.
 
@@ -296,6 +313,8 @@ Arquivos úteis, na pasta do jogo:
 - Na batalha, **Ctrl+Shift+D** grava `UserData\BallPitAccess\threats.txt` (inimigos, esferas, disparos,
   itens com as posições) e a lista da tela aberta no `Latest.log`: útil quando um som aponta para o lado
   errado ou quando um menu é lido na ordem errada.
+- `UserData\BallPitAccess\telemetry.tsv`, se você ligou F4 → Gravar batalhas: cada som, inimigo, esfera e
+  disparo das suas batalhas. A melhor ajuda quando os sons são difíceis de acompanhar.
 
 Diga o que você fez, o que você ouviu e o que esperava.
 

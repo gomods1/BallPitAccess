@@ -60,13 +60,19 @@ namespace BallPitAccess.Audio
         internal static bool Has(string name) => Bank.ContainsKey(name);
 
         /// <summary>Start a continuous sound (silent until its Gain is set). Null if the cue is missing.</summary>
-        internal static LoopVoice Loop(string name) => Bank.TryGetValue(name, out var s) ? LoopVoice.Start(s) : null;
+        internal static LoopVoice Loop(string name)
+        {
+            var v = Bank.TryGetValue(name, out var s) ? LoopVoice.Start(s) : null;
+            if (v != null) { v.Name = name; Loops.Add(v); }
+            return v;
+        }
 
         /// <summary>Play a loop for a moment with fixed settings (sound guide).</summary>
         internal static void PreviewLoop(string name, float seconds, float pan, float pitch, float pulse, float muffle = 0f)
         {
             var v = Loop(name);
             if (v == null) return;
+            Loops.Remove(v);   // a preview is not a sound of the battle
             v.Pan = pan; v.Pitch = pitch; v.Pulse = pulse; v.Muffle = muffle; v.Gain = 0.9f;
             v.StopAfter = (int)(seconds * AudioEngine.Rate);
         }
@@ -76,10 +82,80 @@ namespace BallPitAccess.Audio
         {
             if (!Bank.TryGetValue(name, out var s)) return;
             AudioEngine.Play(s, gain, pan, muffle, pitch);
+            if (!Input.ModKeys.ListOpen && Core.Config.Cues && gain > 0.05f) Remember(name, pan, muffle);
+            Game.Telemetry.Cue(name, pan, gain, muffle, pitch);
             if (Core.Config.Debug)
                 Core.Log.Cue($"{name} pan={pan:F2} gain={gain:F2}" + (muffle > 0.01f ? $" muffle={muffle:F2}" : "") + (Math.Abs(pitch - 1f) > 0.01f ? $" pitch={pitch:F2}" : ""));
         }
+        // ---------------- What was that? (a player could not tell the sounds apart) ----------------
+
+        private struct Heard { public string Entry; public float Pan, Muffle; public long Ms; }
+        private static readonly List<Heard> Recent = new List<Heard>();       // game thread only
+        private static readonly List<LoopVoice> Loops = new List<LoopVoice>();
+        private static readonly System.Diagnostics.Stopwatch Clock = System.Diagnostics.Stopwatch.StartNew();
+
+        /// <summary>The sound guide line (snd_*) that explains a cue, or null for clicks with no meaning of their own.</summary>
+        /// <summary>The battle's continuous sounds (telemetry).</summary>
+        internal static List<LoopVoice> LiveLoops() { Loops.RemoveAll(v => v.Stopped); return Loops; }
+
+        private static string GuideEntry(string name)
+        {
+            if (name.Length == 6 && name.StartsWith("enemy") && char.IsDigit(name[5])) return name[5] >= '5' ? "enemy9" : "enemy1";
+            if (name.Length == 5 && name.StartsWith("boss") && char.IsDigit(name[4])) return "boss5";
+            if (name.StartsWith("treasure")) return "treasure1";
+            if (name == "pickup0" || name == "pickup1") return "pickup0";
+            if (name == "loop_ball") return "loop_ball_far";
+            return Core.Loc.Has("snd_" + name) ? name : null;
+        }
+
+        private static void Remember(string name, float pan, float muffle)
+        {
+            string e = GuideEntry(name);
+            if (e == null) return;
+            Recent.Add(new Heard { Entry = e, Pan = pan, Muffle = muffle, Ms = Clock.ElapsedMilliseconds });
+            if (Recent.Count > 64) Recent.RemoveRange(0, Recent.Count - 64);
+        }
+
+        /// <summary>
+        /// Q in battle: the sounds playing now and the last few heard, newest first, each with what it means and
+        /// where it came from. Every kind is said once (the radar drums repeat all the time).
+        /// </summary>
+        internal static void SayRecent()
+        {
+            var lines = new List<string>();
+            var said = new HashSet<string>();
+            Loops.RemoveAll(v => v.Stopped);
+            foreach (var v in Loops)
+            {
+                if (v.Gain < 0.05f || !Core.Config.Cues) continue;
+                string e = GuideEntry(v.Name);
+                if (e == null || !said.Add(e)) continue;
+                lines.Add(Describe(e, v.Pan, v.Muffle));
+            }
+            long now = Clock.ElapsedMilliseconds;
+            for (int i = Recent.Count - 1; i >= 0 && lines.Count < 4; i--)
+            {
+                var h = Recent[i];
+                if (now - h.Ms > 4000) break;
+                if (!said.Add(h.Entry)) continue;
+                lines.Add(Describe(h.Entry, h.Pan, h.Muffle));
+            }
+            if (lines.Count == 0) { Core.Speech.SayMenu(Core.Loc.Get("last_none")); Core.Buffers.SetDetails(null); return; }
+            Core.Speech.SayMenu(string.Join(". ", lines));
+            Core.Buffers.SetDetails(lines);
+        }
+
+        private static string Describe(string entry, float pan, float muffle)
+        {
+            string t = Core.Loc.Get("snd_" + entry);
+            int dot = t.IndexOf(". ");
+            if (dot < 0) dot = t.IndexOf('。');
+            if (dot > 0) t = t.Substring(0, dot);
+            string side = Core.Loc.Get(pan < -0.2f ? "left" : pan > 0.2f ? "right" : "center");
+            return t + " (" + side + (muffle > 0.3f ? ", " + Core.Loc.Get("behind") : "") + ")";
+        }
     }
+
 
     /// <summary>Minimal RIFF WAV reader: PCM 8/16/24/32-bit or float 32, any channel count (mixed to mono),
     /// linearly resampled to the engine rate.</summary>

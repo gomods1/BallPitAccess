@@ -31,6 +31,7 @@ mod parla **tutte le lingue offerte dal gioco** e segue l'impostazione della lin
 - [Filtri dei suoni (tasti numerici)](#sound-filters-number-keys)
 - [Assistenze](#assists)
 - [Impostazioni della mod (F4)](#mod-settings-f4)
+- [Cambiare i tasti](#changing-keys)
 - [Consigli per la prima spedizione](#tips-for-a-first-run)
 - [Limiti noti](#known-limits)
 - [Segnalare un problema](#reporting-a-problem)
@@ -146,7 +147,7 @@ Chiudi. L'ordine non dipende mai da dove le cose sono disegnate sullo schermo.
 | Barra spaziatrice | Spara (tieni premuta) |
 | F | Fuoco automatico attivo / disattivo |
 | E | Apre un nuovo livello quando è pronto |
-| = / - | Velocità di gioco più alta / più bassa |
+| = / - | Velocità di gioco più alta / più bassa (mancano in alcuni layout di tastiera: usa Num + / Num - della mod, più sotto) |
 | Esc | Pausa |
 
 ### Tasti della mod
@@ -166,6 +167,10 @@ Chiudi. L'ordine non dipende mai da dove le cose sono disegnate sullo schermo.
 | B | Le tue palle e passive |
 | P | Oggetti sul campo |
 | N | Pericoli (colpi, laser, bombe, terreno) |
+| Q | Cos'era quel suono? I suoni che si sentono ora e gli ultimi, con il significato di ciascuno e il suo lato |
+| Num + / Num - | Velocità di gioco più alta / più bassa, con qualsiasi layout di tastiera |
+
+Ogni tasto della mod si può cambiare: vedi [Cambiare i tasti](#changing-keys).
 
 Durante la battaglia vengono annunciati: il livello all'inizio, i boss e la loro salute al 75, 50 e 25 per
 cento, i danni e la salute, gli effetti di stato, gli oggetti speciali quando cadono, "nuovi livelli
@@ -173,33 +178,33 @@ pronti, premi E", la fine della spedizione.
 
 ## Suoni di battaglia {#battle-sounds}
 
-Quattro regole valgono per ogni suono:
+Tre regole valgono per ogni suono, sempre rispetto al tuo eroe:
 
-- **Lato**: un suono arriva dal lato della cosa a cui si riferisce.
+- **Lato**: un suono arriva da dove si trova la cosa a cui si riferisce: da sinistra se è alla tua sinistra,
+  da destra se è alla tua destra, dal centro se è dritto davanti.
 - **Altezza**: più acuto vuol dire più vicino.
 - **Ovattato** vuol dire che è dietro di te.
-- Un suono che ti chiede di **muoverti** arriva dal lato verso cui andare.
 
 Le cose che si muovono di continuo (la tua palla, i colpi nemici) sono **suoni continui** che le seguono;
 le cose che cambiano a scatti (i nemici che avanzano, gli oggetti a terra) sono suoni brevi.
 
 | Suono | Significato |
 |---|---|
-| Tamburo a mano | Un nemico. Più acuto e veloce = più vicino. I tre più vicini suonano a turno. |
+| Tamburo a mano | Un nemico. Più acuto e veloce = più vicino. Quando i nemici si muovono suonano a turno i più vicini; finché nulla cambia, solo il più vicino. |
 | Grande tamburo profondo | Un boss. Tamburi, gong e corno quando ne arriva uno. |
 | Ringhio | Un nemico sta per raggiungerti. |
 | Lamento crescente | Un nemico carica un attacco, dal suo lato. |
-| **Ronzio rotolante** (continuo) | La palla che puoi prendere. Cammina verso il suo lato; **sale man mano che ti avvicini al punto in cui atterrerà la palla**, pulsa più veloce quando la palla si avvicina a te ed è più tenue finché la palla può ancora rimbalzare su un nemico. |
-| Clic mentre il ronzio sale di un gradino | Sei sotto la palla: resta lì. |
+| **Ronzio rotolante** (continuo) | La palla che puoi prendere. Suona dal **punto in cui si trova la palla** e **sale man mano che la palla si avvicina a te**, così senti dove sta andando; pulsa più veloce quando la palla si avvicina alla tua linea ed è più tenue finché la palla può ancora rimbalzare su un nemico. |
+| Clic | Sei fermo dove atterrerà la palla: resta lì. |
 | Tonfo di guantone | Palla presa. |
 | Tonfo sordo che sprofonda | Una palla ti è sfuggita. |
 | Arma che si carica | Le tue palle sono tornate: puoi sparare (silenzioso con il fuoco automatico). |
-| Tintinnio di vetro | Il cristallo di PX, l'oro o la risorsa più vicina che puoi raggiungere a piedi. Non si raccolgono da soli. |
+| Tintinnio di vetro | Il cristallo di PX, l'oro o la risorsa verso cui andare: il più vicino, o un mucchio poco più lontano. Non si raccolgono da soli. |
 | Scintillio di kalimba | Un oggetto speciale: reattore a fusione, progetto, uovo, ingranaggio, salute, calamita, bomba, sacchetto di gemme. |
 | **Fischio d'aria** (continuo) | Un colpo nemico che vola vicino a te, più acuto man mano che arriva. Più forte quando ti colpirà. |
-| Sibilo e schiocco | Un colpo ti colpirà: spostati verso il lato da cui suona. |
-| Ronzio elettrico / due scariche | Un laser sta prendendo la mira / sei sulla sua linea: spostati verso il lato da cui suona. |
-| Fischio in caduta / sfrigolio di miccia | Una bomba sta cadendo qui vicino / ti cadrà addosso: spostati verso il lato da cui suona. |
+| Sibilo e schiocco | Un colpo ti colpirà; suona dal colpo: togliti dalla sua traiettoria. |
+| Ronzio elettrico / due scariche | Un laser sta prendendo la mira / sei sulla sua linea; entrambi suonano dal laser: esci dalla sua linea. |
+| Fischio in caduta / sfrigolio di miccia | Una bomba sta cadendo qui vicino / ti cadrà addosso; entrambi suonano dal punto in cui atterra: allontanati da lì. |
 | Risucchio viscido | Sei finito su un pericolo del terreno (ne viene detto il nome). |
 | Pugno / sorso | Danno / cura. |
 | Battito cardiaco | Salute bassa; più veloce quando è molto bassa. |
@@ -207,10 +212,11 @@ le cose che cambiano a scatti (i nemici che avanzano, gli oggetti a terra) sono 
 | Due note di campana in salita | Un nuovo livello è pronto (premi E). |
 | Colpo di legno | Bordo laterale dell'arena (anche la fine di una lista di un menu). |
 | Colpo metallico | Limite anteriore o posteriore della tua zona di movimento. |
-| Clic di interruttore | L'assistenza alla mira ha cambiato bersaglio, dal lato del nuovo. |
+| Clic di interruttore | L'assistenza alla mira è passata a un altro bersaglio, dal lato del nuovo. Con il fuoco automatico, non dopo un'uccisione. |
 
 Tutti questi suoni si possono ascoltare in **F4 → Guida ai suoni**, con freccia sinistra / destra per
 sentirli da ciascun lato.
+In battaglia, **Q** dice quali suoni hai appena sentito.
 
 ## Filtri dei suoni (tasti numerici) {#sound-filters-number-keys}
 
@@ -241,11 +247,11 @@ Tutto ciò che fa un'assistenza si può fare anche a orecchio; le assistenze ci 
 
 - **Assistenza alla mira** (F5 cambia la modalità): mira per te al nemico più vicino (predefinito), al
   nemico più forte, al nemico davanti a te, a un angolo fisso, oppure è disattivata (mouse). Le frecce la
-  regolano con precisione.
+  regolano con precisione. Mira a una parte del nemico che nessun altro copre, salta i nemici a un angolo in cui il tuo eroe non può tirare e, nella modalità predefinita, punta prima al boss, a meno che un altro nemico stia per raggiungerti.
 - **Assistenza alla presa** (tieni premuto Maiusc): l'eroe va sotto la prossima palla che scende; se non
   arriva nessuna palla va al cristallo o all'oggetto più vicino; se un colpo sta per colpirti, prima si
   sposta dalla sua traiettoria. W / S ti muovono comunque avanti e indietro, A / D prendono sempre il
-  controllo. In F4 può essere disattivata, "tieni premuto Maiusc" (predefinito) o automatica.
+  controllo. In F4 può essere disattivata, "tieni premuto Maiusc" (predefinito) o automatica. Se sei ferito, va prima a prendere un oggetto di salute.
 
 ## Impostazioni della mod (F4) {#mod-settings-f4}
 
@@ -259,8 +265,19 @@ vengono salvate.
 - Suoni degli oggetti: disattivati, solo oggetti speciali, tutti
 - Suoni della salute, clic dell'assistenza alla mira (attivo / disattivo)
 - Lettura delle descrizioni dei potenziamenti al focus
+- Tasti (Invio li apre): vedi [Cambiare i tasti](#changing-keys)
 - Guida ai suoni (Invio la apre)
 - Registro di debug
+- Registra le battaglie (disattivato di default): ogni battaglia viene scritta in `UserData\BallPitAccess\telemetry.tsv`, per regolare i suoni
+
+## Cambiare i tasti {#changing-keys}
+
+**F4 → Tasti** elenca ogni tasto della mod con il tasto che usa ora. Freccia su / giù per scegliere,
+**Invio** e poi premi il nuovo tasto (Esc annulla), **Canc** rimette il tasto predefinito, e l'ultima riga
+li ripristina tutti. Se il nuovo tasto appartiene già a un'altra azione della mod, i due si scambiano e la
+mod dice dove è finita l'altra. I tasti che servono ai menu o al gioco (frecce, Invio, Tab, Esc,
+Backspace, Barra spaziatrice, W A S D F E R X) non si possono prendere. L'aiuto di F1 finisce con i tasti
+come sono impostati ora.
 
 ## Consigli per la prima spedizione {#tips-for-a-first-run}
 
@@ -271,7 +288,8 @@ vengono salvate.
 - **Prima di tutto sopravvivi.** All'inizio di una spedizione restare vivo conta più del danno.
 - **Fondi ed evolvi** le tue palle quando il nuovo livello lo offre: le scelte dicono "fusione" o
   "evoluzione".
-- **Rallenta per i boss** con il tasto meno. La mod te lo ricorda quando un boss arriva a velocità alta.
+- **Rallenta per i boss** con Num - (o il tasto meno del gioco). La mod te lo ricorda quando un boss
+  arriva a velocità alta.
 - Morire è normale: l'oro che riporti costruisce Nuova Pallilonia, e gli edifici rendono più forte ogni
   spedizione successiva.
 
@@ -296,6 +314,8 @@ File utili, nella cartella del gioco:
 - In battaglia, **Ctrl+Maiusc+D** scrive `UserData\BallPitAccess\threats.txt` (nemici, palle, colpi,
   oggetti con le loro posizioni) e la lista della schermata aperta in `Latest.log`: utile quando un suono
   indica la direzione sbagliata o un menu viene letto nell'ordine sbagliato.
+- `UserData\BallPitAccess\telemetry.tsv`, se hai attivato F4 → Registra le battaglie: ogni suono, nemico,
+  palla e colpo delle tue battaglie. L'aiuto migliore quando i suoni sono difficili da seguire.
 
 Di' cosa hai fatto, cosa hai sentito e cosa ti aspettavi.
 

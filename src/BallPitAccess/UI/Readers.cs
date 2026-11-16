@@ -539,13 +539,48 @@ namespace BallPitAccess.UI
             return null;
         }
 
+        // ---------------- Panels that follow the focus ----------------
+
+        private static readonly Dictionary<IntPtr, KeyValuePair<IntPtr, string>> PanelSeen = new Dictionary<IntPtr, KeyValuePair<IntPtr, string>>();
+
+        /// <summary>
+        /// A details panel the game fills from the hover a frame or two late (I2 sets its texts later): true
+        /// while it still shows, unchanged, what it showed for another item. The reader then sets Retry and
+        /// MenuReader looks again shortly (at most 4 times), so the buffer never takes the previous item's
+        /// details (user, 2026-11-16: "off by 1" in the encyclopedia when moving fast, "at random").
+        /// </summary>
+        private static bool PanelBehind(UnityEngine.Object panel, UnityEngine.Object item, List<string> lines)
+        {
+            if (panel == null || item == null || lines == null || lines.Count == 0) return false;
+            string text = string.Join("\n", lines);
+            if (PanelSeen.TryGetValue(panel.Pointer, out var seen) && seen.Key != item.Pointer && seen.Value == text)
+            {
+                Log.Info("Panel behind the focus: " + panel.name + " still shows '" + (text.Length > 60 ? text.Substring(0, 60) : text).Replace("\n", " / ") + "'");
+                return true;
+            }
+            PanelSeen[panel.Pointer] = new KeyValuePair<IntPtr, string>(item.Pointer, text);
+            return false;
+        }
+
+        private static List<string> Joined(params List<string>[] parts)
+        {
+            var all = new List<string>();
+            foreach (var l in parts) if (l != null) all.AddRange(l);
+            return all;
+        }
+
         private static FocusReadout Evo(EvoSelectBtn e)
         {
             var ui = LevelUpUI.I;
             if (ui != null) try { ui.HoverEvo(e, true); } catch { }
             var inf = e.GetInfo();
             var r = new FocusReadout(Names.Upgrade(inf), Loc.Get("kind_evolution"));
-            if (ui != null) r.AddAll(Lines(ui.EvoSelectInfoPanel));
+            if (ui != null)
+            {
+                var panel = Lines(ui.EvoSelectInfoPanel);
+                if (PanelBehind(ui.EvoSelectInfoPanel, e, panel)) r.Retry = true;
+                r.AddAll(panel);
+            }
             string desc = r.Details.Count > 1 ? r.Details[1] : Names.UpgradeDesc(inf);
             r.Add(desc);
             if (Config.ReadDescriptions && desc.Length > 0) r.Summary += ". " + desc;
@@ -564,7 +599,12 @@ namespace BallPitAccess.UI
             }
             var r = new FocusReadout(name, lvl);
             var ui = PauseUI.I;
-            if (ui != null) r.AddAll(Lines(ui.EquipInfoPanel));
+            if (ui != null)
+            {
+                var panel = Lines(ui.EquipInfoPanel);
+                if (PanelBehind(ui.EquipInfoPanel, p, panel)) r.Retry = true;
+                r.AddAll(panel);
+            }
             return r;
         }
 
@@ -602,6 +642,7 @@ namespace BallPitAccess.UI
             r.Summary = string.Join(", ", parts);
             var ui = BuildUI.I;
             string shown = ui != null ? Names.Shown(ui.LocDetailsDesc) : "";
+            if (ui != null && PanelBehind(ui.LocDetailsDesc, bi, new List<string> { shown })) r.Retry = true;
             string desc = shown.Length > 0 ? shown : Tr(inf.GetBuildDescSlug());
             if (desc.Length == 0) desc = Tr(inf.GetDescSlug());
             r.Add(desc);
@@ -649,7 +690,12 @@ namespace BallPitAccess.UI
             r.Add(Tr(inf.GetGameplayDescSlug()));
             r.Add(Tr(inf.GetFlavorDescSlug()));
             if (inf.StarterUpgrade != null) r.Add(Loc.F("starter_ball", Names.Upgrade(inf.StarterUpgrade)));
-            if (ui != null) r.AddAll(Lines(ui.DetailsPanel));
+            if (ui != null)
+            {
+                var panel = Lines(ui.DetailsPanel);
+                if (PanelBehind(ui.DetailsPanel, cs, Joined(panel, new List<string> { Names.Shown(ui.LocReqDesc) }))) r.Retry = true;
+                r.AddAll(panel);
+            }
             return r;
         }
 
@@ -732,10 +778,33 @@ namespace BallPitAccess.UI
                 if (name.Length == 0) name = Speech.Clean(e.PieceInf.DisplayName);
             }
             var r = new FocusReadout(name);
+            // The details panel follows the hover a frame or two late (I2 fills its texts later), so the
+            // buffer took the previous entry's details (user, 2026-11-16: "off by 1", at random). Until the
+            // panel names this entry, MenuReader looks again shortly (at most 4 times).
+            if (ui != null && e.TgtInf != null && name.Length > 0)
+            {
+                string panelName = "";
+                try { if (ui.ItemInfPanel != null) panelName = Names.Shown(ui.ItemInfPanel.LocEquipName); } catch { }
+                if (panelName.Length > 0 && panelName.IndexOf(name, StringComparison.OrdinalIgnoreCase) < 0
+                    && name.IndexOf(panelName, StringComparison.OrdinalIgnoreCase) < 0)
+                { r.Retry = true; Log.Info("Encyclopedia panel behind: focus '" + name + "', panel '" + panelName + "'"); }
+            }
+            else if (ui != null && e.PieceInf != null)
+            {
+                string want = Tr(e.PieceInf.GetGameplayDescSlug()), shown = "";
+                try { shown = Names.Shown(ui.LocEnemyGameplayDesc); } catch { }
+                // Compare the start only: a placeholder the panel fills in would make them differ further on.
+                int n = Math.Min(12, Math.Min(want.Length, shown.Length));
+                if (n > 0 && string.Compare(want, 0, shown, 0, n, StringComparison.OrdinalIgnoreCase) != 0)
+                { r.Retry = true; Log.Info("Encyclopedia panel behind: focus '" + name + "', panel '" + shown + "'"); }
+            }
             if (ui != null)
             {
-                r.AddAll(Lines(ui.WrapperItemDetailsUnlocked));
-                r.AddAll(Lines(ui.WrapperEnemyDetailsUnlocked));
+                var items = Lines(ui.WrapperItemDetailsUnlocked);
+                var enemies = Lines(ui.WrapperEnemyDetailsUnlocked);
+                if (PanelBehind(ui, e, Joined(items, enemies))) r.Retry = true;
+                r.AddAll(items);
+                r.AddAll(enemies);
             }
             if (e.TgtInf != null) r.Add(Names.UpgradeDesc(e.TgtInf));
             if (e.PieceInf != null) r.Add(Tr(e.PieceInf.GetGameplayDescSlug()));

@@ -30,6 +30,7 @@ języku, który oferuje gra**, i stosuje się do ustawienia języka w grze.
 - [Filtry dźwięków (klawisze cyfr)](#sound-filters-number-keys)
 - [Pomoce](#assists)
 - [Ustawienia moda (F4)](#mod-settings-f4)
+- [Zmiana klawiszy](#changing-keys)
 - [Wskazówki na pierwszą rozgrywkę](#tips-for-a-first-run)
 - [Znane ograniczenia](#known-limits)
 - [Zgłaszanie problemu](#reporting-a-problem)
@@ -141,7 +142,7 @@ Kolejność nigdy nie zależy od tego, gdzie elementy są narysowane na ekranie.
 | Spacja | Strzał (przytrzymaj) |
 | F | Automatyczny ostrzał wł. / wył. |
 | E | Otwórz nowy poziom, gdy jest gotowy |
-| = / - | Szybsza / wolniejsza prędkość gry |
+| = / - | Szybsza / wolniejsza prędkość gry (na niektórych układach klawiatury ich brak: użyj Num + / Num - moda, niżej) |
 | Escape | Pauza |
 
 ### Klawisze moda
@@ -161,6 +162,10 @@ Kolejność nigdy nie zależy od tego, gdzie elementy są narysowane na ekranie.
 | B | Twoje kule i zdolności pasywne |
 | P | Przedmioty na polu |
 | N | Zagrożenia (pociski, lasery, bomby, ziemia) |
+| Q | Co to był za dźwięk? Dźwięki, które grają teraz, i kilka ostatnich, z tym, co każdy oznacza, i jego stroną |
+| Num + / Num - | Szybsza / wolniejsza prędkość gry, przy każdym układzie klawiatury |
+
+Każdy klawisz moda można zmienić: zobacz [Zmiana klawiszy](#changing-keys).
 
 W czasie walki mod mówi: poziom na początku, bossów i ich zdrowie przy 75, 50 i 25 procentach, obrażenia
 i zdrowie, efekty statusu, przedmioty specjalne, gdy wypadną, „gotowe nowe poziomy, naciśnij E” oraz koniec
@@ -168,12 +173,12 @@ rozgrywki.
 
 ## Dźwięki walki {#battle-sounds}
 
-Każdy dźwięk podlega czterem zasadom:
+Każdy dźwięk podlega trzem zasadom, zawsze względem twojego bohatera:
 
-- **Strona**: dźwięk dochodzi z tej strony, po której jest to, czego dotyczy.
+- **Strona**: dźwięk dochodzi stamtąd, gdzie jest to, czego dotyczy: z lewej, gdy jest po twojej lewej, z
+  prawej, gdy jest po twojej prawej, ze środka, gdy jest prosto przed tobą.
 - **Wysokość**: wyższy oznacza bliżej.
 - **Stłumiony** oznacza, że jest za tobą.
-- Dźwięk, który każe ci się **ruszyć**, dochodzi ze strony, w którą masz iść.
 
 Rzeczy, które ciągle się poruszają (twoja kula, wrogie pociski), mają **dźwięki ciągłe**, które za nimi
 podążają; rzeczy, które zmieniają się skokowo (nacierający wrogowie, przedmioty leżące na ziemi), mają krótkie
@@ -181,21 +186,21 @@ dźwięki.
 
 | Dźwięk | Znaczenie |
 |---|---|
-| Bębenek ręczny | Wróg. Wyższy i szybszy = bliżej. Trzech najbliższych gra po kolei. |
+| Bębenek ręczny | Wróg. Wyżej i szybciej = bliżej. Gdy wrogowie się ruszają, najbliżsi grają po kolei; dopóki nic się nie zmienia, gra tylko najbliższy. |
 | Duży, głęboki bęben | Boss. Bębny, gong i róg, gdy się pojawia. |
 | Warknięcie | Wróg zaraz do ciebie dotrze. |
 | Narastający pisk | Wróg szykuje atak, po swojej stronie. |
-| **Toczące się buczenie** (ciągłe) | Kula, którą możesz złapać. Idź w jego stronę; **staje się wyższe, im bliżej jesteś miejsca, gdzie kula wyląduje**, pulsuje szybciej, gdy kula się zbliża, i jest cichsze, dopóki kula może jeszcze odbić się od wroga. |
-| Kliknięcie, gdy buczenie wchodzi o stopień wyżej | Jesteś pod kulą: zostań tam. |
+| **Toczące się buczenie** (ciągłe) | Kula, którą możesz złapać. Słychać je **z miejsca, w którym jest kula**, i **staje się wyższe, im bliżej ciebie jest kula**, więc słyszysz, dokąd leci; pulsuje szybciej, gdy kula zbliża się do twojej linii, i jest cichsze, dopóki kula może jeszcze odbić się od wroga. |
+| Kliknięcie | Stoisz tam, gdzie kula wyląduje: zostań tam. |
 | Plaśnięcie rękawicy | Kula złapana. |
 | Głuche, opadające uderzenie | Kula cię minęła. |
 | Przeładowanie broni | Twoje kule wróciły: możesz strzelać (ciche przy automatycznym ostrzale). |
-| Brzęk szkła | Najbliższy kryształ PD, złoto lub zasób, do którego możesz dojść. Nie zbierają się same. |
+| Brzęk szkła | Kryształ PD, złoto lub surowiec, do którego warto podejść: najbliższy albo kupka trochę dalej. Nie zbierają się same. |
 | Migotanie kalimby | Przedmiot specjalny: reaktor fuzji, schemat, jajo, koło zębate, zdrowie, magnes, bomba, sakiewka klejnotów. |
 | **Powietrzny gwizd** (ciągły) | Wrogi pocisk lecący blisko ciebie, wyższy, gdy się zbliża. Głośniejszy, gdy cię trafi. |
-| Świst i trzask | Pocisk cię trafi: przesuń się w stronę, z której go słychać. |
-| Elektryczne buczenie / dwa trzaski | Laser celuje / jesteś na jego linii: przesuń się w stronę, z której go słychać. |
-| Opadający gwizd / syk lontu | W pobliżu spada bomba / spadnie na ciebie: przesuń się w stronę, z której go słychać. |
+| Świst i trzask | Pocisk cię trafi; dźwięk dochodzi od pocisku: zejdź mu z drogi. |
+| Elektryczne buczenie / dwa trzaski | Laser celuje / jesteś na jego linii; oba dźwięki dochodzą od lasera: zejdź z jego linii. |
+| Opadający gwizd / syk lontu | W pobliżu spada bomba / spadnie na ciebie; oba dźwięki dochodzą z miejsca, w którym wyląduje: odsuń się od niego. |
 | Chlupot | Stoisz na zagrożeniu na ziemi (mod mówi jego nazwę). |
 | Cios / łyk | Obrażenia / leczenie. |
 | Bicie serca | Mało zdrowia; szybsze, gdy zdrowia jest bardzo mało. |
@@ -203,10 +208,11 @@ dźwięki.
 | Dwa rosnące dźwięki dzwonka | Nowy poziom jest gotowy (naciśnij E). |
 | Drewniane stuknięcie | Boczna krawędź areny (także koniec listy w menu). |
 | Metalowe stuknięcie | Przednia lub tylna granica obszaru, po którym chodzisz. |
-| Kliknięcie przełącznika | Pomoc w celowaniu zmieniła cel, po stronie nowego celu. |
+| Kliknięcie przełącznika | Wspomaganie celowania przełączyło się na inny cel, po jego stronie. Przy automatycznym strzelaniu nie po zabiciu wroga. |
 
 Każdy z tych dźwięków można usłyszeć w **F4 → Przewodnik po dźwiękach**, a strzałkami w lewo / w prawo
 odtworzyć go po każdej stronie.
+W walce **Q** mówi, jakie dźwięki właśnie było słychać.
 
 ## Filtry dźwięków (klawisze cyfr) {#sound-filters-number-keys}
 
@@ -235,11 +241,11 @@ W walce klawisze cyfr wyciszają lub przywracają grupę dźwięków, żeby łat
 Wszystko, co robi pomoc, można też zrobić na słuch; pomoce są do dyspozycji, kiedy ich chcesz.
 
 - **Pomoc w celowaniu** (F5 zmienia tryb): celuje za ciebie w najbliższego wroga (domyślnie), najsilniejszego
-  wroga, wroga przed tobą, pod stałym kątem albo jest wyłączona (mysz). Strzałki pozwalają ją dostroić.
+  wroga, wroga przed tobą, pod stałym kątem albo jest wyłączona (mysz). Strzałki pozwalają ją dostroić. Celuje w część wroga, której nie zasłania żaden inny, pomija wrogów pod kątem, pod którym twój bohater nie może strzelać, a w trybie domyślnym najpierw bierze bossa, chyba że inny wróg zaraz do ciebie dotrze.
 - **Pomoc w łapaniu** (przytrzymaj Shift): bohater idzie pod następną spadającą kulę; gdy żadna kula nie
   nadlatuje, idzie do najbliższego kryształu lub przedmiotu; jeśli pocisk zaraz cię trafi, najpierw schodzi
   mu z drogi. W / S nadal przesuwają cię do przodu i do tyłu, A / D zawsze przejmują sterowanie. W F4 można ją
-  wyłączyć, ustawić na „przytrzymaj Shift” (domyślnie) albo na tryb automatyczny.
+  wyłączyć, ustawić na „przytrzymaj Shift” (domyślnie) albo na tryb automatyczny. Gdy jesteś ranny, najpierw idzie po przedmiot leczący.
 
 ## Ustawienia moda (F4) {#mod-settings-f4}
 
@@ -253,8 +259,19 @@ są zapisywane.
 - Dźwięki przedmiotów: wyłączone, tylko przedmioty specjalne, wszystkie
 - Dźwięki zdrowia, kliknięcie pomocy w celowaniu (wł. / wył.)
 - Czytanie opisów ulepszeń po zaznaczeniu
+- Klawisze (Enter otwiera): zobacz [Zmiana klawiszy](#changing-keys)
 - Przewodnik po dźwiękach (Enter otwiera)
 - Dziennik debugowania
+- Nagrywanie walk (domyślnie wyłączone): każda walka jest zapisywana do `UserData\BallPitAccess\telemetry.tsv`, do strojenia dźwięków
+
+## Zmiana klawiszy {#changing-keys}
+
+**F4 → Klawisze** wymienia każdy klawisz moda razem z klawiszem, na którym jest teraz. Strzałki w górę / w
+dół wybierają, **Enter**, a potem naciśnij nowy klawisz (Escape anuluje), **Delete** przywraca klawisz
+domyślny, a ostatnia pozycja przywraca wszystkie. Jeśli nowy klawisz należy już do innej akcji moda, oba
+się zamieniają, a mod mówi, dokąd trafiła ta druga. Klawiszy potrzebnych menu lub grze (strzałki, Enter,
+Tab, Escape, Backspace, Spacja, W A S D F E R X) nie można zająć. Pomoc F1 kończy się klawiszami w obecnym
+ustawieniu.
 
 ## Wskazówki na pierwszą rozgrywkę {#tips-for-a-first-run}
 
@@ -265,7 +282,8 @@ są zapisywane.
 - **Najpierw przetrwaj.** Na początku rozgrywki pozostanie przy życiu jest ważniejsze niż obrażenia.
 - **Łącz w fuzje i rozwijaj w ewolucje** swoje kule, gdy nowy poziom to oferuje: opcje mówią „fuzja” albo
   „ewolucja”.
-- **Zwolnij przy bossach** klawiszem minus. Mod przypomina o tym, gdy boss pojawia się przy dużej prędkości.
+- **Zwolnij przy bossach** klawiszem Num - (albo klawiszem minus gry). Mod przypomina o tym, gdy boss
+  pojawia się przy dużej prędkości.
 - Śmierć to normalna rzecz: złoto, które przynosisz, rozbudowuje Nowe Kulopolis, a budowle wzmacniają każdą
   kolejną rozgrywkę.
 
@@ -289,6 +307,8 @@ Przydatne pliki w folderze gry:
 - W walce **Ctrl+Shift+D** zapisuje `UserData\BallPitAccess\threats.txt` (wrogowie, kule, pociski, przedmioty
   wraz z pozycjami) oraz listę otwartego ekranu do `Latest.log`: przydatne, gdy dźwięk wskazuje zły kierunek
   albo menu czyta elementy w złej kolejności.
+- `UserData\BallPitAccess\telemetry.tsv`, jeśli włączono F4 → Nagrywanie walk: każdy dźwięk, wróg, kula i
+  pocisk z twoich walk. Najlepsza pomoc, gdy trudno nadążyć za dźwiękami.
 
 Napisz, co zrobiłeś, co usłyszałeś i czego się spodziewałeś.
 

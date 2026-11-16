@@ -232,6 +232,7 @@ not (see <a href="#reporting-a-problem">Reporting a problem</a>).</p>
 keys)</a></li>
 <li><a href="#assists">Assists</a></li>
 <li><a href="#mod-settings-f4">Mod settings (F4)</a></li>
+<li><a href="#changing-keys">Changing the keys</a></li>
 <li><a href="#tips-for-a-first-run">Tips for a first run</a></li>
 <li><a href="#known-limits">Known limits</a></li>
 <li><a href="#reporting-a-problem">Reporting a problem</a></li>
@@ -459,6 +460,10 @@ up, arrows move it, Enter drops it.</li>
 <h2 id="battle">Battle</h2>
 <h3 id="the-games-own-keys">The game’s own keys</h3>
 <table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
 <tr>
 <th>Key</th>
@@ -484,7 +489,8 @@ up, arrows move it, Enter drops it.</li>
 </tr>
 <tr>
 <td>= / -</td>
-<td>Faster / slower game speed</td>
+<td>Faster / slower game speed (missing on some layouts: use the mod’s
+Num + / Num - below)</td>
 </tr>
 <tr>
 <td>Escape</td>
@@ -558,21 +564,31 @@ filters</a>)</td>
 <td>N</td>
 <td>Hazards (shots, lasers, bombs, floor)</td>
 </tr>
+<tr>
+<td>Q</td>
+<td>What was that sound? The sounds playing now and the last few, with
+what each means and its side</td>
+</tr>
+<tr>
+<td>Num + / Num -</td>
+<td>Faster / slower game speed, on any keyboard layout</td>
+</tr>
 </tbody>
 </table>
+<p>Every mod key can be changed: see <a href="#changing-keys">Changing
+the keys</a>.</p>
 <p>Spoken during battle: the level at the start, bosses and their health
 at 75, 50 and 25 percent, damage and health, status effects, special
 items when they drop, “level ups ready, press E”, the end of the
 run.</p>
 <h2 id="battle-sounds">Battle sounds</h2>
-<p>Four rules hold for every sound:</p>
+<p>Three rules hold for every sound, always relative to your hero:</p>
 <ul>
-<li><strong>Side</strong>: a sound comes from the side of the thing it
-is about.</li>
+<li><strong>Side</strong>: a sound comes from where the thing it is
+about is: left of you on the left, right of you on the right, centred
+when it is straight ahead.</li>
 <li><strong>Pitch</strong>: higher means closer.</li>
 <li><strong>Muffled</strong> means it is behind you.</li>
-<li>A sound that asks you to <strong>move</strong> comes from the side
-to go to.</li>
 </ul>
 <p>Things that move all the time (your ball, enemy shots) are
 <strong>continuous sounds</strong> that follow them; things that change
@@ -592,8 +608,9 @@ sounds.</p>
 <tbody>
 <tr>
 <td>Hand drum</td>
-<td>An enemy. Higher and faster = closer. The three nearest play in
-turn.</td>
+<td>An enemy. Higher and faster = closer. When the enemies move, the
+nearest ones play in turn; while nothing changes, only the nearest one
+plays.</td>
 </tr>
 <tr>
 <td>Big deep drum</td>
@@ -609,14 +626,14 @@ turn.</td>
 </tr>
 <tr>
 <td><strong>Rolling hum</strong> (continuous)</td>
-<td>The ball you can catch. Walk toward its side; it <strong>rises as
-you get closer to where the ball will land</strong>, throbs faster as
-the ball nears you, and is softer while the ball can still bounce off an
-enemy.</td>
+<td>The ball you can catch. It sounds from <strong>where the ball
+is</strong> and <strong>rises as the ball gets closer to you</strong>,
+so you hear where it is heading; it throbs faster as the ball nears your
+line, and is softer while the ball can still bounce off an enemy.</td>
 </tr>
 <tr>
-<td>Click as the hum steps up</td>
-<td>You are under the ball: stay there.</td>
+<td>Click</td>
+<td>You are standing where the ball will land: stay there.</td>
 </tr>
 <tr>
 <td>Glove thud</td>
@@ -632,8 +649,8 @@ enemy.</td>
 </tr>
 <tr>
 <td>Glass tink</td>
-<td>The nearest XP crystal, gold or resource you can walk to. They do
-not collect themselves.</td>
+<td>The XP crystal, gold or resource to walk to: the nearest one, or a
+heap of them a little further. They do not collect themselves.</td>
 </tr>
 <tr>
 <td>Kalimba sparkle</td>
@@ -647,17 +664,18 @@ will hit you.</td>
 </tr>
 <tr>
 <td>Swoosh and crack</td>
-<td>A shot will hit you: step to the side it sounds on.</td>
+<td>A shot will hit you; it sounds from the shot: step out of its
+way.</td>
 </tr>
 <tr>
 <td>Electric hum / two zaps</td>
-<td>A laser is aiming / you are in its line: step to the side it sounds
-on.</td>
+<td>A laser is aiming / you are in its line; both sound from the laser:
+step out of the line.</td>
 </tr>
 <tr>
 <td>Falling whistle / fuse hiss</td>
-<td>A bomb is falling nearby / it will land on you: step to the side it
-sounds on.</td>
+<td>A bomb is falling nearby / it will land on you; both sound from
+where it lands: step away from it.</td>
 </tr>
 <tr>
 <td>Squelch</td>
@@ -689,12 +707,14 @@ sounds on.</td>
 </tr>
 <tr>
 <td>Switch click</td>
-<td>The aim assist changed target, on the side of the new one.</td>
+<td>The aim assist switched to another target, on the side of the new
+one. With autofire on, not after a kill.</td>
 </tr>
 </tbody>
 </table>
 <p>Every one of these can be heard in <strong>F4 → Sound guide</strong>,
-with Left / Right to hear it on each side.</p>
+with Left / Right to hear it on each side. In battle, <strong>Q</strong>
+names the sounds you just heard.</p>
 <h2 id="sound-filters-number-keys">Sound filters (number keys)</h2>
 <p>In battle, the number keys mute or unmute a group of sounds so you
 can concentrate. The game uses none of these keys.</p>
@@ -756,12 +776,16 @@ there when you want them.</p>
 <ul>
 <li><strong>Aim assist</strong> (F5 changes the mode): aims for you at
 the closest enemy (default), the strongest enemy, the enemy in front of
-you, a fixed angle, or off (mouse). The arrows fine-tune it.</li>
+you, a fixed angle, or off (mouse). The arrows fine-tune it. It aims at
+a part of the enemy that no other enemy hides, skips enemies at an angle
+your hero cannot shoot, and in the default mode goes for the boss first
+unless another enemy is about to reach you.</li>
 <li><strong>Catch assist</strong> (hold Shift): the hero walks under the
 next ball coming down; with no ball coming it walks to the nearest
 crystal or item; if a shot is about to hit you it steps out of the way
 first. W / S still move you forward and back, A / D always take over. In
-F4 it can be off, “hold Shift” (default) or automatic.</li>
+F4 it can be off, “hold Shift” (default) or automatic. When you are hurt
+it fetches a health item first.</li>
 </ul>
 <h2 id="mod-settings-f4">Mod settings (F4)</h2>
 <p>Up / Down move, Left / Right or Enter change, Escape closes. Settings
@@ -775,9 +799,23 @@ off)</li>
 <li>Pickup sounds: off, special items only, all</li>
 <li>Health sounds, aim assist click (on / off)</li>
 <li>Read upgrade descriptions on focus</li>
+<li>Keys (Enter opens): see <a href="#changing-keys">Changing the
+keys</a></li>
 <li>Sound guide (Enter opens)</li>
 <li>Debug logging</li>
+<li>Record battles (off by default): every battle is written to
+<code>UserData\BallPitAccess\telemetry.tsv</code>, for tuning the
+sounds</li>
 </ul>
+<h2 id="changing-keys">Changing the keys</h2>
+<p><strong>F4 → Keys</strong> lists every mod key with the key it is on
+now. Up / Down choose, <strong>Enter</strong> then press the new key
+(Escape cancels), <strong>Delete</strong> puts back the default key, and
+the last line restores them all. If the new key already belongs to
+another mod action, the two swap and the mod says where the other one
+went. Keys the menus or the game need (arrows, Enter, Tab, Escape,
+Backspace, Space, W A S D F E R X) cannot be taken. The F1 help ends
+with the keys as they are set now.</p>
 <h2 id="tips-for-a-first-run">Tips for a first run</h2>
 <ul>
 <li><strong>Catch your balls.</strong> A caught ball can be shot again
@@ -789,8 +827,9 @@ themselves. Follow the glass tink; muffled means it is behind you.</li>
 matters more than damage.</li>
 <li><strong>Fuse and evolve</strong> your balls when the level up offers
 it: the choices say “fusion” or “evolution”.</li>
-<li><strong>Slow down for bosses</strong> with the minus key. The mod
-reminds you when a boss arrives at a high speed.</li>
+<li><strong>Slow down for bosses</strong> with Num - (or the game’s
+minus key). The mod reminds you when a boss arrives at a high
+speed.</li>
 <li>Dying is normal: the gold you bring back builds New Ballbylon, and
 buildings make every later run stronger.</li>
 </ul>
@@ -820,6 +859,9 @@ catches and misses).</li>
 pickups with positions) and the open screen’s list to
 <code>Latest.log</code>: useful when a sound points the wrong way or a
 menu reads in the wrong order.</li>
+<li><code>UserData\BallPitAccess\telemetry.tsv</code>, if you turned on
+F4 → Record battles: every sound, enemy, ball and shot of your battles.
+The best help when the sounds are hard to follow.</li>
 </ul>
 <p>Say what you did, what you heard, and what you expected.</p>
 <h2 id="credits">Credits</h2>

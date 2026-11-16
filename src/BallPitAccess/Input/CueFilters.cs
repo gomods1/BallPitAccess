@@ -16,7 +16,7 @@ namespace BallPitAccess.Input
     {
         private sealed class Group
         {
-            public char Key;
+            public string Key;              // Bindings id
             public string Name;            // Loc key
             public Func<bool> Get;
             public Action<bool> Set;
@@ -26,34 +26,43 @@ namespace BallPitAccess.Input
 
         private static readonly List<Group> Groups = new List<Group>
         {
-            new Group { Key = '1', Name = "filter_enemies", Get = () => Config.DangerRadar, Set = v => Config.DangerRadar = v },
-            new Group { Key = '2', Name = "filter_balls", Get = () => Config.BallCues, Set = v => Config.BallCues = v },
+            new Group { Key = "filter1", Name = "filter_enemies", Get = () => Config.DangerRadar, Set = v => Config.DangerRadar = v },
+            new Group { Key = "filter2", Name = "filter_balls", Get = () => Config.BallCues, Set = v => Config.BallCues = v },
             new Group
             {
-                Key = '3', Name = "filter_rewards", Get = () => Config.PickupCues > 0,
+                Key = "filter3", Name = "filter_rewards", Get = () => Config.PickupCues > 0,
                 Set = v =>
                 {
                     if (!v && Config.PickupCues > 0) _pickupMode = Config.PickupCues;
                     Config.PickupCues = v ? Math.Max(1, _pickupMode) : 0;
                 },
             },
-            new Group { Key = '4', Name = "filter_hazards", Get = () => Config.HazardCues, Set = v => Config.HazardCues = v },
-            new Group { Key = '5', Name = "filter_edges", Get = () => Config.WallCues, Set = v => Config.WallCues = v },
-            new Group { Key = '6', Name = "filter_health", Get = () => Config.HealthCues, Set = v => Config.HealthCues = v },
-            new Group { Key = '7', Name = "filter_aim", Get = () => Config.AimCues, Set = v => Config.AimCues = v },
+            new Group { Key = "filter4", Name = "filter_hazards", Get = () => Config.HazardCues, Set = v => Config.HazardCues = v },
+            new Group { Key = "filter5", Name = "filter_edges", Get = () => Config.WallCues, Set = v => Config.WallCues = v },
+            new Group { Key = "filter6", Name = "filter_health", Get = () => Config.HealthCues, Set = v => Config.HealthCues = v },
+            new Group { Key = "filter7", Name = "filter_aim", Get = () => Config.AimCues, Set = v => Config.AimCues = v },
         };
 
         /// <summary>Digits: toggle a group (Ctrl: keep only it); 0 turns every group and the master switch on.</summary>
         internal static bool Update(bool ctrl)
         {
+            if (Bindings.Pressed("filter_all")) { Keys.Consume(); AllOn(); return true; }   // with or without Ctrl: everything back on
+            foreach (var g in Groups)
+            {
+                if (!Bindings.Pressed(g.Key)) continue;
+                Keys.Consume();
+                if (ctrl) Solo(g); else Toggle(g);
+                return true;
+            }
+            // A digit that is not a filter key (8, 9, or one moved elsewhere): say so instead of silence.
             for (char c = '0'; c <= '9'; c++)
             {
                 if (!Keys.Pressed(c)) continue;
+                bool bound = false;
+                foreach (var b in Bindings.All) if (b.Vk == c) { bound = true; break; }
+                if (bound) return false;
                 Keys.Consume();
-                if (c == '0') { AllOn(); return true; }   // 0 (with or without Ctrl): everything back on
-                var g = Groups.Find(x => x.Key == c);
-                if (g == null) { Speech.SayMenu(Loc.Get("filter_none")); return true; }
-                if (ctrl) Solo(g); else Toggle(g);
+                Speech.SayMenu(Loc.Get("filter_none"));
                 return true;
             }
             return false;

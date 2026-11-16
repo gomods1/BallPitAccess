@@ -234,6 +234,7 @@ Bahçeleri)</a></li>
 tuşları)</a></li>
 <li><a href="#assists">Yardımlar</a></li>
 <li><a href="#mod-settings-f4">Mod ayarları (F4)</a></li>
+<li><a href="#changing-keys">Tuşları değiştirme</a></li>
 <li><a href="#tips-for-a-first-run">İlk tur için ipuçları</a></li>
 <li><a href="#known-limits">Bilinen sınırlamalar</a></li>
 <li><a href="#reporting-a-problem">Sorun bildirme</a></li>
@@ -470,6 +471,10 @@ kaldırır, oklar taşır, Enter bırakır.</li>
 <h2 id="battle">Savaş</h2>
 <h3 id="the-games-own-keys">Oyunun kendi tuşları</h3>
 <table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
 <tr>
 <th>Tuş</th>
@@ -495,7 +500,8 @@ kaldırır, oklar taşır, Enter bırakır.</li>
 </tr>
 <tr>
 <td>= / - (eşittir / eksi)</td>
-<td>Oyun hızını artır / azalt</td>
+<td>Oyun hızını artır / azalt (bazı klavye düzenlerinde bulunmaz: modun
+aşağıdaki Num + / Num - tuşlarını kullan)</td>
 </tr>
 <tr>
 <td>Esc</td>
@@ -569,21 +575,31 @@ filtreleri</a>)</td>
 <td>N</td>
 <td>Tehlikeler (atışlar, lazerler, bombalar, zemin)</td>
 </tr>
+<tr>
+<td>Q</td>
+<td>O ses neydi? Şu an çalan sesler ve son birkaç ses, her birinin
+anlamı ve tarafıyla</td>
+</tr>
+<tr>
+<td>Num + / Num -</td>
+<td>Oyun hızını artır / azalt, her klavye düzeninde</td>
+</tr>
 </tbody>
 </table>
+<p>Her mod tuşu değiştirilebilir: bkz. <a href="#changing-keys">Tuşları
+değiştirme</a>.</p>
 <p>Savaş sırasında seslendirilenler: başlangıçta seviye, patronlar ve
 yüzde 75, 50 ve 25’teki canları, hasar ve can, durum etkileri,
 düştüklerinde özel eşyalar, “seviye atlama hazır, E tuşuna bas” ve turun
 sonu.</p>
 <h2 id="battle-sounds">Savaş sesleri</h2>
-<p>Her ses için dört kural geçerlidir:</p>
+<p>Her ses için, her zaman kahramanına göre, üç kural geçerlidir:</p>
 <ul>
-<li><strong>Taraf</strong>: bir ses, ilgili olduğu şey hangi taraftaysa
-oradan gelir.</li>
+<li><strong>Taraf</strong>: bir ses, ilgili olduğu şey neredeyse oradan
+gelir: solundaki soldan, sağındaki sağdan, dümdüz ilerideki ortadan
+duyulur.</li>
 <li><strong>Perde</strong>: daha tiz ses daha yakın demektir.</li>
 <li><strong>Boğuk</strong> ses arkanda demektir.</li>
-<li><strong>Hareket etmeni</strong> isteyen bir ses, gitmen gereken
-taraftan gelir.</li>
 </ul>
 <p>Sürekli hareket eden şeyler (topun, düşman atışları) onları izleyen
 <strong>sürekli seslerdir</strong>; adım adım değişen şeyler (ilerleyen
@@ -602,8 +618,9 @@ düşmanlar, yerde duran eşyalar) kısa seslerdir.</p>
 <tbody>
 <tr>
 <td>El davulu</td>
-<td>Bir düşman. Daha tiz ve daha hızlı = daha yakın. En yakın üç düşman
-sırayla çalar.</td>
+<td>Bir düşman. Daha tiz ve daha hızlı = daha yakın. Düşmanlar hareket
+edince en yakınları sırayla çalar; hiçbir şey değişmezken yalnızca en
+yakını çalar.</td>
 </tr>
 <tr>
 <td>Büyük, derin davul</td>
@@ -619,14 +636,14 @@ sırayla çalar.</td>
 </tr>
 <tr>
 <td><strong>Yuvarlanan uğultu</strong> (sürekli)</td>
-<td>Yakalayabileceğin top. Onun tarafına doğru yürü; <strong>topun
-düşeceği yere yaklaştıkça tizleşir</strong>, top sana yaklaştıkça daha
-hızlı titreşir ve top hâlâ bir düşmandan sekebilecekken daha
-yumuşaktır.</td>
+<td>Yakalayabileceğin top. <strong>Topun bulunduğu yerden</strong>
+duyulur ve <strong>top sana yaklaştıkça tizleşir</strong>, böylece
+nereye gittiğini duyarsın; top senin sırana yaklaştıkça daha hızlı
+titreşir ve top hâlâ bir düşmandan sekebilecekken daha yumuşaktır.</td>
 </tr>
 <tr>
-<td>Uğultu bir basamak yükselirken tık</td>
-<td>Topun altındasın: orada kal.</td>
+<td>Tık</td>
+<td>Topun düşeceği yerde duruyorsun: orada kal.</td>
 </tr>
 <tr>
 <td>Eldivene tok vuruş</td>
@@ -642,8 +659,8 @@ yumuşaktır.</td>
 </tr>
 <tr>
 <td>Cam şıngırtısı</td>
-<td>Yürüyerek ulaşabileceğin en yakın TP kristali, altın ya da kaynak.
-Kendiliğinden toplanmazlar.</td>
+<td>Yürüyerek gideceğin TP kristali, altın ya da kaynak: en yakını ya da
+biraz ötedeki bir yığın. Kendiliğinden toplanmazlar.</td>
 </tr>
 <tr>
 <td>Kalimba pırıltısı</td>
@@ -657,17 +674,17 @@ edecekse daha gür çıkar.</td>
 </tr>
 <tr>
 <td>Vınlama ve şaklama</td>
-<td>Bir atış sana isabet edecek: sesin geldiği tarafa adım at.</td>
+<td>Bir atış sana isabet edecek; ses atıştan gelir: yolundan çekil.</td>
 </tr>
 <tr>
 <td>Elektrik uğultusu / iki elektrik çıtırtısı</td>
-<td>Bir lazer nişan alıyor / onun hattındasın: sesin geldiği tarafa adım
-at.</td>
+<td>Bir lazer nişan alıyor / onun hattındasın; ikisi de lazerden gelir:
+hattan çekil.</td>
 </tr>
 <tr>
 <td>Alçalan ıslık / fitil cızırtısı</td>
-<td>Yakına bir bomba düşüyor / üstüne düşecek: sesin geldiği tarafa adım
-at.</td>
+<td>Yakına bir bomba düşüyor / üstüne düşecek; ikisi de düşeceği yerden
+gelir: oradan uzaklaş.</td>
 </tr>
 <tr>
 <td>Şapırtı</td>
@@ -699,13 +716,14 @@ at.</td>
 </tr>
 <tr>
 <td>Şalter tıkı</td>
-<td>Nişan yardımı hedef değiştirdi, yeni hedefin tarafından
-duyulur.</td>
+<td>Nişan yardımı başka bir hedefe geçti, yeni hedefin tarafından
+duyulur. Otomatik ateş açıkken bir öldürmeden sonra çalmaz.</td>
 </tr>
 </tbody>
 </table>
 <p>Bunların her biri <strong>F4 → Ses rehberi</strong> içinde
-dinlenebilir; Sol ok / Sağ ok ile her iki tarafta da duyabilirsin.</p>
+dinlenebilir; Sol ok / Sağ ok ile her iki tarafta da duyabilirsin.
+Savaşta <strong>Q</strong>, az önce duyduğun sesleri söyler.</p>
 <h2 id="sound-filters-number-keys">Ses filtreleri (rakam tuşları)</h2>
 <p>Savaşta rakam tuşları, dikkatini toplayabilmen için bir ses grubunu
 kapatır veya açar. Oyun bu tuşların hiçbirini kullanmaz.</p>
@@ -774,13 +792,17 @@ istediğinde kullanman için oradadır.</p>
 <li><strong>Nişan yardımı</strong> (F5 modu değiştirir): senin yerine en
 yakın düşmana (varsayılan), en güçlü düşmana, önündeki düşmana ya da
 sabit bir açıya nişan alır, ya da kapalıdır (fare). Oklarla ince ayar
-yapılır.</li>
+yapılır. Düşmanın başka hiçbir düşmanın örtmediği bir yerine nişan alır,
+kahramanının ateş edemediği bir açıdaki düşmanları atlar ve varsayılan
+modda, başka bir düşman sana ulaşmak üzere değilse önce patrona
+gider.</li>
 <li><strong>Yakalama yardımı</strong> (Shift basılı tut): kahraman aşağı
 inen sıradaki topun altına yürür; gelen top yoksa en yakın kristale ya
 da eşyaya yürür; bir atış sana isabet etmek üzereyse önce yolundan
 çekilir. W / S seni yine ileri ve geri götürür, A / D her zaman kontrolü
 devralır. F4 içinde kapalı, “Shift basılı tutulunca” (varsayılan) ya da
-otomatik olarak ayarlanabilir.</li>
+otomatik olarak ayarlanabilir. Yaralıysan önce bir can eşyasına
+gider.</li>
 </ul>
 <h2 id="mod-settings-f4">Mod ayarları (F4)</h2>
 <p>Yukarı ok / Aşağı ok gezinir, Sol ok / Sağ ok veya Enter değiştirir,
@@ -794,9 +816,24 @@ Esc kapatır. Ayarlar kaydedilir.</p>
 <li>Eşya sesleri: kapalı, yalnızca özel eşyalar, tümü</li>
 <li>Can sesleri, nişan yardımı tıkı (açık / kapalı)</li>
 <li>Odaklanınca geliştirme açıklamalarını oku</li>
+<li>Tuşlar (Enter açar): bkz. <a href="#changing-keys">Tuşları
+değiştirme</a></li>
 <li>Ses rehberi (Enter açar)</li>
 <li>Hata ayıklama kaydı</li>
+<li>Savaşları kaydet (varsayılan kapalı): her savaş
+<code>UserData\BallPitAccess\telemetry.tsv</code> dosyasına yazılır,
+sesleri ayarlamak için</li>
 </ul>
+<h2 id="changing-keys">Tuşları değiştirme</h2>
+<p><strong>F4 → Tuşlar</strong> her mod tuşunu şu an bulunduğu tuşla
+birlikte listeler. Yukarı ok / Aşağı ok ile seç, <strong>Enter</strong>
+tuşuna bas ve ardından yeni tuşa bas (Esc iptal eder);
+<strong>Delete</strong> varsayılan tuşu geri getirir, son satır ise
+hepsini sıfırlar. Yeni tuş zaten başka bir mod eylemine aitse ikisi yer
+değiştirir ve mod diğerinin nereye gittiğini söyler. Menülerin veya
+oyunun ihtiyaç duyduğu tuşlar (oklar, Enter, Tab, Esc, Backspace,
+Boşluk, W A S D F E R X) alınamaz. F1 yardımı, tuşların şu anki haliyle
+biter.</p>
 <h2 id="tips-for-a-first-run">İlk tur için ipuçları</h2>
 <ul>
 <li><strong>Toplarını yakala.</strong> Yakalanan bir top hemen yeniden
@@ -809,8 +846,9 @@ Cam şıngırtısını izle; boğuk ses arkanda demektir.</li>
 hasardan daha önemlidir.</li>
 <li>Seviye atlama sunduğunda toplarını <strong>birleştir ve
 evrimleştir</strong>: seçenekler “füzyon” ya da “evrim” der.</li>
-<li><strong>Patronlarda yavaşla</strong>: eksi tuşunu kullan. Bir patron
-yüksek hızda geldiğinde mod sana hatırlatır.</li>
+<li><strong>Patronlarda yavaşla</strong>: Num - tuşunu (ya da oyunun
+eksi tuşunu) kullan. Bir patron yüksek hızda geldiğinde mod sana
+hatırlatır.</li>
 <li>Ölmek normaldir: geri getirdiğin altın Yeni Babil’in Sekme
 Bahçeleri’ni inşa eder, binalar da sonraki her turu güçlendirir.</li>
 </ul>
@@ -841,6 +879,9 @@ ekranlar, yakalamalar ve kaçırmalar).</li>
 birlikte düşmanlar, toplar, atışlar, eşyalar) yazar ve açık ekranın
 listesini <code>Latest.log</code> dosyasına ekler: bir ses yanlış yönü
 gösterdiğinde ya da bir menü yanlış sırada okunduğunda işe yarar.</li>
+<li><code>UserData\BallPitAccess\telemetry.tsv</code>, F4 → Savaşları
+kaydet açıksa: savaşlarındaki her ses, düşman, top ve atış. Sesleri
+takip etmek zor olduğunda en iyi yardım.</li>
 </ul>
 <p>Ne yaptığını, ne duyduğunu ve ne beklediğini anlat.</p>
 <h2 id="credits">Emeği geçenler</h2>

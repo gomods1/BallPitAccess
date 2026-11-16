@@ -40,6 +40,7 @@ namespace BallPitAccess.Core
         internal static void Speech(string text, bool interrupt)
         {
             lock (Gate) _speech?.WriteLine($"{DateTime.Now:HH:mm:ss.fff} {(interrupt ? "!" : " ")} {text}");
+            Game.Telemetry.Say(text, interrupt);
         }
 
         internal static void Event(string text)
