@@ -192,7 +192,7 @@
 Devolver Digital）的模組。它會透過你的螢幕閱讀器
 讀出每一個選單，讓你只用鍵盤就能玩完整個遊戲，並把戰場變成聲音：敵人、你的戰球、敵方子彈、XP
 寶石和特殊道具 都有各自的音效，從它們在你身邊的那一側傳來。</p>
-<p>版本 0.5.0，適用遊戲版本 1.308，包含「崛起波比倫」（Risen
+<p>版本 0.6.0，適用遊戲版本 1.308，包含「崛起波比倫」（Risen
 Ballbylon）DLC。模組會說<strong>遊戲提供的所有語言</strong>，
 並跟隨遊戲的語言設定。</p>
 <!-- LANGS -->
@@ -228,6 +228,7 @@ href="#reporting-a-problem">回報問題</a>）。</p>
 <li><a href="#sound-filters-number-keys">音效篩選（數字鍵）</a></li>
 <li><a href="#assists">輔助功能</a></li>
 <li><a href="#mod-settings-f4">模組設定（F4）</a></li>
+<li><a href="#changing-keys">更改按鍵</a></li>
 <li><a href="#tips-for-a-first-run">第一局的小訣竅</a></li>
 <li><a href="#known-limits">已知限制</a></li>
 <li><a href="#reporting-a-problem">回報問題</a></li>
@@ -442,6 +443,10 @@ MelonLoader，不需要另外安裝。啟動遊戲；第一次啟動和上面一
 <h2 id="battle">戰鬥</h2>
 <h3 id="the-games-own-keys">遊戲本身的按鍵</h3>
 <table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
 <tr>
 <th>按鍵</th>
@@ -467,7 +472,8 @@ MelonLoader，不需要另外安裝。啟動遊戲；第一次啟動和上面一
 </tr>
 <tr>
 <td>= / -</td>
-<td>加快 / 放慢遊戲速度</td>
+<td>加快 / 放慢遊戲速度（有些鍵盤配置沒有這兩個鍵：請用下面模組的 Num +
+/ Num -）</td>
 </tr>
 <tr>
 <td>Esc</td>
@@ -477,6 +483,10 @@ MelonLoader，不需要另外安裝。啟動遊戲；第一次啟動和上面一
 </table>
 <h3 id="mod-keys">模組的按鍵</h3>
 <table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
 <tr>
 <th>按鍵</th>
@@ -537,18 +547,27 @@ href="#sound-filters-number-keys">音效篩選</a>）</td>
 <td>N</td>
 <td>危險（子彈、雷射、炸彈、地面）</td>
 </tr>
+<tr>
+<td>Q</td>
+<td>剛才是什麼聲音？正在播放的音效和最近幾個音效，說明每個音效的意思和方向</td>
+</tr>
+<tr>
+<td>Num + / Num -</td>
+<td>加快 / 放慢遊戲速度，任何鍵盤配置都能用</td>
+</tr>
 </tbody>
 </table>
+<p>每個模組按鍵都可以更改：請看<a
+href="#changing-keys">更改按鍵</a>。</p>
 <p>戰鬥中會說出的內容：開始時的關卡、魔王以及它剩下百分之 75、50 和 25
 的生命值、受到的傷害和生命值、
 狀態效果、掉落的特殊道具、「有升級可用，按 E」、以及這一局的結束。</p>
 <h2 id="battle-sounds">戰鬥音效</h2>
-<p>每個音效都遵守四個規則：</p>
+<p>每個音效都遵守三個規則，而且一律以你的角色為準：</p>
 <ul>
-<li><strong>方向</strong>：音效從它所代表的東西那一側傳來。</li>
+<li><strong>方向</strong>：音效從它所代表的東西所在的位置傳來：在你左邊就從左邊傳來，在你右邊就從右邊傳來，在正前方就在正中間。</li>
 <li><strong>音調</strong>：越高代表越近。</li>
 <li><strong>悶悶的</strong>聲音代表在你後方。</li>
-<li>要你<strong>移動</strong>的音效，會從你該去的那一側傳來。</li>
 </ul>
 <p>一直在移動的東西（你的戰球、敵方子彈）是會跟著它們的<strong>持續音效</strong>；一步一步改變的東西
 （前進的敵人、掉在地上的道具）是短音效。</p>
@@ -566,7 +585,8 @@ href="#sound-filters-number-keys">音效篩選</a>）</td>
 <tbody>
 <tr>
 <td>手鼓</td>
-<td>一個敵人。越高、越快 = 越近。最近的三個會輪流發出聲音。</td>
+<td>敵人。音越高越快 =
+越近。敵人移動時，最近的幾個輪流響起；沒有變化時只響最近的一個。</td>
 </tr>
 <tr>
 <td>大而低沉的鼓</td>
@@ -582,11 +602,11 @@ href="#sound-filters-number-keys">音效篩選</a>）</td>
 </tr>
 <tr>
 <td><strong>滾動的嗡嗡聲</strong>（持續）</td>
-<td>你能接的戰球。朝它那一側走；<strong>離戰球的落點越近，音調越高</strong>，戰球越接近你脈動越快；戰球還可能從敵人身上反彈時，聲音比較小。</td>
+<td>你能接的戰球。它從<strong>戰球所在的位置</strong>傳來，<strong>戰球離你越近，音調越高</strong>，讓你聽出它往哪裡飛；戰球越接近你這一列脈動越快；戰球還可能從敵人身上反彈時，聲音比較小。</td>
 </tr>
 <tr>
-<td>嗡嗡聲升高一階時的喀嗒聲</td>
-<td>你在戰球正下方：待在那裡。</td>
+<td>喀嗒聲</td>
+<td>你站在戰球的落點上：待在那裡。</td>
 </tr>
 <tr>
 <td>手套的悶響</td>
@@ -602,7 +622,7 @@ href="#sound-filters-number-keys">音效篩選</a>）</td>
 </tr>
 <tr>
 <td>玻璃叮聲</td>
-<td>你能走過去拿的最近 XP 寶石、黃金或資源。它們不會自動收集。</td>
+<td>應走去撿取的經驗水晶、金幣或資源：最近的一個，或稍遠處的一堆。它們不會自動收集。</td>
 </tr>
 <tr>
 <td>卡林巴琴的閃亮聲</td>
@@ -614,15 +634,16 @@ href="#sound-filters-number-keys">音效篩選</a>）</td>
 </tr>
 <tr>
 <td>咻的一聲加上爆裂聲</td>
-<td>子彈會打中你：往聲音那一側閃開。</td>
+<td>子彈會打中你；聲音來自子彈：閃開它的路線。</td>
 </tr>
 <tr>
 <td>電流嗡嗡聲 / 兩下滋滋聲</td>
-<td>有雷射正在瞄準 / 你在它的直線上：往聲音那一側閃開。</td>
+<td>有雷射正在瞄準 / 你在它的直線上；兩者都來自雷射：離開這條直線。</td>
 </tr>
 <tr>
 <td>下墜的哨音 / 引信嘶嘶聲</td>
-<td>附近有炸彈正在落下 / 它會落在你身上：往聲音那一側閃開。</td>
+<td>附近有炸彈正在落下 /
+它會落在你身上；兩者都來自它的落點：遠離它。</td>
 </tr>
 <tr>
 <td>啪嘰聲</td>
@@ -654,12 +675,13 @@ href="#sound-filters-number-keys">音效篩選</a>）</td>
 </tr>
 <tr>
 <td>開關喀嗒聲</td>
-<td>瞄準輔助換了目標，聲音在新目標那一側。</td>
+<td>瞄準輔助切換到了另一個目標，在新目標那一側響起。開啟自動射擊時，擊殺後不響。</td>
 </tr>
 </tbody>
 </table>
 <p>這些音效全都可以在 <strong>F4 →
-音效指南</strong>中聽到，用左右方向鍵可以聽它在每一側的聲音。</p>
+音效指南</strong>中聽到，用左右方向鍵可以聽它在每一側的聲音。
+戰鬥中，<strong>Q</strong> 會說出你剛才聽到的音效。</p>
 <h2 id="sound-filters-number-keys">音效篩選（數字鍵）</h2>
 <p>在戰鬥中，數字鍵可以把一組音效靜音或取消靜音，讓你專心。遊戲本身沒有使用這些按鍵。</p>
 <table>
@@ -716,12 +738,12 @@ href="#sound-filters-number-keys">音效篩選</a>）</td>
 <ul>
 <li><strong>瞄準輔助</strong>（F5
 切換模式）：幫你瞄準最近的敵人（預設）、最強的敵人、你正前方的敵人、固定角度，
-或關閉（用滑鼠）。方向鍵可以微調。</li>
+或關閉（用滑鼠）。方向鍵可以微調。它會瞄準敵人沒被其他敵人擋住的部位，略過英雄無法射擊的角度上的敵人；在預設模式下，除非有別的敵人馬上就要碰到你，否則優先打魔王。</li>
 <li><strong>接球輔助</strong>（按住
 Shift）：角色會走到下一顆落下的戰球下方；沒有戰球飛來時，會走到最近的 XP
 寶石或道具； 如果有子彈快要打中你，它會先閃開。W / S
 仍然可以讓你前進和後退，A / D 永遠會接手控制。在 F4 中可以設為
-關閉、「按住 Shift」（預設）或自動。</li>
+關閉、「按住 Shift」（預設）或自動。你受傷時，它會先去撿回復道具。</li>
 </ul>
 <h2 id="mod-settings-f4">模組設定（F4）</h2>
 <p>上下方向鍵移動，左右方向鍵或 Enter 變更，Esc
@@ -734,9 +756,21 @@ Shift）：角色會走到下一顆落下的戰球下方；沒有戰球飛來時
 <li>道具音效：關閉、只有特殊道具、全部</li>
 <li>生命值音效、瞄準輔助喀嗒聲（開啟 / 關閉）</li>
 <li>焦點移到升級時讀出說明</li>
+<li>按鍵（按 Enter 打開）：請看<a
+href="#changing-keys">更改按鍵</a></li>
 <li>音效指南（按 Enter 打開）</li>
 <li>除錯記錄</li>
+<li>記錄戰鬥（預設關閉）：每場戰鬥都會寫入
+<code>UserData\BallPitAccess\telemetry.tsv</code>，用於調整聲音</li>
 </ul>
+<h2 id="changing-keys">更改按鍵</h2>
+<p><strong>F4 →
+按鍵</strong>列出每個模組按鍵和它目前對應的鍵。上下方向鍵選擇，按
+<strong>Enter</strong> 後再按新的鍵（Esc 取消），
+<strong>Delete</strong>
+恢復預設按鍵，最後一行把所有按鍵都恢復。如果新的鍵已經屬於另一個模組動作，兩者會互換，模組會說出
+另一個動作換到了哪裡。選單或遊戲需要的鍵（方向鍵、Enter、Tab、Esc、Backspace、空白鍵、W
+A S D F E R X） 不能使用。F1 說明的最後會列出目前設定的按鍵。</p>
 <h2 id="tips-for-a-first-run">第一局的小訣竅</h2>
 <ul>
 <li><strong>接住你的戰球。</strong> 接住的戰球可以馬上再發射；漏接的要 2
@@ -747,7 +781,8 @@ Shift）：角色會走到下一顆落下的戰球下方；沒有戰球飛來時
 <li><strong>先求生存。</strong>
 在一局的前期，活下來比造成傷害更重要。</li>
 <li>升級時有機會的話，就<strong>融合和進化</strong>你的戰球：選項上會寫「融合」或「進化」。</li>
-<li>遇到魔王時，用減號鍵<strong>放慢速度</strong>。如果魔王出現時遊戲速度很快，模組會提醒你。</li>
+<li>遇到魔王時，用 Num
+-（或遊戲本身的減號鍵）<strong>放慢速度</strong>。如果魔王出現時遊戲速度很快，模組會提醒你。</li>
 <li>死掉是很正常的：你帶回來的黃金可以用來建設新球比倫，而建築會讓之後的每一局都更強。</li>
 </ul>
 <h2 id="known-limits">已知限制</h2>
@@ -769,6 +804,9 @@ Shift）：角色會走到下一顆落下的戰球下方；沒有戰球飛來時
 <code>UserData\BallPitAccess\threats.txt</code>（敵人、戰球、子彈、道具及它們的位置），
 並把目前畫面的清單寫進
 <code>Latest.log</code>：當某個音效指錯方向，或某個選單的讀出順序不對時很有用。</li>
+<li><code>UserData\BallPitAccess\telemetry.tsv</code>：如果你開啟了 F4 →
+記錄戰鬥。包含戰鬥中的每個聲音、敵人、彈珠和
+子彈。聲音難以分辨時最有幫助。</li>
 </ul>
 <p>請說明你做了什麼、聽到了什麼，以及你原本預期會怎樣。</p>
 <h2 id="credits">致謝</h2>

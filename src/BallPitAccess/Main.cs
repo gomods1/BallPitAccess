@@ -6,7 +6,7 @@ using BallPitAccess.UI;
 using MelonLoader;
 using UnityEngine;
 
-[assembly: MelonInfo(typeof(BallPitAccess.Main), "BALL x PIT Access", "0.5.0", "BALL x PIT Access")]
+[assembly: MelonInfo(typeof(BallPitAccess.Main), "BALL x PIT Access", "0.6.0", "BALL x PIT Access")]
 [assembly: MelonGame("Kenny Sun", "BALL x PIT")]
 
 namespace BallPitAccess

@@ -3,9 +3,9 @@
 Player-facing changes to BALL x PIT Access, newest first. The release notes on GitHub are taken from the
 section of each version.
 
-## Unreleased
+## 0.6.0
 
-From a player's feedback (two voice notes; Latin American Spanish keyboard).
+For game version 1.308. Most of these changes come from a player's feedback.
 
 * **Every sound comes from where its thing is, relative to your hero**: left of you on the left, ahead in
   the centre, behind muffled; higher means closer. The ball hum, the crystal tink and the special item

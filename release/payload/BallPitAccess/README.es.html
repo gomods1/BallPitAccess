@@ -194,7 +194,7 @@ te deja usar todo el juego con el teclado y convierte el campo de
 batalla en sonido: los enemigos, tus bolas, los disparos enemigos, los
 cristales de experiencia y los objetos especiales tienen cada uno su
 sonido, que viene de su lado respecto a ti.</p>
-<p>Versión 0.5.0, para la versión 1.308 del juego, incluido el DLC
+<p>Versión 0.6.0, para la versión 1.308 del juego, incluido el DLC
 Bolabilonia Resurgida. El mod habla <strong>todos los idiomas del
 juego</strong> y sigue el idioma que tengas puesto en él.</p>
 <!-- LANGS -->
@@ -234,6 +234,7 @@ Bolabilonia)</a></li>
 (teclas de número)</a></li>
 <li><a href="#ayudas">Ayudas</a></li>
 <li><a href="#ajustes-del-mod-f4">Ajustes del mod (F4)</a></li>
+<li><a href="#changing-keys">Cambiar las teclas</a></li>
 <li><a href="#consejos-para-la-primera-partida">Consejos para la primera
 partida</a></li>
 <li><a href="#límites-conocidos">Límites conocidos</a></li>
@@ -472,6 +473,10 @@ las flechas lo mueven, Intro lo suelta.</li>
 <h2 id="combate">Combate</h2>
 <h3 id="teclas-del-propio-juego">Teclas del propio juego</h3>
 <table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
 <tr>
 <th>Tecla</th>
@@ -497,7 +502,8 @@ las flechas lo mueven, Intro lo suelta.</li>
 </tr>
 <tr>
 <td>= / -</td>
-<td>Más rápido / más lento</td>
+<td>Más rápido / más lento (no existen en algunas distribuciones de
+teclado: usa Num + / Num - del mod, abajo)</td>
 </tr>
 <tr>
 <td>Escape</td>
@@ -571,21 +577,33 @@ href="#filtros-de-sonido-teclas-de-número">Filtros de sonido</a>)</td>
 <td>N</td>
 <td>Peligros (disparos, láseres, bombas, suelo)</td>
 </tr>
+<tr>
+<td>Q</td>
+<td>¿Qué fue ese sonido? Los sonidos que suenan ahora y los últimos, con
+lo que significa cada uno y su lado</td>
+</tr>
+<tr>
+<td>Num + / Num -</td>
+<td>Juego más rápido / más lento, con cualquier distribución de
+teclado</td>
+</tr>
 </tbody>
 </table>
+<p>Todas las teclas del mod se pueden cambiar: mira <a
+href="#changing-keys">Cambiar las teclas</a>.</p>
 <p>Se anuncia durante el combate: el nivel al empezar, los jefes y su
 salud al 75, 50 y 25 por ciento, el daño y la salud, los estados
 alterados, los objetos especiales cuando caen, “subidas de nivel listas,
 pulsa E” y el final de la partida.</p>
 <h2 id="sonidos-de-combate">Sonidos de combate</h2>
-<p>Cuatro reglas valen para todos los sonidos:</p>
+<p>Tres reglas valen para todos los sonidos, siempre respecto a tu
+héroe:</p>
 <ul>
-<li><strong>Lado</strong>: un sonido viene del lado de aquello de lo que
-avisa.</li>
+<li><strong>Lado</strong>: un sonido viene de donde está aquello de lo
+que avisa: a tu izquierda suena a la izquierda, a tu derecha suena a la
+derecha, y en el centro si está justo delante.</li>
 <li><strong>Tono</strong>: más agudo es más cerca.</li>
 <li><strong>Apagado</strong> significa que está detrás de ti.</li>
-<li>Un sonido que te pide <strong>moverte</strong> viene del lado hacia
-el que ir.</li>
 </ul>
 <p>Lo que se mueve todo el tiempo (tu bola, los disparos enemigos) tiene
 un <strong>sonido continuo</strong> que lo sigue; lo que cambia a saltos
@@ -604,8 +622,9 @@ un <strong>sonido continuo</strong> que lo sigue; lo que cambia a saltos
 <tbody>
 <tr>
 <td>Tambor de mano</td>
-<td>Un enemigo. Más agudo y rápido = más cerca. Suenan por turnos los
-tres más cercanos.</td>
+<td>Un enemigo. Más agudo y rápido = más cerca. Cuando los enemigos se
+mueven suenan por turnos los más cercanos; mientras nada cambia, solo el
+más cercano.</td>
 </tr>
 <tr>
 <td>Tambor grande y grave</td>
@@ -621,14 +640,15 @@ tres más cercanos.</td>
 </tr>
 <tr>
 <td><strong>Zumbido rodante</strong> (continuo)</td>
-<td>La bola que puedes atrapar. Camina hacia su lado; <strong>sube de
-tono al acercarte a donde caerá la bola</strong>, late más rápido cuando
-la bola se acerca y suena más suave mientras todavía puede rebotar en un
+<td>La bola que puedes atrapar. Suena desde <strong>donde está la
+bola</strong> y <strong>sube de tono cuanto más se acerca a ti</strong>,
+así que oyes hacia dónde va; late más rápido cuando la bola se acerca a
+tu línea y suena más suave mientras todavía puede rebotar en un
 enemigo.</td>
 </tr>
 <tr>
-<td>Clic y el zumbido sube un escalón</td>
-<td>Estás debajo de la bola: quédate ahí.</td>
+<td>Clic</td>
+<td>Estás donde va a caer la bola: quédate ahí.</td>
 </tr>
 <tr>
 <td>Golpe en el guante</td>
@@ -645,8 +665,8 @@ automático).</td>
 </tr>
 <tr>
 <td>Tintineo de cristal</td>
-<td>El cristal de experiencia, oro o recurso más cercano al que puedes
-llegar. No se recogen solos.</td>
+<td>El cristal de experiencia, oro o recurso al que ir: el más cercano o
+un montón de ellos un poco más lejos. No se recogen solos.</td>
 </tr>
 <tr>
 <td>Destello de kalimba</td>
@@ -660,17 +680,18 @@ fuerte si te va a dar.</td>
 </tr>
 <tr>
 <td>Silbido y chasquido</td>
-<td>Un disparo te va a dar: muévete hacia el lado donde suena.</td>
+<td>Un disparo te va a dar; suena desde el disparo: apártate de su
+camino.</td>
 </tr>
 <tr>
 <td>Zumbido eléctrico / dos descargas</td>
-<td>Un láser apunta / estás en su línea: muévete hacia el lado donde
-suena.</td>
+<td>Un láser apunta / estás en su línea; los dos suenan desde el láser:
+sal de la línea.</td>
 </tr>
 <tr>
 <td>Silbido que cae / mecha</td>
-<td>Una bomba cae cerca / caerá sobre ti: muévete hacia el lado donde
-suena.</td>
+<td>Una bomba cae cerca / caerá sobre ti; los dos suenan desde donde
+caerá: aléjate de ahí.</td>
 </tr>
 <tr>
 <td>Chapoteo</td>
@@ -703,12 +724,14 @@ menú).</td>
 </tr>
 <tr>
 <td>Clic de interruptor</td>
-<td>La ayuda de apuntado cambió de objetivo, al lado del nuevo.</td>
+<td>La ayuda de apuntado cambió a otro objetivo, al lado del nuevo. Con
+el disparo automático, no después de una baja.</td>
 </tr>
 </tbody>
 </table>
 <p>Todos se pueden escuchar en <strong>F4 → Guía de sonidos</strong>,
-con Izquierda / Derecha para oírlos en cada lado.</p>
+con Izquierda / Derecha para oírlos en cada lado. En combate,
+<strong>Q</strong> dice qué sonidos acabas de oír.</p>
 <h2 id="filtros-de-sonido-teclas-de-número">Filtros de sonido (teclas de
 número)</h2>
 <p>En combate, las teclas de número silencian o activan un grupo de
@@ -777,13 +800,17 @@ están para cuando las quieras.</p>
 <li><strong>Ayuda de apuntado</strong> (F5 cambia el modo): apunta por
 ti al enemigo más cercano (por defecto), al más fuerte, al que tienes
 delante, a un ángulo fijo, o desactivada (ratón). Las flechas la
-ajustan.</li>
+ajustan. Apunta a una parte del enemigo que ningún otro tapa, salta los
+enemigos en un ángulo al que tu héroe no puede disparar y, en el modo
+por defecto, va primero a por el jefe salvo que otro enemigo esté a
+punto de alcanzarte.</li>
 <li><strong>Ayuda para atrapar</strong> (mantén Mayús): el héroe va
 debajo de la próxima bola que baja; si no viene ninguna, va al cristal u
 objeto más cercano; si un disparo está a punto de darte, primero se
 aparta. W / S siguen moviéndote hacia delante y atrás, A / D siempre
 mandan. En F4 puede estar desactivada, en “mantener Mayúsculas” (por
-defecto) o automática.</li>
+defecto) o automática. Si estás herido, primero va a por un objeto de
+salud.</li>
 </ul>
 <h2 id="ajustes-del-mod-f4">Ajustes del mod (F4)</h2>
 <p>Arriba / Abajo para moverse, Izquierda / Derecha o Intro para
@@ -799,9 +826,24 @@ peligros (sí / no)</li>
 todos</li>
 <li>Sonidos de salud, clic de la ayuda de apuntado (sí / no)</li>
 <li>Leer la descripción de las mejoras al enfocarlas</li>
+<li>Teclas (Intro las abre): mira <a href="#changing-keys">Cambiar las
+teclas</a></li>
 <li>Guía de sonidos (Intro la abre)</li>
 <li>Registro de depuración</li>
+<li>Grabar batallas (desactivado por defecto): cada batalla se guarda en
+<code>UserData\BallPitAccess\telemetry.tsv</code>, para ajustar los
+sonidos</li>
 </ul>
+<h2 id="changing-keys">Cambiar las teclas</h2>
+<p><strong>F4 → Teclas</strong> lista todas las teclas del mod con la
+tecla que tienen ahora. Arriba / Abajo para elegir,
+<strong>Intro</strong> y luego pulsa la nueva tecla (Escape cancela),
+<strong>Suprimir</strong> devuelve la tecla de fábrica, y la última
+línea las restaura todas. Si la nueva tecla ya era de otra acción del
+mod, las dos se intercambian y el mod dice adónde fue la otra. Las
+teclas que necesitan los menús o el juego (flechas, Intro, Tab, Escape,
+Retroceso, Espacio, W A S D F E R X) no se pueden usar. La ayuda de F1
+termina con las teclas tal como están ahora.</p>
 <h2 id="consejos-para-la-primera-partida">Consejos para la primera
 partida</h2>
 <ul>
@@ -815,8 +857,9 @@ de ti.</li>
 seguir vivo importa más que el daño.</li>
 <li><strong>Fusiona y evoluciona</strong> tus bolas cuando la subida de
 nivel lo ofrezca: las opciones dicen “fusión” o “evolución”.</li>
-<li><strong>Ve más despacio con los jefes</strong> con la tecla menos.
-El mod te lo recuerda cuando llega un jefe a velocidad alta.</li>
+<li><strong>Ve más despacio con los jefes</strong> con Num - (o la tecla
+menos del juego). El mod te lo recuerda cuando llega un jefe a velocidad
+alta.</li>
 <li>Morir es normal: el oro que traes construye Nueva Bolabilonia, y los
 edificios hacen más fuerte cada partida siguiente.</li>
 </ul>
@@ -847,6 +890,9 @@ pantallas, bolas atrapadas y perdidas).</li>
 disparos, objetos con sus posiciones) y la lista de la pantalla abierta
 en <code>Latest.log</code>: útil cuando un sonido señala mal o un menú
 se lee en mal orden.</li>
+<li><code>UserData\BallPitAccess\telemetry.tsv</code>, si activaste F4 →
+Grabar batallas: cada sonido, enemigo, bola y disparo de tus batallas.
+La mejor ayuda cuando los sonidos cuestan de seguir.</li>
 </ul>
 <p>Cuenta qué hiciste, qué oíste y qué esperabas.</p>
 <h2 id="créditos">Créditos</h2>
