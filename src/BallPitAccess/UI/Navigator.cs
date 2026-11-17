@@ -1017,6 +1017,16 @@ namespace BallPitAccess.UI
                 if (li != null && li.Btn != null && li.Btn.gameObject.Pointer == cur.Pointer) levelItem = li;
             }
             catch { }
+            // A build list item right after a category change ignored OnSubmit (the game's submit gate stayed
+            // shut until the focus moved): its own click handler starts the placement every time.
+            var buildItem = cur.GetComponentInParent<BuildItem>();
+            if (buildItem != null && buildItem.Btn != null && buildItem.Btn.gameObject.Pointer == cur.Pointer)
+            {
+                try { Click(buildItem.Btn); Log.Info("Build item clicked: " + MenuReader.Path(cur.transform)); }
+                catch (Exception ex) { Log.Warn("Build item click: " + ex.Message); }
+                MenuReader.Recheck(0.25f);
+                return;
+            }
             try { sel.OnSubmit(new BaseEventData(EventSystem.current)); Log.Info("Submit " + MenuReader.Path(cur.transform)); }
             catch (Exception ex) { Log.Warn("Submit: " + ex.Message); }
             MenuReader.Recheck(0.25f);
@@ -1152,7 +1162,17 @@ namespace BallPitAccess.UI
                 var o = TopOverlay();
                 if (o != null) { bool handled = o.OnBPressed(); Log.Info("Back on " + o.GetIl2CppType().Name + ": " + handled); return; }
                 var bm = BaseMgr.I;
-                if (bm != null && bm.CurState != BaseState.kNormal) { bm.OnBPressed(); Log.Info("Back in base state " + bm.CurState); }
+                if (bm != null && bm.CurState != BaseState.kNormal)
+                {
+                    var st = bm.CurState;
+                    // The game's back (OnBPressed) only leaves the harvest aim, the launcher and the level
+                    // transitions; expansion and rearrange are left by pressing their side bar button again.
+                    var ui = BaseUI.I;
+                    if (st == BaseState.kSelectingExpansion && ui != null) ui.OnExpandClicked();
+                    else if (st == BaseState.kRearrangeBuildings && ui != null) ui.OnRearrangeClicked();
+                    else bm.OnBPressed();
+                    Log.Info("Back in base state " + st);
+                }
             }
             catch (Exception ex) { Log.Warn("Back: " + ex.Message); }
         }

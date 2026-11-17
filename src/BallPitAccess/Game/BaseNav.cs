@@ -98,6 +98,10 @@ namespace BallPitAccess.Game
             // The harvest aim passes through a cutscene state for a few frames on its way in: not news.
             if (to == BaseState.kCutscene && from == BaseState.kAimWorkers) return;
             if (to == BaseState.kCutscene) return;      // a camera move: nothing to do or know
+            // Expansion mode moves the camera on entry and after a purchase: back from that move it is the same
+            // mode, not news (the keys were said twice). After a purchase say what happened instead.
+            if (to == BaseState.kSelectingExpansion && from == BaseState.kCutscene) return;
+            if (to == BaseState.kSelectingExpansion && from == BaseState.kExpanding) { Speech.Event(Loc.Get("plot_bought")); return; }
             string key = "base_" + to;
             if (Loc.Has(key)) Speech.Event(Loc.Get(key));
         }
@@ -299,7 +303,10 @@ namespace BallPitAccess.Game
                 if (b.UpgradeLvl > 0) parts.Add(Loc.F("bld_level", b.UpgradeLvl + 1));
                 if (b.CurState == BuildingState.kScaffold) parts.Add(Loc.F("bld_scaffold", Mathf.RoundToInt(b.GetUpgradePct() * 100f)));
                 else if (b.CurState == BuildingState.kUpgrading) parts.Add(Loc.F("bld_upgrading", Mathf.RoundToInt(b.GetUpgradePct() * 100f)));
-                if (b.CanHarvest())
+                // Rearrange mode: Enter picks the building up, so the harvest hint ("Enter harvests") was wrong there.
+                bool rearranging = false;
+                try { rearranging = BaseMgr.I != null && BaseMgr.I.CurState == BaseState.kRearrangeBuildings; } catch { }
+                if (!rearranging && b.CanHarvest())
                 {
                     bool now = HarvestOpen();
                     parts.Add(Loc.Get(now ? "bld_harvest_enter" : "bld_harvest"));

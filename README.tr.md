@@ -5,7 +5,7 @@ menüleri ekran okuyucun aracılığıyla seslendirir, oyunun tamamını klavyey
 alanını sese dönüştürür: düşmanların, toplarının, düşman atışlarının, TP kristallerinin ve özel eşyaların
 her birinin kendi sesi vardır ve bu ses, senin hangi tarafındaysa oradan gelir.
 
-Sürüm 0.6.0, oyunun 1.308 sürümü için, Yükselen Babil'in Sekme Bahçeleri (Risen Ballbylon) DLC'si dahil.
+Sürüm 0.6.1, oyunun 1.308 sürümü için, Yükselen Babil'in Sekme Bahçeleri (Risen Ballbylon) DLC'si dahil.
 Mod **oyunun sunduğu tüm dilleri** konuşur ve oyunun dil ayarını izler.
 
 <!-- LANGS -->

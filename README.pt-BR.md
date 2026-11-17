@@ -5,7 +5,7 @@ pelo seu leitor de tela, permite usar o jogo inteiro pelo teclado e transforma o
 inimigos, suas esferas, disparos inimigos, cristais de EXP e itens especiais têm cada um o seu som, que
 vem do lado em que estão em relação a você.
 
-Versão 0.6.0, para a versão 1.308 do jogo, incluindo o DLC Bolalônia Elevada (Risen Ballbylon). O mod fala
+Versão 0.6.1, para a versão 1.308 do jogo, incluindo o DLC Bolalônia Elevada (Risen Ballbylon). O mod fala
 **todos os idiomas que o jogo oferece** e segue o idioma configurado no jogo.
 
 <!-- LANGS -->

@@ -88,15 +88,18 @@ namespace BallPitAccess.Game
                     // The preview animates in: its first legality reading is wrong, wait for it.
                     _announceAt = Time.unscaledTime + 0.5f;
                 }
-                if (!active && _wasActive) _kbOwned = false;
+                if (!active && _wasActive) { _kbOwned = false; _search = null; }
                 _wasActive = active;
+                if (_cancelPending) PendingCancel(active);
                 if (_checkDropAt > 0 && Time.unscaledTime >= _checkDropAt)
                 {
                     _checkDropAt = -1f;
-                    Speech.Event(Loc.Get(Rearranging ? "place_refused" : "placed"));
+                    Speech.Event(Loc.Get(Rearranging ? "place_refused" : "rearrange_dropped"));
                 }
                 if (!active) return;
 
+                if (_search != null) StepSearch();
+                WatchRotation();
                 if (_announceAt > 0 && Time.unscaledTime >= _announceAt) { _announceAt = -1f; Announce(); }
                 if (Keys.Consumed || !Keys.GameHasFocus() || Keys.Ctrl || Keys.Alt || ModKeys.ListOpen || UI.Navigator.Blocking) return;
 
@@ -107,7 +110,7 @@ namespace BallPitAccess.Game
                 else if (Keys.Pressed(Keys.VK_DOWN)) MoveBy(0, -step);
                 else if (Keys.Pressed(Keys.VK_HOME)) JumpToEmpty();
                 else if (Keys.Pressed(Keys.VK_RETURN)) { Keys.Consume(); Place(); }
-                else if (Keys.Pressed(Keys.VK_BACK)) { Keys.Consume(); Cancel(); }
+                else if (Keys.Pressed(Keys.VK_BACK)) { Keys.Consume(); _cancelPending = true; _releasedFrame = -1; }
             }
             catch (Exception ex)
             {
@@ -125,6 +128,7 @@ namespace BallPitAccess.Game
         private static void MoveBy(float dx, float dy)
         {
             Claim();
+            _search = null;
             var g = BaseGridMgr.I;
             _x = Mathf.Clamp(_x + dx, g.LeftBorderX, g.RightBorderX);
             _y = Mathf.Clamp(_y + dy, g.BottomBorderY, g.TopBorderY);
@@ -134,18 +138,55 @@ namespace BallPitAccess.Game
             _announceAt = Time.unscaledTime + 0.08f;
         }
 
+        /// <summary>
+        /// Home: the game's empty spots are single free tiles, and a bigger building (the houses) does not fit
+        /// on all of them. Try them in turn (the fit check reads the preview where it stands, so each try waits
+        /// a few frames) and stop on the first one the building fits; back to the start if none does.
+        /// </summary>
+        private static System.Collections.Generic.List<Vector3> _search;
+        private static int _searchIdx, _searchAt;
+        private static Vector3 _searchFrom;
+
         private static void JumpToEmpty()
         {
             Claim();
             var g = BaseGridMgr.I;
             var spots = g.FindEmptySpots();
             if (spots == null || spots.Count == 0) { Speech.SayMenu(Loc.Get("place_no_empty")); return; }
-            var s = spots[0];
-            Vector3 wp = g.GetWorldPos(s.x, s.y);
+            _search = new System.Collections.Generic.List<Vector3>();
+            foreach (var s in spots) _search.Add(g.GetWorldPos(s.x, s.y));
+            _searchFrom = new Vector3(_x, _y, 0);
+            _searchIdx = 0;
+            _announceAt = -1f;
+            TrySpot(g);
+        }
+
+        private static void TrySpot(BaseGridMgr g)
+        {
+            var wp = _search[_searchIdx];
             _x = wp.x; _y = wp.y;
-            if (Config.Debug) Log.Info($"Placement empty spot grid {s} world {wp}");
             g.SetHover(_x, _y, true);
-            _announceAt = Time.unscaledTime + 0.08f;
+            _searchAt = Time.frameCount + 4;
+        }
+
+        private static void StepSearch()
+        {
+            if (_search == null || Time.frameCount < _searchAt) return;
+            var g = BaseGridMgr.I;
+            bool fits = g.GetPlacePreview() == null || g.CanBuildPlacePreview();
+            if (fits)
+            {
+                if (Config.Debug) Log.Info($"Placement: spot {_searchIdx + 1} of {_search.Count} fits");
+                _search = null;
+                Announce();
+                return;
+            }
+            if (++_searchIdx < _search.Count) { TrySpot(g); return; }
+            Log.Info($"Placement: none of {_search.Count} empty spots fits");
+            _search = null;
+            _x = _searchFrom.x; _y = _searchFrom.y;
+            g.SetHover(_x, _y, true);
+            Speech.SayMenu(Loc.Get("place_no_fit"));
         }
 
         private static void Announce()
@@ -183,9 +224,52 @@ namespace BallPitAccess.Game
             if (!g.CanBuildPlacePreview()) { Speech.SayMenu(Loc.Get("place_refused")); return; }
             var ui = BaseUI.I;
             if (ui == null) return;
+            bool moving = Rearranging;
             ui.OnPlaceBuildingClicked();
-            Log.Info("Placed at " + g.GetHoverPos());
-            Speech.Event(Loc.Get("placed"));
+            Log.Info((moving ? "Rearrange drop at " : "Placed at ") + g.GetHoverPos());
+            // A building picked up in rearrange mode is moved, not built: say so once the game took it.
+            if (moving) _checkDropAt = Time.unscaledTime + 0.4f;
+            else Speech.Event(Loc.Get("placed"));
+        }
+
+        private static int _lastRot = int.MinValue;
+        private static bool _rotPending;
+
+        /// <summary>
+        /// The game's rotate key (R by default) turns the preview, and whether it fits can change with it: say
+        /// the spot again once the turn animation ends. Read from the preview, so any rotate binding works.
+        /// </summary>
+        private static void WatchRotation()
+        {
+            var p = BaseGridMgr.I.GetPlacePreview();
+            if (p == null || p.Inst == null) { _lastRot = int.MinValue; _rotPending = false; return; }
+            int rot = p.Inst.Rotation;
+            if (_lastRot != int.MinValue && rot != _lastRot) _rotPending = true;
+            _lastRot = rot;
+            if (_rotPending && !p.IsRotating())
+            {
+                _rotPending = false;
+                _search = null;
+                _announceAt = Time.unscaledTime + 0.08f;
+            }
+        }
+
+        private static bool _cancelPending;
+        private static int _releasedFrame = -1;
+
+        /// <summary>
+        /// The game reads Backspace as its own "back" when the key is released: cancelling on the press left the
+        /// base in its normal state at the release, and the game opened the pause menu (one press did two
+        /// things). Wait for the release and two more frames, then cancel only if the building is still there.
+        /// </summary>
+        private static void PendingCancel(bool active)
+        {
+            if (Keys.Down(Keys.VK_BACK)) return;
+            if (_releasedFrame < 0) { _releasedFrame = Time.frameCount; return; }
+            if (Time.frameCount < _releasedFrame + 2) return;
+            _cancelPending = false;
+            if (active) Cancel();
+            else { Log.Info("Placement: the game cancelled it itself"); Speech.Event(Loc.Get("place_cancelled")); }
         }
 
         private static void Cancel()

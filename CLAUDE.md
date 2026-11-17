@@ -177,5 +177,20 @@ No game file was replaced.
 - `MenuReader` waits while `Navigator.Settling` (a screen or page announcement is pending) and stays
   quiet in a battle unless a screen is open.
 - Ctrl+Shift+D writes `List (dump)` with the raw texts of the open screen to `Latest.log`.
+- **Test saves without keys**: with `Debug = true`, `Game/DevCommands` runs the lines of
+  `UserData/BallPitAccess/dev.txt` (`resources N`, `blueprint kX`, `unseen kTut`, `tut kTut`, `probe`,
+  `select kX`, `state`…) through the game's own SaveMgr / BaseTutMgr. Seen base tutorials are
+  `MetaSaveData.IsBaseTutSeen` (the game's `kResetBaseTutorials` cheat does nothing in the shipped build).
+  Saves: `%USERPROFILE%/AppData/LocalLow/Kenny Sun/BALL x PIT/meta1*.yankai` (Odin binary); back them up before
+  testing and restore with the game closed. A rich test save is in `game/save_backup/test_after_2026-11-17`.
+- The game reads **Backspace as its own back on key release**: in the base's normal state it opens the pause
+  menu. A mod action on Backspace that returns to the normal state must wait for the release
+  (`Placement.PendingCancel`).
+- `BaseMgr.OnBPressed` only leaves the harvest aim, launcher and level transitions; expansion and rearrange
+  are left with their sidebar toggles (`BaseUI.OnExpandClicked` / `OnRearrangeClicked`).
+- `CoolButton.OnSubmit` is gated by input state (`InputMgr._isInputAConsumed` and a static flag): after a
+  Ctrl+Tab category change the first build item ignored it. Build items are pressed with `Navigator.Click`.
+- `BaseGridMgr.FindEmptySpots` returns single free tiles; `CanBuildPlacePreview` tests the preview's colliders
+  where it stands (a few frames after `SetHover`), so multi-tile fit is found by trying spots in turn.
 - `GameMgr.CurState`: several states open an `OverlayUI` (level up, pause, revive, game over…); the
   navigator announces the screen, `Battle` only plays the cue, or both would speak.

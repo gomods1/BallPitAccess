@@ -5,7 +5,7 @@ avec votre lecteur d'écran, vous permet d'utiliser tout le jeu au clavier et tr
 bataille en sons : les ennemis, vos boules, les tirs ennemis, les cristaux d'EXP et les objets spéciaux
 ont chacun leur son, qui vient du côté où ils se trouvent par rapport à vous.
 
-Version 0.6.0, pour la version 1.308 du jeu, DLC Baboulone émergée compris. Le mod parle **toutes les
+Version 0.6.1, pour la version 1.308 du jeu, DLC Baboulone émergée compris. Le mod parle **toutes les
 langues proposées par le jeu** et suit la langue choisie dans le jeu.
 
 <!-- LANGS -->

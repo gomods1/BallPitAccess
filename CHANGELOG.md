@@ -3,6 +3,28 @@
 Player-facing changes to BALL x PIT Access, newest first. The release notes on GitHub are taken from the
 section of each version.
 
+## 0.6.1
+
+For game version 1.308. Fixes to building in the base, found while checking a player's report about the
+Sheriff's Office.
+
+* **Enter on a building in the build menu always starts placing it**: right after changing category with
+  Control Tab (for example to Housing), Enter on the first building did nothing until you moved away and
+  back.
+* **Home finds a spot where the building really fits**: it used to jump to the first free tile, and a house
+  (Sheriff's Office and the others) is bigger than one tile, so it often landed on "occupied". It now tries
+  the free spots in turn and stops on the first one that fits; if none does, it says so (expand the base or
+  move other buildings).
+* **R says where you are after rotating**: turning a building can change whether it fits; the column, row
+  and "fits" or "occupied" are spoken again once the turn ends.
+* **Backspace cancels placing without opening the pause menu**: one press used to cancel and then open
+  the pause menu.
+* **Backspace leaves expansion and rearrange mode**: in expansion it did nothing (most of all after buying a
+  plot).
+* **Expansion speaks its keys once**, and says "Plot bought" after a purchase instead of repeating them.
+* **Rearrange**: dropping a building says "Building moved" (it said "Built"), and buildings no longer offer
+  "Enter harvests" there, since Enter picks the building up.
+
 ## 0.6.0
 
 For game version 1.308. Most of these changes come from a player's feedback.
