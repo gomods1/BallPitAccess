@@ -3,6 +3,24 @@
 Player-facing changes to BALL x PIT Access, newest first. The release notes on GitHub are taken from the
 section of each version.
 
+## 0.6.2
+
+From a player's reports about building after the Gunsmith unlocked.
+
+* **Building works after a harvest or a run**: choosing a building in the build menu sent you back to the
+  side bar (Play, Harvest, Build...) instead of placing it, until the game was restarted. It happened once
+  you had walked through your buildings with Tab (as you do to harvest). It now starts placing every time.
+* **Building sizes**: the build menu says how many tiles each building takes ("Villa, stone 10, 3 wide, 2
+  tall"), placing starts with the building's name and size, and Tab on a placed building gives its size in
+  the details.
+* **Explore mode**: press K in the base to walk the land tile by tile with the arrows. Each tile says
+  whether it is free (and how many free tiles follow to the right and down), which building stands on it,
+  or that the land is not bought yet. Tab / Shift+Tab jump to the next / previous free tile; K, Backspace
+  or Escape leave (without opening the pause menu). Opening it says how many tiles are free.
+* **Placing a building says the column and row of its top-left tile**, the same numbers explore mode
+  uses, so a free area found by exploring can be found again while placing. Before, the numbers were
+  measured from the middle of the building and did not match.
+
 ## 0.6.1
 
 For game version 1.308. Fixes to building in the base, found while checking a player's report about the

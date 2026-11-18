@@ -78,13 +78,15 @@ namespace BallPitAccess.Game
         {
             try
             {
+                EnsurePreview();
                 bool active = Active;
                 if (active && !_wasActive)
                 {
                     var hp = BaseGridMgr.I.GetHoverPos();
                     _x = hp.x; _y = hp.y;
-                    Log.Info($"Placement start at {hp}; borders L {BaseGridMgr.I.LeftBorderX} R {BaseGridMgr.I.RightBorderX} T {BaseGridMgr.I.TopBorderY} B {BaseGridMgr.I.BottomBorderY} tile {BaseGridMgr.kSpaceWidth} rearrange {Rearranging}");
-                    Speech.Event(Loc.Get(Rearranging ? "rearrange_moving" : "place_start"));
+                    BaseGrid.Refresh();
+                    Log.Info($"Placement start at {hp}; borders L {BaseGridMgr.I.LeftBorderX} R {BaseGridMgr.I.RightBorderX} T {BaseGridMgr.I.TopBorderY} B {BaseGridMgr.I.BottomBorderY} tile {BaseGridMgr.kSpaceWidth} rearrange {Rearranging}; grid x {BaseGrid.MinX}..{BaseGrid.MaxX} y {BaseGrid.MinY}..{BaseGrid.MaxY}");
+                    Speech.Event(What() + Loc.Get(Rearranging ? "rearrange_moving" : "place_start"));
                     // The preview animates in: its first legality reading is wrong, wait for it.
                     _announceAt = Time.unscaledTime + 0.5f;
                 }
@@ -116,6 +118,44 @@ namespace BallPitAccess.Game
             {
                 if (++_errors <= 10) Log.Error("Placement: " + ex);
             }
+        }
+
+        private static int _noPreviewFrames;
+
+        /// <summary>
+        /// The game makes the placement preview in BaseGridMgr.SetHover, which its mouse handler calls every frame.
+        /// When the keyboard owned the hover from before (Tab through the buildings, a harvest), that handler is
+        /// skipped, no preview was ever made, the base sat in kPlaceBuilding with nothing to place and the side
+        /// bar took the keys (a player: "after harvesting it doesn't let me build anything"). Make it here.
+        /// </summary>
+        private static void EnsurePreview()
+        {
+            var bm = BaseMgr.I; var g = BaseGridMgr.I;
+            if (bm == null || g == null || bm.CurState != BaseState.kPlaceBuilding || g.GetPlacePreview() != null) { _noPreviewFrames = 0; return; }
+            if (++_noPreviewFrames < 2) return;     // one frame for the game's own mouse handler
+            _noPreviewFrames = 0;
+            Vector3 at = g.GetHoverPos();
+            if (at.x < g.LeftBorderX || at.x > g.RightBorderX || at.y < g.BottomBorderY || at.y > g.TopBorderY)
+                at = new Vector3((g.LeftBorderX + g.RightBorderX) / 2f, (g.BottomBorderY + g.TopBorderY) / 2f, 0f);
+            if (BaseGrid.Refresh()) { var c = BaseGrid.CellOf(at); at = BaseGrid.World(c.x, c.y); }
+            Claim();
+            g.SetHover(at.x, at.y, true);
+            Log.Info($"Placement: no preview in kPlaceBuilding (keyboard owned {_kbOwned}), made it at {at}: {(g.GetPlacePreview() != null)}");
+        }
+
+        /// <summary>"Wheat field, 2 wide, 2 tall. ": the building being placed, as it is turned now.</summary>
+        private static string What()
+        {
+            try
+            {
+                var p = BaseGridMgr.I.GetPlacePreview() ?? BaseGridMgr.I.GetPendingRearrangeBuilding();
+                var inst = p != null ? p.Inst : null;
+                if (inst == null) return "";
+                string name = Names.Building(inst.GetInfo());
+                string size = BaseGrid.Size(inst.GetInfo());
+                return (size.Length > 0 ? name + ", " + size : name) + ". ";
+            }
+            catch { return ""; }
         }
 
         /// <summary>The keyboard now owns the base grid's hover until the real mouse moves or clicks.</summary>
@@ -196,9 +236,15 @@ namespace BallPitAccess.Game
             if (Config.Debug) Log.Info($"Placement announce hover {hp} wanted ({_x},{_y})");
             // The game snaps the preview to its grid: step on from where it actually is.
             _x = hp.x; _y = hp.y;
-            float w = BaseGridMgr.kSpaceWidth > 0.01f ? BaseGridMgr.kSpaceWidth : 1f;
-            int col = Mathf.FloorToInt((hp.x - g.LeftBorderX) / w) + 1;
-            int row = Mathf.FloorToInt((g.TopBorderY - hp.y) / w) + 1;
+            // The same numbers as explore mode and the building list: the preview's top-left tile.
+            int col, row;
+            var p0 = g.GetPlacePreview() ?? g.GetPendingRearrangeBuilding();
+            Vector2Int cell;
+            // The preview's Inst keeps the spot it was made at; the hover point is its bottom-left tile.
+            cell = BaseGrid.CellOf(hp);
+            try { if (p0 != null && p0.Inst != null) cell = BaseGrid.PreviewTopLeft(cell, p0.Inst.GetInfo().TileSize); } catch { }
+            col = BaseGrid.Col(cell.x); row = BaseGrid.Row(cell.y);
+            if (Config.Debug) Log.Info($"Placement cell {cell} (hover cell {BaseGrid.CellOf(hp)}) -> col {col} row {row}");
             if (g.GetPlacePreview() == null)
             {
                 // Rearranging: the game only tells whether it fits when the building is dropped.
@@ -251,6 +297,9 @@ namespace BallPitAccess.Game
                 _rotPending = false;
                 _search = null;
                 _announceAt = Time.unscaledTime + 0.08f;
+                // Inst.GetTileSize() swaps width and height here, but the tiles taken once built did not (a turned
+                // 3 by 2 villa still covered 3 by 2): say the spot again, not a new size.
+                Log.Info($"Placement rotated to {rot}, size {p.Inst.GetTileSize()}");
             }
         }
 

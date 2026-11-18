@@ -5,7 +5,7 @@ menüleri ekran okuyucun aracılığıyla seslendirir, oyunun tamamını klavyey
 alanını sese dönüştürür: düşmanların, toplarının, düşman atışlarının, TP kristallerinin ve özel eşyaların
 her birinin kendi sesi vardır ve bu ses, senin hangi tarafındaysa oradan gelir.
 
-Sürüm 0.6.1, oyunun 1.308 sürümü için, Yükselen Babil'in Sekme Bahçeleri (Risen Ballbylon) DLC'si dahil.
+Sürüm 0.6.2, oyunun 1.308 sürümü için, Yükselen Babil'in Sekme Bahçeleri (Risen Ballbylon) DLC'si dahil.
 Mod **oyunun sunduğu tüm dilleri** konuşur ve oyunun dil ayarını izler.
 
 <!-- LANGS -->
@@ -124,6 +124,7 @@ Sıra hiçbir zaman ögelerin ekranda nereye çizildiğine bağlı değildir.
 | Delete | Bir binayı parçala |
 | H | Kaynaklar ve gün |
 | J | Hasat ve işçiler |
+| K | Üssü kare kare keşfet |
 
 - **İnşa**: oklar binayı bir kare taşır ve sığıp sığmadığını söyler, Enter inşa eder, R döndürür, Home boş
   bir yere atlar, Backspace iptal eder.
@@ -131,6 +132,8 @@ Sıra hiçbir zaman ögelerin ekranda nereye çizildiğine bağlı değildir.
   Sol ok / Sağ ok nişanı çevirir, hızlandırmak için Boşluk tuşunu basılı tut, Esc çıkar.
 - **Genişletme**: Tab bir arsa seçer, Enter satın alır.
 - **Yeniden düzenleme**: Tab bir bina seçer, Enter onu kaldırır, oklar taşır, Enter bırakır.
+- **Keşif** (K): oklar bir kare ilerler ve orada ne olduğunu söyler: boş (ve sağa ve aşağı kaç boş kare daha olduğu), boyutuyla bir bina ya da satın alınmamış arazi. Tab / Shift+Tab sonraki / önceki boş kareye atlar. K, Backspace veya Escape çıkar. Sütun ve satırlar bina yerleştirirken kullanılanlarla aynıdır.
+- İnşa menüsü her binanın ne kadar yer kapladığını söyler ("3 genişlik, 2 yükseklik"), yerleştirme de adı ve boyutuyla başlar.
 
 ## Savaş {#battle}
 

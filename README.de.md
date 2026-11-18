@@ -5,7 +5,7 @@ Ein Mod, der **BALL x PIT** (Kenny Sun / Devolver Digital) ohne Sehen spielbar m
 Schlachtfeld in Klang: Gegner, deine Bälle, gegnerische Schüsse, EP-Juwelen und besondere Gegenstände haben
 jeweils ihr eigenes Geräusch, das von ihrer Seite aus zu dir kommt.
 
-Version 0.6.1, für die Spielversion 1.308, einschließlich des DLC Aufgestiegenes Ballbylon (Risen Ballbylon).
+Version 0.6.2, für die Spielversion 1.308, einschließlich des DLC Aufgestiegenes Ballbylon (Risen Ballbylon).
 Der Mod spricht **jede Sprache, die das Spiel anbietet**, und folgt der Spracheinstellung des Spiels.
 
 <!-- LANGS -->
@@ -127,6 +127,7 @@ Bildschirm gezeichnet sind.
 | Entf | Ein Gebäude demontieren |
 | H | Rohstoffe und Tag |
 | J | Ernte und Arbeiter |
+| K | Die Basis Feld für Feld erkunden |
 
 - **Bauen**: Die Pfeiltasten bewegen das Gebäude um ein Feld und sagen, ob es passt, Eingabe baut, R dreht,
   Pos1 springt zu einem freien Platz, Rücktaste bricht ab.
@@ -136,6 +137,8 @@ Bildschirm gezeichnet sind.
 - **Erweitern**: Tab wählt ein Grundstück, Eingabe kauft es.
 - **Neu anordnen**: Tab wählt ein Gebäude, Eingabe hebt es auf, die Pfeiltasten bewegen es, Eingabe setzt es
   ab.
+- **Erkunden** (K): Die Pfeiltasten gehen ein Feld weiter und sagen, was dort ist: frei (und wie viele freie Felder nach rechts und nach unten folgen), ein Gebäude mit seiner Größe oder noch nicht gekauftes Land. Tab / Umschalt+Tab springen zum nächsten / vorigen freien Feld. K, Rücktaste oder Escape beenden. Spalten und Reihen sind dieselben wie beim Platzieren eines Gebäudes.
+- Das Baumenü sagt, wie viel Platz jedes Gebäude braucht („3 breit, 2 hoch“), und beim Platzieren werden zuerst Name und Größe gesagt.
 
 ## Kampf {#battle}
 

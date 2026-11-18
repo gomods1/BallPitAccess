@@ -47,6 +47,7 @@ namespace BallPitAccess.Game
                 AnnounceMain(st);
                 if (ModKeys.ListOpen || Keys.Consumed || !Keys.GameHasFocus() || Keys.Ctrl || Keys.Alt || Keys.ScreenReaderModifier) return;
                 if (Navigator.HasOverlay || Navigator.FtueShowing) { _owns = false; return; }
+                if (Explore.Active) return;
                 if (_onElevator && !_owns) LeaveElevator();
                 switch (st)
                 {
@@ -321,8 +322,11 @@ namespace BallPitAccess.Game
                     string cost = Names.Cost(b.GetUpgradeCost());
                     details.Add(Loc.F("bld_can_upgrade", cost));
                 }
-                var gp = b.GetBotLeftGridPos();
-                details.Add(Loc.F("bld_at", gp.x, gp.y));
+                BaseGrid.Refresh();
+                var tl = BaseGrid.TopLeftTiles(b) ?? BaseGrid.TopLeft(b);
+                details.Add(Loc.F("bld_at", BaseGrid.Col(tl.x), BaseGrid.Row(tl.y)));
+                string size = BaseGrid.SizeTiles(b);
+                if (size.Length > 0) details.Add(size);
                 string desc = Names.Tr(inf.GetDescSlug());
                 if (desc.Length == 0) desc = Names.Tr(inf.GetBuildDescSlug());
                 if (desc.Length > 0) details.Add(desc);

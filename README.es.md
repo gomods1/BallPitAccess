@@ -5,7 +5,7 @@ lector de pantalla, te deja usar todo el juego con el teclado y convierte el cam
 los enemigos, tus bolas, los disparos enemigos, los cristales de experiencia y los objetos especiales
 tienen cada uno su sonido, que viene de su lado respecto a ti.
 
-Versión 0.6.1, para la versión 1.308 del juego, incluido el DLC Bolabilonia Resurgida. El mod habla
+Versión 0.6.2, para la versión 1.308 del juego, incluido el DLC Bolabilonia Resurgida. El mod habla
 **todos los idiomas del juego** y sigue el idioma que tengas puesto en él.
 
 <!-- LANGS -->
@@ -125,6 +125,7 @@ Cerrar. El orden nunca depende de dónde se dibujan las cosas en la pantalla.
 | Suprimir | Desmontar un edificio |
 | H | Recursos y día |
 | J | Recolección y trabajadores |
+| K | Explorar la base casilla a casilla |
 
 - **Construir**: las flechas mueven el edificio una casilla y dicen si cabe, Intro construye, R gira,
   Inicio salta a un sitio libre, Retroceso cancela.
@@ -132,6 +133,8 @@ Cerrar. El orden nunca depende de dónde se dibujan las cosas en la pantalla.
   edificio, Izquierda / Derecha giran la puntería, mantén Espacio para acelerar, Escape sale.
 - **Expandir**: Tab elige una parcela, Intro la compra.
 - **Reorganizar**: Tab elige un edificio, Intro lo coge, las flechas lo mueven, Intro lo suelta.
+- **Explorar** (K): las flechas avanzan una casilla y dicen qué hay: libre (y cuántas casillas libres siguen a la derecha y hacia abajo), un edificio con su tamaño, o terreno sin comprar. Tab / Mayúsculas+Tab saltan a la casilla libre siguiente / anterior. K, Retroceso o Escape salen. Las columnas y filas son las mismas que al colocar un edificio.
+- El menú de construcción dice cuánto espacio ocupa cada edificio ("3 de ancho, 2 de alto"), y al colocarlo se dice su nombre y su tamaño.
 
 ## Combate
 

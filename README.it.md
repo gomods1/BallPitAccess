@@ -5,7 +5,7 @@ tramite il tuo screen reader, ti permette di usare tutto il gioco con la tastier
 battaglia in suono: i nemici, le tue palle, i colpi nemici, i cristalli di PX e gli oggetti speciali hanno
 ciascuno il proprio suono, che arriva dal loro lato rispetto a te.
 
-Versione 0.6.1, per la versione 1.308 del gioco, incluso il DLC Pallilonia Risorta (Risen Ballbylon). La
+Versione 0.6.2, per la versione 1.308 del gioco, incluso il DLC Pallilonia Risorta (Risen Ballbylon). La
 mod parla **tutte le lingue offerte dal gioco** e segue l'impostazione della lingua del gioco.
 
 <!-- LANGS -->
@@ -129,6 +129,7 @@ Chiudi. L'ordine non dipende mai da dove le cose sono disegnate sullo schermo.
 | Canc | Smantella un edificio |
 | H | Risorse e giorno |
 | J | Raccolta e lavoratori |
+| K | Esplora la base casella per casella |
 
 - **Costruzione**: le frecce spostano l'edificio di una casella e dicono se ci sta, Invio costruisce,
   R ruota, Home salta a un posto libero, Backspace annulla.
@@ -136,6 +137,8 @@ Chiudi. L'ordine non dipende mai da dove le cose sono disegnate sullo schermo.
   freccia sinistra / destra ruotano la mira, tieni premuta la Barra spaziatrice per accelerare, Esc esce.
 - **Espansione**: Tab sceglie un lotto, Invio lo compra.
 - **Riposizionamento**: Tab sceglie un edificio, Invio lo solleva, le frecce lo spostano, Invio lo posa.
+- **Esplora** (K): le frecce avanzano di una casella e dicono cosa c'è: libera (e quante caselle libere seguono a destra e in basso), un edificio con la sua dimensione, o terreno non acquistato. Tab / Maiusc+Tab saltano alla casella libera successiva / precedente. K, Backspace o Esc escono. Colonne e righe sono le stesse usate per piazzare un edificio.
+- Il menu di costruzione dice quanto spazio occupa ogni edificio ("3 di larghezza, 2 di altezza"), e il piazzamento inizia con nome e dimensione.
 
 ## Battaglia {#battle}
 

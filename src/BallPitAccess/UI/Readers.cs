@@ -638,6 +638,9 @@ namespace BallPitAccess.UI
                 if (cost.Length > 0) parts.Add(cost);
                 if (!bi.CanAfford) parts.Add(Loc.Get("cant_afford"));
             }
+            // How much room it needs (a player: "so that we can discover how much space we need to build them").
+            string size = Game.BaseGrid.Size(inf);
+            if (size.Length > 0) parts.Add(size);
             try { if (bi.WrapperNew != null && bi.WrapperNew.activeInHierarchy) parts.Add(Loc.Get("new")); } catch { }
             r.Summary = string.Join(", ", parts);
             var ui = BuildUI.I;

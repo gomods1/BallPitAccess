@@ -330,3 +330,31 @@ at the user's request: "the player can tell roughly where it will go"; the landi
 shot: the shot; laser: its emitter; bomb: where it lands). Pickup pitch is now by straight-line distance.
 `Hazards.DodgePan` survives only to pick `DodgeDir` for the catch assist. Help, sound guide and READMEs
 rewritten in every language. Built, not run.
+
+### Session 9 (2026-11-18): building after a harvest, building sizes, explore mode (verified in game, scripted)
+A player (Gunsmith unlocked) reported that after a harvest or a run, choosing a building sent them back to the
+side bar until the game was restarted, and asked for building sizes and a mode to walk every tile.
+- **Cause (from the disassembly, confirmed in game)**: the game makes the placement preview in
+  `BaseGridMgr.SetHover`, which only its mouse handler `UpdateMouseControls` calls. `Placement.Claim` (Tab through
+  buildings, the harvest aim) skips that handler until the real mouse moves, so the base sat in
+  `kPlaceBuilding` with no preview: `Placement.Active` false, the side bar took the keys. Log line now:
+  `Placement: no preview in kPlaceBuilding (keyboard owned True), made it at …` (`Placement.EnsurePreview`).
+- **`Game/BaseGrid.cs`**: one column / row numbering (column 1 = leftmost bought tile, row 1 = top), read from
+  `MetaSaveData.BaseChunks` (`BaseChunkInst.Buildings[x][y]` = the building on each tile, 8 × 6 tiles per chunk;
+  what `FindEmptySpots` reads; colliders reach over neighbours' tiles). Placement, the base list (`bld_at`) and
+  explore all use it.
+- **Placement anchor (measured after building, chunk grid)**: the hover tile is the middle column (left of the
+  middle two) and the middle row (lower of the middle two) of `BuildingInfo.TileSize`. Turning with R did not
+  change the tiles taken (a turned 3×2 villa covered 3×2) although `Inst.GetTileSize()` swaps: R no longer says
+  a size. The preview's `Inst.X/Y` stays where it was made (useless for its position).
+- **Explore** (`Game/Explore.cs`, K = the `position` binding in the base): arrows, Tab / Shift+Tab next free tile,
+  Enter repeats, K / Backspace / Escape leave. Rewired keyboard maps are off while it is open. Backspace is
+  read by `BaseMgr.MyUpdate` straight from Unity (`Input.GetKeyDown(Backspace)` or the Pause action → base pause
+  menu): `BasePauseUI.Activate` is skipped while exploring and 0.5 s after.
+- Sizes: build list items, placement start, Tab details, explore (placed buildings: from the chunk grid).
+- Verified by script on the test save: harvest → Build → Forest places; footprints of a forest, a turned villa,
+  a cozy home and captain's quarters match what placement announced; Backspace / Escape leave explore without
+  the pause menu, and Backspace pauses normally afterwards. Home's search runs at a few spots a second when the
+  game window is not in front (4 frames per try).
+- Not checked: the "after a run" path (same cause, `_kbOwned` is static), rearrange mode's numbers with the new
+  anchor, odd shapes (`BuildingInfo.InnerGrid`).

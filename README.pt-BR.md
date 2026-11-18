@@ -5,7 +5,7 @@ pelo seu leitor de tela, permite usar o jogo inteiro pelo teclado e transforma o
 inimigos, suas esferas, disparos inimigos, cristais de EXP e itens especiais têm cada um o seu som, que
 vem do lado em que estão em relação a você.
 
-Versão 0.6.1, para a versão 1.308 do jogo, incluindo o DLC Bolalônia Elevada (Risen Ballbylon). O mod fala
+Versão 0.6.2, para a versão 1.308 do jogo, incluindo o DLC Bolalônia Elevada (Risen Ballbylon). O mod fala
 **todos os idiomas que o jogo oferece** e segue o idioma configurado no jogo.
 
 <!-- LANGS -->
@@ -127,6 +127,7 @@ Fechar. A ordem nunca depende de onde as coisas estão desenhadas na tela.
 | Delete | Desmontar uma edificação |
 | H | Recursos e dia |
 | J | Colheita e trabalhadores |
+| K | Explorar a base casa por casa |
 
 - **Construção**: as setas movem a edificação um bloco e dizem se ela cabe, Enter constrói, R gira, Home
   pula para um espaço livre, Backspace cancela.
@@ -135,6 +136,8 @@ Fechar. A ordem nunca depende de onde as coisas estão desenhadas na tela.
   sai.
 - **Expansão**: Tab escolhe um terreno, Enter compra.
 - **Reorganizar**: Tab escolhe uma edificação, Enter pega, as setas movem, Enter solta.
+- **Explorar** (K): as setas andam uma casa e dizem o que há nela: livre (e quantas casas livres seguem para a direita e para baixo), uma construção com o tamanho, ou terreno não comprado. Tab / Shift+Tab pulam para a próxima / anterior casa livre. K, Backspace ou Esc saem. As colunas e linhas são as mesmas usadas ao posicionar uma construção.
+- O menu de construção diz quanto espaço cada construção ocupa ("3 de largura, 2 de altura"), e o posicionamento começa com o nome e o tamanho.
 
 ## Batalha {#battle}
 

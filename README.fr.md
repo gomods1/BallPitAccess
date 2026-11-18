@@ -5,7 +5,7 @@ avec votre lecteur d'écran, vous permet d'utiliser tout le jeu au clavier et tr
 bataille en sons : les ennemis, vos boules, les tirs ennemis, les cristaux d'EXP et les objets spéciaux
 ont chacun leur son, qui vient du côté où ils se trouvent par rapport à vous.
 
-Version 0.6.1, pour la version 1.308 du jeu, DLC Baboulone émergée compris. Le mod parle **toutes les
+Version 0.6.2, pour la version 1.308 du jeu, DLC Baboulone émergée compris. Le mod parle **toutes les
 langues proposées par le jeu** et suit la langue choisie dans le jeu.
 
 <!-- LANGS -->
@@ -126,6 +126,7 @@ Fermer. L'ordre ne dépend jamais de l'endroit où les éléments sont dessinés
 | Suppr | Démonter un bâtiment |
 | H | Ressources et jour |
 | J | Récolte et ouvriers |
+| K | Explorer la base case par case |
 
 - **Construction** : les flèches déplacent le bâtiment d'une case et disent s'il rentre, Entrée
   construit, R fait pivoter, Début va à un emplacement libre, Retour arrière annule.
@@ -133,6 +134,8 @@ Fermer. L'ordre ne dépend jamais de l'endroit où les éléments sont dessinés
   bâtiment, flèche gauche / flèche droite tournent la visée, maintenez Espace pour accélérer, Échap quitte.
 - **Extension** : Tab choisit une parcelle, Entrée l'achète.
 - **Disposition** : Tab choisit un bâtiment, Entrée le soulève, les flèches le déplacent, Entrée le pose.
+- **Explorer** (K) : les flèches avancent d'une case et disent ce qu'il y a : libre (et combien de cases libres suivent vers la droite et vers le bas), un bâtiment avec sa taille, ou un terrain non acheté. Tab / Maj+Tab sautent à la case libre suivante / précédente. K, Retour arrière ou Échap quittent. Les colonnes et rangées sont les mêmes que pour placer un bâtiment.
+- Le menu de construction dit la place que prend chaque bâtiment (« 3 de large, 2 de haut »), et le placement commence par son nom et sa taille.
 
 ## Combat {#battle}
 

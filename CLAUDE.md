@@ -74,7 +74,7 @@ Blind accessibility mod for **BALL x PIT** (Kenny Sun / Devolver), following
     (enemy shots, lasers, bombs, floor), `Pickups`, `AimAssist` (postfix on `MousePosToAimDir`), `CatchAssist` (walks the hero under the next ball /
     to a pickup / out of a hit through `Player.IsOverridingInput` + `InputX/YOverride`),
     `BallPatches` (catch cue), `Names` (game names through I2), `BaseNav` (buildings, expansion,
-    rearrange, base HUD keys), `Placement`, `Harvest`, `Tutorial`, `Scenes` (boot, intro, credits), `Dump`.
+    rearrange, base HUD keys), `BaseGrid` (tile numbering, chunk grid), `Explore` (K in the base), `Placement`, `Harvest`, `Tutorial`, `Scenes` (boot, intro, credits), `Dump`.
   - `UI/`: `MenuReader` (EventSystem focus → speech), `Navigator` (keyboard navigation: one ordered list
     per screen, groups, overlays, pages, FTUE, text fields), `Readers` (one reader per item type).
 - **Menu navigation never follows screen position** (user rule, 2026-11-14, after a playtest where the
@@ -98,7 +98,7 @@ Blind accessibility mod for **BALL x PIT** (Kenny Sun / Devolver), following
 - Assists are optional helpers, never the way to play (user, 2026-11-15: "not fun if all you do is
   shift shift shift"): every task an assist does must also be doable by ear from the cues alone.
 - Update order (`Main.cs`): Keys → ModKeys → Battle → AimAssist → Hazards → Pickups → CatchAssist → Scenes → Placement →
-  Harvest → BaseNav → Tutorial → Navigator → MenuReader → Speech.Pump. A handler that acts on a key calls
+  Harvest → Explore → BaseNav → Tutorial → Navigator → MenuReader → Speech.Pump. A handler that acts on a key calls
   `Keys.Consume()`; later handlers check `Keys.Consumed`.
 
 ## How the game's menus work (what the readers rely on)
@@ -192,5 +192,14 @@ No game file was replaced.
   Ctrl+Tab category change the first build item ignored it. Build items are pressed with `Navigator.Click`.
 - `BaseGridMgr.FindEmptySpots` returns single free tiles; `CanBuildPlacePreview` tests the preview's colliders
   where it stands (a few frames after `SetHover`), so multi-tile fit is found by trying spots in turn.
+- **The placement preview is made in `BaseGridMgr.SetHover`** (only the game's mouse handler calls it each
+  frame). While `Placement.Claim` owns the hover that handler is skipped: `Placement.EnsurePreview` makes the
+  preview itself when the base is in `kPlaceBuilding` without one.
+- **Which building is on a tile**: `MetaSaveData.BaseChunks[..][..]` → `BaseChunkInst.Buildings[x][y]` (8 × 6
+  tiles per chunk), read through `Game/BaseGrid`. `GetBuildingAtWorldPos` uses colliders, which reach over the
+  neighbours' tiles. A preview's hover tile is its middle column / row (`BaseGrid.PreviewTopLeft`); R does not
+  change the tiles a building takes, although `Inst.GetTileSize()` swaps.
+- `BaseMgr.MyUpdate` opens the base pause menu on `Input.GetKeyDown(Backspace)` (Unity input, not Rewired:
+  muting the keyboard maps does not stop it). `Explore` skips `BasePauseUI.Activate` instead.
 - `GameMgr.CurState`: several states open an `OverlayUI` (level up, pause, revive, game over…); the
   navigator announces the screen, `Battle` only plays the cue, or both would speak.

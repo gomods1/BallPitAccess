@@ -103,6 +103,7 @@ namespace BallPitAccess.Input
                 // Resources everywhere in the base: its menus (build, upgrades, market), build and harvest modes.
                 if (Bindings.Pressed("health")) BaseNav.SayResources();
                 else if (Bindings.Pressed("enemies") && !Navigator.HasOverlay) BaseNav.SayHarvest();
+                else if (Bindings.Pressed("position") && !Navigator.HasOverlay && !Placement.Active) { Keys.Consume(); Explore.Toggle(); }
             }
         }
 

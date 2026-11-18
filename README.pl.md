@@ -5,7 +5,7 @@ przez twój czytnik ekranu, pozwala obsłużyć całą grę z klawiatury i zamie
 twoje kule, wrogie pociski, kryształy PD i przedmioty specjalne mają własne dźwięki, dochodzące z tej strony,
 po której się znajdują.
 
-Wersja 0.6.1, dla wersji gry 1.308, razem z DLC Wyniesione Kulopolis (Risen Ballbylon). Mod mówi **w każdym
+Wersja 0.6.2, dla wersji gry 1.308, razem z DLC Wyniesione Kulopolis (Risen Ballbylon). Mod mówi **w każdym
 języku, który oferuje gra**, i stosuje się do ustawienia języka w grze.
 
 <!-- LANGS -->
@@ -124,6 +124,7 @@ Kolejność nigdy nie zależy od tego, gdzie elementy są narysowane na ekranie.
 | Delete | Wyburz budowlę |
 | H | Zasoby i dzień |
 | J | Zbiory i robotnicy |
+| K | Zwiedzanie bazy pole po polu |
 
 - **Budowanie**: strzałki przesuwają budowlę o jedno pole i mówią, czy się mieści, Enter buduje, R obraca,
   Home przeskakuje na wolne miejsce, Backspace anuluje.
@@ -131,6 +132,8 @@ Kolejność nigdy nie zależy od tego, gdzie elementy są narysowane na ekranie.
   strzałki w lewo / w prawo obracają celownik, przytrzymanie spacji przyspiesza, Escape wychodzi.
 - **Powiększanie**: Tab wybiera działkę, Enter ją kupuje.
 - **Układanie**: Tab wybiera budowlę, Enter ją podnosi, strzałki ją przesuwają, Enter ją upuszcza.
+- **Eksploracja** (K): strzałki przechodzą o jedno pole i mówią, co tam jest: wolne (i ile wolnych pól jest dalej w prawo i w dół), budynek z rozmiarem albo teren niekupiony. Tab / Shift+Tab skaczą do następnego / poprzedniego wolnego pola. K, Backspace lub Escape wychodzą. Kolumny i rzędy są te same co przy stawianiu budynku.
+- Menu budowy mówi, ile miejsca zajmuje każdy budynek („3 szerokości, 2 wysokości”), a stawianie zaczyna się od nazwy i rozmiaru.
 
 ## Walka {#battle}
 
