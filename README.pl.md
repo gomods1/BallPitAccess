@@ -5,7 +5,7 @@ przez twój czytnik ekranu, pozwala obsłużyć całą grę z klawiatury i zamie
 twoje kule, wrogie pociski, kryształy PD i przedmioty specjalne mają własne dźwięki, dochodzące z tej strony,
 po której się znajdują.
 
-Wersja 0.6.2, dla wersji gry 1.308, razem z DLC Wyniesione Kulopolis (Risen Ballbylon). Mod mówi **w każdym
+Wersja 0.6.3, dla wersji gry 1.308, razem z DLC Wyniesione Kulopolis (Risen Ballbylon). Mod mówi **w każdym
 języku, który oferuje gra**, i stosuje się do ustawienia języka w grze.
 
 <!-- LANGS -->
@@ -130,6 +130,7 @@ Kolejność nigdy nie zależy od tego, gdzie elementy są narysowane na ekranie.
   Home przeskakuje na wolne miejsce, Backspace anuluje.
 - **Zbiory**: zaczynają się wycelowane w budowlę. Enter wysyła robotników, Tab celuje w inną budowlę,
   strzałki w lewo / w prawo obracają celownik, przytrzymanie spacji przyspiesza, Escape wychodzi.
+- **Budowa**: budowle w budowie lub w trakcie ulepszania też są na liście Tab podczas zbiorów. Każdy robotnik, który się od nich odbije, je buduje; mod mówi, gdy budowa jest ukończona. Enter na takiej budowli w bazie rozpoczyna zbiory wycelowane w nią.
 - **Powiększanie**: Tab wybiera działkę, Enter ją kupuje.
 - **Układanie**: Tab wybiera budowlę, Enter ją podnosi, strzałki ją przesuwają, Enter ją upuszcza.
 - **Eksploracja** (K): strzałki przechodzą o jedno pole i mówią, co tam jest: wolne (i ile wolnych pól jest dalej w prawo i w dół), budynek z rozmiarem albo teren niekupiony. Tab / Shift+Tab skaczą do następnego / poprzedniego wolnego pola. K, Backspace lub Escape wychodzą. Kolumny i rzędy są te same co przy stawianiu budynku.

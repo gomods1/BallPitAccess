@@ -3,6 +3,20 @@
 Player-facing changes to BALL x PIT Access, newest first. The release notes on GitHub are taken from the
 section of each version.
 
+## 0.6.3
+
+From a player's report: the game says workers can speed up a building under construction, and the mod had
+no way to do it.
+
+* **Building with your workers**: buildings under construction or upgrading are now in the harvest's Tab
+  list, with their progress ("Forest, under construction, 40 percent"). Every worker that bounces off one
+  builds it, and the mod says when it is finished ("Forest is finished"). Opening the harvest says how
+  many buildings are under construction.
+* **Enter on a building under construction** in the base starts the harvest already aimed at it, the same
+  as on a building ready to harvest. When no harvest is available, Tab on it says that workers build it
+  during a harvest.
+* **J** (harvest and workers) also says how many buildings are under construction.
+
 ## 0.6.2
 
 From a player's reports about building after the Gunsmith unlocked.

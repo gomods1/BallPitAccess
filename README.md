@@ -5,7 +5,7 @@ menu through your screen reader, lets you use the whole game with the keyboard, 
 into sound: enemies, your balls, enemy shots, XP crystals and special items all have their own sounds,
 coming from their side of you.
 
-Version 0.6.2, for game version 1.308, including the Risen Ballbylon DLC. The mod speaks **every language
+Version 0.6.3, for game version 1.308, including the Risen Ballbylon DLC. The mod speaks **every language
 the game offers** and follows the game's language setting.
 
 <!-- LANGS -->
@@ -130,6 +130,7 @@ order never depends on where things are drawn on the screen.
   jumps to a free spot, Backspace cancels.
 - **Harvest**: it starts aimed at a building. Enter launches the workers, Tab aims at another building,
   Left / Right turn the aim, hold Space to speed up, Escape leaves.
+- **Construction**: buildings under construction or upgrading are in the harvest's Tab list too. Every worker that bounces off one builds it; the mod says when it is finished. Enter on one in the base starts the harvest aimed at it.
 - **Expansion**: Tab chooses a plot, Enter buys it.
 - **Rearrange**: Tab chooses a building, Enter picks it up, arrows move it, Enter drops it.
 - **Explore** (K): the arrows walk one tile at a time and say what is there: free (and how many free tiles follow to the right and down), a building with its size, or land not bought yet. Tab / Shift+Tab jump to the next / previous free tile. K, Backspace or Escape leave. Columns and rows are the same ones placing a building uses.

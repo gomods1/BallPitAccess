@@ -5,7 +5,7 @@ pelo seu leitor de tela, permite usar o jogo inteiro pelo teclado e transforma o
 inimigos, suas esferas, disparos inimigos, cristais de EXP e itens especiais têm cada um o seu som, que
 vem do lado em que estão em relação a você.
 
-Versão 0.6.2, para a versão 1.308 do jogo, incluindo o DLC Bolalônia Elevada (Risen Ballbylon). O mod fala
+Versão 0.6.3, para a versão 1.308 do jogo, incluindo o DLC Bolalônia Elevada (Risen Ballbylon). O mod fala
 **todos os idiomas que o jogo oferece** e segue o idioma configurado no jogo.
 
 <!-- LANGS -->
@@ -134,6 +134,7 @@ Fechar. A ordem nunca depende de onde as coisas estão desenhadas na tela.
 - **Colheita**: ela começa mirando em uma edificação. Enter lança os trabalhadores, Tab mira em outra
   edificação, as setas para a esquerda e para a direita giram a mira, segure Espaço para acelerar, Esc
   sai.
+- **Construção**: edificações em construção ou em melhoria também estão na lista do Tab da colheita. Cada trabalhador que bate em uma delas a constrói; o mod avisa quando ela fica pronta. Enter em uma delas na base começa a colheita mirando nela.
 - **Expansão**: Tab escolhe um terreno, Enter compra.
 - **Reorganizar**: Tab escolhe uma edificação, Enter pega, as setas movem, Enter solta.
 - **Explorar** (K): as setas andam uma casa e dizem o que há nela: livre (e quantas casas livres seguem para a direita e para baixo), uma construção com o tamanho, ou terreno não comprado. Tab / Shift+Tab pulam para a próxima / anterior casa livre. K, Backspace ou Esc saem. As colunas e linhas são as mesmas usadas ao posicionar uma construção.

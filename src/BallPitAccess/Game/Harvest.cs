@@ -13,6 +13,8 @@ namespace BallPitAccess.Game
     /// launches on a click. Here: Tab / Shift+Tab cycle the buildings that can be harvested now, aiming at
     /// each (name, distance and direction spoken); Left / Right turn the aim 5 degrees; Enter or Space
     /// launches through the game's own BaseMgr.LaunchWorkers with that direction.
+    /// Buildings under construction or upgrading are targets too: a worker that bounces off one adds build
+    /// points to it (BuildingInst.GetHitByWorker -> AddUpgradePts). A building that finishes is announced.
     /// </summary>
     internal static class Harvest
     {
@@ -55,11 +57,17 @@ namespace BallPitAccess.Game
                         _index = pick;
                         _deg = Mathf.Clamp(Angle(list[pick].Obj.transform.position, PlayerPos()), 5f, 175f);
                         Apply();
-                        Speech.Event(Loc.F("harvest_start_at", list.Count, TargetName(list[pick]), AngleWords(_deg)));
+                        int ready = 0;
+                        foreach (var b in list) if (!UnderConstruction(b)) ready++;
+                        Speech.Event(Loc.F("harvest_start_at", ready, TargetName(list[pick]), AngleWords(_deg)));
                     }
                     else Speech.Event(Loc.F("harvest_start", 0));
+                    int building = 0;
+                    foreach (var b in list) if (UnderConstruction(b)) building++;
+                    if (building > 0) Speech.Event(Loc.F("construct_n", building));
                 }
                 _was = active;
+                WatchFinished();
                 if (!active || Keys.Consumed || !Keys.GameHasFocus() || Keys.Ctrl || Keys.Alt || ModKeys.ListOpen || Navigator.Blocking) return;
 
                 if (Keys.Pressed(Keys.VK_TAB)) Cycle(Keys.Shift ? -1 : 1);
@@ -83,7 +91,7 @@ namespace BallPitAccess.Game
                 var b = kv.Value;
                 if (b == null || b.Obj == null) continue;
                 bool ok;
-                try { ok = b.CanHarvest(); } catch { ok = false; }
+                try { ok = b.CanHarvest() || UnderConstruction(b); } catch { ok = false; }
                 if (ok) list.Add(b);
             }
             Vector3 p = PlayerPos();
@@ -105,10 +113,64 @@ namespace BallPitAccess.Game
             return list;
         }
 
-        private static string TargetName(BuildingInst b)
+        /// <summary>Under construction or upgrading: workers that bounce off it build it.</summary>
+        internal static bool UnderConstruction(BuildingInst b)
+        {
+            try { return b != null && (b.CurState == BuildingState.kScaffold || b.CurState == BuildingState.kUpgrading); }
+            catch { return false; }
+        }
+
+        private static string PlainName(BuildingInst b)
         {
             string name = Readers.Tr(b.GetInfo()?.GetNameSlug());
             return name.Length > 0 ? name : b.Type.ToString().TrimStart('k');
+        }
+
+        private static string TargetName(BuildingInst b)
+        {
+            string name = PlainName(b);
+            try
+            {
+                if (b.CurState == BuildingState.kScaffold)
+                    return name + ", " + Loc.F("bld_scaffold", Mathf.RoundToInt(b.GetUpgradePct() * 100f));
+                if (b.CurState == BuildingState.kUpgrading)
+                    return name + ", " + Loc.F("bld_upgrading", Mathf.RoundToInt(b.GetUpgradePct() * 100f));
+            }
+            catch { }
+            return name;
+        }
+
+        // Buildings under construction or upgrading, by pointer, with their names: one that leaves that
+        // state (the workers finished it) is announced. Only workers move these states on, and a newly
+        // placed building enters the watch already under construction, so nothing else is spoken.
+        private static readonly Dictionary<IntPtr, string> _building = new Dictionary<IntPtr, string>();
+        private static float _nextWatch;
+
+        private static void WatchFinished()
+        {
+            if (Time.unscaledTime < _nextWatch) return;
+            _nextWatch = Time.unscaledTime + 0.3f;
+            var bm = BuildingMgr.I;
+            if (bm == null || bm.BuildingsById == null || BaseMgr.I == null) { _building.Clear(); return; }
+            var seen = new HashSet<IntPtr>();
+            foreach (var kv in bm.BuildingsById)
+            {
+                var b = kv.Value;
+                if (b == null) continue;
+                var ptr = b.Pointer;
+                seen.Add(ptr);
+                bool now = UnderConstruction(b);
+                if (now) { if (!_building.ContainsKey(ptr)) _building[ptr] = PlainName(b); }
+                else if (_building.TryGetValue(ptr, out var name))
+                {
+                    _building.Remove(ptr);
+                    Speech.Event(Loc.F("bld_done", name));
+                    Log.Info("Construction finished: " + b.Type);
+                }
+            }
+            // Dismantled or picked up: forget it without a word.
+            if (_building.Count > 0)
+                foreach (var ptr in new List<IntPtr>(_building.Keys)) if (!seen.Contains(ptr)) _building.Remove(ptr);
         }
 
         private static Vector3 PlayerPos()

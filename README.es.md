@@ -5,7 +5,7 @@ lector de pantalla, te deja usar todo el juego con el teclado y convierte el cam
 los enemigos, tus bolas, los disparos enemigos, los cristales de experiencia y los objetos especiales
 tienen cada uno su sonido, que viene de su lado respecto a ti.
 
-Versión 0.6.2, para la versión 1.308 del juego, incluido el DLC Bolabilonia Resurgida. El mod habla
+Versión 0.6.3, para la versión 1.308 del juego, incluido el DLC Bolabilonia Resurgida. El mod habla
 **todos los idiomas del juego** y sigue el idioma que tengas puesto en él.
 
 <!-- LANGS -->
@@ -131,6 +131,7 @@ Cerrar. El orden nunca depende de dónde se dibujan las cosas en la pantalla.
   Inicio salta a un sitio libre, Retroceso cancela.
 - **Recolectar**: empieza apuntando a un edificio. Intro lanza a los trabajadores, Tab apunta a otro
   edificio, Izquierda / Derecha giran la puntería, mantén Espacio para acelerar, Escape sale.
+- **Construcción**: los edificios en construcción o mejorándose también están en la lista Tab de la recolección. Cada trabajador que rebota en uno lo construye; el mod avisa cuando está terminado. Intro sobre uno en la base empieza la recolección apuntada a él.
 - **Expandir**: Tab elige una parcela, Intro la compra.
 - **Reorganizar**: Tab elige un edificio, Intro lo coge, las flechas lo mueven, Intro lo suelta.
 - **Explorar** (K): las flechas avanzan una casilla y dicen qué hay: libre (y cuántas casillas libres siguen a la derecha y hacia abajo), un edificio con su tamaño, o terreno sin comprar. Tab / Mayúsculas+Tab saltan a la casilla libre siguiente / anterior. K, Retroceso o Escape salen. Las columnas y filas son las mismas que al colocar un edificio.

@@ -5,7 +5,7 @@ avec votre lecteur d'écran, vous permet d'utiliser tout le jeu au clavier et tr
 bataille en sons : les ennemis, vos boules, les tirs ennemis, les cristaux d'EXP et les objets spéciaux
 ont chacun leur son, qui vient du côté où ils se trouvent par rapport à vous.
 
-Version 0.6.2, pour la version 1.308 du jeu, DLC Baboulone émergée compris. Le mod parle **toutes les
+Version 0.6.3, pour la version 1.308 du jeu, DLC Baboulone émergée compris. Le mod parle **toutes les
 langues proposées par le jeu** et suit la langue choisie dans le jeu.
 
 <!-- LANGS -->
@@ -132,6 +132,7 @@ Fermer. L'ordre ne dépend jamais de l'endroit où les éléments sont dessinés
   construit, R fait pivoter, Début va à un emplacement libre, Retour arrière annule.
 - **Récolte** : elle commence en visant un bâtiment. Entrée lance les ouvriers, Tab vise un autre
   bâtiment, flèche gauche / flèche droite tournent la visée, maintenez Espace pour accélérer, Échap quitte.
+- **Chantiers** : les bâtiments en chantier ou en amélioration font aussi partie de la liste Tab de la récolte. Chaque ouvrier qui rebondit sur l'un d'eux le construit ; le mod annonce quand il est terminé. Entrée sur l'un d'eux dans la base lance la récolte en le visant.
 - **Extension** : Tab choisit une parcelle, Entrée l'achète.
 - **Disposition** : Tab choisit un bâtiment, Entrée le soulève, les flèches le déplacent, Entrée le pose.
 - **Explorer** (K) : les flèches avancent d'une case et disent ce qu'il y a : libre (et combien de cases libres suivent vers la droite et vers le bas), un bâtiment avec sa taille, ou un terrain non acheté. Tab / Maj+Tab sautent à la case libre suivante / précédente. K, Retour arrière ou Échap quittent. Les colonnes et rangées sont les mêmes que pour placer un bâtiment.

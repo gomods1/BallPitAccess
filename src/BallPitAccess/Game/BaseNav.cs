@@ -313,6 +313,8 @@ namespace BallPitAccess.Game
                     parts.Add(Loc.Get(now ? "bld_harvest_enter" : "bld_harvest"));
                     if (now) details.Add(Loc.Get("bld_open_hint"));
                 }
+                else if (!rearranging && Harvest.UnderConstruction(b))
+                    parts.Add(Loc.Get(HarvestOpen() ? "bld_build_enter" : "bld_build_harvest"));
                 string held = Names.Cost(b.HeldResources);
                 if (held.Length > 0) parts.Add(Loc.F("bld_holds", held));
                 if (b.HasWorker()) parts.Add(Loc.F("bld_worker", Names.Char(b.GetWorker())));
@@ -348,8 +350,8 @@ namespace BallPitAccess.Game
         }
 
         /// <summary>
-        /// Enter on a building that is ready to harvest: press the side bar's harvest button (the game's own
-        /// way in) and tell the harvest aim to start on this building.
+        /// Enter on a building that is ready to harvest or under construction: press the side bar's harvest
+        /// button (the game's own way in) and tell the harvest aim to start on this building.
         /// </summary>
         private static bool StartHarvest()
         {
@@ -357,7 +359,7 @@ namespace BallPitAccess.Game
             if (b == null) return false;
             try
             {
-                if (!b.CanHarvest() || !HarvestOpen()) return false;
+                if ((!b.CanHarvest() && !Harvest.UnderConstruction(b)) || !HarvestOpen()) return false;
                 Harvest.Prefer(b.Pointer);
                 var es = UnityEngine.EventSystems.EventSystem.current;
                 Navigator.Click(BaseUI.I.BtnWorkers.Btn);
@@ -486,6 +488,10 @@ namespace BallPitAccess.Game
                     if (!ms.HasAnythingToHarvest()) parts.Add(Loc.Get("harvest_none"));
                     else if (bm.IsBuildingAvailableToHarvest() && !ms.DidHarvestToday) parts.Add(Loc.Get("harvest_ready"));
                     else parts.Add(Loc.F("harvest_wait", Mathf.RoundToInt(bm.GetHarvestRefreshProgress() * 100f)));
+                    int building = 0;
+                    if (bm.BuildingsById != null)
+                        foreach (var kv in bm.BuildingsById) if (Harvest.UnderConstruction(kv.Value)) building++;
+                    if (building > 0) parts.Add(Loc.F("construct_n", building));
                 }
                 var ui = BaseUI.I;
                 if (ui != null) { string clock = Names.Shown(ui.TxtHarvestClock); if (clock.Length > 0) parts.Add(clock); }

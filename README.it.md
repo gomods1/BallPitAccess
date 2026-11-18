@@ -5,7 +5,7 @@ tramite il tuo screen reader, ti permette di usare tutto il gioco con la tastier
 battaglia in suono: i nemici, le tue palle, i colpi nemici, i cristalli di PX e gli oggetti speciali hanno
 ciascuno il proprio suono, che arriva dal loro lato rispetto a te.
 
-Versione 0.6.2, per la versione 1.308 del gioco, incluso il DLC Pallilonia Risorta (Risen Ballbylon). La
+Versione 0.6.3, per la versione 1.308 del gioco, incluso il DLC Pallilonia Risorta (Risen Ballbylon). La
 mod parla **tutte le lingue offerte dal gioco** e segue l'impostazione della lingua del gioco.
 
 <!-- LANGS -->
@@ -135,6 +135,7 @@ Chiudi. L'ordine non dipende mai da dove le cose sono disegnate sullo schermo.
   R ruota, Home salta a un posto libero, Backspace annulla.
 - **Raccolta**: parte mirata su un edificio. Invio lancia i lavoratori, Tab mira a un altro edificio,
   freccia sinistra / destra ruotano la mira, tieni premuta la Barra spaziatrice per accelerare, Esc esce.
+- **Costruzione**: gli edifici in costruzione o in potenziamento sono anche nella lista Tab della raccolta. Ogni lavoratore che ci rimbalza sopra li costruisce; la mod avvisa quando sono completati. Invio su uno di essi nella base avvia la raccolta mirata su di esso.
 - **Espansione**: Tab sceglie un lotto, Invio lo compra.
 - **Riposizionamento**: Tab sceglie un edificio, Invio lo solleva, le frecce lo spostano, Invio lo posa.
 - **Esplora** (K): le frecce avanzano di una casella e dicono cosa c'è: libera (e quante caselle libere seguono a destra e in basso), un edificio con la sua dimensione, o terreno non acquistato. Tab / Maiusc+Tab saltano alla casella libera successiva / precedente. K, Backspace o Esc escono. Colonne e righe sono le stesse usate per piazzare un edificio.

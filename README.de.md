@@ -5,7 +5,7 @@ Ein Mod, der **BALL x PIT** (Kenny Sun / Devolver Digital) ohne Sehen spielbar m
 Schlachtfeld in Klang: Gegner, deine Bälle, gegnerische Schüsse, EP-Juwelen und besondere Gegenstände haben
 jeweils ihr eigenes Geräusch, das von ihrer Seite aus zu dir kommt.
 
-Version 0.6.2, für die Spielversion 1.308, einschließlich des DLC Aufgestiegenes Ballbylon (Risen Ballbylon).
+Version 0.6.3, für die Spielversion 1.308, einschließlich des DLC Aufgestiegenes Ballbylon (Risen Ballbylon).
 Der Mod spricht **jede Sprache, die das Spiel anbietet**, und folgt der Spracheinstellung des Spiels.
 
 <!-- LANGS -->
@@ -134,6 +134,7 @@ Bildschirm gezeichnet sind.
 - **Ernte**: Sie beginnt mit Ziel auf ein Gebäude. Eingabe schickt die Arbeiter los, Tab zielt auf ein
   anderes Gebäude, Pfeil nach links / rechts drehen das Ziel, Leertaste halten beschleunigt, Esc verlässt den
   Modus.
+- **Bau**: Gebäude im Bau oder in der Aufwertung stehen auch in der Tab-Liste der Ernte. Jeder Arbeiter, der von einem abprallt, baut daran; die Mod sagt, wenn es fertig ist. Eingabe auf einem davon in der Basis startet die Ernte mit Ziel darauf.
 - **Erweitern**: Tab wählt ein Grundstück, Eingabe kauft es.
 - **Neu anordnen**: Tab wählt ein Gebäude, Eingabe hebt es auf, die Pfeiltasten bewegen es, Eingabe setzt es
   ab.
