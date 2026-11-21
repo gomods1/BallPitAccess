@@ -5,7 +5,7 @@ menüleri ekran okuyucun aracılığıyla seslendirir, oyunun tamamını klavyey
 alanını sese dönüştürür: düşmanların, toplarının, düşman atışlarının, TP kristallerinin ve özel eşyaların
 her birinin kendi sesi vardır ve bu ses, senin hangi tarafındaysa oradan gelir.
 
-Sürüm 0.6.4, oyunun 1.308 sürümü için, Yükselen Babil'in Sekme Bahçeleri (Risen Ballbylon) DLC'si dahil.
+Sürüm 0.7.0, oyunun 1.308 sürümü için, Yükselen Babil'in Sekme Bahçeleri (Risen Ballbylon) DLC'si dahil.
 Mod **oyunun sunduğu tüm dilleri** konuşur ve oyunun dil ayarını izler.
 
 <!-- LANGS -->
@@ -31,6 +31,7 @@ Mod **oyunun sunduğu tüm dilleri** konuşur ve oyunun dil ayarını izler.
 - [Yardımlar](#assists)
 - [Mod ayarları (F4)](#mod-settings-f4)
 - [Tuşları değiştirme](#changing-keys)
+- [Kumanda](#controller)
 - [İlk tur için ipuçları](#tips-for-a-first-run)
 - [Bilinen sınırlamalar](#known-limits)
 - [Sorun bildirme](#reporting-a-problem)
@@ -266,6 +267,7 @@ Yukarı ok / Aşağı ok gezinir, Sol ok / Sağ ok veya Enter değiştirir, Esc 
 - Eşya sesleri: kapalı, yalnızca özel eşyalar, tümü
 - Can sesleri, nişan yardımı tıkı (açık / kapalı)
 - Odaklanınca geliştirme açıklamalarını oku
+- Kumanda
 - Tuşlar (Enter açar): bkz. [Tuşları değiştirme](#changing-keys)
 - Ses rehberi (Enter açar)
 - Hata ayıklama kaydı
@@ -278,6 +280,23 @@ Yukarı ok / Aşağı ok gezinir, Sol ok / Sağ ok veya Enter değiştirir, Esc 
 son satır ise hepsini sıfırlar. Yeni tuş zaten başka bir mod eylemine aitse ikisi yer değiştirir ve mod
 diğerinin nereye gittiğini söyler. Menülerin veya oyunun ihtiyaç duyduğu tuşlar (oklar, Enter, Tab, Esc,
 Backspace, Boşluk, W A S D F E R X) alınamaz. F1 yardımı, tuşların şu anki haliyle biter.
+
+## Kumanda {#controller}
+
+- Xbox düğmeleri; PlayStation veya Switch kumandası, oyun için Steam Input açıkken çalışır
+- Savaş dışında yön tuşları veya sol analog oklar gibi hareket eder, A Enter'dır, B geri gider
+- X ve Y ilk ve son öğeye atlar; bina yerleştirirken X sığdığı bir yer bulur, Y onu döndürür
+- RB ve LB Tab ve Shift Tab'dır, RT ve LT ekranın sekmelerini değiştirir
+- Start oyunun duraklatmasıdır
+- Savaşta analoglar, tetikler ve düğmeler oyundadır
+- Yön yukarı düşmanları söyler, aşağı sağlığını, sol durumlarını, sağ ilerlemeni
+- Yakalamak için sol analoğa basılı tut, Shift gibi
+- Sağ analoğa dokunmazsan nişan yardımı senin yerine nişan alır; kendin nişan almak için onu hareket ettir
+- Daha fazlası için View'ı basılı tut: A yardım, B mod ayarları, X ekranı okur, Y tekrarlar, Start nişan modunu değiştirir
+- View ile LB ve RB gözden geçirme listesinin daha eski ve daha yeni satırlarını okur, View ile analog tıklaması ayrıntılar ve olaylar arasında geçiş yapar
+- Savaşta View ile yön tuşları: yukarı tehlikeler, aşağı ekipman, sol eşyalar, sağ son ses; View ile LT ve RT oyunu yavaşlatır ve hızlandırır
+- Üste View ile yön tuşları: yukarı hasat, aşağı kaynaklar, sol keşif modu
+- Menülerde View ile LT ve RT Page Up ve Page Down'dır
 
 ## İlk tur için ipuçları {#tips-for-a-first-run}
 

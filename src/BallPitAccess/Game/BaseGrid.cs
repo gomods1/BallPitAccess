@@ -69,6 +69,15 @@ namespace BallPitAccess.Game
         internal static Vector2Int CellOf(Vector3 world) =>
             new Vector2Int(Mathf.RoundToInt((world.x - _origin.x) / _dx), Mathf.RoundToInt((world.y - _origin.y) / _dy));
 
+        /// <summary>
+        /// The tile of a placement hover point. A building with an even width or height snaps to the line between
+        /// two tiles, so its hover point sits on a half tile (20.5); RoundToInt rounds halves to the even number, and
+        /// moving one tile at a time read 13, 15, 15, 17 (a player: "I can only move two rows or columns at a
+        /// time"). A half goes to the lower tile, which is the anchor PreviewTopLeft expects.
+        /// </summary>
+        internal static Vector2Int HoverCell(Vector3 world) =>
+            new Vector2Int(Mathf.FloorToInt((world.x - _origin.x) / _dx + 0.49f), Mathf.FloorToInt((world.y - _origin.y) / _dy + 0.49f));
+
         internal static bool Inside(int x, int y) => x >= MinX && x <= MaxX && y >= MinY && y <= MaxY;
 
         /// <summary>The grid y that is one row further down the screen.</summary>

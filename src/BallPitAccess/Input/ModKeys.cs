@@ -300,7 +300,8 @@ namespace BallPitAccess.Input
         {
             string here = Battle.InBattle ? "help_battle" : BaseNav.InBase ? "help_base" : "help_menu";
             var order = new List<string> { here };
-            foreach (var p in new[] { "help_battle", "help_sounds", "help_base", "help_menu", "help_common" })
+            if (Pad.Connected) order.Add("help_pad");      // a controller in hand: its buttons come right after
+            foreach (var p in new[] { "help_battle", "help_sounds", "help_base", "help_menu", "help_common", "help_pad" })
                 if (!order.Contains(p)) order.Add(p);
             var lines = new List<string>();
             var sections = new List<int>();
@@ -356,6 +357,7 @@ namespace BallPitAccess.Input
                     Loc.F("set_health", OnOff(Config.HealthCues)),
                     Loc.F("set_aimcues", OnOff(Config.AimCues)),
                     Loc.F("set_descriptions", OnOff(Config.ReadDescriptions)),
+                    Loc.F("set_pad", OnOff(Config.Pad)),
                     Loc.Get("set_keys"),
                     Loc.Get("set_sounds"),
                     Loc.F("set_debug", OnOff(Config.Debug)),
@@ -386,10 +388,11 @@ namespace BallPitAccess.Input
                         case 9: Config.HealthCues = !Config.HealthCues; break;
                         case 10: Config.AimCues = !Config.AimCues; break;
                         case 11: Config.ReadDescriptions = !Config.ReadDescriptions; break;
-                        case 12: if (dir == 0) OpenKeys(); break;
-                        case 13: if (dir == 0) OpenSounds(); break;
-                        case 14: Config.Debug = !Config.Debug; break;
-                        case 15: Game.Telemetry.Toggle(); break;
+                        case 12: Config.Pad = !Config.Pad; break;
+                        case 13: if (dir == 0) OpenKeys(); break;
+                        case 14: if (dir == 0) OpenSounds(); break;
+                        case 15: Config.Debug = !Config.Debug; break;
+                        case 16: Game.Telemetry.Toggle(); break;
                     }
                 },
             };

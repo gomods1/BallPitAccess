@@ -5,7 +5,7 @@ przez twój czytnik ekranu, pozwala obsłużyć całą grę z klawiatury i zamie
 twoje kule, wrogie pociski, kryształy PD i przedmioty specjalne mają własne dźwięki, dochodzące z tej strony,
 po której się znajdują.
 
-Wersja 0.6.4, dla wersji gry 1.308, razem z DLC Wyniesione Kulopolis (Risen Ballbylon). Mod mówi **w każdym
+Wersja 0.7.0, dla wersji gry 1.308, razem z DLC Wyniesione Kulopolis (Risen Ballbylon). Mod mówi **w każdym
 języku, który oferuje gra**, i stosuje się do ustawienia języka w grze.
 
 <!-- LANGS -->
@@ -31,6 +31,7 @@ języku, który oferuje gra**, i stosuje się do ustawienia języka w grze.
 - [Pomoce](#assists)
 - [Ustawienia moda (F4)](#mod-settings-f4)
 - [Zmiana klawiszy](#changing-keys)
+- [Kontroler](#controller)
 - [Wskazówki na pierwszą rozgrywkę](#tips-for-a-first-run)
 - [Znane ograniczenia](#known-limits)
 - [Zgłaszanie problemu](#reporting-a-problem)
@@ -268,6 +269,7 @@ są zapisywane.
 - Dźwięki przedmiotów: wyłączone, tylko przedmioty specjalne, wszystkie
 - Dźwięki zdrowia, kliknięcie pomocy w celowaniu (wł. / wył.)
 - Czytanie opisów ulepszeń po zaznaczeniu
+- Kontroler
 - Klawisze (Enter otwiera): zobacz [Zmiana klawiszy](#changing-keys)
 - Przewodnik po dźwiękach (Enter otwiera)
 - Dziennik debugowania
@@ -281,6 +283,23 @@ domyślny, a ostatnia pozycja przywraca wszystkie. Jeśli nowy klawisz należy j
 się zamieniają, a mod mówi, dokąd trafiła ta druga. Klawiszy potrzebnych menu lub grze (strzałki, Enter,
 Tab, Escape, Backspace, Spacja, W A S D F E R X) nie można zająć. Pomoc F1 kończy się klawiszami w obecnym
 ustawieniu.
+
+## Kontroler {#controller}
+
+- Przyciski Xbox; kontroler PlayStation lub Switch działa z włączonym dla gry Steam Input
+- Poza walką krzyżak lub lewa gałka poruszają jak strzałki, A to Enter, a B wraca
+- X i Y skaczą do pierwszej i ostatniej pozycji; przy stawianiu budowli X szuka miejsca, gdzie się mieści, a Y ją obraca
+- RB i LB to Tab i Shift Tab, RT i LT zmieniają karty ekranu
+- Start to pauza gry
+- W walce gra ma gałki, spusty i przyciski
+- Krzyżak w górę podaje wrogów, w dół twoje zdrowie, w lewo twoje stany, w prawo twój postęp
+- Przytrzymaj wciśniętą lewą gałkę, żeby łapać, jak Shift
+- Jeśli nie ruszasz prawej gałki, asystent celowania celuje za ciebie; porusz nią, żeby celować samemu
+- Przytrzymaj View po więcej: A pomoc, B ustawienia moda, X czyta ekran, Y powtarza, Start zmienia tryb celowania
+- View z LB i RB czyta starsze i nowsze wiersze listy przeglądu, View z kliknięciem gałki przełącza między szczegółami i zdarzeniami
+- W walce View z krzyżakiem: w górę zagrożenia, w dół ekwipunek, w lewo przedmioty, w prawo ostatni dźwięk; View z LT i RT spowalnia i przyspiesza grę
+- W bazie View z krzyżakiem: w górę zbiory, w dół zasoby, w lewo tryb zwiedzania
+- W menu View z LT i RT to Page Up i Page Down
 
 ## Wskazówki na pierwszą rozgrywkę {#tips-for-a-first-run}
 

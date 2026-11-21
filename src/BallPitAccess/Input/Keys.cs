@@ -85,7 +85,7 @@ namespace BallPitAccess.Input
         }
 
         /// <summary>Live state, read now.</summary>
-        internal static bool Down(int vk) => vk > 0 && ((GetAsyncKeyState(vk) & 0x8000) != 0 || HeldByDev(vk));
+        internal static bool Down(int vk) => vk > 0 && ((GetAsyncKeyState(vk) & 0x8000) != 0 || HeldByDev(vk) || Pad.HoldsKey(vk));
 
         internal static bool Ctrl => Down(VK_CONTROL);
         internal static bool Shift => Down(VK_SHIFT);
@@ -98,12 +98,13 @@ namespace BallPitAccess.Input
         internal static void Update()
         {
             Consumed = false;
+            Pad.Update();
             bool focus = GameHasFocus();
             _held = _held == null && Injected.Count > 0 ? Injected.Dequeue() : null;
             for (int vk = 1; vk < 256; vk++)
             {
                 Prev[vk] = Cur[vk];
-                Cur[vk] = focus && ((GetAsyncKeyState(vk) & 0x8000) != 0 || HeldByDev(vk));
+                Cur[vk] = focus && ((GetAsyncKeyState(vk) & 0x8000) != 0 || HeldByDev(vk) || Pad.HoldsKey(vk));
             }
         }
 

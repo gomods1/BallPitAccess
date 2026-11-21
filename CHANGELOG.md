@@ -3,6 +3,27 @@
 Player-facing changes to BALL x PIT Access, newest first. The release notes on GitHub are taken from the
 section of each version.
 
+## 0.7.0
+
+From two players' reports: rearranging seemed to move buildings two rows or columns at a time, and a
+request for controller support.
+
+* **Moving a building says the right column and row**: for buildings 2 tiles wide or tall (most of them), every
+  other arrow press said a column two away and the next one said the same column again, although the building
+  moved one tile each time. Rearrange and building a new one both had it. The position now changes by one with
+  each press, and matches the tiles the building takes once placed.
+* **Placing starts on your land**: the game puts a new building where the mouse pointer is, which was often
+  off the land ("column 26, row 15, blocked"). When it is, the mod moves it to the middle of the land.
+* **Controller support** (Xbox buttons; PlayStation and Switch controllers with Steam Input turned on). Outside
+  a battle the D-pad or left stick moves like the arrows, A is Enter, B goes back, LB and RB are Shift Tab and Tab,
+  LT and RT change tabs, X and Y go to the first and last item (while placing a building X finds a spot and Y
+  rotates it). In a battle the game keeps the sticks, triggers and buttons; the D-pad says enemies, health,
+  status and progress, holding the left stick in catches, and the aim assist aims while the right stick is left
+  alone. Hold View for help, settings, reading the screen, the review lists, game speed and more. The F1 help and
+  the README have the whole list. F4 → Controller turns it off. Controller support is new and has not yet
+  been played with a controller in hand: please report anything that acts twice, does nothing, or fights
+  the game (with `UserData\BallPitAccess\speech.log` and `MelonLoader\Latest.log`).
+
 ## 0.6.4
 
 From a player's report: workers never built a Haunted House, a frozen hero with no way to tell why, and a

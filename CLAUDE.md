@@ -66,7 +66,10 @@ Blind accessibility mod for **BALL x PIT** (Kenny Sun / Devolver), following
     `Sounds/`, made by `tools/make_cues.py`; `UserData/BallPitAccess/sounds/*.wav` overrides; see CUES.md).
     One physical family per cue category: never make two categories out of the same kind of blip.
   - `Input/`: `Keys` (GetAsyncKeyState, only while the game window is in front; `Name(vk)` = Windows key
-    name), `Bindings` (every mod hotkey is remappable from F4 → Keys: read keys as `Bindings.Pressed("id")`,
+    name), `Pad` (XInput controller → held virtual keys that `Keys` merges in, so every handler works
+    unchanged; menu mode switches the game's joystick `ActionElementMap`s off except Start and keeps the game in
+    keyboard/mouse mode; battle mode leaves the game the pad except D-pad, View, L3; View = chord modifier;
+    dev `pad a view+a up`, `paddump`), `Bindings` (every mod hotkey is remappable from F4 → Keys: read keys as `Bindings.Pressed("id")`,
     never a hard-coded letter or F-key; a new key = a new `Add` + `key_<id>` string), `ModKeys` (F-keys,
     Ctrl+arrows, HUD letters, battle arrows = aim, help / settings / sound guide lists; mutes Rewired
     keyboard maps while a mod list is open).
@@ -190,6 +193,10 @@ No game file was replaced.
   are left with their sidebar toggles (`BaseUI.OnExpandClicked` / `OnRearrangeClicked`).
 - `CoolButton.OnSubmit` is gated by input state (`InputMgr._isInputAConsumed` and a static flag): after a
   Ctrl+Tab category change the first build item ignored it. Build items are pressed with `Navigator.Click`.
+- **A 2-wide or 2-tall building's hover point is on a half tile** (it snaps to the line between two tiles):
+  `BaseGrid.HoverCell` floors halves; `RoundToInt` (half to even) made the column jump by two every other step.
+- Game controller defaults (dumped): RT shoot, LB/RB speed (rotate in the base), Y autofire, X level up,
+  Start pause, left stick move, D-pad zoom (base). A, B, View, L3 have no battle action.
 - `BaseGridMgr.FindEmptySpots` returns single free tiles; `CanBuildPlacePreview` tests the preview's colliders
   where it stands (a few frames after `SetHover`), so multi-tile fit is found by trying spots in turn.
 - **The placement preview is made in `BaseGridMgr.SetHover`** (only the game's mouse handler calls it each

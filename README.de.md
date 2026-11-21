@@ -5,7 +5,7 @@ Ein Mod, der **BALL x PIT** (Kenny Sun / Devolver Digital) ohne Sehen spielbar m
 Schlachtfeld in Klang: Gegner, deine Bälle, gegnerische Schüsse, EP-Juwelen und besondere Gegenstände haben
 jeweils ihr eigenes Geräusch, das von ihrer Seite aus zu dir kommt.
 
-Version 0.6.4, für die Spielversion 1.308, einschließlich des DLC Aufgestiegenes Ballbylon (Risen Ballbylon).
+Version 0.7.0, für die Spielversion 1.308, einschließlich des DLC Aufgestiegenes Ballbylon (Risen Ballbylon).
 Der Mod spricht **jede Sprache, die das Spiel anbietet**, und folgt der Spracheinstellung des Spiels.
 
 <!-- LANGS -->
@@ -32,6 +32,7 @@ Der Mod spricht **jede Sprache, die das Spiel anbietet**, und folgt der Sprachei
 - [Hilfen](#assists)
 - [Mod-Einstellungen (F4)](#mod-settings-f4)
 - [Die Tasten ändern](#changing-keys)
+- [Controller](#controller)
 - [Tipps für den ersten Durchlauf](#tips-for-a-first-run)
 - [Bekannte Einschränkungen](#known-limits)
 - [Ein Problem melden](#reporting-a-problem)
@@ -274,6 +275,7 @@ Einstellungen werden gespeichert.
 - Geräusche für Gegenstände: aus, nur besondere Gegenstände, alle
 - Lebensgeräusche, Klick der Zielhilfe (an / aus)
 - Aufwertungsbeschreibungen beim Fokus vorlesen
+- Controller
 - Tasten (Eingabe öffnet): siehe [Die Tasten ändern](#changing-keys)
 - Klangführer (Eingabe öffnet)
 - Debug-Protokoll
@@ -287,6 +289,23 @@ wieder her, und die letzte Zeile setzt alle zurück. Gehört die neue Taste scho
 Mod-Aktion, tauschen die beiden, und der Mod sagt, wohin die andere gewandert ist. Tasten, die die Menüs
 oder das Spiel brauchen (Pfeiltasten, Eingabe, Tab, Esc, Rücktaste, Leertaste, W A S D F E R X), können
 nicht belegt werden. Die F1-Hilfe endet mit den Tasten, wie sie gerade belegt sind.
+
+## Controller {#controller}
+
+- Xbox-Tasten; ein PlayStation- oder Switch-Controller funktioniert, wenn Steam Input für das Spiel eingeschaltet ist
+- Außerhalb eines Kampfes bewegen Steuerkreuz oder linker Stick wie die Pfeiltasten, A ist Eingabe und B geht zurück
+- X und Y springen zum ersten und letzten Eintrag; beim Platzieren eines Gebäudes sucht X eine Stelle, an der es passt, und Y dreht es
+- RB und LB sind Tab und Umschalt Tab, RT und LT wechseln die Reiter des Bildschirms
+- Start ist die Pause des Spiels
+- Im Kampf hat das Spiel die Sticks, die Trigger und die Tasten
+- Steuerkreuz oben sagt die Gegner, unten deine Gesundheit, links deinen Status, rechts deinen Fortschritt
+- Halte den linken Stick gedrückt, um zu fangen, wie Umschalt
+- Lässt du den rechten Stick los, zielt die Zielhilfe für dich; bewege ihn, um selbst zu zielen
+- Halte View für mehr: A Hilfe, B Mod-Einstellungen, X liest den Bildschirm, Y wiederholt, Start wechselt den Zielmodus
+- View mit LB und RB liest ältere und neuere Zeilen der Rückschau, View mit einem Stick-Klick wechselt zwischen Details und Ereignissen
+- Im Kampf View mit dem Steuerkreuz: oben Gefahren, unten Ausrüstung, links Gegenstände, rechts der letzte Ton; View mit LT und RT macht das Spiel langsamer und schneller
+- In der Basis View mit dem Steuerkreuz: oben Ernte, unten Ressourcen, links Erkundungsmodus
+- In Menüs ist View mit LT und RT Bild auf und Bild ab
 
 ## Tipps für den ersten Durchlauf {#tips-for-a-first-run}
 

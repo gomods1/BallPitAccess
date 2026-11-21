@@ -5,7 +5,7 @@ menu through your screen reader, lets you use the whole game with the keyboard, 
 into sound: enemies, your balls, enemy shots, XP crystals and special items all have their own sounds,
 coming from their side of you.
 
-Version 0.6.4, for game version 1.308, including the Risen Ballbylon DLC. The mod speaks **every language
+Version 0.7.0, for game version 1.308, including the Risen Ballbylon DLC. The mod speaks **every language
 the game offers** and follows the game's language setting.
 
 <!-- LANGS -->
@@ -31,6 +31,7 @@ the game offers** and follows the game's language setting.
 - [Assists](#assists)
 - [Mod settings (F4)](#mod-settings-f4)
 - [Changing the keys](#changing-keys)
+- [Controller](#controller)
 - [Tips for a first run](#tips-for-a-first-run)
 - [Known limits](#known-limits)
 - [Reporting a problem](#reporting-a-problem)
@@ -264,6 +265,7 @@ Up / Down move, Left / Right or Enter change, Escape closes. Settings are saved.
 - Pickup sounds: off, special items only, all
 - Health sounds, aim assist click (on / off)
 - Read upgrade descriptions on focus
+- Controller
 - Keys (Enter opens): see [Changing the keys](#changing-keys)
 - Sound guide (Enter opens)
 - Debug logging
@@ -276,6 +278,23 @@ new key (Escape cancels), **Delete** puts back the default key, and the last lin
 If the new key already belongs to another mod action, the two swap and the mod says where the other one
 went. Keys the menus or the game need (arrows, Enter, Tab, Escape, Backspace, Space, W A S D F E R X)
 cannot be taken. The F1 help ends with the keys as they are set now.
+
+## Controller {#controller}
+
+- Xbox buttons; a PlayStation or Switch controller works with Steam Input turned on for the game
+- Outside a battle the D-pad or the left stick moves like the arrows, A is Enter and B goes back
+- X and Y jump to the first and last item; while placing a building X finds a spot where it fits and Y rotates it
+- RB and LB are Tab and Shift Tab, RT and LT change the screen's tabs
+- Start is the game's pause
+- In a battle the game has the sticks, the triggers and the buttons
+- D-pad up says the enemies, down your health, left your status, right your progress
+- Hold the left stick in to catch, like Shift
+- Leave the right stick alone and the aim assist aims for you; move it to aim yourself
+- Hold View for more: A help, B mod settings, X reads the screen, Y repeats, Start changes the aim mode
+- View with LB and RB reads older and newer lines of the review list, View with a stick click switches between details and events
+- In a battle View with the D-pad: up hazards, down equipment, left pickups, right the last sound; View with LT and RT slows down and speeds up the game
+- In the base View with the D-pad: up harvest, down resources, left explore mode
+- In menus View with LT and RT is Page Up and Page Down
 
 ## Tips for a first run
 

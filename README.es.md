@@ -5,7 +5,7 @@ lector de pantalla, te deja usar todo el juego con el teclado y convierte el cam
 los enemigos, tus bolas, los disparos enemigos, los cristales de experiencia y los objetos especiales
 tienen cada uno su sonido, que viene de su lado respecto a ti.
 
-Versión 0.6.4, para la versión 1.308 del juego, incluido el DLC Bolabilonia Resurgida. El mod habla
+Versión 0.7.0, para la versión 1.308 del juego, incluido el DLC Bolabilonia Resurgida. El mod habla
 **todos los idiomas del juego** y sigue el idioma que tengas puesto en él.
 
 <!-- LANGS -->
@@ -32,6 +32,7 @@ Versión 0.6.4, para la versión 1.308 del juego, incluido el DLC Bolabilonia Re
 - [Ayudas](#ayudas)
 - [Ajustes del mod (F4)](#ajustes-del-mod-f4)
 - [Cambiar las teclas](#changing-keys)
+- [Mando](#controller)
 - [Consejos para la primera partida](#consejos-para-la-primera-partida)
 - [Límites conocidos](#límites-conocidos)
 - [Informar de un problema](#informar-de-un-problema)
@@ -268,6 +269,7 @@ guardan.
 - Sonidos de objetos: desactivados, solo objetos especiales, todos
 - Sonidos de salud, clic de la ayuda de apuntado (sí / no)
 - Leer la descripción de las mejoras al enfocarlas
+- Mando
 - Teclas (Intro las abre): mira [Cambiar las teclas](#changing-keys)
 - Guía de sonidos (Intro la abre)
 - Registro de depuración
@@ -281,6 +283,23 @@ guardan.
 el mod dice adónde fue la otra. Las teclas que necesitan los menús o el juego (flechas, Intro, Tab, Escape,
 Retroceso, Espacio, W A S D F E R X) no se pueden usar. La ayuda de F1 termina con las teclas tal como
 están ahora.
+
+## Mando {#controller}
+
+- Botones de Xbox; un mando de PlayStation o de Switch funciona con Steam Input activado para el juego
+- Fuera de una batalla la cruceta o el stick izquierdo se mueven como las flechas, A es Intro y B vuelve atrás
+- X e Y saltan al primer y al último elemento; al colocar un edificio X busca un sitio donde cabe e Y lo gira
+- RB y LB son Tab y Mayúsculas Tab, RT y LT cambian las pestañas de la pantalla
+- Start es la pausa del juego
+- En una batalla el juego tiene los sticks, los gatillos y los botones
+- Cruceta arriba dice los enemigos, abajo tu salud, izquierda tus estados, derecha tu progreso
+- Mantén pulsado el stick izquierdo para atrapar, como Mayúsculas
+- Si no tocas el stick derecho, la asistencia de puntería apunta por ti; muévelo para apuntar tú
+- Mantén View para más: A ayuda, B ajustes del mod, X lee la pantalla, Y repite, Start cambia el modo de puntería
+- View con LB y RB lee líneas más antiguas y más recientes de la lista de repaso, View con un clic de stick cambia entre detalles y eventos
+- En una batalla View con la cruceta: arriba peligros, abajo equipo, izquierda objetos, derecha el último sonido; View con LT y RT baja y sube la velocidad del juego
+- En la base View con la cruceta: arriba recolección, abajo recursos, izquierda modo explorar
+- En los menús View con LT y RT es Re Pág y Av Pág
 
 ## Consejos para la primera partida
 

@@ -9,7 +9,7 @@ namespace BallPitAccess.Core
     internal static class Config
     {
         private static MelonPreferences_Category _cat;
-        private static MelonPreferences_Entry<bool> _telemetry;
+        private static MelonPreferences_Entry<bool> _telemetry, _pad;
         private static MelonPreferences_Entry<bool> _cues, _debug, _dangerRadar, _ballCues, _wallCues, _hazardCues, _autoRead, _healthCues, _aimCues;
         private static MelonPreferences_Entry<float> _cueVolume;
         private static MelonPreferences_Entry<int> _aimMode, _pickupCues, _catchMode;
@@ -32,6 +32,7 @@ namespace BallPitAccess.Core
             _catchMode = _cat.CreateEntry("CatchMode", (int)Game.CatchAssist.Mode.Hold, "Catch assist: 0 off, 1 hold Shift, 2 automatic");
             _backend = _cat.CreateEntry("SpeechBackend", "Auto", "Prism backend name or Auto");
             _debug = _cat.CreateEntry("Debug", false, "Debug logging");
+            _pad = _cat.CreateEntry("Controller", true, "Controller support (XInput): the D-pad and buttons drive the mod");
             _telemetry = _cat.CreateEntry("Telemetry", false, "Record battles to UserData/BallPitAccess/telemetry.tsv (for tuning the cues)");
         }
 
@@ -49,6 +50,7 @@ namespace BallPitAccess.Core
         internal static int CatchMode { get => _catchMode?.Value ?? 1; set { _catchMode.Value = value; Save(); } }
         internal static string SpeechBackend => _backend?.Value ?? "Auto";
         internal static bool Telemetry { get => _telemetry?.Value ?? false; set { _telemetry.Value = value; Save(); } }
+        internal static bool Pad { get => _pad?.Value ?? true; set { _pad.Value = value; Save(); } }
         internal static bool Debug { get => _debug?.Value ?? false; set { _debug.Value = value; Save(); } }
 
         private static void Save()

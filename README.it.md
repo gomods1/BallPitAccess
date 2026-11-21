@@ -5,7 +5,7 @@ tramite il tuo screen reader, ti permette di usare tutto il gioco con la tastier
 battaglia in suono: i nemici, le tue palle, i colpi nemici, i cristalli di PX e gli oggetti speciali hanno
 ciascuno il proprio suono, che arriva dal loro lato rispetto a te.
 
-Versione 0.6.4, per la versione 1.308 del gioco, incluso il DLC Pallilonia Risorta (Risen Ballbylon). La
+Versione 0.7.0, per la versione 1.308 del gioco, incluso il DLC Pallilonia Risorta (Risen Ballbylon). La
 mod parla **tutte le lingue offerte dal gioco** e segue l'impostazione della lingua del gioco.
 
 <!-- LANGS -->
@@ -32,6 +32,7 @@ mod parla **tutte le lingue offerte dal gioco** e segue l'impostazione della lin
 - [Assistenze](#assists)
 - [Impostazioni della mod (F4)](#mod-settings-f4)
 - [Cambiare i tasti](#changing-keys)
+- [Controller](#controller)
 - [Consigli per la prima spedizione](#tips-for-a-first-run)
 - [Limiti noti](#known-limits)
 - [Segnalare un problema](#reporting-a-problem)
@@ -274,6 +275,7 @@ vengono salvate.
 - Suoni degli oggetti: disattivati, solo oggetti speciali, tutti
 - Suoni della salute, clic dell'assistenza alla mira (attivo / disattivo)
 - Lettura delle descrizioni dei potenziamenti al focus
+- Controller
 - Tasti (Invio li apre): vedi [Cambiare i tasti](#changing-keys)
 - Guida ai suoni (Invio la apre)
 - Registro di debug
@@ -287,6 +289,23 @@ li ripristina tutti. Se il nuovo tasto appartiene già a un'altra azione della m
 mod dice dove è finita l'altra. I tasti che servono ai menu o al gioco (frecce, Invio, Tab, Esc,
 Backspace, Barra spaziatrice, W A S D F E R X) non si possono prendere. L'aiuto di F1 finisce con i tasti
 come sono impostati ora.
+
+## Controller {#controller}
+
+- Pulsanti Xbox; un controller PlayStation o Switch funziona con Steam Input attivo per il gioco
+- Fuori dalla battaglia la croce direzionale o lo stick sinistro si muovono come le frecce, A è Invio e B torna indietro
+- X e Y saltano al primo e all'ultimo elemento; mentre posizioni un edificio X trova un posto dove entra e Y lo ruota
+- RB e LB sono Tab e Maiusc Tab, RT e LT cambiano le schede della schermata
+- Start è la pausa del gioco
+- In battaglia il gioco usa gli stick, i grilletti e i pulsanti
+- Croce su dice i nemici, giù la tua salute, sinistra i tuoi stati, destra i tuoi progressi
+- Tieni premuto lo stick sinistro per prendere, come Maiusc
+- Se lasci stare lo stick destro, l'assistenza alla mira mira per te; muovilo per mirare da solo
+- Tieni premuto View per altro: A aiuto, B impostazioni della mod, X legge la schermata, Y ripete, Start cambia la modalità di mira
+- View con LB e RB legge le righe più vecchie e più recenti della lista di riepilogo, View con un clic dello stick passa tra dettagli ed eventi
+- In battaglia View con la croce: su pericoli, giù equipaggiamento, sinistra oggetti, destra l'ultimo suono; View con LT e RT rallenta e accelera il gioco
+- Nella base View con la croce: su raccolto, giù risorse, sinistra modalità esplorazione
+- Nei menu View con LT e RT è Pagina su e Pagina giù
 
 ## Consigli per la prima spedizione {#tips-for-a-first-run}
 

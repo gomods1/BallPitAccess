@@ -82,11 +82,21 @@ namespace BallPitAccess.Game
             float now = Time.unscaledTime;
             if (!_loggedCalls && now > 30f && Battle.InBattle) { _loggedCalls = true; Log.Info("Aim postfix calls so far: " + _calls); }
             var mode = Current;
+            // A controller in the game's controller mode: the game reads no mouse, so the postfix never runs. While
+            // the right stick is left alone the assist sets the aim itself; moving the stick aims by hand.
+            bool push = DevForce || Input.Pad.PushAim;
+            if (push && Battle.Playing && mode == Mode.Fixed && Battle.InBattle)
+                try
+                {
+                    float r = _fixedDeg * Mathf.Deg2Rad;
+                    Player.I?.SetAimDir(BallMgr.ClampAimDir(new Vector2(Mathf.Cos(r), Mathf.Sin(r)), GameAimMode(), 0));
+                }
+                catch { }
             if (!Battle.InBattle || mode == Mode.Off || mode == Mode.Fixed) { _target = null; return; }
             // Dev (no mouse in a -batchmode game): push the assist's direction into the game's aim every frame.
             if (DevForce && Battle.Playing && DevDeg > 0f)
                 try { Player.I?.SetAimDir(new Vector2(Mathf.Cos(DevDeg * Mathf.Deg2Rad), Mathf.Sin(DevDeg * Mathf.Deg2Rad))); } catch { }
-            else if (DevForce && Battle.Playing && WantDir(out Vector2 fd))
+            else if (push && Battle.Playing && WantDir(out Vector2 fd) && !BackOrSides())
                 try { Player.I?.SetAimDir(BallMgr.ClampAimDir(fd, GameAimMode(), 0)); } catch { }
             bool valid = _target != null && _target.CurState != PieceState.kDead && _target.Obj != null && _target.Obj.IsActive;
             if (now < _nextPick && valid)
@@ -289,6 +299,13 @@ namespace BallPitAccess.Game
                 return hit.collider == null || hit.collider.Pointer == c.Pointer;
             }
             catch { return true; }
+        }
+
+        /// <summary>Characters that shoot backward or sideways keep their own aim (as in the postfix).</summary>
+        private static bool BackOrSides()
+        {
+            var am = GameAimMode();
+            return am == AimMode.kBack || am == AimMode.kSides;
         }
 
         /// <summary>Dev: the direction the assist wants now.</summary>

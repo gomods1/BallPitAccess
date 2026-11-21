@@ -5,7 +5,7 @@ pelo seu leitor de tela, permite usar o jogo inteiro pelo teclado e transforma o
 inimigos, suas esferas, disparos inimigos, cristais de EXP e itens especiais têm cada um o seu som, que
 vem do lado em que estão em relação a você.
 
-Versão 0.6.4, para a versão 1.308 do jogo, incluindo o DLC Bolalônia Elevada (Risen Ballbylon). O mod fala
+Versão 0.7.0, para a versão 1.308 do jogo, incluindo o DLC Bolalônia Elevada (Risen Ballbylon). O mod fala
 **todos os idiomas que o jogo oferece** e segue o idioma configurado no jogo.
 
 <!-- LANGS -->
@@ -32,6 +32,7 @@ Versão 0.6.4, para a versão 1.308 do jogo, incluindo o DLC Bolalônia Elevada 
 - [Assistências](#assists)
 - [Configurações do mod (F4)](#mod-settings-f4)
 - [Mudar as teclas](#changing-keys)
+- [Controle](#controller)
 - [Dicas para a primeira partida](#tips-for-a-first-run)
 - [Limitações conhecidas](#known-limits)
 - [Relatar um problema](#reporting-a-problem)
@@ -274,6 +275,7 @@ fecha. As configurações são salvas.
 - Sons de itens: desativados, só itens especiais, todos
 - Sons de vida, clique da assistência de mira (ativado / desativado)
 - Ler as descrições das melhorias ao focar
+- Controle
 - Teclas (Enter abre): veja [Mudar as teclas](#changing-keys)
 - Guia de sons (Enter abre)
 - Registro de depuração
@@ -287,6 +289,23 @@ a última linha restaura todas. Se a nova tecla já pertence a outra ação do m
 o mod diz para onde a outra foi. As teclas de que os menus ou o jogo precisam (setas, Enter, Tab, Esc,
 Backspace, Espaço, W A S D F E R X) não podem ser usadas. A ajuda do F1 termina com as teclas como estão
 agora.
+
+## Controle {#controller}
+
+- Botões do Xbox; um controle de PlayStation ou de Switch funciona com o Steam Input ativado para o jogo
+- Fora de uma batalha o direcional ou o analógico esquerdo movem como as setas, A é Enter e B volta
+- X e Y pulam para o primeiro e o último item; ao posicionar uma construção X procura um lugar onde ela cabe e Y a gira
+- RB e LB são Tab e Shift Tab, RT e LT trocam as abas da tela
+- Start é a pausa do jogo
+- Em uma batalha o jogo usa os analógicos, os gatilhos e os botões
+- Direcional para cima diz os inimigos, para baixo sua vida, para a esquerda seus estados, para a direita seu progresso
+- Segure o analógico esquerdo pressionado para pegar, como Shift
+- Se deixar o analógico direito parado, a assistência de mira mira por você; mova-o para mirar você mesmo
+- Segure View para mais: A ajuda, B configurações do mod, X lê a tela, Y repete, Start muda o modo de mira
+- View com LB e RB lê linhas mais antigas e mais novas da lista de revisão, View com um clique de analógico alterna entre detalhes e eventos
+- Em uma batalha View com o direcional: para cima perigos, para baixo equipamento, para a esquerda itens, para a direita o último som; View com LT e RT deixa o jogo mais lento e mais rápido
+- Na base View com o direcional: para cima colheita, para baixo recursos, para a esquerda modo explorar
+- Nos menus View com LT e RT é Page Up e Page Down
 
 ## Dicas para a primeira partida {#tips-for-a-first-run}
 

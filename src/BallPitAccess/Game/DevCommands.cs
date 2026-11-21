@@ -236,6 +236,7 @@ namespace BallPitAccess.Game
                         if (b.Obj != null)
                         {
                             sb.Append(" at ").Append(b.Obj.transform.position);
+                            try { BaseGrid.Refresh(); var tl = BaseGrid.TopLeftTiles(b); if (tl.HasValue) sb.Append(" tiles from col ").Append(BaseGrid.Col(tl.Value.x)).Append(" row ").Append(BaseGrid.Row(tl.Value.y)).Append(' ').Append(BaseGrid.SizeTiles(b)); } catch { }
                             try { var c = b.Obj.Col; if (c != null) sb.Append(" col ").Append(c.GetIl2CppType().Name).Append(" layer ").Append(c.gameObject.layer).Append(" enabled ").Append(c.enabled).Append(" bounds ").Append(c.bounds.min).Append('-').Append(c.bounds.max); } catch { }
                         }
                     }
@@ -269,6 +270,18 @@ namespace BallPitAccess.Game
                     }
                     return "queued " + n + " keys";
                 }
+                case "pad":
+                {
+                    // pad a view+a up lb: controller buttons, each one a frame down (Input.Pad.Btn names).
+                    int n = 0;
+                    foreach (var spec in arg.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
+                        if (Input.Pad.Inject(spec)) n++;
+                        else return "unknown button " + spec;
+                    return "queued " + n + " buttons";
+                }
+                case "paddump":
+                    Log.WriteFile("pad.txt", Input.Pad.Describe());
+                    return "pad.txt written";
                 case "cheatflag":
                 {
                     // cheatflag DisableLevelUp true: any bool / int field of GameCheatMgr.

@@ -82,9 +82,20 @@ namespace BallPitAccess.Game
                 bool active = Active;
                 if (active && !_wasActive)
                 {
-                    var hp = BaseGridMgr.I.GetHoverPos();
-                    _x = hp.x; _y = hp.y;
+                    var g0 = BaseGridMgr.I;
+                    var hp = g0.GetHoverPos();
                     BaseGrid.Refresh();
+                    // The game makes the preview where the mouse is, which for a player who never touches the mouse
+                    // is anywhere, often off the land ("column 26, row 15, blocked"): start in the middle of the land.
+                    if (!Rearranging && !BaseGrid.Inside(BaseGrid.HoverCell(hp).x, BaseGrid.HoverCell(hp).y))
+                    {
+                        var mid = BaseGrid.World((BaseGrid.MinX + BaseGrid.MaxX) / 2, (BaseGrid.MinY + BaseGrid.MaxY) / 2);
+                        Claim();
+                        g0.SetHover(mid.x, mid.y, true);
+                        Log.Info($"Placement: the preview started off the land at {hp}, moved to the middle {mid}");
+                        hp = g0.GetHoverPos();
+                    }
+                    _x = hp.x; _y = hp.y;
                     Log.Info($"Placement start at {hp}; borders L {BaseGridMgr.I.LeftBorderX} R {BaseGridMgr.I.RightBorderX} T {BaseGridMgr.I.TopBorderY} B {BaseGridMgr.I.BottomBorderY} tile {BaseGridMgr.kSpaceWidth} rearrange {Rearranging}; grid x {BaseGrid.MinX}..{BaseGrid.MaxX} y {BaseGrid.MinY}..{BaseGrid.MaxY}");
                     Speech.Event(What() + Loc.Get(Rearranging ? "rearrange_moving" : "place_start"));
                     // The preview animates in: its first legality reading is wrong, wait for it.
@@ -113,6 +124,7 @@ namespace BallPitAccess.Game
                 else if (Keys.Pressed(Keys.VK_HOME)) JumpToEmpty();
                 else if (Keys.Pressed(Keys.VK_RETURN)) { Keys.Consume(); Place(); }
                 else if (Keys.Pressed(Keys.VK_BACK)) { Keys.Consume(); _cancelPending = true; _releasedFrame = -1; }
+                else if (Input.Pad.RotatePressed) Rotate();
             }
             catch (Exception ex)
             {
@@ -241,10 +253,22 @@ namespace BallPitAccess.Game
             var p0 = g.GetPlacePreview() ?? g.GetPendingRearrangeBuilding();
             Vector2Int cell;
             // The preview's Inst keeps the spot it was made at; the hover point is its bottom-left tile.
-            cell = BaseGrid.CellOf(hp);
+            cell = BaseGrid.HoverCell(hp);
             try { if (p0 != null && p0.Inst != null) cell = BaseGrid.PreviewTopLeft(cell, p0.Inst.GetInfo().TileSize); } catch { }
             col = BaseGrid.Col(cell.x); row = BaseGrid.Row(cell.y);
-            if (Config.Debug) Log.Info($"Placement cell {cell} (hover cell {BaseGrid.CellOf(hp)}) -> col {col} row {row}");
+            if (Config.Debug)
+            {
+                string extra = "";
+                try
+                {
+                    var pv = g.GetPlacePreview(); var rb = g.GetPendingRearrangeBuilding();
+                    if (pv != null) extra += $" preview at {pv.transform.position} inst ({pv.Inst?.X},{pv.Inst?.Y})";
+                    if (rb != null) extra += $" pending at {rb.transform.position} inst ({rb.Inst?.X},{rb.Inst?.Y})";
+                    extra += $" state {BaseMgr.I?.CurState}";
+                }
+                catch (Exception ex) { extra = " (" + ex.Message + ")"; }
+                Log.Info($"Placement cell {cell} (hover cell {BaseGrid.HoverCell(hp)}, rounded {BaseGrid.CellOf(hp)}) -> col {col} row {row}{extra}");
+            }
             if (g.GetPlacePreview() == null)
             {
                 // Rearranging: the game only tells whether it fits when the building is dropped.
@@ -276,6 +300,20 @@ namespace BallPitAccess.Game
             // A building picked up in rearrange mode is moved, not built: say so once the game took it.
             if (moving) _checkDropAt = Time.unscaledTime + 0.4f;
             else Speech.Event(Loc.Get("placed"));
+        }
+
+        /// <summary>Y on a controller: the game's rotate (R on the keyboard), whose controller mapping the mod has off.</summary>
+        private static void Rotate()
+        {
+            var g = BaseGridMgr.I;
+            try
+            {
+                bool can = g.GetPlacePreview() != null && g.CanRotatePlacePreview();
+                Log.Info("Placement: controller rotate, can rotate " + can);
+                if (can) g.RotatePlacePreview(1);
+                else Audio.Cues.Play("wall", 0f, 0.5f);
+            }
+            catch (Exception ex) { Log.Warn("Rotate: " + ex.Message); }
         }
 
         private static int _lastRot = int.MinValue;

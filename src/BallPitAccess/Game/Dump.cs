@@ -25,6 +25,7 @@ namespace BallPitAccess.Game
                 try { neg = im.GetKeyboardBtnForAction(at, Pole.Negative).ToString(); } catch { neg = "?"; }
                 sb.AppendLine($"{at}: +{pos} -{neg}");
             }
+            try { sb.Append(Input.Pad.Describe()); } catch (Exception ex) { sb.AppendLine("pad: " + ex.Message); }
             Log.WriteFile("bindings.txt", sb.ToString());
             Log.Info("Bindings:\n" + sb);
         }

@@ -394,3 +394,21 @@ frozen hero with no way to tell why, and a boss stuck at 100 percent.
   kFastestest, Enter every 20 s for fuser screens (~2 min). `kSkipToEnd` breaks the level (wave 2080 of 118).
 - Not checked: other bosses' parts (Pyramid Tank, Yeti Queen, Moon, swarms: same `GetHealthPct` path);
   the Spanish table in game (the headless game ran in English); the knockback input lock by ear.
+
+### Session 11 (2026-11-21): rearrange two tiles at a time, controller support (verified in game, scripted)
+Two reports: "I can only move two rows or columns at a time" when rearranging, and "lack of controller support".
+- **Cause** (measured): a 2×2 building's hover point sits on a half tile (x 20.5 in grid units); `CellOf` used
+  `RoundToInt` (half to even), so columns read 13, 15, 15, 17 while the building moved one tile per press.
+  `BaseGrid.HoverCell` floors halves; checked against the real footprint (forest at 22.5 / 2.5 → column 15 row 9,
+  the chunk grid agrees) and by dropping a wheat field. New placement had the same bug.
+- Placement started where the mouse pointer was (often off the land): it now starts in the middle of the land.
+- **Controller** (`Input/Pad.cs`): XInput → held virtual keys. Verified with dev `pad` injections (no pad was on):
+  side bar, rearrange pick up / move / cancel, build menu LT/RT/LB/RB, explore (View+left), help / settings /
+  screen / resources chords, B closes mod lists, battle D-pad and View chords (all eight info keys, speed, aim
+  mode), help in battle switches to menu mode and back.
+- **Not verified (needs a real controller switched on)**: switching the game's joystick mappings off (menu
+  mode: all but Start; battle: D-pad, View, L3; View held: all buttons), the `OnLastActiveControllerChanged`
+  prefix and the forced keyboard/mouse mode in menus, right-stick aim and `Pad.PushAim` (assist aims through
+  `SetAimDir` while the right stick is idle), L3 hold = catch, auto-repeat on a held D-pad.
+  Wheat field and forest cannot rotate (`CanRotatePlacePreview` false): Y rotate untested on a rotatable one.
+- The Xbox Wireless Controller on this machine is paired over Bluetooth but was off: XInput saw no pad.

@@ -6,7 +6,7 @@ using BallPitAccess.UI;
 using MelonLoader;
 using UnityEngine;
 
-[assembly: MelonInfo(typeof(BallPitAccess.Main), "BALL x PIT Access", "0.6.4", "BALL x PIT Access")]
+[assembly: MelonInfo(typeof(BallPitAccess.Main), "BALL x PIT Access", "0.7.0", "BALL x PIT Access")]
 [assembly: MelonGame("Kenny Sun", "BALL x PIT")]
 
 namespace BallPitAccess
@@ -55,6 +55,7 @@ namespace BallPitAccess
                     AimAssist.TryPatch(HarmonyInstance);
                     BallPatches.TryPatch(HarmonyInstance);
                     Placement.TryPatch(HarmonyInstance);
+                    Input.Pad.TryPatch(HarmonyInstance);
                     Explore.TryPatch(HarmonyInstance);
                     Harvest.TryPatch(HarmonyInstance);
                     Hazards.TryPatch(HarmonyInstance);

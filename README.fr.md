@@ -5,7 +5,7 @@ avec votre lecteur d'écran, vous permet d'utiliser tout le jeu au clavier et tr
 bataille en sons : les ennemis, vos boules, les tirs ennemis, les cristaux d'EXP et les objets spéciaux
 ont chacun leur son, qui vient du côté où ils se trouvent par rapport à vous.
 
-Version 0.6.4, pour la version 1.308 du jeu, DLC Baboulone émergée compris. Le mod parle **toutes les
+Version 0.7.0, pour la version 1.308 du jeu, DLC Baboulone émergée compris. Le mod parle **toutes les
 langues proposées par le jeu** et suit la langue choisie dans le jeu.
 
 <!-- LANGS -->
@@ -32,6 +32,7 @@ langues proposées par le jeu** et suit la langue choisie dans le jeu.
 - [Aides](#assists)
 - [Paramètres du mod (F4)](#mod-settings-f4)
 - [Changer les touches](#changing-keys)
+- [Manette](#controller)
 - [Conseils pour une première expédition](#tips-for-a-first-run)
 - [Limites connues](#known-limits)
 - [Signaler un problème](#reporting-a-problem)
@@ -272,6 +273,7 @@ ferme. Les paramètres sont enregistrés.
 - Sons des objets à ramasser : désactivés, objets spéciaux seulement, tous
 - Sons de vie, clic de l'aide à la visée (activé / désactivé)
 - Lire la description des améliorations au focus
+- Manette
 - Touches (Entrée ouvre la liste) : voir [Changer les touches](#changing-keys)
 - Guide des sons (Entrée l'ouvre)
 - Journal de débogage
@@ -285,6 +287,23 @@ touche par défaut, et la dernière ligne les remet toutes. Si la nouvelle touch
 autre action du mod, les deux s'échangent et le mod dit où l'autre est partie. Les touches dont les menus
 ou le jeu ont besoin (flèches, Entrée, Tab, Échap, Retour arrière, Espace, W A S D F E R X) ne peuvent pas
 être prises. L'aide F1 se termine par les touches telles qu'elles sont réglées maintenant.
+
+## Manette {#controller}
+
+- Boutons Xbox ; une manette PlayStation ou Switch fonctionne avec Steam Input activé pour le jeu
+- Hors combat la croix directionnelle ou le stick gauche déplacent comme les flèches, A est Entrée et B revient en arrière
+- X et Y vont au premier et au dernier élément ; en plaçant un bâtiment X trouve un endroit où il tient et Y le fait pivoter
+- RB et LB sont Tab et Maj Tab, RT et LT changent les onglets de l'écran
+- Start est la pause du jeu
+- En combat le jeu garde les sticks, les gâchettes et les boutons
+- Croix en haut donne les ennemis, en bas ta santé, à gauche tes états, à droite ta progression
+- Maintiens le stick gauche enfoncé pour attraper, comme Maj
+- Si tu laisses le stick droit, l'aide à la visée vise pour toi ; bouge-le pour viser toi-même
+- Maintiens View pour plus : A aide, B réglages du mod, X lit l'écran, Y répète, Start change le mode de visée
+- View avec LB et RB lit les lignes plus anciennes et plus récentes de la liste de relecture, View avec un clic de stick passe des détails aux événements
+- En combat View avec la croix : en haut les dangers, en bas l'équipement, à gauche les objets, à droite le dernier son ; View avec LT et RT ralentit et accélère le jeu
+- À la base View avec la croix : en haut la récolte, en bas les ressources, à gauche le mode exploration
+- Dans les menus View avec LT et RT fait Page précédente et Page suivante
 
 ## Conseils pour une première expédition {#tips-for-a-first-run}
 
