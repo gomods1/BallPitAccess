@@ -5,7 +5,7 @@ przez twój czytnik ekranu, pozwala obsłużyć całą grę z klawiatury i zamie
 twoje kule, wrogie pociski, kryształy PD i przedmioty specjalne mają własne dźwięki, dochodzące z tej strony,
 po której się znajdują.
 
-Wersja 0.6.3, dla wersji gry 1.308, razem z DLC Wyniesione Kulopolis (Risen Ballbylon). Mod mówi **w każdym
+Wersja 0.6.4, dla wersji gry 1.308, razem z DLC Wyniesione Kulopolis (Risen Ballbylon). Mod mówi **w każdym
 języku, który oferuje gra**, i stosuje się do ustawienia języka w grze.
 
 <!-- LANGS -->
@@ -131,6 +131,8 @@ Kolejność nigdy nie zależy od tego, gdzie elementy są narysowane na ekranie.
 - **Zbiory**: zaczynają się wycelowane w budowlę. Enter wysyła robotników, Tab celuje w inną budowlę,
   strzałki w lewo / w prawo obracają celownik, przytrzymanie spacji przyspiesza, Escape wychodzi.
 - **Budowa**: budowle w budowie lub w trakcie ulepszania też są na liście Tab podczas zbiorów. Każdy robotnik, który się od nich odbije, je buduje; mod mówi, gdy budowa jest ukończona. Enter na takiej budowli w bazie rozpoczyna zbiory wycelowane w nią.
+- **Czy robotnicy tam dotrą?** Gdy zbiory celują w budynek (Tab albo Enter na nim w bazie), mod śledzi drogę robotników tak, jak porusza ich gra, i wybiera kąt, który tam dociera: „robotnicy trafiają w nią prosto”, „robotnicy docierają do niej, odbijając się od ściany”, „robotnicy przechodzą nad nią” (pola pszenicy) albo „brak wolnej drogi, przeszkadza Las”. Do budynku bez wolnej drogi robotnicy docierają tylko przypadkiem: przenieś go albo ten, który przeszkadza. Lewo / Prawo mówią, w co trafia linia.
+- **Po zbiorach** mod mówi, co dostał każdy budynek w budowie („Nawiedzony dom: trafienia 6, z 40 do 55 procent”). Podsumowanie gry liczy tylko zasoby: mówi „Bezowocne przedsięwzięcie”, gdy nic nie zebrano, nawet jeśli robotnicy budowali.
 - **Powiększanie**: Tab wybiera działkę, Enter ją kupuje.
 - **Układanie**: Tab wybiera budowlę, Enter ją podnosi, strzałki ją przesuwają, Enter ją upuszcza.
 - **Eksploracja** (K): strzałki przechodzą o jedno pole i mówią, co tam jest: wolne (i ile wolnych pól jest dalej w prawo i w dół), budynek z rozmiarem albo teren niekupiony. Tab / Shift+Tab skaczą do następnego / poprzedniego wolnego pola. K, Backspace lub Escape wychodzą. Kolumny i rzędy są te same co przy stawianiu budynku.
@@ -159,6 +161,7 @@ Kolejność nigdy nie zależy od tego, gdzie elementy są narysowane na ekranie.
 | Shift (przytrzymaj) | Pomoc w łapaniu (zobacz [Pomoce](#assists)) |
 | 1 do 7, 0 | Filtry dźwięków (zobacz [Filtry dźwięków](#sound-filters-number-keys)) |
 | H | Zdrowie i efekty statusu |
+| U | Efekty z pozostałymi sekundami oraz czy możesz się ruszać, a jeśli nie, to dlaczego (zamrożenie, odrzut po trafieniu, nacierający wrogowie). Gdy zamrożenie się kończy, mod mówi „Znowu możesz się ruszać” |
 | J | Wrogowie i boss |
 | K | Twoja pozycja |
 | G | Prędkość gry |
@@ -174,6 +177,8 @@ Każdy klawisz moda można zmienić: zobacz [Zmiana klawiszy](#changing-keys).
 W czasie walki mod mówi: poziom na początku, bossów i ich zdrowie przy 75, 50 i 25 procentach, obrażenia
 i zdrowie, efekty statusu, przedmioty specjalne, gdy wypadną, „gotowe nowe poziomy, naciśnij E” oraz koniec
 rozgrywki.
+
+**Bossowie**: J podaje prawdziwe zdrowie bossa, takie samo jak jego pasek w grze. Niektórzy bossowie przyjmują obrażenia tylko w słaby punkt: ciała Króla Szkieletów nie da się zranić, tylko koronę na jego głowie, a ciało osłania ją z przodu, więc kule docierają do niej po odbiciu od ścian. J mówi, gdzie jest słaby punkt, a pomoc w celowaniu w niego mierzy.
 
 ## Dźwięki walki {#battle-sounds}
 

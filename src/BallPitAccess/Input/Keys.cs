@@ -56,8 +56,26 @@ namespace BallPitAccess.Input
             return "#" + vk;
         }
 
+        // ---------------- Dev: keys from dev.txt ("key tab", "key shift+tab") ----------------
+        // For testing a game that runs with no window to type in (-batchmode, another session). Only reached
+        // through DevCommands (Debug = true). Each queued key is down for one frame, with its modifiers.
+
+        internal static bool DevFocus;
+        private static readonly System.Collections.Generic.Queue<int[]> Injected = new System.Collections.Generic.Queue<int[]>();
+        private static int[] _held;
+
+        internal static void Inject(params int[] vks) => Injected.Enqueue(vks);
+
+        private static bool HeldByDev(int vk)
+        {
+            if (_held == null) return false;
+            foreach (int v in _held) if (v == vk) return true;
+            return false;
+        }
+
         internal static bool GameHasFocus()
         {
+            if (DevFocus) return true;
             IntPtr fg = GetForegroundWindow();
             if (fg == _lastFg) return _lastFgOwn;
             _lastFg = fg;
@@ -67,7 +85,7 @@ namespace BallPitAccess.Input
         }
 
         /// <summary>Live state, read now.</summary>
-        internal static bool Down(int vk) => vk > 0 && (GetAsyncKeyState(vk) & 0x8000) != 0;
+        internal static bool Down(int vk) => vk > 0 && ((GetAsyncKeyState(vk) & 0x8000) != 0 || HeldByDev(vk));
 
         internal static bool Ctrl => Down(VK_CONTROL);
         internal static bool Shift => Down(VK_SHIFT);
@@ -81,10 +99,11 @@ namespace BallPitAccess.Input
         {
             Consumed = false;
             bool focus = GameHasFocus();
+            _held = _held == null && Injected.Count > 0 ? Injected.Dequeue() : null;
             for (int vk = 1; vk < 256; vk++)
             {
                 Prev[vk] = Cur[vk];
-                Cur[vk] = focus && (GetAsyncKeyState(vk) & 0x8000) != 0;
+                Cur[vk] = focus && ((GetAsyncKeyState(vk) & 0x8000) != 0 || HeldByDev(vk));
             }
         }
 

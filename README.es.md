@@ -5,7 +5,7 @@ lector de pantalla, te deja usar todo el juego con el teclado y convierte el cam
 los enemigos, tus bolas, los disparos enemigos, los cristales de experiencia y los objetos especiales
 tienen cada uno su sonido, que viene de su lado respecto a ti.
 
-Versión 0.6.3, para la versión 1.308 del juego, incluido el DLC Bolabilonia Resurgida. El mod habla
+Versión 0.6.4, para la versión 1.308 del juego, incluido el DLC Bolabilonia Resurgida. El mod habla
 **todos los idiomas del juego** y sigue el idioma que tengas puesto en él.
 
 <!-- LANGS -->
@@ -132,6 +132,8 @@ Cerrar. El orden nunca depende de dónde se dibujan las cosas en la pantalla.
 - **Recolectar**: empieza apuntando a un edificio. Intro lanza a los trabajadores, Tab apunta a otro
   edificio, Izquierda / Derecha giran la puntería, mantén Espacio para acelerar, Escape sale.
 - **Construcción**: los edificios en construcción o mejorándose también están en la lista Tab de la recolección. Cada trabajador que rebota en uno lo construye; el mod avisa cuando está terminado. Intro sobre uno en la base empieza la recolección apuntada a él.
+- **¿Llegarán los trabajadores?** Cuando la recolección apunta a un edificio (Tab, o Intro sobre él en la base), el mod sigue el camino de los trabajadores igual que los mueve el juego y elige un ángulo que llega: "los trabajadores le dan directamente", "los trabajadores llegan rebotando en una pared", "los trabajadores pasan por encima" (campos de trigo), o "no hay camino libre, Bosque está en medio". A un edificio sin camino libre solo se llega por suerte: muévelo, o mueve el que estorba. Izquierda / Derecha dicen en qué da la línea.
+- **Después de una recolección** el mod dice qué recibió cada edificio en construcción ("Casa encantada: 6 golpes, del 40 al 55 por ciento"). El resumen del juego solo cuenta recursos: dice "Un esfuerzo infructuoso" siempre que no se recolectó nada, aunque los trabajadores hayan construido.
 - **Expandir**: Tab elige una parcela, Intro la compra.
 - **Reorganizar**: Tab elige un edificio, Intro lo coge, las flechas lo mueven, Intro lo suelta.
 - **Explorar** (K): las flechas avanzan una casilla y dicen qué hay: libre (y cuántas casillas libres siguen a la derecha y hacia abajo), un edificio con su tamaño, o terreno sin comprar. Tab / Mayúsculas+Tab saltan a la casilla libre siguiente / anterior. K, Retroceso o Escape salen. Las columnas y filas son las mismas que al colocar un edificio.
@@ -160,6 +162,7 @@ Cerrar. El orden nunca depende de dónde se dibujan las cosas en la pantalla.
 | Mayús (mantener) | Ayuda para atrapar (mira [Ayudas](#ayudas)) |
 | 1 a 7, 0 | Filtros de sonido (mira [Filtros de sonido](#filtros-de-sonido-teclas-de-número)) |
 | H | Salud y estados alterados |
+| U | Estados con los segundos que les quedan, y si puedes moverte, y si no, por qué (congelado, empujado por un golpe, enemigos avanzando). Cuando se acaba una congelación el mod dice "Ya puedes moverte" |
 | J | Enemigos y jefe |
 | K | Tu posición |
 | G | Velocidad del juego |
@@ -175,6 +178,8 @@ Todas las teclas del mod se pueden cambiar: mira [Cambiar las teclas](#changing-
 Se anuncia durante el combate: el nivel al empezar, los jefes y su salud al 75, 50 y 25 por ciento, el
 daño y la salud, los estados alterados, los objetos especiales cuando caen, "subidas de nivel listas,
 pulsa E" y el final de la partida.
+
+**Jefes**: J da la salud real del jefe, la misma que su barra en el juego. Algunos jefes solo reciben daño en un punto débil: al Rey Esqueleto no se le puede herir el cuerpo, solo la corona de la cabeza, y su cuerpo la protege por delante, así que las bolas llegan rebotando en las paredes. J dice dónde está el punto débil, y la ayuda de puntería va a por él.
 
 ## Sonidos de combate
 

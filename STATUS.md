@@ -358,3 +358,39 @@ side bar until the game was restarted, and asked for building sizes and a mode t
   game window is not in front (4 frames per try).
 - Not checked: the "after a run" path (same cause, `_kbOwned` is static), rearrange mode's numbers with the new
   anchor, odd shapes (`BuildingInfo.InnerGrid`).
+
+### Session 10 (2026-11-21): worker reach, status key, boss health (verified in game, headless)
+A player reported: workers never built a Haunted House (10+ harvests, "A Fruitless Endeavor" each time), a
+frozen hero with no way to tell why, and a boss stuck at 100 percent.
+- **Testing without a window**: this Claude session ran in Windows session 0, where a normal launch hangs
+  (no display). `Balls.exe -batchmode -nographics -logFile …` runs the game and the mod headless; `dev.txt`
+  drives it (`focus on`, `key tab enter u j …` injects mod keys for one frame each, `Keys.DevFocus`).
+  Everything below was verified that way (speech.log + Latest.log). The game's own input and the mouse
+  do not exist there: the aim postfix never runs (`forceaim on` pushes the assist's aim into the game).
+- **Harvest**: `BaseMgr.MoveBalls` moves workers with `Physics2D.Raycast(pos, aim, step, ColMgr.kLayerMaskBounce)`
+  (a point; piece layer 9 = building hit, layer 8 = walls/edges, bounce = reflect) and harvests wheat-type
+  buildings (layer 10, `kLayerMaskPickup`) with `OverlapCircleNonAlloc(pos, BallObj.PickupRange = 0.125)`.
+  Workers start at the hero. A harvested-empty forest moves to layer 0. Measured: predicted first building
+  = real first hit (Villa straight; a forest "blocked by Captain's Quarters" → the workers hit Captain's
+  Quarters 4 times). Each worker lands only a few hits per harvest, so a blocked building is reached by
+  chance. `Harvest.AimAt` scans 5–175° in 0.5° steps for the widest stretch that reaches the target
+  (straight before off-a-wall); the summary only counts resources, so the mod reports construction hits
+  (patch on `BuildingInst.GetHitByWorker`). `Physics2D.CircleCastAll` is stripped from the build: calling
+  it closed the game with no log. Pass-over is tested with box geometry instead.
+- **Status key U** (`Battle.SayStatus`, `MoveBlock` from `Player.MyUpdate`'s checks): frozen, teleporting,
+  `_isKnockingBack`, `MoveMode.kOnlyDodge`, turn-based + `TurnBasedState.kAdvancing`, catch assist.
+  After a hit the game also ignores movement for 0.7 s until all move keys are released
+  (`_didLetGoOfInputAfterKnockback`). "You can move again" when kFrozen ends. Verified with `status kFrozen 3`.
+- **Boss health**: the Skeleton King's piece stays 32580/32580 and `CanBeDamaged()` false; its
+  `GetHealthPct()` override returns the crown's health. The crown (`GridPieceObjSkeletonKingCrown`, 16290
+  health, its own `GridPieceInst`) is a child object, **not in `BattleSaveData.Pieces`**. `Battle.BossPct`
+  uses the main piece's `GetHealthPct()`; `AddBossParts` adds damageable child parts to the threats, so J,
+  the radar and the assist see the crown. The crown sits on the torso (crown x ±1.3, y 8.19–9.05; torso
+  x ±1.8, y 5.7–8.57; arena during the boss: walls ±7.31, back wall 8.44), so no straight shot reaches it.
+  A bank-shot search (rays + wall reflections) was built and measured: no better than plain shots, removed.
+- Dev commands added: `pieces`, `gamecheat kX`, `god`, `cheatflag Name value`, `speed kX`, `status kX N`,
+  `buildings`, `harvestreset`, `aim kType | deg N | trace N`, `launch`, `focus`, `key`, `forceaim`,
+  `forcedeg`, `target`. Reaching the Bone Yard boss: god on, `cheatflag DisableLevelUp true`, speed
+  kFastestest, Enter every 20 s for fuser screens (~2 min). `kSkipToEnd` breaks the level (wave 2080 of 118).
+- Not checked: other bosses' parts (Pyramid Tank, Yeti Queen, Moon, swarms: same `GetHealthPct` path);
+  the Spanish table in game (the headless game ran in English); the knockback input lock by ear.

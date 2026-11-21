@@ -83,6 +83,11 @@ namespace BallPitAccess.Game
             if (!_loggedCalls && now > 30f && Battle.InBattle) { _loggedCalls = true; Log.Info("Aim postfix calls so far: " + _calls); }
             var mode = Current;
             if (!Battle.InBattle || mode == Mode.Off || mode == Mode.Fixed) { _target = null; return; }
+            // Dev (no mouse in a -batchmode game): push the assist's direction into the game's aim every frame.
+            if (DevForce && Battle.Playing && DevDeg > 0f)
+                try { Player.I?.SetAimDir(new Vector2(Mathf.Cos(DevDeg * Mathf.Deg2Rad), Mathf.Sin(DevDeg * Mathf.Deg2Rad))); } catch { }
+            else if (DevForce && Battle.Playing && WantDir(out Vector2 fd))
+                try { Player.I?.SetAimDir(BallMgr.ClampAimDir(fd, GameAimMode(), 0)); } catch { }
             bool valid = _target != null && _target.CurState != PieceState.kDead && _target.Obj != null && _target.Obj.IsActive;
             if (now < _nextPick && valid)
             {
@@ -222,6 +227,9 @@ namespace BallPitAccess.Game
                         break;
                     default: score = t.Rows - (bossFirst && t.Boss ? 5000f : 0f); break;
                 }
+                // A piece the game does not damage (the Skeleton King's body: only his crown takes hits) is
+                // aimed at only when nothing else is there.
+                if (!t.Hurtable) score += 50000f;
                 if (!Reachable(p - start, am)) score += 100000f;   // the game would clamp it: only if nothing else
                 else if (!clear) score += 500f;                     // a ball would hit another enemy first
                 if (score < bestScore) { bestScore = score; best = tb; bestPoint = p; }
@@ -257,6 +265,40 @@ namespace BallPitAccess.Game
                     _aimOffset = AimPoint(tb, AimStart(), out _) - tb.T.Center;
                     return;
                 }
+        }
+
+        // A bank-shot search (rays with reflections off the walls and the king's limbs, aiming at the widest
+        // stretch of angles that bring a ball down onto the crown) was tried on 2026-11-21 and removed: every
+        // solution was a 1-degree sliver after 2 to 10 bounces, and in the game it did no more crown damage than
+        // plain shots (40 s each: 146 and 0 with it, 0 to 168 with fixed angles). The crown stays the target.
+
+        /// <summary>Dev (a -batchmode game has no mouse, so the postfix never runs): push this aim into the game.</summary>
+        internal static bool DevForce;
+        /// <summary>Dev: a fixed angle for DevForce instead of the assist's direction (0 = the assist).</summary>
+        internal static float DevDeg;
+
+        /// <summary>A ball shot straight at this thing's centre meets it before anything else.</summary>
+        internal static bool StraightTo(Battle.Threat t)
+        {
+            try
+            {
+                var c = t.Obj.Col;
+                if (c == null) return true;
+                Vector2 start = AimStart(), to = (Vector2)t.Center - start;
+                var hit = Physics2D.Raycast(start, to.normalized, to.magnitude + 1f, ColMgr.kLayerMaskBounce);
+                return hit.collider == null || hit.collider.Pointer == c.Pointer;
+            }
+            catch { return true; }
+        }
+
+        /// <summary>Dev: the direction the assist wants now.</summary>
+        internal static bool WantDir(out Vector2 dir)
+        {
+            dir = Vector2.up;
+            if (_target == null || _target.Obj == null) return false;
+            Vector3 start = AimStart(), tgt = _target.Obj.GetWorldCenterPos() + _aimOffset;
+            dir = ((Vector2)(tgt - start)).normalized;
+            return dir.sqrMagnitude > 0.5f;
         }
 
         /// <summary>

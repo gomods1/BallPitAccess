@@ -201,5 +201,15 @@ No game file was replaced.
   change the tiles a building takes, although `Inst.GetTileSize()` swaps.
 - `BaseMgr.MyUpdate` opens the base pause menu on `Input.GetKeyDown(Backspace)` (Unity input, not Rewired:
   muting the keyboard maps does not stop it). `Explore` skips `BasePauseUI.Activate` instead.
+- **Testing with no game window** (a Claude session in Windows session 0 cannot show one): launch
+  `Balls.exe -batchmode -nographics -logFile <path>`; drive it with `dev.txt` (`focus on`, then
+  `key tab shift+tab enter u …`: mod keys injected one frame each). The aim postfix never runs there
+  (no mouse): `forceaim on` pushes the assist's aim. `Physics2D.CircleCastAll` is stripped from the
+  build (calling it closes the game silently): use only physics calls the game itself uses.
+- **Workers and balls are rays**: `Physics2D.Raycast(pos, aim, step, ColMgr.kLayerMaskBounce)`, bounce by
+  reflection; wheat-type buildings (`kLayerMaskPickup`) are harvested by an overlap of radius
+  `BallObj.PickupRange` (0.125). In battle the side / back walls are `GridMgr` borders, not colliders.
+- **Boss health is `GridPieceObj.GetHealthPct()`** on the main piece: the Skeleton King's own CurHealth never
+  moves, his body takes no damage, and his crown is a child `SubGridPieceObj` that is not in `Pieces`.
 - `GameMgr.CurState`: several states open an `OverlayUI` (level up, pause, revive, game over…); the
   navigator announces the screen, `Battle` only plays the cue, or both would speak.

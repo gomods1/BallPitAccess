@@ -194,7 +194,7 @@ d’écran, vous permet d’utiliser tout le jeu au clavier et transforme le
 champ de bataille en sons : les ennemis, vos boules, les tirs ennemis,
 les cristaux d’EXP et les objets spéciaux ont chacun leur son, qui vient
 du côté où ils se trouvent par rapport à vous.</p>
-<p>Version 0.6.3, pour la version 1.308 du jeu, DLC Baboulone émergée
+<p>Version 0.6.4, pour la version 1.308 du jeu, DLC Baboulone émergée
 compris. Le mod parle <strong>toutes les langues proposées par le
 jeu</strong> et suit la langue choisie dans le jeu.</p>
 <!-- LANGS -->
@@ -480,6 +480,20 @@ amélioration font aussi partie de la liste Tab de la récolte. Chaque
 ouvrier qui rebondit sur l’un d’eux le construit ; le mod annonce quand
 il est terminé. Entrée sur l’un d’eux dans la base lance la récolte en
 le visant.</li>
+<li><strong>Les ouvriers l’atteindront-ils ?</strong> Quand la récolte
+vise un bâtiment (Tab, ou Entrée dessus à la base), le mod suit le
+trajet des ouvriers comme le jeu les déplace et choisit un angle qui
+l’atteint : « les ouvriers le touchent directement », « les ouvriers
+l’atteignent en rebondissant sur un mur », « les ouvriers passent dessus
+» (champs de blé), ou « pas de chemin libre, Forêt est sur le passage ».
+Un bâtiment sans chemin libre n’est atteint que par chance :
+déplacez-le, ou celui qui gêne. Gauche / Droite disent ce que touche la
+ligne.</li>
+<li><strong>Après une récolte</strong>, le mod dit ce que chaque
+bâtiment en construction a reçu (« Maison hantée : 6 touches, de 40 à 55
+pour cent »). Le résumé du jeu ne compte que les ressources : il dit «
+Récolte infructueuse » dès que rien n’a été récolté, même si les
+ouvriers ont construit.</li>
 <li><strong>Extension</strong> : Tab choisit une parcelle, Entrée
 l’achète.</li>
 <li><strong>Disposition</strong> : Tab choisit un bâtiment, Entrée le
@@ -574,6 +588,12 @@ son</a>)</td>
 <td>Vie et effets d’état</td>
 </tr>
 <tr>
+<td>U</td>
+<td>États avec les secondes restantes, et si vous pouvez bouger, et
+sinon pourquoi (gelé, repoussé par un coup, ennemis qui avancent). Quand
+un gel prend fin, le mod dit « Vous pouvez de nouveau bouger »</td>
+</tr>
+<tr>
 <td>J</td>
 <td>Ennemis et boss</td>
 </tr>
@@ -619,6 +639,12 @@ href="#changing-keys">Changer les touches</a>.</p>
 à 75, 50 et 25 pour cent, les dégâts et les soins, les effets d’état,
 les objets spéciaux quand ils tombent, « gains de niveau prêts, appuyez
 sur E », la fin de l’expédition.</p>
+<p><strong>Boss</strong> : J donne la vraie vie du boss, la même que sa
+barre dans le jeu. Certains boss ne prennent des dégâts que sur un point
+faible : le corps du Roi Squelette ne peut pas être blessé, seule la
+couronne sur sa tête le peut, et son corps la protège de face, donc les
+balles l’atteignent après avoir rebondi sur les murs. J dit où est le
+point faible, et l’aide à la visée le prend pour cible.</p>
 <h2 id="battle-sounds">Sons de combat</h2>
 <p>Trois règles valent pour tous les sons, toujours par rapport à votre
 personnage :</p>

@@ -6,7 +6,7 @@ using BallPitAccess.UI;
 using MelonLoader;
 using UnityEngine;
 
-[assembly: MelonInfo(typeof(BallPitAccess.Main), "BALL x PIT Access", "0.6.3", "BALL x PIT Access")]
+[assembly: MelonInfo(typeof(BallPitAccess.Main), "BALL x PIT Access", "0.6.4", "BALL x PIT Access")]
 [assembly: MelonGame("Kenny Sun", "BALL x PIT")]
 
 namespace BallPitAccess
@@ -56,6 +56,7 @@ namespace BallPitAccess
                     BallPatches.TryPatch(HarmonyInstance);
                     Placement.TryPatch(HarmonyInstance);
                     Explore.TryPatch(HarmonyInstance);
+                    Harvest.TryPatch(HarmonyInstance);
                     Hazards.TryPatch(HarmonyInstance);
                 }
                 bool trace = _frames++ < 3;

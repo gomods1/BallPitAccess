@@ -25,6 +25,12 @@ namespace BallPitAccess.Game
             public float Rows;      // rows between the enemy's front edge and the hero
             public float Line;      // rows between the enemy's front edge and the line where enemies attack
             public bool Boss;
+            /// <summary>The game would take damage on it now (GridPieceObj.CanBeDamaged). The Skeleton King's body never does.</summary>
+            public bool Hurtable = true;
+            /// <summary>A part of a bigger piece (SubGridPieceObj: a crown, a stack, a swarm unit).</summary>
+            public bool Sub;
+            /// <summary>A boss's weak spot that is not in the game's piece list (the Skeleton King's crown).</summary>
+            public bool Part;
         }
 
         internal static readonly List<Threat> Threats = new List<Threat>();
@@ -95,6 +101,7 @@ namespace BallPitAccess.Game
                 _boss = IntPtr.Zero;
                 _bossQuarter = 4;
                 StatusSeen.Clear();
+                _wasFrozen = false;
                 Charging.Clear();
                 Log.Info("In battle: " + battle);
                 if (battle) { var muted = Input.CueFilters.MutedSummary(); if (muted != null) Speech.Event(muted); }
@@ -284,6 +291,8 @@ namespace BallPitAccess.Game
                     Line = Math.Max(0f, (bot - attackY) / RowH),
                     Boss = IsBoss(inst.Type),
                 };
+                try { t.Hurtable = obj.CanBeDamaged(); } catch { }
+                try { t.Sub = obj.TryCast<SubGridPieceObj>() != null; } catch { }
                 Threats.Add(t);
                 if (inst.CurState == PieceState.kChargingAttack || inst.CurState == PieceState.kAttacking)
                 {
@@ -294,7 +303,54 @@ namespace BallPitAccess.Game
                 }
             }
             Charging.IntersectWith(ChargingNow);
+            AddBossParts(py, attackY);
             Threats.Sort((a, b) => a.Rows.CompareTo(b.Rows));
+        }
+
+        // A boss whose own piece takes no damage keeps its weak spot as a part that is not in
+        // BattleSaveData.Pieces (measured: the Skeleton King's crown is a GridPieceObjSkeletonKingCrown child with
+        // its own GridPieceInst, 16290 health, while the king's piece stays at 32580/32580 forever). Those parts
+        // are added to the threats, so J, the radar and the aim assist know the crown.
+        private static readonly List<SubGridPieceObj> _parts = new List<SubGridPieceObj>();
+        private static IntPtr _partsOf = IntPtr.Zero;
+        private static float _nextParts;
+
+        private static void AddBossParts(float py, float attackY)
+        {
+            Threat main = null;
+            foreach (var t in Threats) if (t.Boss && !t.Sub && !t.Hurtable) { main = t; break; }
+            if (main == null) { _parts.Clear(); _partsOf = IntPtr.Zero; return; }
+            float now = Time.unscaledTime;
+            if (main.Obj.Pointer != _partsOf || now >= _nextParts)
+            {
+                _partsOf = main.Obj.Pointer;
+                _nextParts = now + 1f;
+                _parts.Clear();
+                try { foreach (var sub in main.Obj.GetComponentsInChildren<SubGridPieceObj>(false)) if (sub != null) _parts.Add(sub); }
+                catch { }
+            }
+            foreach (var sub in _parts)
+            {
+                try
+                {
+                    if (sub == null || !sub.IsActive || !sub.CanBeDamaged()) continue;
+                    var inst = sub.Inst;
+                    if (inst == null || inst.CurState == PieceState.kDead) continue;
+                    bool known = false;
+                    foreach (var t in Threats) if (t.Obj.Pointer == sub.Pointer) { known = true; break; }
+                    if (known) continue;
+                    Vector3 c = sub.GetWorldCenterPos();
+                    float bot = c.y;
+                    try { var col = sub.Col; if (col != null) bot = col.bounds.min.y; } catch { }
+                    Threats.Add(new Threat
+                    {
+                        Inst = inst, Obj = sub, Center = c, BotY = bot,
+                        Rows = Math.Max(0f, (bot - py) / RowH), Line = Math.Max(0f, (bot - attackY) / RowH),
+                        Boss = true, Hurtable = true, Sub = true, Part = true,
+                    });
+                }
+                catch { }
+            }
         }
 
         internal static bool IsBoss(GridPieceType t)
@@ -385,20 +441,15 @@ namespace BallPitAccess.Game
                 }
             }
             StatusSeen.RemoveWhere(t => (mask & (1 << t)) == 0);
+            bool frozen = (mask & (1 << (int)PlayerStatusEffectType.kFrozen)) != 0;
+            if (_wasFrozen && !frozen) Speech.Battle(Loc.Get("unfrozen"), "status", 2.5f);
+            _wasFrozen = frozen;
         }
 
         private static void CheckBoss()
         {
-            // A boss can be several pieces (quartet, swarm): one boss per kind, health over all its pieces.
             Threat boss = null;
-            double cur = 0, max = 0;
-            foreach (var t in Threats)
-            {
-                if (!t.Boss) continue;
-                if (boss == null) boss = t;
-                if (t.Inst.Type != boss.Inst.Type) continue;
-                try { cur += t.Inst.CurHealth; max += t.Inst.MaxHealth; } catch { }
-            }
+            foreach (var t in Threats) if (t.Boss) { boss = t; break; }
             float now = Time.unscaledTime;
             if (boss == null)
             {
@@ -406,7 +457,7 @@ namespace BallPitAccess.Game
                 return;
             }
             _bossSeen = now;
-            float pct = max > 0 ? (float)(cur / max) : 1f;
+            float pct = BossPct(boss.Inst.Type, out _);
             IntPtr kind = (IntPtr)((int)boss.Inst.Type + 1);
             if (kind != _boss)
             {
@@ -425,6 +476,111 @@ namespace BallPitAccess.Game
                 _bossQuarter = q;
                 Speech.Battle(Loc.F("boss_health", Mathf.RoundToInt(pct * 100f)), "boss", 4f);
             }
+        }
+
+        /// <summary>
+        /// A boss's health, 0..1, the way the game's boss bar measures it. Several bosses keep their health in
+        /// parts (the Skeleton King's crown, the Pyramid Tank's stack, the Yeti Queen's, the swarms, the Moon):
+        /// the main piece's own CurHealth never moves, and its GetHealthPct override reads the parts. The main
+        /// piece is the one that is not a SubGridPieceObj; without one, health over all the boss's pieces.
+        /// `weak` is the part to hit when the main piece itself cannot be hurt (null otherwise).
+        /// </summary>
+        internal static float BossPct(GridPieceType type, out Threat weak)
+        {
+            weak = null;
+            Threat main = null;
+            double cur = 0, max = 0;
+            foreach (var t in Threats)
+            {
+                if (!t.Boss || t.Inst.Type != type) continue;
+                if (!t.Sub && main == null) main = t;
+                try { cur += t.Inst.CurHealth; max += t.Inst.MaxHealth; } catch { }
+            }
+            if (main != null && !main.Hurtable)
+            {
+                foreach (var t in Threats)
+                    if (t.Boss && t.Inst.Type == type && t != main && t.Hurtable && (weak == null || t.Rows < weak.Rows)) weak = t;
+            }
+            if (main != null)
+            {
+                try
+                {
+                    float p = main.Obj.GetHealthPct();
+                    if (!float.IsNaN(p) && p >= 0f && p <= 1.001f) return Mathf.Clamp01(p);
+                }
+                catch { }
+            }
+            return max > 0 ? (float)(cur / max) : 1f;
+        }
+
+        // ---------------- Status (a player found the hero frozen and had no way to tell why) ----------------
+
+        private static bool _wasFrozen;
+
+        private static bool HasEffect(BattleSaveData save, PlayerStatusEffectType type, out float left)
+        {
+            left = 0f;
+            var list = save?.PlayerStatusEffects;
+            if (list == null) return false;
+            for (int i = 0; i < list.Count; i++)
+            {
+                var e = list[i];
+                if (e != null && e.Type == type && e.RemainingLen > 0f) { left = e.RemainingLen; return true; }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Why the hero cannot move right now, from the checks in Player.MyUpdate: frozen, teleporting, knocked
+        /// back, a character that walks by itself (MoveMode.kOnlyDodge), a turn-based character while the
+        /// enemies advance, the catch assist walking. Null when the hero can move.
+        /// </summary>
+        internal static string MoveBlock()
+        {
+            var save = BattleSaveData.I;
+            var p = Player.I;
+            if (save == null || p == null) return null;
+            if (HasEffect(save, PlayerStatusEffectType.kFrozen, out _)) return Loc.Get("move_frozen");
+            try { if (p.CurState == PlayerState.kTeleporting) return Loc.Get("move_teleport"); } catch { }
+            try { if (p._isKnockingBack) return Loc.Get("move_knockback"); } catch { }
+            try
+            {
+                var cb = CharBattleInst.I;
+                if (cb != null)
+                {
+                    if (cb.GetMoveMode() == MoveMode.kOnlyDodge) return Loc.Get("move_dodge_only");
+                    if (cb.GetTimeMode() == TimeMode.kTurnBased && GridMgr.I != null && GridMgr.I.GetTacticsState() == TurnBasedState.kAdvancing)
+                        return Loc.Get("move_turns");
+                }
+            }
+            catch { }
+            try { if (p.IsOverridingInput) return Loc.Get("move_assist"); } catch { }
+            return null;
+        }
+
+        /// <summary>U: every status effect with its seconds left, then whether the hero can move and why not.</summary>
+        internal static void SayStatus()
+        {
+            if (!InBattle) { Speech.SayMenu(Loc.Get("not_in_battle")); return; }
+            var save = BattleSaveData.I;
+            var fx = new List<string>();
+            try
+            {
+                var list = save.PlayerStatusEffects;
+                for (int i = 0; list != null && i < list.Count; i++)
+                {
+                    var e = list[i];
+                    if (e == null || e.RemainingLen <= 0f) continue;
+                    int secs = Mathf.CeilToInt(e.RemainingLen);
+                    fx.Add(secs == 1 ? Loc.F("status_sec", Names.PlayerStatus(e.Type)) : Loc.F("status_secs", Names.PlayerStatus(e.Type), secs));
+                }
+            }
+            catch { }
+            string s = fx.Count > 0 ? string.Join(", ", fx) : Loc.Get("status_none");
+            string block = MoveBlock();
+            s += ". " + (block ?? Loc.Get("move_ok"));
+            Speech.SayMenu(s);
+            Log.Info("Status key: " + s);
         }
 
         private static void CheckBallState()
@@ -749,8 +905,20 @@ namespace BallPitAccess.Game
 
         private static string BossText(Threat b)
         {
-            float pct = b.Inst.MaxHealth > 0 ? (float)b.Inst.CurHealth / b.Inst.MaxHealth * 100f : 100f;
-            return Names.Enemy(b.Inst) + ", " + Loc.F("boss_health", Mathf.RoundToInt(pct));
+            float pct = BossPct(b.Inst.Type, out Threat weak) * 100f;
+            string s = Names.Enemy(b.Inst) + ", " + Loc.F("boss_health", Mathf.RoundToInt(pct));
+            if (weak != null)
+            {
+                s += ", " + Loc.F("boss_weak", Where(weak.Center));
+                if (!AimAssist.StraightTo(weak)) s += ", " + Loc.Get("boss_weak_behind");
+            }
+            else
+            {
+                bool any = false;
+                foreach (var t in Threats) if (t.Boss && t.Inst.Type == b.Inst.Type && t.Hurtable) { any = true; break; }
+                if (!any) s += ", " + Loc.Get("boss_immune");
+            }
+            return s;
         }
 
         internal static string Describe(Threat t)

@@ -47,6 +47,7 @@ namespace BallPitAccess.Input
             Add("aim_right", F1 + 6);
             Add("aim_say", F1 + 7);
             Add("health", 'H');
+            Add("status", 'U');
             Add("enemies", 'J');
             Add("position", 'K');
             Add("speed", 'G');

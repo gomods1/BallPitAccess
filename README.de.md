@@ -5,7 +5,7 @@ Ein Mod, der **BALL x PIT** (Kenny Sun / Devolver Digital) ohne Sehen spielbar m
 Schlachtfeld in Klang: Gegner, deine Bälle, gegnerische Schüsse, EP-Juwelen und besondere Gegenstände haben
 jeweils ihr eigenes Geräusch, das von ihrer Seite aus zu dir kommt.
 
-Version 0.6.3, für die Spielversion 1.308, einschließlich des DLC Aufgestiegenes Ballbylon (Risen Ballbylon).
+Version 0.6.4, für die Spielversion 1.308, einschließlich des DLC Aufgestiegenes Ballbylon (Risen Ballbylon).
 Der Mod spricht **jede Sprache, die das Spiel anbietet**, und folgt der Spracheinstellung des Spiels.
 
 <!-- LANGS -->
@@ -135,6 +135,8 @@ Bildschirm gezeichnet sind.
   anderes Gebäude, Pfeil nach links / rechts drehen das Ziel, Leertaste halten beschleunigt, Esc verlässt den
   Modus.
 - **Bau**: Gebäude im Bau oder in der Aufwertung stehen auch in der Tab-Liste der Ernte. Jeder Arbeiter, der von einem abprallt, baut daran; die Mod sagt, wenn es fertig ist. Eingabe auf einem davon in der Basis startet die Ernte mit Ziel darauf.
+- **Erreichen die Arbeiter es?** Zielt die Ernte auf ein Gebäude (Tab, oder Eingabe darauf in der Basis), verfolgt die Mod den Weg der Arbeiter so, wie das Spiel sie bewegt, und wählt einen Winkel, der es erreicht: „Arbeiter treffen es direkt“, „Arbeiter erreichen es über eine Wand“, „Arbeiter laufen darüber“ (Weizenfelder) oder „kein freier Weg, Wald steht im Weg“. Ein Gebäude ohne freien Weg wird nur zufällig erreicht: versetze es oder das Gebäude im Weg. Links / Rechts sagen, was die Linie trifft.
+- **Nach einer Ernte** sagt die Mod, was jedes Gebäude im Bau bekommen hat („Geisterhaus: 6 Treffer, von 40 auf 55 Prozent“). Die Zusammenfassung des Spiels zählt nur Rohstoffe: Sie sagt „Vergebene Mühe“, sobald nichts geerntet wurde, auch wenn die Arbeiter gebaut haben.
 - **Erweitern**: Tab wählt ein Grundstück, Eingabe kauft es.
 - **Neu anordnen**: Tab wählt ein Gebäude, Eingabe hebt es auf, die Pfeiltasten bewegen es, Eingabe setzt es
   ab.
@@ -164,6 +166,7 @@ Bildschirm gezeichnet sind.
 | Umschalt (halten) | Fanghilfe (siehe [Hilfen](#assists)) |
 | 1 bis 7, 0 | Soundfilter (siehe [Soundfilter](#sound-filters-number-keys)) |
 | H | Leben und Statuseffekte |
+| U | Statuseffekte mit den verbleibenden Sekunden und ob du dich bewegen kannst, und wenn nicht, warum (eingefroren, von einem Treffer zurückgestoßen, Gegner rücken vor). Endet ein Einfrieren, sagt die Mod „Du kannst dich wieder bewegen“ |
 | J | Gegner und Boss |
 | K | Deine Position |
 | G | Spielgeschwindigkeit |
@@ -179,6 +182,8 @@ Jede Mod-Taste lässt sich ändern: siehe [Die Tasten ändern](#changing-keys).
 Im Kampf wird angesagt: das Level zu Beginn, Bosse und ihr Leben bei 75, 50 und 25 Prozent, Schaden und
 Leben, Statuseffekte, besondere Gegenstände, wenn sie fallen, „Stufenaufstiege bereit, drücke E“, das Ende
 des Durchlaufs.
+
+**Bosse**: J nennt das echte Leben des Bosses, dasselbe wie seine Leiste im Spiel. Manche Bosse nehmen nur an einem Schwachpunkt Schaden: Der Körper des Skelettkönigs kann nicht verletzt werden, nur die Krone auf seinem Kopf, und sein Körper schützt sie von vorn, also erreichen Kugeln sie erst nach Abprallern an den Wänden. J sagt, wo der Schwachpunkt ist, und die Zielhilfe nimmt ihn ins Visier.
 
 ## Kampfgeräusche {#battle-sounds}
 

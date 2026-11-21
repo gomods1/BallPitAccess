@@ -5,7 +5,7 @@ pelo seu leitor de tela, permite usar o jogo inteiro pelo teclado e transforma o
 inimigos, suas esferas, disparos inimigos, cristais de EXP e itens especiais têm cada um o seu som, que
 vem do lado em que estão em relação a você.
 
-Versão 0.6.3, para a versão 1.308 do jogo, incluindo o DLC Bolalônia Elevada (Risen Ballbylon). O mod fala
+Versão 0.6.4, para a versão 1.308 do jogo, incluindo o DLC Bolalônia Elevada (Risen Ballbylon). O mod fala
 **todos os idiomas que o jogo oferece** e segue o idioma configurado no jogo.
 
 <!-- LANGS -->
@@ -135,6 +135,8 @@ Fechar. A ordem nunca depende de onde as coisas estão desenhadas na tela.
   edificação, as setas para a esquerda e para a direita giram a mira, segure Espaço para acelerar, Esc
   sai.
 - **Construção**: edificações em construção ou em melhoria também estão na lista do Tab da colheita. Cada trabalhador que bate em uma delas a constrói; o mod avisa quando ela fica pronta. Enter em uma delas na base começa a colheita mirando nela.
+- **Os trabalhadores vão chegar?** Quando a colheita mira em uma construção (Tab, ou Enter nela na base), o mod segue o caminho dos trabalhadores do jeito que o jogo os move e escolhe um ângulo que chega: "os trabalhadores acertam direto", "os trabalhadores chegam rebatendo em uma parede", "os trabalhadores passam por cima" (campos de trigo), ou "sem caminho livre, Floresta está no meio". Uma construção sem caminho livre só é alcançada por sorte: mova-a, ou mova a que está no caminho. Esquerda / Direita dizem no que a linha acerta.
+- **Depois de uma colheita** o mod diz o que cada construção em obras recebeu ("Casa Assombrada: 6 golpes, de 40 para 55 por cento"). O resumo do jogo só conta recursos: diz "Um Esforço Infrutífero" sempre que nada foi colhido, mesmo que os trabalhadores tenham construído.
 - **Expansão**: Tab escolhe um terreno, Enter compra.
 - **Reorganizar**: Tab escolhe uma edificação, Enter pega, as setas movem, Enter solta.
 - **Explorar** (K): as setas andam uma casa e dizem o que há nela: livre (e quantas casas livres seguem para a direita e para baixo), uma construção com o tamanho, ou terreno não comprado. Tab / Shift+Tab pulam para a próxima / anterior casa livre. K, Backspace ou Esc saem. As colunas e linhas são as mesmas usadas ao posicionar uma construção.
@@ -163,6 +165,7 @@ Fechar. A ordem nunca depende de onde as coisas estão desenhadas na tela.
 | Shift (segurar) | Assistência para pegar (veja [Assistências](#assists)) |
 | 1 a 7, 0 | Filtros de som (veja [Filtros de som](#sound-filters-number-keys)) |
 | H | Vida e efeitos de status |
+| U | Status com os segundos restantes, e se você pode se mover, e se não, por quê (congelado, empurrado por um golpe, inimigos avançando). Quando um congelamento acaba o mod diz "Você pode se mover de novo" |
 | J | Inimigos e chefe |
 | K | Sua posição |
 | G | Velocidade do jogo |
@@ -178,6 +181,8 @@ Todas as teclas do mod podem ser mudadas: veja [Mudar as teclas](#changing-keys)
 Falado durante a batalha: o nível no começo, os chefes e a vida deles em 75, 50 e 25 por cento, dano e
 vida, efeitos de status, itens especiais quando caem, "subidas de nível prontas, pressione E", o fim da
 partida.
+
+**Chefes**: J dá a vida real do chefe, a mesma da barra dele no jogo. Alguns chefes só levam dano em um ponto fraco: o corpo do Rei Esqueleto não pode ser ferido, só a coroa na cabeça dele, e o corpo a protege pela frente, então as bolas chegam nela depois de rebater nas paredes. J diz onde está o ponto fraco, e a assistência de mira vai atrás dele.
 
 ## Sons de batalha {#battle-sounds}
 

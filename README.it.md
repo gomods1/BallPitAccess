@@ -5,7 +5,7 @@ tramite il tuo screen reader, ti permette di usare tutto il gioco con la tastier
 battaglia in suono: i nemici, le tue palle, i colpi nemici, i cristalli di PX e gli oggetti speciali hanno
 ciascuno il proprio suono, che arriva dal loro lato rispetto a te.
 
-Versione 0.6.3, per la versione 1.308 del gioco, incluso il DLC Pallilonia Risorta (Risen Ballbylon). La
+Versione 0.6.4, per la versione 1.308 del gioco, incluso il DLC Pallilonia Risorta (Risen Ballbylon). La
 mod parla **tutte le lingue offerte dal gioco** e segue l'impostazione della lingua del gioco.
 
 <!-- LANGS -->
@@ -136,6 +136,8 @@ Chiudi. L'ordine non dipende mai da dove le cose sono disegnate sullo schermo.
 - **Raccolta**: parte mirata su un edificio. Invio lancia i lavoratori, Tab mira a un altro edificio,
   freccia sinistra / destra ruotano la mira, tieni premuta la Barra spaziatrice per accelerare, Esc esce.
 - **Costruzione**: gli edifici in costruzione o in potenziamento sono anche nella lista Tab della raccolta. Ogni lavoratore che ci rimbalza sopra li costruisce; la mod avvisa quando sono completati. Invio su uno di essi nella base avvia la raccolta mirata su di esso.
+- **I lavoratori ci arriveranno?** Quando la raccolta mira a un edificio (Tab, o Invio su di esso nella base), la mod segue il percorso dei lavoratori come li muove il gioco e sceglie un angolo che ci arriva: "i lavoratori lo colpiscono direttamente", "i lavoratori lo raggiungono rimbalzando su una parete", "i lavoratori ci passano sopra" (campi di grano), oppure "nessun percorso libero, Foresta è in mezzo". Un edificio senza percorso libero si raggiunge solo per caso: spostalo, o sposta quello che ostacola. Sinistra / Destra dicono cosa colpisce la linea.
+- **Dopo una raccolta** la mod dice cosa ha ricevuto ogni edificio in costruzione ("Casa stregata: 6 colpi, dal 40 al 55 per cento"). Il riepilogo del gioco conta solo le risorse: dice "Un'impresa infruttuosa" ogni volta che non si è raccolto nulla, anche se i lavoratori hanno costruito.
 - **Espansione**: Tab sceglie un lotto, Invio lo compra.
 - **Riposizionamento**: Tab sceglie un edificio, Invio lo solleva, le frecce lo spostano, Invio lo posa.
 - **Esplora** (K): le frecce avanzano di una casella e dicono cosa c'è: libera (e quante caselle libere seguono a destra e in basso), un edificio con la sua dimensione, o terreno non acquistato. Tab / Maiusc+Tab saltano alla casella libera successiva / precedente. K, Backspace o Esc escono. Colonne e righe sono le stesse usate per piazzare un edificio.
@@ -164,6 +166,7 @@ Chiudi. L'ordine non dipende mai da dove le cose sono disegnate sullo schermo.
 | Maiusc (tieni premuto) | Assistenza alla presa (vedi [Assistenze](#assists)) |
 | Da 1 a 7, 0 | Filtri dei suoni (vedi [Filtri dei suoni](#sound-filters-number-keys)) |
 | H | Salute ed effetti di stato |
+| U | Stati con i secondi rimasti, e se puoi muoverti, e se no perché (congelato, respinto da un colpo, nemici che avanzano). Quando finisce un congelamento la mod dice "Puoi muoverti di nuovo" |
 | J | Nemici e boss |
 | K | La tua posizione |
 | G | Velocità di gioco |
@@ -179,6 +182,8 @@ Ogni tasto della mod si può cambiare: vedi [Cambiare i tasti](#changing-keys).
 Durante la battaglia vengono annunciati: il livello all'inizio, i boss e la loro salute al 75, 50 e 25 per
 cento, i danni e la salute, gli effetti di stato, gli oggetti speciali quando cadono, "nuovi livelli
 pronti, premi E", la fine della spedizione.
+
+**Boss**: J dà la salute reale del boss, la stessa della sua barra nel gioco. Alcuni boss subiscono danni solo su un punto debole: il corpo del Re Scheletro non può essere ferito, solo la corona sulla sua testa, e il corpo la protegge davanti, quindi le palle la raggiungono dopo essere rimbalzate sulle pareti. J dice dov'è il punto debole, e l'assistenza alla mira lo prende di mira.
 
 ## Suoni di battaglia {#battle-sounds}
 

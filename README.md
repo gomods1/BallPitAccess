@@ -5,7 +5,7 @@ menu through your screen reader, lets you use the whole game with the keyboard, 
 into sound: enemies, your balls, enemy shots, XP crystals and special items all have their own sounds,
 coming from their side of you.
 
-Version 0.6.3, for game version 1.308, including the Risen Ballbylon DLC. The mod speaks **every language
+Version 0.6.4, for game version 1.308, including the Risen Ballbylon DLC. The mod speaks **every language
 the game offers** and follows the game's language setting.
 
 <!-- LANGS -->
@@ -131,6 +131,8 @@ order never depends on where things are drawn on the screen.
 - **Harvest**: it starts aimed at a building. Enter launches the workers, Tab aims at another building,
   Left / Right turn the aim, hold Space to speed up, Escape leaves.
 - **Construction**: buildings under construction or upgrading are in the harvest's Tab list too. Every worker that bounces off one builds it; the mod says when it is finished. Enter on one in the base starts the harvest aimed at it.
+- **Will the workers reach it?** When the harvest aims at a building (Tab, or Enter on it in the base), the mod follows the workers' path the way the game moves them and picks an angle that reaches it: "workers hit it straight", "workers reach it off a wall", "workers pass over it" (wheat fields), or "no clear path, Forest is in the way". A building with no clear path is reached only by chance: move it, or the building in the way. Left / Right say what the line hits.
+- **After a harvest** the mod says what each building under construction got ("Haunted House: 6 hits, 40 to 55 percent"). The game's own summary only counts resources: it says "A Fruitless Endeavor" whenever nothing was harvested, even when the workers built.
 - **Expansion**: Tab chooses a plot, Enter buys it.
 - **Rearrange**: Tab chooses a building, Enter picks it up, arrows move it, Enter drops it.
 - **Explore** (K): the arrows walk one tile at a time and say what is there: free (and how many free tiles follow to the right and down), a building with its size, or land not bought yet. Tab / Shift+Tab jump to the next / previous free tile. K, Backspace or Escape leave. Columns and rows are the same ones placing a building uses.
@@ -159,6 +161,7 @@ order never depends on where things are drawn on the screen.
 | Shift (hold) | Catch assist (see [Assists](#assists)) |
 | 1 to 7, 0 | Sound filters (see [Sound filters](#sound-filters-number-keys)) |
 | H | Health and status effects |
+| U | Status effects with the seconds left, and whether you can move, and why not (frozen, knocked back, enemies advancing). When a freeze ends the mod says "You can move again" |
 | J | Enemies and boss |
 | K | Your position |
 | G | Game speed |
@@ -173,6 +176,8 @@ Every mod key can be changed: see [Changing the keys](#changing-keys).
 
 Spoken during battle: the level at the start, bosses and their health at 75, 50 and 25 percent, damage
 and health, status effects, special items when they drop, "level ups ready, press E", the end of the run.
+
+**Bosses**: J gives the boss's real health, the same as the game's boss bar. Some bosses only take damage on a weak spot: the Skeleton King's body cannot be hurt, only the crown on his head can, and his body shields it from the front, so balls reach it after bouncing off the walls. J says where the weak spot is, and the aim assist goes for it.
 
 ## Battle sounds
 

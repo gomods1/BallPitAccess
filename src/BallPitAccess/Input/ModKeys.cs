@@ -89,6 +89,7 @@ namespace BallPitAccess.Input
                 if (CueFilters.Update(false)) return;
                 if (Navigator.HasOverlay && !Battle.Playing) return;
                 if (Bindings.Pressed("health")) Battle.SayHealth();
+                else if (Bindings.Pressed("status")) Battle.SayStatus();
                 else if (Bindings.Pressed("enemies")) Battle.SayEnemies();
                 else if (Bindings.Pressed("position")) Battle.SayPosition();
                 else if (Bindings.Pressed("speed")) Battle.SaySpeed();
@@ -312,6 +313,7 @@ namespace BallPitAccess.Input
                 {
                     lines.Add(Loc.F("help_speed_keys", Bindings.KeyOf("speed_up"), Bindings.KeyOf("speed_down")));
                     lines.Add(Loc.F("help_last_sound", Bindings.KeyOf("last_sound")));
+                    lines.Add(Loc.F("help_status_key", Bindings.KeyOf("status")));
                 }
             }
             // The keys as they are set now (they can be changed, so the texts above give the defaults).

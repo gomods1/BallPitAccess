@@ -5,7 +5,7 @@ avec votre lecteur d'écran, vous permet d'utiliser tout le jeu au clavier et tr
 bataille en sons : les ennemis, vos boules, les tirs ennemis, les cristaux d'EXP et les objets spéciaux
 ont chacun leur son, qui vient du côté où ils se trouvent par rapport à vous.
 
-Version 0.6.3, pour la version 1.308 du jeu, DLC Baboulone émergée compris. Le mod parle **toutes les
+Version 0.6.4, pour la version 1.308 du jeu, DLC Baboulone émergée compris. Le mod parle **toutes les
 langues proposées par le jeu** et suit la langue choisie dans le jeu.
 
 <!-- LANGS -->
@@ -133,6 +133,8 @@ Fermer. L'ordre ne dépend jamais de l'endroit où les éléments sont dessinés
 - **Récolte** : elle commence en visant un bâtiment. Entrée lance les ouvriers, Tab vise un autre
   bâtiment, flèche gauche / flèche droite tournent la visée, maintenez Espace pour accélérer, Échap quitte.
 - **Chantiers** : les bâtiments en chantier ou en amélioration font aussi partie de la liste Tab de la récolte. Chaque ouvrier qui rebondit sur l'un d'eux le construit ; le mod annonce quand il est terminé. Entrée sur l'un d'eux dans la base lance la récolte en le visant.
+- **Les ouvriers l'atteindront-ils ?** Quand la récolte vise un bâtiment (Tab, ou Entrée dessus à la base), le mod suit le trajet des ouvriers comme le jeu les déplace et choisit un angle qui l'atteint : « les ouvriers le touchent directement », « les ouvriers l'atteignent en rebondissant sur un mur », « les ouvriers passent dessus » (champs de blé), ou « pas de chemin libre, Forêt est sur le passage ». Un bâtiment sans chemin libre n'est atteint que par chance : déplacez-le, ou celui qui gêne. Gauche / Droite disent ce que touche la ligne.
+- **Après une récolte**, le mod dit ce que chaque bâtiment en construction a reçu (« Maison hantée : 6 touches, de 40 à 55 pour cent »). Le résumé du jeu ne compte que les ressources : il dit « Récolte infructueuse » dès que rien n'a été récolté, même si les ouvriers ont construit.
 - **Extension** : Tab choisit une parcelle, Entrée l'achète.
 - **Disposition** : Tab choisit un bâtiment, Entrée le soulève, les flèches le déplacent, Entrée le pose.
 - **Explorer** (K) : les flèches avancent d'une case et disent ce qu'il y a : libre (et combien de cases libres suivent vers la droite et vers le bas), un bâtiment avec sa taille, ou un terrain non acheté. Tab / Maj+Tab sautent à la case libre suivante / précédente. K, Retour arrière ou Échap quittent. Les colonnes et rangées sont les mêmes que pour placer un bâtiment.
@@ -161,6 +163,7 @@ Fermer. L'ordre ne dépend jamais de l'endroit où les éléments sont dessinés
 | Maj (maintenir) | Aide au rattrapage (voir [Aides](#assists)) |
 | 1 à 7, 0 | Filtres de son (voir [Filtres de son](#sound-filters-number-keys)) |
 | H | Vie et effets d'état |
+| U | États avec les secondes restantes, et si vous pouvez bouger, et sinon pourquoi (gelé, repoussé par un coup, ennemis qui avancent). Quand un gel prend fin, le mod dit « Vous pouvez de nouveau bouger » |
 | J | Ennemis et boss |
 | K | Votre position |
 | G | Vitesse du jeu |
@@ -176,6 +179,8 @@ Chaque touche du mod peut être changée : voir [Changer les touches](#changing-
 Annoncé pendant le combat : le niveau au début, les boss et leur vie à 75, 50 et 25 pour cent, les dégâts
 et les soins, les effets d'état, les objets spéciaux quand ils tombent, « gains de niveau prêts, appuyez
 sur E », la fin de l'expédition.
+
+**Boss** : J donne la vraie vie du boss, la même que sa barre dans le jeu. Certains boss ne prennent des dégâts que sur un point faible : le corps du Roi Squelette ne peut pas être blessé, seule la couronne sur sa tête le peut, et son corps la protège de face, donc les balles l'atteignent après avoir rebondi sur les murs. J dit où est le point faible, et l'aide à la visée le prend pour cible.
 
 ## Sons de combat {#battle-sounds}
 

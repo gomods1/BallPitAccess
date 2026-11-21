@@ -3,6 +3,30 @@
 Player-facing changes to BALL x PIT Access, newest first. The release notes on GitHub are taken from the
 section of each version.
 
+## 0.6.4
+
+From a player's report: workers never built a Haunted House, a frozen hero with no way to tell why, and a
+boss that stayed at 100 percent.
+
+* **The harvest says whether the workers will reach a building**: when it aims at one (Tab, or Enter on it
+  in the base), the mod follows the workers' path the way the game moves them and picks an angle that
+  reaches it ("workers hit it straight", "workers reach it off a wall", "workers pass over it" for wheat
+  fields). If no angle does, it says so and names the building in the way ("no clear path, Forest is in the
+  way"): workers reach such a building only by chance. Before, the aim went at the building's centre, and
+  a building in front of it took every worker. Left / Right also say what the line hits.
+* **After a harvest the mod says what each building under construction got** ("Haunted House: 6 hits, 40
+  to 55 percent"). The game's summary only counts resources, so "A Fruitless Endeavor" did not mean the
+  workers missed.
+* **New key U: status effects and whether you can move**: each effect with its seconds left, then "You can
+  move", or why not (frozen, knocked back by a hit, teleporting, enemies advancing for turn-based
+  characters, a character that walks by itself). When a freeze ends the mod says "You can move again".
+* **Boss health is the real one**: some bosses keep their health in a part, and the mod read the main
+  piece, which never changes. The Skeleton King showed 100 percent all fight. J now gives the same health
+  as the game's boss bar, and the 75 / 50 / 25 percent announcements come.
+* **Weak spots**: the Skeleton King's body cannot be hurt at all, only the crown on his head, and his body
+  shields it from the front. J says so and where the crown is, and the aim assist goes for the crown
+  instead of the body.
+
 ## 0.6.3
 
 From a player's report: the game says workers can speed up a building under construction, and the mod had

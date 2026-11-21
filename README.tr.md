@@ -5,7 +5,7 @@ menüleri ekran okuyucun aracılığıyla seslendirir, oyunun tamamını klavyey
 alanını sese dönüştürür: düşmanların, toplarının, düşman atışlarının, TP kristallerinin ve özel eşyaların
 her birinin kendi sesi vardır ve bu ses, senin hangi tarafındaysa oradan gelir.
 
-Sürüm 0.6.3, oyunun 1.308 sürümü için, Yükselen Babil'in Sekme Bahçeleri (Risen Ballbylon) DLC'si dahil.
+Sürüm 0.6.4, oyunun 1.308 sürümü için, Yükselen Babil'in Sekme Bahçeleri (Risen Ballbylon) DLC'si dahil.
 Mod **oyunun sunduğu tüm dilleri** konuşur ve oyunun dil ayarını izler.
 
 <!-- LANGS -->
@@ -131,6 +131,8 @@ Sıra hiçbir zaman ögelerin ekranda nereye çizildiğine bağlı değildir.
 - **Hasat**: bir binaya nişan alarak başlar. Enter işçileri fırlatır, Tab başka bir binaya nişan alır,
   Sol ok / Sağ ok nişanı çevirir, hızlandırmak için Boşluk tuşunu basılı tut, Esc çıkar.
 - **İnşaat**: inşaat hâlindeki veya geliştirilen binalar da hasadın Tab listesindedir. Ondan seken her işçi onu inşa eder; bina tamamlanınca mod söyler. Üste birinin üzerinde Enter, ona nişan alan hasadı başlatır.
+- **İşçiler ulaşacak mı?** Hasat bir binayı hedeflediğinde (Tab ya da üste binanın üzerinde Enter), mod işçilerin yolunu oyunun onları hareket ettirdiği gibi izler ve ona ulaşan bir açı seçer: "işçiler doğrudan vurur", "işçiler bir duvardan sekerek ulaşır", "işçiler üzerinden geçer" (buğday tarlaları) ya da "açık yol yok, Orman önünde". Açık yolu olmayan bir binaya ancak şans eseri ulaşılır: onu ya da yoldaki binayı taşı. Sol / Sağ çizginin neye vurduğunu söyler.
+- **Bir hasattan sonra** mod inşa hâlindeki her binanın ne aldığını söyler ("Perili Ev: 6 vuruş, yüzde 40 → yüzde 55"). Oyunun kendi özeti yalnızca kaynakları sayar: hiçbir şey toplanmadığında, işçiler inşa etmiş olsa bile "Nafile Bir Çaba" der.
 - **Genişletme**: Tab bir arsa seçer, Enter satın alır.
 - **Yeniden düzenleme**: Tab bir bina seçer, Enter onu kaldırır, oklar taşır, Enter bırakır.
 - **Keşif** (K): oklar bir kare ilerler ve orada ne olduğunu söyler: boş (ve sağa ve aşağı kaç boş kare daha olduğu), boyutuyla bir bina ya da satın alınmamış arazi. Tab / Shift+Tab sonraki / önceki boş kareye atlar. K, Backspace veya Escape çıkar. Sütun ve satırlar bina yerleştirirken kullanılanlarla aynıdır.
@@ -159,6 +161,7 @@ Sıra hiçbir zaman ögelerin ekranda nereye çizildiğine bağlı değildir.
 | Shift (basılı tut) | Yakalama yardımı (bkz. [Yardımlar](#assists)) |
 | 1 ile 7 arası, 0 | Ses filtreleri (bkz. [Ses filtreleri](#sound-filters-number-keys)) |
 | H | Can ve durum etkileri |
+| U | Kalan saniyeleriyle durum etkileri, hareket edip edemeyeceğin ve edemiyorsan nedeni (dondun, bir darbeyle geri itildin, düşmanlar ilerliyor). Donma bitince mod "Yeniden hareket edebilirsin" der |
 | J | Düşmanlar ve patron |
 | K | Konumun |
 | G | Oyun hızı |
@@ -173,6 +176,8 @@ Her mod tuşu değiştirilebilir: bkz. [Tuşları değiştirme](#changing-keys).
 
 Savaş sırasında seslendirilenler: başlangıçta seviye, patronlar ve yüzde 75, 50 ve 25'teki canları, hasar ve
 can, durum etkileri, düştüklerinde özel eşyalar, "seviye atlama hazır, E tuşuna bas" ve turun sonu.
+
+**Boss'lar**: J, boss'un gerçek canını söyler; oyundaki boss çubuğuyla aynıdır. Bazı boss'lar yalnızca zayıf noktalarından hasar alır: İskelet Kral'ın gövdesi yaralanamaz, yalnızca başındaki taç yaralanabilir ve gövdesi onu önden korur; toplar ona duvarlardan sekerek ulaşır. J zayıf noktanın nerede olduğunu söyler ve nişan yardımı onu hedefler.
 
 ## Savaş sesleri {#battle-sounds}
 
