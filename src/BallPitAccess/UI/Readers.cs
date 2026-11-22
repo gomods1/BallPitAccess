@@ -300,6 +300,10 @@ namespace BallPitAccess.UI
                 var r = new FocusReadout(label + " " + Names.Shown(sdi.TxtValue), change.Length > 0 ? change : null);
                 string scaling = Names.Shown(sdi.TxtScaling);
                 if (scaling.Length > 0) r.Add(Loc.F("stat_scaling", scaling));
+                // The stat's tooltip (what it does) appears on the label's hover; the focus may sit on another part
+                // of the row (a player: "the tooltip for the intelligence stat is not read").
+                try { sdi.OnLabelHover(); } catch { }
+                r.AddAll(MenuReader.HoverLines());
                 return r;
             }
 
@@ -326,7 +330,7 @@ namespace BallPitAccess.UI
             if (awi != null)
             {
                 var c = awi.GetChar();
-                return c == null ? new FocusReadout(Loc.Get("no_worker")) : new FocusReadout(Names.Char(c), Loc.F("level_n", c.Lvl));
+                return c == null ? new FocusReadout(Loc.Get("no_worker")) : new FocusReadout(Names.Char(c), Loc.F("level_n", c.Lvl + 1));
             }
             var mi = Up<MasseuseItem>(go);
             if (mi != null) return new FocusReadout(Names.Char(mi._tgtChar), Names.Shown(mi.TxtStamina), Names.Shown(mi.TxtCost));
@@ -413,7 +417,7 @@ namespace BallPitAccess.UI
             catch { }
             if (hero != null)
             {
-                try { r.Add(Loc.F("level_n", hero.Lvl)); } catch { }
+                try { r.Add(Loc.F("level_n", hero.Lvl + 1)); } catch { }
                 r.Add(Names.UpgradeDesc(hero.GetInfo()));
             }
             return r;
@@ -462,10 +466,21 @@ namespace BallPitAccess.UI
         private static FocusReadout LevelUp(LevelUpBtn b)
         {
             var ui = LevelUpUI.I;
-            if (ui != null) try { ui.HoverBtn(b); } catch { }
             string name;
             if (b.ChoiceType == LvlUpChoiceType.kResource) name = b.NumResources + " " + Names.Resource(b.ResType);
             else name = Names.Upgrade(b.TgtInfo);
+            // HoverBtn rebuilds the panel's stat rows from a pool: right after it the rows are gone, so every read
+            // that hovered first found none (a player: "the stats of the upgrades aren't being read"). Hover only when
+            // the panel shows another choice, and then read again shortly.
+            bool hovered = false;
+            if (ui != null)
+            {
+                string showing = NamedText(ui, "TxUpgName");
+                if (showing.Length == 0 || name.Length == 0 || (showing.IndexOf(name, StringComparison.OrdinalIgnoreCase) < 0 && name.IndexOf(showing, StringComparison.OrdinalIgnoreCase) < 0))
+                {
+                    try { ui.HoverBtn(b); hovered = true; } catch { }
+                }
+            }
             if (name.Length == 0 && ui != null) name = Names.Shown(ui.LocDetailsName);
             string kind = null;
             try
@@ -495,18 +510,7 @@ namespace BallPitAccess.UI
                 r.Add(Names.Shown(ui.LocDetailsComboDesc1));
                 r.Add(Names.Shown(ui.LocDetailsComboDesc2));
                 r.Add(Names.Shown(ui.LocDetailsComboDetails));
-                try
-                {
-                    if (ui.WrapperDetailsStats != null && ui.WrapperDetailsStats.activeInHierarchy)
-                        foreach (var row in ui.WrapperDetailsStats.GetComponentsInChildren<LevelUpStatRow>(false))
-                        {
-                            if (row == null) continue;
-                            string label = Names.Shown(row.LocLabel), o = Names.Shown(row.TxtOldStat), n = Names.Shown(row.TxtNewStat);
-                            if (label.Length == 0) continue;
-                            r.Add(n.Length > 0 && n != o ? Loc.F("stat_change", label, o, n) : label + " " + o);
-                        }
-                }
-                catch { }
+                foreach (var line in StatRows(ui, b.transform)) r.Add(line);
             }
             // The panel follows the hover a frame or two late; its text is the one with the numbers filled in
             // (the bare translation has placeholders the mod can only drop).
@@ -517,8 +521,60 @@ namespace BallPitAccess.UI
                 if (desc.Length == 0 || (!filled && HasParams(b.TgtInfo)) || (panelName.Length > 0 && name.Length > 0 && !string.Equals(panelName, name, StringComparison.OrdinalIgnoreCase))) r.Retry = true;
             }
             if (desc.Length == 0) { desc = Names.UpgradeDesc(b.TgtInfo); r.Add(desc); }
+            if (hovered && b.ChoiceType != LvlUpChoiceType.kResource) r.Retry = true;
             if (Config.ReadDescriptions && desc.Length > 0) r.Summary += ". " + desc;
             return r;
+        }
+
+        /// <summary>
+        /// The level-up panel's stat rows ("Damage 27-48 to 36-66", "Bleed Stacks 2 to 4"): every active LevelUpStatRow of
+        /// the screen. The label's text sits on a child of the Localize object ("RowTop/Label"), so Names.Shown read
+        /// nothing and the rows were never spoken (a player: "the stats of the upgrades aren't being read").
+        /// </summary>
+        private static int _statRowLogs;
+
+        internal static List<string> StatRows(LevelUpUI ui, Transform near)
+        {
+            var lines = new List<string>();
+            try
+            {
+                // By the texts' own names: each row has a "Label" (in RowTop) and "StartStat" / "NewStat" (in RowBot).
+                // Looking the rows up by their component found none, although the screen showed them (2026-11-22).
+                var seen = new HashSet<IntPtr>();
+                // Each row is a LvlUpStatRow(Clone) with RowTop/Label and RowBot/StartStat, Arrow, NewStat
+                // (UI/CvsLevelUp/BackingDetails/Scroll View/Viewport/Lis/...). Found from its "StartStat" text with a
+                // scene-wide search; searching the screen's children found no rows although they were on screen.
+                var root = near != null ? near.root : ui.transform.root;
+                var ordered = new List<KeyValuePair<int, string>>();
+                foreach (var st in UnityEngine.Object.FindObjectsOfType<TMP_Text>())
+                {
+                    if (st == null || st.name != "StartStat" || !st.isActiveAndEnabled) continue;
+                    var bot = st.transform.parent;
+                    var row = bot != null ? bot.parent : null;
+                    if (row == null || !seen.Add(row.Pointer)) continue;
+                    string label = "", o = Speech.Clean(st.text), n = "";
+                    for (int i = 0; i < row.childCount; i++)
+                    {
+                        var part = row.GetChild(i);
+                        for (int j = 0; j < part.childCount; j++)
+                        {
+                            var tt = part.GetChild(j).GetComponent<TMP_Text>();
+                            if (tt == null || !tt.isActiveAndEnabled) continue;
+                            if (tt.name == "Label") label = Speech.Clean(tt.text);
+                            else if (tt.name == "NewStat") n = Speech.Clean(tt.text);
+                        }
+                    }
+                    o = NoDash(o); n = NoDash(n);
+                    if (label.Length == 0 || (o.Length == 0 && n.Length == 0)) continue;
+                    ordered.Add(new KeyValuePair<int, string>(row.GetSiblingIndex(), n.Length > 0 && n != o ? Loc.F("stat_change", label, o.Length > 0 ? o : "0", n) : label + " " + (o.Length > 0 ? o : n)));
+                }
+                // In the panel's order, top first (the search returns them in any order).
+                ordered.Sort((a, c) => a.Key.CompareTo(c.Key));
+                foreach (var kv in ordered) lines.Add(kv.Value);
+                if (Config.Debug && _statRowLogs++ < 40) Log.Info("Stat rows: " + lines.Count + " under " + root.name + " (LevelUpUI.I under " + ui.transform.root.name + ", same " + (root.Pointer == ui.transform.root.Pointer) + ")");
+            }
+            catch (Exception ex) { if (Config.Debug) Log.Warn("Stat rows: " + ex.Message); }
+            return lines;
         }
 
         /// <summary>The upgrade's description has {[PARAM]} placeholders (its numbers come from the game).</summary>
@@ -562,6 +618,35 @@ namespace BallPitAccess.UI
             return false;
         }
 
+        /// <summary>The name an equipment panel (encyclopedia, evolution choice, pause equipment) shows right now.</summary>
+        private static string PanelName(EquipmentInfoPanel p)
+        {
+            try
+            {
+                if (p == null || !p.gameObject.activeInHierarchy) return "";
+                string n = Names.ShownAt(p.LocEquipName);
+                if (n.Length == 0) n = NamedText(p, "TxtName");
+                return n;
+            }
+            catch { return ""; }
+        }
+
+        /// <summary>
+        /// The equipment panel does not show this item yet. It fills in a few hundred milliseconds after the focus
+        /// moves (measured 2026-11-22: the encyclopedia's panel still named the previous entry 0.08 s after the
+        /// move, so the details of each entry were the ones of the entry above). An empty name counts as behind.
+        /// </summary>
+        private static bool PanelShowsOther(EquipmentInfoPanel p, string name)
+        {
+            if (p == null || string.IsNullOrEmpty(name)) return false;
+            bool on;
+            try { on = p.gameObject.activeInHierarchy; } catch { on = false; }
+            if (!on) return false;
+            string shown = PanelName(p);
+            if (shown.Length == 0) return true;
+            return shown.IndexOf(name, StringComparison.OrdinalIgnoreCase) < 0 && name.IndexOf(shown, StringComparison.OrdinalIgnoreCase) < 0;
+        }
+
         private static List<string> Joined(params List<string>[] parts)
         {
             var all = new List<string>();
@@ -574,14 +659,46 @@ namespace BallPitAccess.UI
             var ui = LevelUpUI.I;
             if (ui != null) try { ui.HoverEvo(e, true); } catch { }
             var inf = e.GetInfo();
-            var r = new FocusReadout(Names.Upgrade(inf), Loc.Get("kind_evolution"));
-            if (ui != null)
+            string evoName = Names.Upgrade(inf);
+            var r = new FocusReadout(evoName.Length > 0 ? evoName : Loc.Get("unknown_item"), Loc.Get("kind_evolution"));
+            // What it is made of: the two icons a sighted player sees on the card ("Iron x Burn").
+            string from = "";
+            try
             {
-                var panel = Lines(ui.EvoSelectInfoPanel);
-                if (PanelBehind(ui.EvoSelectInfoPanel, e, panel)) r.Retry = true;
-                r.AddAll(panel);
+                var comps = inf != null && inf.MergeComponents != null && inf.MergeComponents.Length > 0 ? inf.MergeComponents[0] : null;
+                var names = new List<string>();
+                for (int i = 0; comps != null && i < comps.Length; i++) if (comps[i] != null) names.Add(Names.Upgrade(comps[i]));
+                if (names.Count > 0) from = Loc.F("evo_from", string.Join(" + ", names));
             }
-            string desc = r.Details.Count > 1 ? r.Details[1] : Names.UpgradeDesc(inf);
+            catch { }
+            if (from.Length > 0) r.Summary += ", " + from;
+            // The description with its numbers: the card's info panel is only shown on a mouse hover, and the bare
+            // translation lost its numbers ("Deals - damage", "Inflicts stacks of bleed"). Fill the game's panel for
+            // this evolution (EquipmentInfoPanel.SetUpgrade) and read its texts.
+            string desc = "", dmg = "";
+            var panel = ui != null ? ui.EvoSelectInfoPanel : null;
+            if (panel != null && inf != null)
+            {
+                try
+                {
+                    panel.SetUpgrade(inf, 0);
+                    var dp = panel.DescPanel;
+                    if (dp != null)
+                    {
+                        desc = Names.Filled(dp.LocDesc, dp.ParamsDesc);
+                        if (desc.Length == 0 && dp.TxtDesc != null && !dp.TxtDesc.text.Contains("{[")) desc = Speech.Clean(dp.TxtDesc.text);
+                    }
+                    dmg = Names.Filled(panel.LocEquipDmg, panel.ParamsEquipDmg);
+                    if (Config.Debug) Log.Info("Evolution " + evoName + ": desc '" + desc + "', damage '" + dmg + "'");
+                }
+                catch (Exception ex) { if (Config.Debug) Log.Warn("Evolution panel: " + ex.Message); }
+                var lines = Lines(panel);
+                if (lines.Count > 0 && PanelShowsOther(panel, evoName)) r.Retry = true;
+                if (desc.Length == 0) foreach (var l in lines) if (l != evoName && l.Length > 20) { desc = l; break; }
+            }
+            if (desc.Length == 0) desc = Names.UpgradeDesc(inf);
+            r.Add(from);
+            r.Add(dmg);
             r.Add(desc);
             if (Config.ReadDescriptions && desc.Length > 0) r.Summary += ". " + desc;
             return r;
@@ -589,9 +706,10 @@ namespace BallPitAccess.UI
 
         private static FocusReadout PauseEquip(PauseEquipInfoBtn p)
         {
+            // Levels count from 0 inside the game; the game shows them from 1 ("Bleed, level 1" was its Level 2).
             string name = "", lvl = null;
-            if (p._tgtHero != null) { name = Names.Upgrade(p._tgtHero.GetInfo()); lvl = Loc.F("level_n", p._tgtHero.Lvl); }
-            else if (p._tgtPassive != null) { name = Names.Upgrade(p._tgtPassive.GetInfo()); lvl = Loc.F("level_n", p._tgtPassive.Lvl); }
+            if (p._tgtHero != null) { name = Names.Upgrade(p._tgtHero.GetInfo()); lvl = Loc.F("level_n", p._tgtHero.Lvl + 1); }
+            else if (p._tgtPassive != null) { name = Names.Upgrade(p._tgtPassive.GetInfo()); lvl = Loc.F("level_n", p._tgtPassive.Lvl + 1); }
             else if (p._tgtPet != null)
             {
                 var m = p._tgtPet.GetMetaInst();
@@ -599,10 +717,24 @@ namespace BallPitAccess.UI
             }
             var r = new FocusReadout(name, lvl);
             var ui = PauseUI.I;
+            // The details panel follows the game's own preview call, not the focus: it kept describing the first item
+            // while the focus moved on (a player: "the tooltips are read in the wrong order").
+            if (ui != null)
+                try
+                {
+                    if (p._tgtHero != null) ui.PreviewHero(p, p._tgtHero);
+                    else if (p._tgtPassive != null) ui.PreviewPassive(p, p._tgtPassive);
+                    else if (p._tgtPet != null) ui.PreviewPet(p, p._tgtPet);
+                }
+                catch (Exception ex) { if (Config.Debug) Log.Warn("Pause preview: " + ex.Message); }
             if (ui != null)
             {
                 var panel = Lines(ui.EquipInfoPanel);
-                if (PanelBehind(ui.EquipInfoPanel, p, panel)) r.Retry = true;
+                if (PanelBehind(ui.EquipInfoPanel, p, panel) || (p._tgtPet == null && PanelShowsOther(ui.EquipInfoPanel, name)))
+                {
+                    r.Retry = true;
+                    if (Config.Debug) Log.Info("Pause equipment panel behind: focus '" + name + "', panel '" + PanelName(ui.EquipInfoPanel) + "'");
+                }
                 r.AddAll(panel);
             }
             return r;
@@ -687,12 +819,15 @@ namespace BallPitAccess.UI
             try { inst = inf.GetInst(); } catch { }
             var ui = CharSelectUI.I;
             bool locked = inst != null && !inst.IsUnlocked;
-            var r = new FocusReadout(Names.Char(inf), locked ? Loc.Get("locked") : inst != null ? Loc.F("level_n", inst.Lvl) : null);
+            var r = new FocusReadout(Names.Char(inf), locked ? Loc.Get("locked") : inst != null ? Loc.F("level_n", inst.Lvl + 1) : null);
             try { if (cs.WrapperBonus != null && cs.WrapperBonus.activeInHierarchy) r.Summary += ", " + Loc.F("bonus_n", Names.Shown(cs.TxtBonusAmt)); } catch { }
             if (locked && ui != null) { string req = Names.Shown(ui.LocReqDesc); if (req.Length > 0) { r.Summary += ". " + req; r.Add(req); } }
             r.Add(Tr(inf.GetGameplayDescSlug()));
             r.Add(Tr(inf.GetFlavorDescSlug()));
             if (inf.StarterUpgrade != null) r.Add(Loc.F("starter_ball", Names.Upgrade(inf.StarterUpgrade)));
+            // The stats the character starts a run with (the game's "More Stats..." screen, which threw an exception
+            // when opened from the base on a fresh start: 2026-11-22, UpgradeMgr.CalculateStats).
+            if (!locked && inst != null) { var st = CharStats(inst, inf); if (st.Length > 0) r.Add(st); }
             if (ui != null)
             {
                 var panel = Lines(ui.DetailsPanel);
@@ -700,6 +835,75 @@ namespace BallPitAccess.UI
                 r.AddAll(panel);
             }
             return r;
+        }
+
+        /// <summary>"Stats: Endurance 3, Strength 2, ...": a character's stats as the game's stats panel fills them.</summary>
+        internal static string CharStats(CharMetaInst meta, CharInfo inf)
+        {
+            var parts = new List<string>();
+            try
+            {
+                var csu = CharStatsUI.I;
+                var grp = csu != null && csu.InfoPanel != null ? csu.InfoPanel.StatGrp : null;
+                if (grp != null && meta != null)
+                {
+                    grp.InitChar(meta);
+                    var items = grp.StatItems;
+                    for (int i = 0; items != null && i < items.Length; i++)
+                    {
+                        var it = items[i];
+                        if (it == null) continue;
+                        string label = StatName(it.Type);
+                        string v = it.TxtValue != null ? Speech.Clean(it.TxtValue.text) : "";
+                        if (label.Length > 0 && v.Length > 0) parts.Add(label + " " + v);
+                    }
+                }
+            }
+            catch (Exception ex) { if (Config.Debug) Log.Warn("CharStats from the panel: " + ex.Message); }
+            if (parts.Count == 0)
+            {
+                // No stats panel to fill: the character's base stats plus the bonus stats it earned.
+                try
+                {
+                    var st = inf != null ? inf.Stats : null;
+                    var bonus = meta != null ? meta.BonusStats : null;
+                    for (int i = 0; st != null && i < st.Length && i < (int)StatType.kNum; i++)
+                    {
+                        int v = st[i] + (bonus != null && i < bonus.Length ? bonus[i] : 0);
+                        parts.Add(StatName((StatType)i) + " " + v);
+                    }
+                }
+                catch (Exception ex) { if (Config.Debug) Log.Warn("CharStats from the data: " + ex.Message); }
+            }
+            return parts.Count > 0 ? Loc.F("char_stats", string.Join(", ", parts)) : "";
+        }
+
+        private static readonly Dictionary<StatType, string> StatNames = new Dictionary<StatType, string>();
+
+        /// <summary>A stat's name in the game's words, read from the stat rows the game labels (cached once seen).</summary>
+        internal static string StatName(StatType t)
+        {
+            if (StatNames.TryGetValue(t, out var n) && n.Length > 0) return n;
+            // The game's term for the stat's label (found with the dev command "terms Endurance").
+            // Two keep older names: Strength is "hero_damage", Dexterity "acceleration".
+            string key = t == StatType.kStrength ? "hero_damage" : t == StatType.kDexterity ? "acceleration" : t.ToString().Substring(1).ToLowerInvariant();
+            n = Tr("Generated/stat_" + key + "_label");
+            if (n.Length > 0) { StatNames[t] = n; return n; }
+            try
+            {
+                foreach (var it in Resources.FindObjectsOfTypeAll<StatDisplayItem>())
+                {
+                    if (it == null || it.Type != t || it.LocLabel == null) continue;
+                    string term = it.LocLabel.Term;
+                    if (!string.IsNullOrEmpty(term)) n = Tr(term);
+                    if (n.Length == 0 && it.LocLabel.GetComponent<TMP_Text>() != null) n = Speech.Clean(it.LocLabel.GetComponent<TMP_Text>().text);
+                    if (n.Length > 0) { Log.Info("Stat name " + t + ": term '" + term + "' -> " + n); break; }
+                }
+            }
+            catch { }
+            if (n.Length == 0) return Names.FromEnum(t.ToString());
+            StatNames[t] = n;
+            return n;
         }
 
         private static FocusReadout LevelSelect(LevelSelectItem ls, GameObject go)
@@ -786,11 +990,8 @@ namespace BallPitAccess.UI
             // panel names this entry, MenuReader looks again shortly (at most 4 times).
             if (ui != null && e.TgtInf != null && name.Length > 0)
             {
-                string panelName = "";
-                try { if (ui.ItemInfPanel != null) panelName = Names.Shown(ui.ItemInfPanel.LocEquipName); } catch { }
-                if (panelName.Length > 0 && panelName.IndexOf(name, StringComparison.OrdinalIgnoreCase) < 0
-                    && name.IndexOf(panelName, StringComparison.OrdinalIgnoreCase) < 0)
-                { r.Retry = true; Log.Info("Encyclopedia panel behind: focus '" + name + "', panel '" + panelName + "'"); }
+                if (PanelShowsOther(ui.ItemInfPanel, name))
+                { r.Retry = true; if (Config.Debug) Log.Info("Encyclopedia panel behind: focus '" + name + "', panel '" + PanelName(ui.ItemInfPanel) + "'"); }
             }
             else if (ui != null && e.PieceInf != null)
             {

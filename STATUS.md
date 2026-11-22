@@ -412,3 +412,55 @@ Two reports: "I can only move two rows or columns at a time" when rearranging, a
   `SetAimDir` while the right stick is idle), L3 hold = catch, auto-repeat on a held D-pad.
   Wheat field and forest cannot rotate (`CanRotatePlacePreview` false): Y rotate untested on a rotatable one.
 - The Xbox Wireless Controller on this machine is paired over Bluetooth but was off: XInput saw no pad.
+
+### Session 12 (2026-11-22): tester report after the Haunted House (verified in game, scripted, test save)
+Eleven points from a player; all fixed and checked in the running game (test save, dev.txt) except the
+"silent third evolution", which did not reproduce (see below). Not released: CHANGELOG has a `## 0.7.1` section.
+- **Details lag** (encyclopedia, pause equipment, evolutions): the game fills its details panels a few hundred ms
+  after focus; the details were captured at 80 ms, so Ctrl+Up read the previous item. `Buffers.SetDetails` takes a
+  `fresh` reader (MenuReader re-describes the focused object on the first Ctrl+Up); retries up to 10;
+  `Readers.PanelShowsOther` compares the equipment panel's visible name. **Pause equipment**: the panel follows
+  `PauseUI.PreviewHero/PreviewPassive/PreviewPet` only; the reader calls them.
+- **Level-up stat rows** (`LvlUpStatRow(Clone)/RowTop/Label`, `RowBot/StartStat|NewStat` under
+  `CvsLevelUp/BackingDetails`): `LevelUpUI.HoverBtn` rebuilds them from a pool, so a read right after it found none.
+  The reader hovers only when `TxUpgName` shows another choice, then retries; rows are found from "StartStat"
+  texts (`FindObjectsOfType<TMP_Text>`), sorted by sibling index.
+- **Evolutions**: the card's info panel only shows on a mouse hover; the reader fills it with
+  `EquipmentInfoPanel.SetUpgrade(inf, 0)` and reads `DescPanel` through `Names.Filled`; ingredients from
+  `MergeComponents[0]`. Fuser list: 3 evolutions per page, `BtnFuserNext` first in the list. The silent third
+  evolution did not reproduce (4 evolutions, both pages read); MenuReader now reads known items even when
+  inactive or without a CoolSelectable and logs `Focus not announced` / `Focus on a hidden object`.
+- **Base tooltips**: `BaseNav.Descriptions` uses `BuildingInst.ApplyDesc` / `ApplyHousingUpgradeDesc` into the hover
+  popup's Localize + params, then `Names.Filled`. Stat sprites (`stat_str|dex|int|spd|end|ldr`) → stat names
+  (`Loc.StatSprite`); stat label terms are `Generated/stat_<x>_label` with strength = `hero_damage`, dexterity =
+  `acceleration` (dev `terms Text` lists I2 terms).
+- **Character stats**: `Readers.CharStats` fills `CharStatsUI.I.InfoPanel.StatGrp.InitChar(meta)`; fallback
+  `CharInfo.Stats + BonusStats`. The game's own "More Stats..." threw `NullReferenceException` in
+  `UpgradeMgr.CalculateStats` (from the base on a fresh start). Levels: `CharMetaInst.Lvl`, `HeroInst.Lvl`,
+  `PassiveInst.Lvl` are 0-based (the game shows +1).
+- **Placement geometry (from the disassembly of `BaseGridMgr.ClampBuildingPreview` and `CanBuildPlacePreview`)**:
+  tile centres are `GetWorldPos(x, y)`; the game snaps a preview to tile centres for an odd size and to corners for
+  an even one, by `GetTileSize()` (which swaps on odd rotations). `SetHover(force)` does not snap: keyboard moves
+  now go through `ClampBuildingPreview` (`Placement.Snap`); before, buildings could be placed half a tile off and the
+  outer ring looked unbuildable. The fit test builds temporary colliders from `BuildingInfo.PolyColPoints(Scaled)`
+  (points from the box corner, centred on the hover point, turned with `ColWrapper`); the preview's own colliders are
+  off and parked at the origin. `Game/Footprint.cs` puts that polygon where the preview stands (5 points per tile,
+  3 inside = covered), learns shapes per type and rotation, describes them ("open corner top left"); rotation is
+  clockwise (Haunted House: open corner bottom left, top left, top right, bottom right). The chunk grid marks a
+  building's whole box even where an L-shape is open, and shapes interlock (a Haunted House's open corner sat on a
+  wheat field): `Footprint.Occupancy` takes tile owners from `Collider2D.OverlapPoint` on placed buildings' colliders,
+  the chunk grid only for non-polygon buildings. Rearrange also has a place preview and can turn buildings.
+- **Paths (I key, Home)**: `Game/Paths.cs` sweeps 5–175° from the aiming spot once per frame through the game's
+  physics (preview / picked-up colliders switched off), then tests candidate tiles as boxes arithmetically. The hero
+  object is not at the aiming spot outside the harvest ((0, -3.5) on the test save): `Harvest.AimOrigin` keeps the
+  spot seen while aiming in `UserData/BallPitAccess/aim_origin.txt`. Home scores all free spots × rotations
+  (~0.3 s), moves once, verifies with `CanBuildPlacePreview`, next candidate if refused.
+- **Explore**: Page Down / Page Up next / previous building (reading order), with the shape of placed polygons.
+- **Testing without stealing focus**: with `focus on`, the mod now ignores real keys unless the game window is
+  really in front (the player's typing elsewhere reached it). The game takes the foreground at start, after the
+  splash and on scene loads; minimizing breaks its UI (screen size 0) and restoring makes it take the foreground
+  again. `tools/keepbehind.ps1` (run in the background) gives the foreground back to the player's last window and
+  puts the game at the bottom; the player has to Alt+Tab away once. `tools/launch.ps1` / `minimize.ps1` exist too.
+- New dev commands: `tilemap kType`, `rotate N`, `gamestate kX` (kPaused, kLevelUp, kPickTreasure = fuser),
+  `bback`, `terms Text`, `findtext Name`, `evosetup N` (own both balls of N evolutions at max level).
+  The game's `kAddBall` / `kAddPassive` / `kMaxOutItems` cheats do nothing in the shipped build; `kLevelUp` works.

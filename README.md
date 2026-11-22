@@ -5,7 +5,7 @@ menu through your screen reader, lets you use the whole game with the keyboard, 
 into sound: enemies, your balls, enemy shots, XP crystals and special items all have their own sounds,
 coming from their side of you.
 
-Version 0.7.0, for game version 1.308, including the Risen Ballbylon DLC. The mod speaks **every language
+Version 0.7.1, for game version 1.308, including the Risen Ballbylon DLC. The mod speaks **every language
 the game offers** and follows the game's language setting.
 
 <!-- LANGS -->
@@ -126,6 +126,7 @@ order never depends on where things are drawn on the screen.
 | H | Resources and day |
 | J | Harvest and workers |
 | K | Explore the base tile by tile |
+| I | Placing or moving a building: what this spot gets in the way of |
 
 - **Building**: arrows move the building one tile and say whether it fits, Enter builds, R rotates, Home
   jumps to a free spot, Backspace cancels.
@@ -138,6 +139,8 @@ order never depends on where things are drawn on the screen.
 - **Rearrange**: Tab chooses a building, Enter picks it up, arrows move it, Enter drops it.
 - **Explore** (K): the arrows walk one tile at a time and say what is there: free (and how many free tiles follow to the right and down), a building with its size, or land not bought yet. Tab / Shift+Tab jump to the next / previous free tile. K, Backspace or Escape leave. Columns and rows are the same ones placing a building uses.
 - The build menu says how much room each building takes ("3 wide, 2 tall"), and placing starts with its name and size.
+- **Placing or moving a building**: the position says what blocks it ("blocked by Forest"). I says whether the workers reach the spot and which buildings it would cut off or leave reachable only off a wall. Home finds the best free spot, one the workers hit straight that cuts nobody off, and turns the building to fit. After R the new shape is said: some buildings, like the Haunted House, are not rectangles ("open corner top left"). Rearranging can turn buildings too.
+- **Explore**: Page Down / Page Up jump to the next / previous building and say where it is, its size and its shape.
 
 ## Battle
 

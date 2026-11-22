@@ -3,6 +3,39 @@
 Player-facing changes to BALL x PIT Access, newest first. The release notes on GitHub are taken from the
 section of each version.
 
+## 0.7.1
+
+From a player's report after building the Haunted House.
+
+* **Building tooltips say their numbers and bonuses**: Tab through your buildings and Control Up said "Harvest
+  to gain wheat" without the count, "All characters gain + bonus" without the amount, and a house only "A house
+  for The Itchy Finger". The details now use the game's own filled-in texts, including what a house's upgrade
+  gives ("Nearby Stat Bonus buildings provide an additional +1 bonus (strength dexterity …)").
+* **Encyclopedia, evolutions and pause equipment read the right item**: the details often belonged to the item
+  read before. The mod now waits for the game's panel to show the focused item, and reads it again when you
+  press Control Up. In the pause menu's equipment the details stayed on the first item: fixed.
+* **Upgrade stats are read**: on the level-up screen the stat rows ("Damage: 27-48 to 36-66", "Bleed Stacks: 2
+  to 4") were never spoken. They are now, in screen order.
+* **Evolutions with their numbers and ingredients**: "Hemorrhage, evolution, made from Bleed + Iron. Inflicts 3
+  stacks of bleed…". Before, the numbers were missing ("Deals - damage").
+* **Character stats before a run**: the character list's details end with the stats it starts with
+  ("Stats: Endurance 7, Strength 9, …"). The game's own "More Stats..." button failed in some cases.
+* **The Intelligence tooltip** (and every stat's) is read with Control Up.
+* **Levels are the game's**: characters and equipment said one level less than the game shows.
+* **Where a building fits, and whose way it blocks** (placing and rearranging):
+  * The position says what is in the way: "column 8, row 6, blocked by Cozy Home".
+  * **I** says whether the workers reach the spot and which buildings it would cut off ("Workers hit it
+    straight, across 37 degrees. Cuts off Villa (under construction). Cozy Home only reachable off a wall").
+  * **Home** finds the best free spot (the workers hit it straight, it cuts nobody off) and turns the building
+    to fit, in a moment. Before, it tried the free tiles one by one with the game's move sound and on a full base
+    seemed never to end.
+  * **R** says the new shape: some buildings are not rectangles. The Haunted House is three tiles of a square,
+    and turning it moves the open corner ("Turned, open corner top left").
+  * Moving with the arrows keeps the building on the game's grid; buildings could end up half a tile off.
+* **Explore**: Page Down / Page Up jump to the next / previous building with its position, size and shape.
+* Stat icons in texts are read as the stat's name ("+1 bonus Dexterity", not "stat dex Dexterity"), and the title
+  glyph in "THE BONE x YARD" is gone.
+
 ## 0.7.0
 
 From two players' reports: rearranging seemed to move buildings two rows or columns at a time, and a

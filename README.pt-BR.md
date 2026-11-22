@@ -5,7 +5,7 @@ pelo seu leitor de tela, permite usar o jogo inteiro pelo teclado e transforma o
 inimigos, suas esferas, disparos inimigos, cristais de EXP e itens especiais têm cada um o seu som, que
 vem do lado em que estão em relação a você.
 
-Versão 0.7.0, para a versão 1.308 do jogo, incluindo o DLC Bolalônia Elevada (Risen Ballbylon). O mod fala
+Versão 0.7.1, para a versão 1.308 do jogo, incluindo o DLC Bolalônia Elevada (Risen Ballbylon). O mod fala
 **todos os idiomas que o jogo oferece** e segue o idioma configurado no jogo.
 
 <!-- LANGS -->
@@ -129,6 +129,7 @@ Fechar. A ordem nunca depende de onde as coisas estão desenhadas na tela.
 | H | Recursos e dia |
 | J | Colheita e trabalhadores |
 | K | Explorar a base casa por casa |
+| I | Posicionando ou movendo um prédio: o que este lugar atrapalha |
 
 - **Construção**: as setas movem a edificação um bloco e dizem se ela cabe, Enter constrói, R gira, Home
   pula para um espaço livre, Backspace cancela.
@@ -142,6 +143,8 @@ Fechar. A ordem nunca depende de onde as coisas estão desenhadas na tela.
 - **Reorganizar**: Tab escolhe uma edificação, Enter pega, as setas movem, Enter solta.
 - **Explorar** (K): as setas andam uma casa e dizem o que há nela: livre (e quantas casas livres seguem para a direita e para baixo), uma construção com o tamanho, ou terreno não comprado. Tab / Shift+Tab pulam para a próxima / anterior casa livre. K, Backspace ou Esc saem. As colunas e linhas são as mesmas usadas ao posicionar uma construção.
 - O menu de construção diz quanto espaço cada construção ocupa ("3 de largura, 2 de altura"), e o posicionamento começa com o nome e o tamanho.
+- **Posicionar ou mover um prédio**: a posição diz o que a bloqueia ("bloqueado por Floresta"). I diz se os trabalhadores alcançam o lugar e quais prédios ele isolaria ou deixaria alcançáveis só ricocheteando numa parede. Home encontra o melhor lugar livre, que os trabalhadores acertam em linha reta e que não isola ninguém, e gira o prédio para caber. Depois de R a nova forma é dita: alguns prédios, como a casa assombrada, não são retângulos ("canto aberto em cima à esquerda"). Ao reorganizar também dá para girar os prédios.
+- **Explorar**: Page Down / Page Up pulam para o próximo prédio / o anterior e dizem onde ele está, o tamanho e a forma.
 
 ## Batalha {#battle}
 

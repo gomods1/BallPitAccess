@@ -93,7 +93,7 @@ namespace BallPitAccess.Game
             if (_unmutePending) _unmutePending = false;
             else Mute(true);
             Log.Info($"Explore open: grid x {BaseGrid.MinX}..{BaseGrid.MaxX} y {BaseGrid.MinY}..{BaseGrid.MaxY}, {_free.Count} free, start ({_x},{_y})");
-            Speech.SayMenu(Loc.F("explore_start", _free.Count, BaseGrid.NumCols, BaseGrid.NumRows, Bindings.KeyOf("position")) + ". " + Describe(_x, _y));
+            Speech.SayMenu(Loc.F("explore_start", _free.Count, BaseGrid.NumCols, BaseGrid.NumRows, Bindings.KeyOf("position")) + ". " + Loc.Get("explore_keys") + ". " + Describe(_x, _y));
         }
 
         internal static void Close(bool say)
@@ -137,6 +137,8 @@ namespace BallPitAccess.Game
                 else if (Keys.Pressed(Keys.VK_UP)) { Keys.Consume(); Move(0, -BaseGrid.Down); }
                 else if (Keys.Pressed(Keys.VK_DOWN)) { Keys.Consume(); Move(0, BaseGrid.Down); }
                 else if (Keys.Pressed(Keys.VK_TAB)) { Keys.Consume(); JumpFree(Keys.Shift ? -1 : 1); }
+                else if (Keys.Pressed(Keys.VK_NEXT)) { Keys.Consume(); JumpBuilding(1); }
+                else if (Keys.Pressed(Keys.VK_PRIOR)) { Keys.Consume(); JumpBuilding(-1); }
                 else if (Keys.Pressed(Keys.VK_RETURN)) { Keys.Consume(); _lastBuilding = IntPtr.Zero; Speech.SayMenu(Describe(_x, _y)); }
                 else if (Keys.Pressed(Keys.VK_BACK) || Keys.Pressed(Keys.VK_ESCAPE)) { Keys.Consume(); Close(true); }
                 else if (Keys.Pressed(Keys.VK_HOME) || Keys.Pressed(Keys.VK_END)) Keys.Consume();
@@ -202,6 +204,37 @@ namespace BallPitAccess.Game
             Speak();
         }
 
+        /// <summary>
+        /// Page Down / Page Up: the next / previous building in reading order (top row first), the cursor on its top-left
+        /// tile (a player: "there should be a way to go to the next and previous building to view their coordinates").
+        /// </summary>
+        private static void JumpBuilding(int dir)
+        {
+            var bm = BuildingMgr.I;
+            var tops = new List<KeyValuePair<Vector2Int, BuildingInst>>();
+            if (bm != null && bm.BuildingsById != null)
+                foreach (var kv in bm.BuildingsById)
+                {
+                    var b = kv.Value;
+                    if (b == null || b.Obj == null) continue;
+                    var tl = BaseGrid.TopLeftTiles(b);
+                    if (tl.HasValue && BaseGrid.Inside(tl.Value.x, tl.Value.y)) tops.Add(new KeyValuePair<Vector2Int, BuildingInst>(tl.Value, b));
+                }
+            if (tops.Count == 0) { Speech.SayMenu(Loc.Get("explore_no_building")); return; }
+            tops.Sort((a, c) => Order(a.Key.x, a.Key.y).CompareTo(Order(c.Key.x, c.Key.y)));
+            // The building the cursor is on counts as the current one, wherever on it the cursor is.
+            var here = BaseGrid.BuildingAt(_x, _y);
+            int cur = Order(_x, _y);
+            if (here != null) { var tl = BaseGrid.TopLeftTiles(here); if (tl.HasValue) cur = Order(tl.Value.x, tl.Value.y); }
+            KeyValuePair<Vector2Int, BuildingInst>? pick = null;
+            if (dir > 0) { foreach (var t in tops) if (Order(t.Key.x, t.Key.y) > cur) { pick = t; break; } if (pick == null) pick = tops[0]; }
+            else { for (int i = tops.Count - 1; i >= 0; i--) if (Order(tops[i].Key.x, tops[i].Key.y) < cur) { pick = tops[i]; break; } if (pick == null) pick = tops[tops.Count - 1]; }
+            _x = pick.Value.Key.x; _y = pick.Value.Key.y;
+            _lastBuilding = IntPtr.Zero;
+            int n = tops.FindIndex(t => t.Value.Pointer == pick.Value.Value.Pointer) + 1;
+            Speech.SayMenu(Describe(_x, _y) + ", " + Loc.F("n_of_m", n, tops.Count));
+        }
+
         private static string Describe(int x, int y)
         {
             string what = What(x, y);
@@ -236,6 +269,7 @@ namespace BallPitAccess.Game
                     bool same = inst.Pointer == prev;
                     _lastBuilding = inst.Pointer;
                     string size = same ? "" : BaseGrid.SizeTiles(inst);
+                    if (!same) { string shape = Footprint.PlacedShape(inst); if (shape.Length > 0) size += ", " + shape; }
                     if (Config.Debug && !same)
                     {
                         var bl = inst.GetBotLeftGridPos();

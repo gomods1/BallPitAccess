@@ -1012,10 +1012,10 @@ namespace BallPitAccess.Game
                 }
                 var heroes = save.Heroes;
                 for (int i = 0; heroes != null && i < heroes.Count; i++)
-                    if (heroes[i] != null) lines.Add(Loc.F("equip_ball", Names.Upgrade(heroes[i].GetInfo()), heroes[i].Lvl));
+                    if (heroes[i] != null) lines.Add(Loc.F("equip_ball", Names.Upgrade(heroes[i].GetInfo()), heroes[i].Lvl + 1));
                 var pas = save.Passives;
                 for (int i = 0; pas != null && i < pas.Count; i++)
-                    if (pas[i] != null) lines.Add(Loc.F("equip_passive", Names.Upgrade(pas[i].GetInfo()), pas[i].Lvl));
+                    if (pas[i] != null) lines.Add(Loc.F("equip_passive", Names.Upgrade(pas[i].GetInfo()), pas[i].Lvl + 1));
             }
             catch (Exception ex) { Log.Warn("Equipment: " + ex.Message); }
             Speech.SayMenu(head + (lines.Count > 0 ? ". " + string.Join(", ", lines) : ""));

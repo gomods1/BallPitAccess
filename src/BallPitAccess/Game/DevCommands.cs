@@ -311,6 +311,122 @@ namespace BallPitAccess.Game
                     try { var bm = BallMgr.I; if (bm != null) { var g = bm.GetCurAimDir(); s2 += " game aim " + (Mathf.Atan2(g.y, g.x) * Mathf.Rad2Deg).ToString("0.0"); } } catch { }
                     return s2;
                 }
+                case "tilemap":
+                {
+                    // tilemap kHauntedHouse: the tiles each building of that type covers in the chunk grid (# = it),
+                    // with its rotation, and the info's inner grid; for the shape / rotation model of placement.
+                    var bt = (BuildingType)Enum.Parse(typeof(BuildingType), arg);
+                    var bm = BuildingMgr.I;
+                    if (bm == null || bm.BuildingsById == null) return "no BuildingMgr";
+                    BaseGrid.Refresh();
+                    var sb = new System.Text.StringBuilder();
+                    foreach (var kv in bm.BuildingsById)
+                    {
+                        var b = kv.Value;
+                        if (b == null || b.Type != bt) continue;
+                        var inf = b.GetInfo();
+                        sb.Append("\n  ").Append(bt).Append(" rot ").Append(b.Rotation).Append(" X,Y ").Append(b.X).Append(',').Append(b.Y)
+                          .Append(" botleft ").Append(b.GetBotLeftGridPos()).Append(" size ").Append(inf.TileSize).Append(" inst size ").Append(b.GetTileSize());
+                        if (BaseGrid.Tiles(b, out int x0, out int x1, out int y0, out int y1))
+                        {
+                            sb.Append(" tiles x ").Append(x0).Append("..").Append(x1).Append(" y ").Append(y0).Append("..").Append(y1);
+                            for (int y = y1; y >= y0; y--)
+                            {
+                                sb.Append("\n    ");
+                                for (int x = x0; x <= x1; x++) { var o = BaseGrid.BuildingAt(x, y); sb.Append(o != null && o.Pointer == b.Pointer ? '#' : '.'); }
+                            }
+                        }
+                        sb.Append("\n    inner grid (x right, y up):");
+                        for (int y = inf.TileSize.y - 1; y >= 0; y--)
+                        {
+                            sb.Append("\n    ");
+                            for (int x = 0; x < inf.TileSize.x; x++) { bool on; try { on = inf.IsInInnerGrid(x, y); } catch { on = true; } sb.Append(on ? '#' : '.'); }
+                        }
+                    }
+                    var pv = BaseGridMgr.I != null ? BaseGridMgr.I.GetPlacePreview() : null;
+                    if (pv != null && pv.Inst != null) sb.Append("\n  preview ").Append(pv.Inst.Type).Append(" rot ").Append(pv.Inst.Rotation).Append(" hover ").Append(BaseGridMgr.I.GetHoverPos()).Append(" cell ").Append(BaseGrid.HoverCell(BaseGridMgr.I.GetHoverPos()));
+                    return sb.ToString();
+                }
+                case "rotate":
+                {
+                    var g = BaseGridMgr.I;
+                    if (g == null || g.GetPlacePreview() == null) return "no preview";
+                    g.RotatePlacePreview(arg.Length > 0 ? int.Parse(arg) : 1);
+                    return "rotation now " + g.GetPlacePreview().Inst.Rotation;
+                }
+                case "findtext":
+                {
+                    // findtext StartStat: every active text object with that name, with its path and text.
+                    var sb = new System.Text.StringBuilder();
+                    int n = 0;
+                    foreach (var t in UnityEngine.Object.FindObjectsOfType<Il2CppTMPro.TMP_Text>())
+                    {
+                        if (t == null || t.name != arg) continue;
+                        sb.Append("\n  ").Append(UI.MenuReader.Path(t.transform)).Append(" = ").Append(t.text).Append(" active ").Append(t.isActiveAndEnabled);
+                        if (++n >= 20) break;
+                    }
+                    var lu = LevelUpUI.I;
+                    if (lu != null) sb.Append("\n  LevelUpUI.I at ").Append(UI.MenuReader.Path(lu.transform)).Append(" active ").Append(lu.gameObject.activeInHierarchy);
+                    return n + " found" + sb;
+                }
+                case "terms":
+                {
+                    // terms Endurance: the I2 terms whose term name or current translation contains the text.
+                    var sb = new System.Text.StringBuilder();
+                    int n = 0;
+                    foreach (var term in Il2CppI2.Loc.LocalizationManager.GetTermsList())
+                    {
+                        string tr = Il2CppI2.Loc.LocalizationManager.GetTranslation(term) ?? "";
+                        if (term.IndexOf(arg, StringComparison.OrdinalIgnoreCase) < 0 && tr.IndexOf(arg, StringComparison.OrdinalIgnoreCase) < 0) continue;
+                        sb.Append("\n  ").Append(term).Append(" = ").Append(tr.Length > 80 ? tr.Substring(0, 80) : tr);
+                        if (++n >= 40) break;
+                    }
+                    return n + " terms" + sb;
+                }
+                case "evosetup":
+                {
+                    // evosetup 3: own both balls of N evolutions (two base balls each), all at their top level, so the
+                    // next fuser (gamestate kPickTreasure) offers several evolutions.
+                    var db = InfoDB.I; var um = UpgradeMgr.I; var bsd = BattleSaveData.I;
+                    if (db == null || um == null || bsd == null) return "not in battle";
+                    int want = arg.Length > 0 ? int.Parse(arg) : 3;
+                    var used = new System.Collections.Generic.HashSet<HeroType>();
+                    var sb = new System.Text.StringBuilder();
+                    int got = 0;
+                    foreach (var h in db.Heroes)
+                    {
+                        if (got >= want || h == null || h.MergeComponents == null || h.MergeComponents.Length == 0) continue;
+                        var comps = h.MergeComponents[0];
+                        if (comps == null || comps.Length != 2) continue;
+                        var a = comps[0] != null ? comps[0].TryCast<HeroInfo>() : null;
+                        var b = comps[1] != null ? comps[1].TryCast<HeroInfo>() : null;
+                        if (a == null || b == null || a.IsMerged() || b.IsMerged() || used.Contains(a.Type) || used.Contains(b.Type)) continue;
+                        used.Add(a.Type); used.Add(b.Type); got++;
+                        sb.Append(' ').Append(h.Type).Append('=').Append(a.Type).Append('+').Append(b.Type);
+                    }
+                    foreach (var t in used)
+                    {
+                        bool owned = false;
+                        foreach (var hi in bsd.Heroes) if (hi != null && hi.Type == t) owned = true;
+                        if (!owned) um.AddHero(t);
+                    }
+                    foreach (var hi in bsd.Heroes) if (hi != null) { int m = hi.GetMaxLvl(); hi.Lvl = m; sb.Append(" | ").Append(hi.Type).Append(" lvl ").Append(hi.Lvl).Append('/').Append(m); }
+                    return "evolutions" + sb;
+                }
+                case "bback":
+                {
+                    var bm = BaseMgr.I;
+                    if (bm == null) return "not in the base";
+                    bm.OnBPressed();
+                    return "OnBPressed, state " + bm.CurState;
+                }
+                case "gamestate":
+                {
+                    var gm = GameMgr.I;
+                    if (gm == null) return "not in battle";
+                    gm.SetState((GameState)Enum.Parse(typeof(GameState), arg));
+                    return "state " + gm.CurState;
+                }
                 case "autoplay":
                     GameCheatMgr.Autoplay = arg != "off";
                     return "autoplay " + GameCheatMgr.Autoplay;

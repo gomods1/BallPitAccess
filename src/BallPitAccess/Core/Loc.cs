@@ -72,6 +72,19 @@ namespace BallPitAccess.Core
         }
 
         /// <summary>Inline sprite names in game text, turned into words. Mouse glyphs become the mod key for the current mode.</summary>
+        private static string StatSprite(string s)
+        {
+            Il2Cpp.StatType t;
+            if (s.StartsWith("end") || s.StartsWith("vig")) t = Il2Cpp.StatType.kEndurance;
+            else if (s.StartsWith("str")) t = Il2Cpp.StatType.kStrength;
+            else if (s.StartsWith("lea") || s.StartsWith("ldr")) t = Il2Cpp.StatType.kLeadership;
+            else if (s.StartsWith("sp") || s.StartsWith("agi")) t = Il2Cpp.StatType.kSpeed;
+            else if (s.StartsWith("dex")) t = Il2Cpp.StatType.kDexterity;
+            else if (s.StartsWith("int")) t = Il2Cpp.StatType.kIntelligence;
+            else { Log.Info("Unknown stat sprite: stat_" + s); return ""; }
+            return UI.Readers.StatName(t);
+        }
+
         internal static string SpriteName(string name)
         {
             if (string.IsNullOrEmpty(name)) return "";
@@ -93,6 +106,11 @@ namespace BallPitAccess.Core
             if (kb) return n.ToUpperInvariant();
             // Decoration next to a text that already says it ("Level 2" with an up arrow).
             if (n.Contains("arrow")) return "";
+            // A stat icon: the stat's name in the game's words. Followed by that name ("+1 bonus [stat_dex] Dexterity")
+            // the doubled word is dropped by Speech.Clean; alone ("an additional +1 bonus [stat]") it is the only name.
+            if (n.StartsWith("stat_")) return StatSprite(n.Substring(5));
+            // The title glyph between words ("THE BONE x YARD").
+            if (n == "x") return "";
             return name.Replace('_', ' ');
         }
     }

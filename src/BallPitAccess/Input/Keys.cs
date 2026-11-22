@@ -73,9 +73,12 @@ namespace BallPitAccess.Input
             return false;
         }
 
-        internal static bool GameHasFocus()
+        internal static bool GameHasFocus() => DevFocus || RealFocus();
+
+        /// <summary>The game window really is in front. With dev focus on and the window behind, only injected keys
+        /// count: the player's typing in another window must not reach the mod (2026-11-22).</summary>
+        private static bool RealFocus()
         {
-            if (DevFocus) return true;
             IntPtr fg = GetForegroundWindow();
             if (fg == _lastFg) return _lastFgOwn;
             _lastFg = fg;
@@ -85,7 +88,7 @@ namespace BallPitAccess.Input
         }
 
         /// <summary>Live state, read now.</summary>
-        internal static bool Down(int vk) => vk > 0 && ((GetAsyncKeyState(vk) & 0x8000) != 0 || HeldByDev(vk) || Pad.HoldsKey(vk));
+        internal static bool Down(int vk) => vk > 0 && ((RealFocus() && (GetAsyncKeyState(vk) & 0x8000) != 0) || HeldByDev(vk) || Pad.HoldsKey(vk));
 
         internal static bool Ctrl => Down(VK_CONTROL);
         internal static bool Shift => Down(VK_SHIFT);
@@ -99,12 +102,12 @@ namespace BallPitAccess.Input
         {
             Consumed = false;
             Pad.Update();
-            bool focus = GameHasFocus();
+            bool focus = GameHasFocus(), real = RealFocus();
             _held = _held == null && Injected.Count > 0 ? Injected.Dequeue() : null;
             for (int vk = 1; vk < 256; vk++)
             {
                 Prev[vk] = Cur[vk];
-                Cur[vk] = focus && ((GetAsyncKeyState(vk) & 0x8000) != 0 || HeldByDev(vk) || Pad.HoldsKey(vk));
+                Cur[vk] = focus && ((real && (GetAsyncKeyState(vk) & 0x8000) != 0) || HeldByDev(vk) || Pad.HoldsKey(vk));
             }
         }
 

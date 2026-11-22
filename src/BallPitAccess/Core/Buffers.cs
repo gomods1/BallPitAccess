@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace BallPitAccess.Core
@@ -30,18 +31,40 @@ namespace BallPitAccess.Core
         }
 
         private static System.Func<List<string>> _more;
+        private static System.Func<List<string>> _fresh;
 
         /// <summary>
         /// Replace the Details buffer. <paramref name="more"/> is asked for extra lines the first time the
-        /// player reads the buffer (tooltips the game fills in a moment after focus).
+        /// player reads the buffer (tooltips the game fills in a moment after focus). <paramref name="fresh"/>,
+        /// when given, reads the item again at that moment and replaces the lines: the game's details panels
+        /// fill in a few hundred milliseconds after the focus, so lines taken at focus time could still be the
+        /// previous item's (a player: "reading the tooltip from the item above").
         /// </summary>
-        internal static void SetDetails(List<string> lines, System.Func<List<string>> more = null)
+        internal static void SetDetails(List<string> lines, System.Func<List<string>> more = null, System.Func<List<string>> fresh = null)
         {
             Details.Items.Clear();
             if (lines != null) foreach (var l in lines) if (!string.IsNullOrEmpty(l)) Details.Items.Add(l);
             Details.Cursor = -1;
             _more = more;
-            _current = Details.Items.Count > 0 || more != null ? 0 : 1;
+            _fresh = fresh;
+            _current = Details.Items.Count > 0 || more != null || fresh != null ? 0 : 1;
+        }
+
+        private static void Refresh()
+        {
+            var f = _fresh;
+            _fresh = null;
+            if (f == null) return;
+            try
+            {
+                var lines = f();
+                if (lines == null || lines.Count == 0) return;
+                int cursor = Details.Cursor;
+                Details.Items.Clear();
+                foreach (var l in lines) if (!string.IsNullOrEmpty(l) && !Details.Items.Contains(l)) Details.Items.Add(l);
+                Details.Cursor = Math.Min(cursor, Details.Items.Count - 1);
+            }
+            catch { }
         }
 
         /// <summary>The first line was just spoken: the next Ctrl+Up reads the second.</summary>
@@ -68,6 +91,7 @@ namespace BallPitAccess.Core
             var b = All[_current];
             if (b == Details)
             {
+                Refresh();
                 Extend();
                 // Nothing to detail: the same key reads the recent events instead.
                 if (b.Items.Count == 0 && Events.Items.Count > 0) { _current = 1; b = Events; }
@@ -81,7 +105,7 @@ namespace BallPitAccess.Core
         internal static void TowardTop()
         {
             var b = All[_current];
-            if (b == Details) Extend();
+            if (b == Details) { Refresh(); Extend(); }
             if (b.Items.Count == 0) { Speech.SayMenu(Loc.Get(b == Events ? "events_empty" : "details_empty")); return; }
             if (b.Cursor > 0) b.Cursor--;
             else { b.Cursor = 0; Speech.SayMenu(Loc.Get("top") + ". " + b.Items[0]); return; }

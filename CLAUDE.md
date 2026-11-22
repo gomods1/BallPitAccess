@@ -195,10 +195,24 @@ No game file was replaced.
   Ctrl+Tab category change the first build item ignored it. Build items are pressed with `Navigator.Click`.
 - **A 2-wide or 2-tall building's hover point is on a half tile** (it snaps to the line between two tiles):
   `BaseGrid.HoverCell` floors halves; `RoundToInt` (half to even) made the column jump by two every other step.
+- **Tile centres are `GetWorldPos(x, y)`**. `BaseGridMgr.ClampBuildingPreview` snaps a preview to centres (odd size)
+  or corners (even size) by the *turned* size; `SetHover(force)` does not snap, so every keyboard move goes through
+  `Placement.Snap` (else buildings land half a tile off). The preview's own colliders are off and parked at the
+  origin: shapes come from `BuildingInfo.PolyColPointsScaled` centred on the preview (`Game/Footprint.cs`). Some
+  buildings are not rectangles (Haunted House = L) and interlock; the chunk grid marks their whole box, so tile
+  owners come from placed colliders (`Footprint.Occupancy`). Outside the harvest the hero object is not at the
+  workers' launch spot: use `Harvest.AimOrigin`.
+- **Details panels that the reader must drive itself**: pause equipment follows only `PauseUI.Preview*`;
+  `LevelUpUI.HoverBtn` rebuilds the stat rows from a pool (read them without re-hovering); the fuser's evolution info
+  panel is filled with `EquipmentInfoPanel.SetUpgrade`. Item levels (`Lvl`) are 0-based; the game shows +1.
+- **Testing while the player uses the PC**: the game takes the foreground at start and on scene loads; run
+  `tools/keepbehind.ps1` in the background (gives the foreground back to the player's last window). Never minimize
+  the game (its UI gets a 0-size screen). Dev `focus on` only accepts injected keys while the window is behind.
 - Game controller defaults (dumped): RT shoot, LB/RB speed (rotate in the base), Y autofire, X level up,
   Start pause, left stick move, D-pad zoom (base). A, B, View, L3 have no battle action.
-- `BaseGridMgr.FindEmptySpots` returns single free tiles; `CanBuildPlacePreview` tests the preview's colliders
-  where it stands (a few frames after `SetHover`), so multi-tile fit is found by trying spots in turn.
+- `BaseGridMgr.FindEmptySpots` returns single free tiles; `CanBuildPlacePreview` tests the shape where the preview
+  stands (a few frames after `SetHover`). Home scores every free spot and rotation at once (`Footprint` + `Paths`),
+  moves once and only falls back to the next candidate when the game refuses it.
 - **The placement preview is made in `BaseGridMgr.SetHover`** (only the game's mouse handler calls it each
   frame). While `Placement.Claim` owns the hover that handler is skipped: `Placement.EnsurePreview` makes the
   preview itself when the base is in `kPlaceBuilding` without one.

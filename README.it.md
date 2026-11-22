@@ -5,7 +5,7 @@ tramite il tuo screen reader, ti permette di usare tutto il gioco con la tastier
 battaglia in suono: i nemici, le tue palle, i colpi nemici, i cristalli di PX e gli oggetti speciali hanno
 ciascuno il proprio suono, che arriva dal loro lato rispetto a te.
 
-Versione 0.7.0, per la versione 1.308 del gioco, incluso il DLC Pallilonia Risorta (Risen Ballbylon). La
+Versione 0.7.1, per la versione 1.308 del gioco, incluso il DLC Pallilonia Risorta (Risen Ballbylon). La
 mod parla **tutte le lingue offerte dal gioco** e segue l'impostazione della lingua del gioco.
 
 <!-- LANGS -->
@@ -131,6 +131,7 @@ Chiudi. L'ordine non dipende mai da dove le cose sono disegnate sullo schermo.
 | H | Risorse e giorno |
 | J | Raccolta e lavoratori |
 | K | Esplora la base casella per casella |
+| I | Posizionare o spostare un edificio: cosa intralcia questo posto |
 
 - **Costruzione**: le frecce spostano l'edificio di una casella e dicono se ci sta, Invio costruisce,
   R ruota, Home salta a un posto libero, Backspace annulla.
@@ -143,6 +144,8 @@ Chiudi. L'ordine non dipende mai da dove le cose sono disegnate sullo schermo.
 - **Riposizionamento**: Tab sceglie un edificio, Invio lo solleva, le frecce lo spostano, Invio lo posa.
 - **Esplora** (K): le frecce avanzano di una casella e dicono cosa c'è: libera (e quante caselle libere seguono a destra e in basso), un edificio con la sua dimensione, o terreno non acquistato. Tab / Maiusc+Tab saltano alla casella libera successiva / precedente. K, Backspace o Esc escono. Colonne e righe sono le stesse usate per piazzare un edificio.
 - Il menu di costruzione dice quanto spazio occupa ogni edificio ("3 di larghezza, 2 di altezza"), e il piazzamento inizia con nome e dimensione.
+- **Posizionare o spostare un edificio**: la posizione dice cosa la blocca ("bloccato da Foresta"). I dice se i lavoratori raggiungono il posto e quali edifici taglierebbe fuori o lascerebbe raggiungibili solo rimbalzando su un muro. Home trova il miglior posto libero, che i lavoratori colpiscono dritto e che non taglia fuori nessuno, e ruota l'edificio perché ci stia. Dopo R viene detta la nuova forma: alcuni edifici, come la casa infestata, non sono rettangoli ("angolo aperto in alto a sinistra"). Anche riorganizzando si possono ruotare gli edifici.
+- **Esplorazione**: Pagina giù / Pagina su saltano all'edificio successivo / precedente e dicono dove si trova, quanto è grande e che forma ha.
 
 ## Battaglia {#battle}
 

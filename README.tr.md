@@ -5,7 +5,7 @@ menüleri ekran okuyucun aracılığıyla seslendirir, oyunun tamamını klavyey
 alanını sese dönüştürür: düşmanların, toplarının, düşman atışlarının, TP kristallerinin ve özel eşyaların
 her birinin kendi sesi vardır ve bu ses, senin hangi tarafındaysa oradan gelir.
 
-Sürüm 0.7.0, oyunun 1.308 sürümü için, Yükselen Babil'in Sekme Bahçeleri (Risen Ballbylon) DLC'si dahil.
+Sürüm 0.7.1, oyunun 1.308 sürümü için, Yükselen Babil'in Sekme Bahçeleri (Risen Ballbylon) DLC'si dahil.
 Mod **oyunun sunduğu tüm dilleri** konuşur ve oyunun dil ayarını izler.
 
 <!-- LANGS -->
@@ -126,6 +126,7 @@ Sıra hiçbir zaman ögelerin ekranda nereye çizildiğine bağlı değildir.
 | H | Kaynaklar ve gün |
 | J | Hasat ve işçiler |
 | K | Üssü kare kare keşfet |
+| I | Bina yerleştirirken veya taşırken: bu yerin kimin yolunu kestiği |
 
 - **İnşa**: oklar binayı bir kare taşır ve sığıp sığmadığını söyler, Enter inşa eder, R döndürür, Home boş
   bir yere atlar, Backspace iptal eder.
@@ -138,6 +139,8 @@ Sıra hiçbir zaman ögelerin ekranda nereye çizildiğine bağlı değildir.
 - **Yeniden düzenleme**: Tab bir bina seçer, Enter onu kaldırır, oklar taşır, Enter bırakır.
 - **Keşif** (K): oklar bir kare ilerler ve orada ne olduğunu söyler: boş (ve sağa ve aşağı kaç boş kare daha olduğu), boyutuyla bir bina ya da satın alınmamış arazi. Tab / Shift+Tab sonraki / önceki boş kareye atlar. K, Backspace veya Escape çıkar. Sütun ve satırlar bina yerleştirirken kullanılanlarla aynıdır.
 - İnşa menüsü her binanın ne kadar yer kapladığını söyler ("3 genişlik, 2 yükseklik"), yerleştirme de adı ve boyutuyla başlar.
+- **Bina yerleştirme veya taşıma**: konum onu neyin engellediğini söyler ("Orman engelliyor"). I, işçilerin bu yere ulaşıp ulaşmadığını ve hangi binaların yolunu keseceğini ya da onları yalnızca duvardan sekerek ulaşılabilir bırakacağını söyler. Home işçilerin doğrudan vurduğu ve kimsenin yolunu kesmeyen en iyi boş yeri bulur ve binayı sığacak şekilde döndürür. R'den sonra yeni şekil söylenir: perili ev gibi bazı binalar dikdörtgen değildir ("sol üst köşe açık"). Yeniden düzenlerken de binalar döndürülebilir.
+- **Keşif**: Page Down / Page Up sonraki / önceki binaya atlar ve nerede olduğunu, boyutunu ve şeklini söyler.
 
 ## Savaş {#battle}
 

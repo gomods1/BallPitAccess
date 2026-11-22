@@ -316,6 +316,11 @@ namespace BallPitAccess.Input
                     lines.Add(Loc.F("help_last_sound", Bindings.KeyOf("last_sound")));
                     lines.Add(Loc.F("help_status_key", Bindings.KeyOf("status")));
                 }
+                if (part == "help_base")
+                {
+                    lines.Add(Loc.F("help_place_keys", Bindings.KeyOf("paths")));
+                    lines.Add(Loc.Get("help_explore_buildings"));
+                }
             }
             // The keys as they are set now (they can be changed, so the texts above give the defaults).
             sections.Add(lines.Count);

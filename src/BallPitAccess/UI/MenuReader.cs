@@ -46,8 +46,10 @@ namespace BallPitAccess.UI
                     // HUD button (the speed button, after a popup closes) is not news.
                     bool idleBattle = Game.Battle.InBattle && !Navigator.Blocking;
                     // In a battle the game also parks the selection on things that are not controls (a hint's text).
-                    bool notControl = Game.Battle.InBattle && g.GetComponent<CoolSelectable>() == null && g.GetComponent<TMP_InputField>() == null;
+                    bool notControl = Game.Battle.InBattle && g.GetComponent<CoolSelectable>() == null && g.GetComponent<TMP_InputField>() == null
+                        && !Readers.IsItem(g);
                     if (!idleBattle && !notControl) Announce(g);
+                    else if (Navigator.Blocking) Log.Info("Focus not announced (" + (idleBattle ? "battle" : "not a control") + "): " + Path(g.transform));
                 }
                 // After activating or adjusting a control: say it again if what it says changed.
                 if (_recheckAt > 0 && now >= _recheckAt)
@@ -57,7 +59,7 @@ namespace BallPitAccess.UI
                     {
                         string before = _lastText;
                         string after = Describe(go, out var details);
-                        if (after != before) { _lastText = after; SetDetails(after, details); Speech.SayMenu(after); }
+                        if (after != before) { _lastText = after; SetDetails(after, details, go); Speech.SayMenu(after); }
                     }
                 }
             }
@@ -74,19 +76,25 @@ namespace BallPitAccess.UI
 
         internal static void Announce(GameObject go)
         {
-            if (go == null || !go.activeInHierarchy) return;
+            if (go == null) return;
+            // A choice still sliding in (an evolution on the fuser's list) can be inactive for a moment: a known item
+            // is read anyway, or it was skipped without a word (a player: "one of the evolutions doesn't read at all").
+            if (!go.activeInHierarchy && !Readers.IsItem(go)) { Log.Info("Focus on a hidden object, not read: " + Path(go.transform)); return; }
             string text = Describe(go, out var details);
-            // The game's details panel has not caught up with the focus yet: look again shortly.
-            if (_retry && _retries < 4)
+            // The game's details panel has not caught up with the focus yet: look again shortly. The equipment
+            // panels (encyclopedia, evolutions, pause equipment) take a few hundred milliseconds.
+            if (_retry && _retries < 10)
             {
                 _retries++;
                 _pending = go;
-                _focusSince = Time.unscaledTime + 0.04f;
+                _focusSince = Time.unscaledTime - 0.03f;
                 return;
             }
+            if (_retry) Log.Info("Panel still behind after " + _retries + " retries: " + text);
+            else if (_retries > 0 && Config.Debug) Log.Info("Panel caught up after " + _retries + " retries");
             _retries = 0;
             _lastText = text;
-            SetDetails(text, details);
+            SetDetails(text, details, go);
             string suffix = NextSuffix;
             NextSuffix = null;
             Speech.SayMenu(string.IsNullOrEmpty(suffix) ? text : text + ", " + suffix);
@@ -110,12 +118,29 @@ namespace BallPitAccess.UI
         /// shows for it by the time the player asks (Ctrl+Up). Only this item: the other texts of the screen
         /// are F2's, or Ctrl+Up walks into the neighbours' names.
         /// </summary>
-        private static void SetDetails(string summary, List<string> details)
+        private static void SetDetails(string summary, List<string> details, GameObject go = null)
         {
             var lines = new List<string>();
             if (!string.IsNullOrEmpty(summary)) lines.Add(summary);
             if (details != null) lines.AddRange(details);
-            Buffers.SetDetails(lines, HoverLines);
+            // Read the item again when the player opens its details: by then the game's panel shows this item.
+            Func<List<string>> fresh = null;
+            if (go != null)
+            {
+                IntPtr ptr = go.Pointer;
+                fresh = () =>
+                {
+                    var es = EventSystem.current;
+                    var cur = es != null ? es.currentSelectedGameObject : null;
+                    if (cur == null || cur.Pointer != ptr || !cur.activeInHierarchy) return null;
+                    string again = Describe(cur, out var d2);
+                    var l2 = new List<string>();
+                    if (!string.IsNullOrEmpty(again)) l2.Add(again);
+                    if (d2 != null) l2.AddRange(d2);
+                    return l2;
+                };
+            }
+            Buffers.SetDetails(lines, HoverLines, fresh);
             Buffers.StartReading();     // the name was just spoken: Ctrl+Up reads the next line
         }
 

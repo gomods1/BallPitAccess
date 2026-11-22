@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using BallPitAccess.Core;
 using BallPitAccess.Input;
 using Il2Cpp;
@@ -91,17 +92,19 @@ namespace BallPitAccess.Game
                     {
                         var mid = BaseGrid.World((BaseGrid.MinX + BaseGrid.MaxX) / 2, (BaseGrid.MinY + BaseGrid.MaxY) / 2);
                         Claim();
-                        g0.SetHover(mid.x, mid.y, true);
+                        SetHoverSnapped(mid.x, mid.y);
                         Log.Info($"Placement: the preview started off the land at {hp}, moved to the middle {mid}");
                         hp = g0.GetHoverPos();
                     }
                     _x = hp.x; _y = hp.y;
+                    // A building picked up in rearrange mode starts parked away from the cursor until the hover is set.
+                    if (Rearranging) { Claim(); SetHoverSnapped(hp.x, hp.y); }
                     Log.Info($"Placement start at {hp}; borders L {BaseGridMgr.I.LeftBorderX} R {BaseGridMgr.I.RightBorderX} T {BaseGridMgr.I.TopBorderY} B {BaseGridMgr.I.BottomBorderY} tile {BaseGridMgr.kSpaceWidth} rearrange {Rearranging}; grid x {BaseGrid.MinX}..{BaseGrid.MaxX} y {BaseGrid.MinY}..{BaseGrid.MaxY}");
-                    Speech.Event(What() + Loc.Get(Rearranging ? "rearrange_moving" : "place_start"));
+                    Speech.Event(What() + Loc.Get(Rearranging ? "rearrange_moving" : "place_start") + ". " + Loc.F("place_keys", Bindings.KeyOf("paths")));
                     // The preview animates in: its first legality reading is wrong, wait for it.
                     _announceAt = Time.unscaledTime + 0.5f;
                 }
-                if (!active && _wasActive) { _kbOwned = false; _search = null; }
+                if (!active && _wasActive) { _kbOwned = false; _step = SearchStep.None; }
                 _wasActive = active;
                 if (_cancelPending) PendingCancel(active);
                 if (_checkDropAt > 0 && Time.unscaledTime >= _checkDropAt)
@@ -111,7 +114,7 @@ namespace BallPitAccess.Game
                 }
                 if (!active) return;
 
-                if (_search != null) StepSearch();
+                if (_step != SearchStep.None) StepSearch();
                 WatchRotation();
                 if (_announceAt > 0 && Time.unscaledTime >= _announceAt) { _announceAt = -1f; Announce(); }
                 if (Keys.Consumed || !Keys.GameHasFocus() || Keys.Ctrl || Keys.Alt || ModKeys.ListOpen || UI.Navigator.Blocking) return;
@@ -121,7 +124,8 @@ namespace BallPitAccess.Game
                 else if (Keys.Pressed(Keys.VK_RIGHT)) MoveBy(step, 0);
                 else if (Keys.Pressed(Keys.VK_UP)) MoveBy(0, step);
                 else if (Keys.Pressed(Keys.VK_DOWN)) MoveBy(0, -step);
-                else if (Keys.Pressed(Keys.VK_HOME)) JumpToEmpty();
+                else if (Keys.Pressed(Keys.VK_HOME)) { Keys.Consume(); JumpToBest(); }
+                else if (Bindings.Pressed("paths")) { Keys.Consume(); SayPaths(); }
                 else if (Keys.Pressed(Keys.VK_RETURN)) { Keys.Consume(); Place(); }
                 else if (Keys.Pressed(Keys.VK_BACK)) { Keys.Consume(); _cancelPending = true; _releasedFrame = -1; }
                 else if (Input.Pad.RotatePressed) Rotate();
@@ -152,6 +156,7 @@ namespace BallPitAccess.Game
             if (BaseGrid.Refresh()) { var c = BaseGrid.CellOf(at); at = BaseGrid.World(c.x, c.y); }
             Claim();
             g.SetHover(at.x, at.y, true);
+            if (g.GetPlacePreview() != null) SetHoverSnapped(at.x, at.y);
             Log.Info($"Placement: no preview in kPlaceBuilding (keyboard owned {_kbOwned}), made it at {at}: {(g.GetPlacePreview() != null)}");
         }
 
@@ -177,107 +182,285 @@ namespace BallPitAccess.Game
             try { Vector2 m = GameInput.GetMouseOrTouchPosition(); _mouseAtClaim = new Vector3(m.x, m.y, 0); } catch { }
         }
 
+        /// <summary>
+        /// Where the game would put the preview for this point: BaseGridMgr.ClampBuildingPreview, what its mouse handler
+        /// uses (nearest valid land; tile centres for an odd size, tile corners for an even one, by the turned size).
+        /// SetHover(force) does not snap, and a keyboard hover off that grid left buildings half a tile off (2026-11-22).
+        /// </summary>
+        private static Vector3 Snap(Vector3 v)
+        {
+            try { var g = BaseGridMgr.I; if (g != null && g.GetPlacePreview() != null) return g.ClampBuildingPreview(v); } catch { }
+            return v;
+        }
+
+        private static void SetHoverSnapped(float x, float y)
+        {
+            var v = Snap(new Vector3(x, y, 0f));
+            _x = v.x; _y = v.y;
+            BaseGridMgr.I.SetHover(_x, _y, true);
+        }
+
         private static void MoveBy(float dx, float dy)
         {
             Claim();
-            _search = null;
+            _step = SearchStep.None;
             var g = BaseGridMgr.I;
-            _x = Mathf.Clamp(_x + dx, g.LeftBorderX, g.RightBorderX);
-            _y = Mathf.Clamp(_y + dy, g.BottomBorderY, g.TopBorderY);
-            g.SetHover(_x, _y, true);
+            // Past the border: stay. Clamping to the border put a 2 by 2 building's hover half a tile off its grid
+            // (2026-11-22: rows read 12, 12, 11 and the shape straddled two rows).
+            float nx = _x + dx, ny = _y + dy;
+            if (nx < g.LeftBorderX - 0.01f || nx > g.RightBorderX + 0.01f || ny < g.BottomBorderY - 0.01f || ny > g.TopBorderY + 0.01f)
+            {
+                Audio.Cues.Play("wall", dx < 0 ? -1f : dx > 0 ? 1f : 0f, 0.6f);
+                Speech.SayMenu(Loc.Get("explore_edge"));
+                return;
+            }
+            SetHoverSnapped(nx, ny);
             if (Config.Debug) Log.Info($"Placement move to ({_x},{_y}) -> hover {g.GetHoverPos()}");
             // The preview's colour (legality) refreshes on the next frames.
             _announceAt = Time.unscaledTime + 0.08f;
         }
 
-        /// <summary>
-        /// Home: the game's empty spots are single free tiles, and a bigger building (the houses) does not fit
-        /// on all of them. Try them in turn (the fit check reads the preview where it stands, so each try waits
-        /// a few frames) and stop on the first one the building fits; back to the start if none does.
-        /// </summary>
-        private static System.Collections.Generic.List<Vector3> _search;
-        private static int _searchIdx, _searchAt;
+        // ---------------- Home: the best spot ----------------
+        // The old search moved the preview over the game's empty spots one by one, a few frames each, with the game's
+        // hover sound every time; on a full base it ran for minutes and looked stuck (a player: "the movement sound keeps
+        // playing forever"). Now every spot is checked at once from the chunk grid and the building's shape, scored by
+        // whether workers can reach it and what it would cut off, and the preview is moved (and turned) once.
+
+        private enum SearchStep { None, Learn, Settle }
+        private static SearchStep _step;
+        private static int _learnLeft, _settleFrames, _tries, _wantRot;
+        private static List<Cand> _cands;
         private static Vector3 _searchFrom;
 
-        private static void JumpToEmpty()
+        private sealed class Cand { public Vector2Int Hover; public int Rot; public List<Vector2Int> Cells; public Paths.Result Res; public float Score; }
+
+        private static BuildingObj Moving()
         {
-            Claim();
             var g = BaseGridMgr.I;
-            var spots = g.FindEmptySpots();
-            if (spots == null || spots.Count == 0) { Speech.SayMenu(Loc.Get("place_no_empty")); return; }
-            _search = new System.Collections.Generic.List<Vector3>();
-            foreach (var s in spots) _search.Add(g.GetWorldPos(s.x, s.y));
-            _searchFrom = new Vector3(_x, _y, 0);
-            _searchIdx = 0;
-            _announceAt = -1f;
-            TrySpot(g);
+            return g == null ? null : g.GetPlacePreview() ?? g.GetPendingRearrangeBuilding();
         }
 
-        private static void TrySpot(BaseGridMgr g)
+        /// <summary>The building picked up in rearrange mode (its old tiles are free for it), or null.</summary>
+        private static BuildingObj Pending()
         {
-            var wp = _search[_searchIdx];
-            _x = wp.x; _y = wp.y;
-            g.SetHover(_x, _y, true);
-            _searchAt = Time.frameCount + 4;
+            try { return BaseGridMgr.I?.GetPendingRearrangeBuilding(); } catch { return null; }
+        }
+
+        private static bool CanTurn()
+        {
+            try { var g = BaseGridMgr.I; return g.GetPlacePreview() != null && g.CanRotatePlacePreview(); } catch { return false; }
+        }
+
+        private static void JumpToBest()
+        {
+            Claim();
+            var o = Moving();
+            if (o == null || o.Inst == null) return;
+            _tries = 0;
+            _searchFrom = new Vector3(_x, _y, 0);
+            _announceAt = -1f;
+            Speech.SayMenu(Loc.Get("place_searching"));
+            // Learn the shape at every rotation first (the preview turns once round, a moment each).
+            int unknown = 0;
+            bool poly = false;
+            try { poly = o.Inst.GetInfo().ColType == ColliderType.kPoly; } catch { }
+            if (poly && CanTurn()) for (int r = 0; r < 4; r++) if (!Footprint.Known(o.Inst.Type, r)) unknown++;
+            if (unknown > 0) { _step = SearchStep.Learn; _learnLeft = 4; _settleFrames = 0; return; }
+            Choose();
         }
 
         private static void StepSearch()
         {
-            if (_search == null || Time.frameCount < _searchAt) return;
             var g = BaseGridMgr.I;
-            bool fits = g.GetPlacePreview() == null || g.CanBuildPlacePreview();
-            if (fits)
+            var o = Moving();
+            if (o == null || o.Inst == null) { _step = SearchStep.None; return; }
+            if (++_settleFrames < 3) return;
+            if (_step == SearchStep.Learn)
             {
-                if (Config.Debug) Log.Info($"Placement: spot {_searchIdx + 1} of {_search.Count} fits");
-                _search = null;
-                Announce();
+                if (Footprint.Measure(o) == null)
+                {
+                    if (_settleFrames > 120) { Log.Warn("Placement: the shape could not be read"); _step = SearchStep.None; Choose(); }
+                    return;
+                }
+                if (_learnLeft-- <= 0) { _step = SearchStep.None; Choose(); return; }
+                g.RotatePlacePreview(1);
+                SetHoverSnapped(_x, _y);
+                _settleFrames = 0;
                 return;
             }
-            if (++_searchIdx < _search.Count) { TrySpot(g); return; }
-            Log.Info($"Placement: none of {_search.Count} empty spots fits");
-            _search = null;
+            if (_step == SearchStep.Settle)
+            {
+                if (o.Inst.Rotation != _wantRot && CanTurn())
+                {
+                    bool turning = false;
+                    try { turning = o.IsRotating(); } catch { }
+                    if (!turning) { g.RotatePlacePreview(1); SetHoverSnapped(_x, _y); }
+                    _settleFrames = 0;
+                    return;
+                }
+                if (Footprint.Measure(o) == null && _settleFrames < 120) return;
+                bool fits = g.GetPlacePreview() == null || g.CanBuildPlacePreview();
+                var c = _cands != null && _cands.Count > 0 ? _cands[0] : null;
+                if (fits || c == null)
+                {
+                    _step = SearchStep.None;
+                    if (c == null) return;
+                    var hp = g.GetHoverPos(); _x = hp.x; _y = hp.y;
+                    var tl = Footprint.TopLeft(c.Cells);
+                    string where = Loc.F("place_pos", BaseGrid.Col(tl.x), BaseGrid.Row(tl.y), Loc.Get(fits ? "place_ok" : "place_blocked"));
+                    string shape = Footprint.Describe(c.Cells);
+                    string words = Paths.Words(c.Res, Paths.PassOverType(o.Inst.Type));
+                    Log.Info($"Placement best spot: hover {c.Hover} rotation {c.Rot} score {c.Score} after {_tries} refusals; {words}");
+                    Speech.SayMenu(Loc.Get("place_best") + " " + where + (shape.Length > 0 ? ". " + char.ToUpperInvariant(shape[0]) + shape.Substring(1) : "") + ". " + words);
+                    Audio.Cues.Play(fits ? "tick" : "wall", 0f, 0.6f);
+                    return;
+                }
+                // The game's collider test refused it (a neighbour's collider reaches over): the next best.
+                Log.Info($"Placement: spot {c.Hover} rotation {c.Rot} refused by the game; preview at {o.transform.position} anchor {Footprint.Anchor(o)} hover {g.GetHoverPos()} rotation {o.Inst.Rotation}, cells {string.Join(" ", c.Cells)}");
+                _cands.RemoveAt(0);
+                if (++_tries >= 8 || _cands.Count == 0) { GiveUp(); return; }
+                Go(_cands[0]);
+            }
+        }
+
+        private static void Choose()
+        {
+            var o = Moving();
+            if (o == null || o.Inst == null) return;
+            BaseGrid.Refresh();
+            var g = BaseGridMgr.I;
+            var type = o.Inst.Type;
+            var inf = o.Inst.GetInfo();
+            var pend = Pending();
+            var ignore = pend != null ? pend.Inst : null;
+            bool passOver = Paths.PassOverType(type);
+            var rots = new List<int>();
+            if (CanTurn()) { for (int r = 0; r < 4; r++) if (Footprint.Known(type, r)) rots.Add(r); }
+            // A rectangle has two ways round (a half turn covers the same tiles).
+            if (rots.Count == 0) { rots.Add(o.Inst.Rotation); if (CanTurn() && inf.TileSize.x != inf.TileSize.y) rots.Add((o.Inst.Rotation + 1) % 4); }
+            var cands = new List<Cand>();
+            var here = BaseGrid.HoverCell(new Vector3(_searchFrom.x, _searchFrom.y, 0));
+            float t0 = Time.realtimeSinceStartup;
+            for (int x = BaseGrid.MinX - 3; x <= BaseGrid.MaxX + 3; x++)
+                for (int y = BaseGrid.MinY - 3; y <= BaseGrid.MaxY + 3; y++)
+                    foreach (int r in rots)
+                    {
+                        var h = new Vector2Int(x, y);
+                        var cells = Footprint.At(type, r, h) ?? Footprint.Box(inf, h, r);
+                        if (Footprint.Obstacle(cells, ignore).Length > 0) continue;
+                        var res = Paths.Analyse(cells, pend, passOver);
+                        float score = Paths.Score(res) - 0.5f * (Math.Abs(h.x - here.x) + Math.Abs(h.y - here.y)) - (r != o.Inst.Rotation ? 1f : 0f);
+                        cands.Add(new Cand { Hover = h, Rot = r, Cells = cells, Res = res, Score = score });
+                    }
+            if (cands.Count == 0) { Speech.SayMenu(Loc.Get("place_no_fit")); return; }
+            cands.Sort((a, b) => b.Score.CompareTo(a.Score));
+            if (cands.Count > 12) cands.RemoveRange(12, cands.Count - 12);
+            _cands = cands;
+            Log.Info($"Placement: best of the free spots for {type} in {(Time.realtimeSinceStartup - t0) * 1000f:0} ms, rotations {string.Join(",", rots)}: first {cands[0].Hover} rotation {cands[0].Rot} score {cands[0].Score}");
+            Go(cands[0]);
+        }
+
+        /// <summary>Move (and turn) the preview to a candidate; StepSearch checks it once it has settled.</summary>
+        private static void Go(Cand c)
+        {
+            var g = BaseGridMgr.I;
+            var hp = g.GetHoverPos();
+            var cur = BaseGrid.HoverCell(hp);
+            // The preview stands on the grid where the game snapped it; step from there (the shapes are learned from it).
+            try { var o = Moving(); if (o != null) { var pp = o.transform.position; hp = new Vector3(pp.x, pp.y, 0f); cur = Footprint.Anchor(o); } } catch { }
+            float step = BaseGridMgr.kSpaceWidth > 0.01f ? BaseGridMgr.kSpaceWidth : 1.125f;
+            float sx = BaseGrid.World(1, 0).x - BaseGrid.World(0, 0).x, sy = BaseGrid.World(0, 1).y - BaseGrid.World(0, 0).y;
+            if (Math.Abs(sx) < 0.01f) sx = step;
+            if (Math.Abs(sy) < 0.01f) sy = step;
+            Claim();
+            SetHoverSnapped(hp.x + (c.Hover.x - cur.x) * sx, hp.y + (c.Hover.y - cur.y) * sy);
+            _wantRot = c.Rot;
+            _step = SearchStep.Settle;
+            _settleFrames = 0;
+        }
+
+        private static void GiveUp()
+        {
+            _step = SearchStep.None;
+            Log.Info("Placement: no candidate was accepted by the game");
             _x = _searchFrom.x; _y = _searchFrom.y;
-            g.SetHover(_x, _y, true);
+            BaseGridMgr.I.SetHover(_x, _y, true);
             Speech.SayMenu(Loc.Get("place_no_fit"));
         }
+
+        /// <summary>The tiles the building being placed or moved covers now: its measured shape, else its listed box.</summary>
+        private static List<Vector2Int> CurrentCells(BuildingObj o, out bool measured)
+        {
+            measured = false;
+            var g = BaseGridMgr.I;
+            var hover = Footprint.Anchor(o);
+            var m = Footprint.Measure(o);
+            if (m != null) { measured = true; return m; }
+            var known = Footprint.At(o.Inst.Type, o.Inst.Rotation, hover);
+            if (known != null) { measured = true; return known; }
+            return Footprint.Box(o.Inst.GetInfo(), hover, o.Inst.Rotation);
+        }
+
+        private static int _announceTries;
+        private static bool _turned;
 
         private static void Announce()
         {
             var g = BaseGridMgr.I;
+            var o = Moving();
+            if (o == null || o.Inst == null) return;
+            // Wait for the preview to stop sliding / turning (its shape and the game's fit test read where it stands).
+            bool still = true;
+            try { still = !o.IsMoving() && !o.IsRotating(); } catch { }
+            if (still)
+            {
+                // A building just picked up in rearrange mode flies to the cursor: its first position was the far
+                // corner of the base ("column 0, row 14").
+                var a = Footprint.Anchor(o); var hc = BaseGrid.HoverCell(g.GetHoverPos());
+                if (Math.Abs(a.x - hc.x) > 1 || Math.Abs(a.y - hc.y) > 1) still = false;
+            }
+            if (!still && _announceTries++ < 30) { _announceAt = Time.unscaledTime + 0.05f; return; }
+            _announceTries = 0;
             var hp = g.GetHoverPos();
-            if (Config.Debug) Log.Info($"Placement announce hover {hp} wanted ({_x},{_y})");
             // The game snaps the preview to its grid: step on from where it actually is.
             _x = hp.x; _y = hp.y;
-            // The same numbers as explore mode and the building list: the preview's top-left tile.
-            int col, row;
-            var p0 = g.GetPlacePreview() ?? g.GetPendingRearrangeBuilding();
-            Vector2Int cell;
-            // The preview's Inst keeps the spot it was made at; the hover point is its bottom-left tile.
-            cell = BaseGrid.HoverCell(hp);
-            try { if (p0 != null && p0.Inst != null) cell = BaseGrid.PreviewTopLeft(cell, p0.Inst.GetInfo().TileSize); } catch { }
-            col = BaseGrid.Col(cell.x); row = BaseGrid.Row(cell.y);
-            if (Config.Debug)
+            BaseGrid.Refresh();
+            var cells = CurrentCells(o, out bool measured);
+            var tl = Footprint.TopLeft(cells);
+            int col = BaseGrid.Col(tl.x), row = BaseGrid.Row(tl.y);
+            if (Config.Debug) Log.Info($"Placement announce hover {hp} cell {BaseGrid.HoverCell(hp)} -> col {col} row {row}, {cells.Count} tiles ({(measured ? "measured" : "box")}), rotation {o.Inst.Rotation}");
+            string prefix = "";
+            if (_turned)
             {
-                string extra = "";
-                try
-                {
-                    var pv = g.GetPlacePreview(); var rb = g.GetPendingRearrangeBuilding();
-                    if (pv != null) extra += $" preview at {pv.transform.position} inst ({pv.Inst?.X},{pv.Inst?.Y})";
-                    if (rb != null) extra += $" pending at {rb.transform.position} inst ({rb.Inst?.X},{rb.Inst?.Y})";
-                    extra += $" state {BaseMgr.I?.CurState}";
-                }
-                catch (Exception ex) { extra = " (" + ex.Message + ")"; }
-                Log.Info($"Placement cell {cell} (hover cell {BaseGrid.HoverCell(hp)}, rounded {BaseGrid.CellOf(hp)}) -> col {col} row {row}{extra}");
+                _turned = false;
+                Footprint.Bounds(cells, out int x0, out int x1, out int y0, out int y1);
+                string shape = Footprint.Describe(cells);
+                prefix = Loc.Get("place_turned") + ", " + (shape.Length > 0 ? shape : BaseGrid.Size(new Vector2Int(x1 - x0 + 1, y1 - y0 + 1))) + ". ";
             }
-            if (g.GetPlacePreview() == null)
-            {
-                // Rearranging: the game only tells whether it fits when the building is dropped.
-                Speech.SayMenu(Loc.F("place_pos_only", col, row));
-                return;
-            }
-            bool ok = g.CanBuildPlacePreview();
-            Speech.SayMenu(Loc.F("place_pos", col, row, Loc.Get(ok ? "place_ok" : "place_blocked")));
+            bool noPreview = g.GetPlacePreview() == null;
+            var pend = Pending();
+            string why = Footprint.Obstacle(cells, pend != null ? pend.Inst : null);
+            bool ok = noPreview ? why.Length == 0 : g.CanBuildPlacePreview();
+            if (!noPreview && ok != (why.Length == 0)) Log.Info($"Placement: the game says {(ok ? "fits" : "blocked")}, the tiles say '{why}' at {string.Join(" ", cells)}; preview at {o.transform.position} hover {hp}");
+            string state = Loc.Get(ok ? "place_ok" : "place_blocked");
+            if (!ok && why.Length > 0) state = why;
+            Speech.SayMenu(prefix + Loc.F("place_pos", col, row, state));
             Audio.Cues.Play(ok ? "tick" : "wall", 0f, 0.6f);
+        }
+
+        /// <summary>The paths key: what this spot does to the workers' reach.</summary>
+        private static void SayPaths()
+        {
+            var o = Moving();
+            if (o == null || o.Inst == null) return;
+            BaseGrid.Refresh();
+            var cells = CurrentCells(o, out _);
+            bool passOver = Paths.PassOverType(o.Inst.Type);
+            var res = Paths.Analyse(cells, Pending(), passOver);
+            string words = Paths.Words(res, passOver);
+            if (Config.Debug) Log.Info(Paths.Debug(cells));
+            Log.Info($"Placement paths at {Footprint.TopLeft(cells)}: self {res.Self.Direct}/{res.Self.Wall}, cut off {res.CutOff.Count}, wall only {res.WallOnly.Count}, lost {res.Lost}: {words}");
+            Speech.SayMenu(words);
         }
 
         private static void Place()
@@ -330,10 +513,13 @@ namespace BallPitAccess.Game
             int rot = p.Inst.Rotation;
             if (_lastRot != int.MinValue && rot != _lastRot) _rotPending = true;
             _lastRot = rot;
+            if (_step != SearchStep.None) { _rotPending = false; return; }     // the Home search turns it itself
             if (_rotPending && !p.IsRotating())
             {
                 _rotPending = false;
-                _search = null;
+                _turned = true;
+                // A turned 3 by 2 building is 2 by 3: its snap changes, so put it back on the grid.
+                try { var hp0 = BaseGridMgr.I.GetHoverPos(); SetHoverSnapped(hp0.x, hp0.y); } catch { }
                 _announceAt = Time.unscaledTime + 0.08f;
                 // Inst.GetTileSize() swaps width and height here, but the tiles taken once built did not (a turned
                 // 3 by 2 villa still covered 3 by 2): say the spot again, not a new size.

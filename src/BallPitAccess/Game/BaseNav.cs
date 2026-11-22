@@ -329,12 +329,70 @@ namespace BallPitAccess.Game
                 details.Add(Loc.F("bld_at", BaseGrid.Col(tl.x), BaseGrid.Row(tl.y)));
                 string size = BaseGrid.SizeTiles(b);
                 if (size.Length > 0) details.Add(size);
-                string desc = Names.Tr(inf.GetDescSlug());
-                if (desc.Length == 0) desc = Names.Tr(inf.GetBuildDescSlug());
-                if (desc.Length > 0) details.Add(desc);
+                foreach (var d in Descriptions(b, inf)) details.Add(d);
             }
             catch (Exception ex) { if (Config.Debug) Log.Warn("Describe building: " + ex.Message); }
             return string.Join(", ", parts);
+        }
+
+        /// <summary>
+        /// The building's description with its numbers, filled by the game's own BuildingInst.ApplyDesc /
+        /// ApplyHousingUpgradeDesc into the hover popup's texts (what the popup shows). The bare translation lost
+        /// its placeholders ("Harvest to gain wheat (/)", "All characters gain + bonus": a player could not tell
+        /// what bonus a building gives).
+        /// </summary>
+        internal static List<string> Descriptions(BuildingInst b, BuildingInfo inf)
+        {
+            var list = new List<string>();
+            var pop = BaseHoverPopup.I;
+            if (pop != null)
+            {
+                try
+                {
+                    if (pop.LocBuildingDesc != null && pop.ParamsBuildingDesc != null)
+                    {
+                        b.ApplyDesc(pop.LocBuildingDesc, pop.ParamsBuildingDesc, false);
+                        string d = Names.Filled(pop.LocBuildingDesc, pop.ParamsBuildingDesc);
+                        if (d.Length == 0) d = PlainOnly(pop.LocBuildingDesc.Term);
+                        if (d.Length > 0) list.Add(d);
+                    }
+                }
+                catch (Exception ex) { if (Config.Debug) Log.Warn("ApplyDesc: " + ex.Message); }
+                try
+                {
+                    if (pop.LocBuildingDesc2 != null && pop.ParamsBuildingDesc2 != null && inf != null && inf.Cat == BuildingCat.kHousing)
+                    {
+                        b.ApplyHousingUpgradeDesc(pop.LocBuildingDesc2, pop.ParamsBuildingDesc2);
+                        string d2 = Names.Filled(pop.LocBuildingDesc2, pop.ParamsBuildingDesc2);
+                        if (d2.Length == 0) d2 = PlainOnly(pop.LocBuildingDesc2.Term);
+                        if (Config.Debug)
+                        {
+                            string ps = "";
+                            try { var l = pop.ParamsBuildingDesc2._Params; for (int i = 0; l != null && i < l.Count; i++) ps += " " + l[i].Name + "=" + l[i].Value; } catch { }
+                            Log.Info("Housing desc of " + b.Type + ": term " + pop.LocBuildingDesc2.Term + " raw '" + Il2CppI2.Loc.LocalizationManager.GetTranslation(pop.LocBuildingDesc2.Term) + "' params" + ps + " -> '" + d2 + "'");
+                        }
+                        if (d2.Length > 0 && !list.Contains(d2)) list.Add(d2);
+                    }
+                }
+                catch (Exception ex) { if (Config.Debug) Log.Warn("ApplyHousingUpgradeDesc: " + ex.Message); }
+            }
+            if (list.Count == 0 && inf != null)
+            {
+                string d = PlainOnly(inf.GetDescSlug());
+                if (d.Length == 0) d = PlainOnly(inf.GetBuildDescSlug());
+                if (d.Length > 0) list.Add(d);
+            }
+            return list;
+        }
+
+        /// <summary>The term's translation when it has no number placeholders (one with them would be read with gaps).</summary>
+        private static string PlainOnly(string term)
+        {
+            if (string.IsNullOrEmpty(term)) return "";
+            string raw = "";
+            try { raw = Il2CppI2.Loc.LocalizationManager.GetTranslation(term) ?? ""; } catch { }
+            if (raw.Contains("{[") && !raw.Contains("{[x]}")) return "";
+            return Names.Tr(term);
         }
 
         /// <summary>The side bar's harvest button can be pressed now.</summary>

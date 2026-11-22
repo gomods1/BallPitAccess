@@ -5,7 +5,7 @@ avec votre lecteur d'écran, vous permet d'utiliser tout le jeu au clavier et tr
 bataille en sons : les ennemis, vos boules, les tirs ennemis, les cristaux d'EXP et les objets spéciaux
 ont chacun leur son, qui vient du côté où ils se trouvent par rapport à vous.
 
-Version 0.7.0, pour la version 1.308 du jeu, DLC Baboulone émergée compris. Le mod parle **toutes les
+Version 0.7.1, pour la version 1.308 du jeu, DLC Baboulone émergée compris. Le mod parle **toutes les
 langues proposées par le jeu** et suit la langue choisie dans le jeu.
 
 <!-- LANGS -->
@@ -128,6 +128,7 @@ Fermer. L'ordre ne dépend jamais de l'endroit où les éléments sont dessinés
 | H | Ressources et jour |
 | J | Récolte et ouvriers |
 | K | Explorer la base case par case |
+| I | Placer ou déplacer un bâtiment : ce que cet emplacement gêne |
 
 - **Construction** : les flèches déplacent le bâtiment d'une case et disent s'il rentre, Entrée
   construit, R fait pivoter, Début va à un emplacement libre, Retour arrière annule.
@@ -140,6 +141,8 @@ Fermer. L'ordre ne dépend jamais de l'endroit où les éléments sont dessinés
 - **Disposition** : Tab choisit un bâtiment, Entrée le soulève, les flèches le déplacent, Entrée le pose.
 - **Explorer** (K) : les flèches avancent d'une case et disent ce qu'il y a : libre (et combien de cases libres suivent vers la droite et vers le bas), un bâtiment avec sa taille, ou un terrain non acheté. Tab / Maj+Tab sautent à la case libre suivante / précédente. K, Retour arrière ou Échap quittent. Les colonnes et rangées sont les mêmes que pour placer un bâtiment.
 - Le menu de construction dit la place que prend chaque bâtiment (« 3 de large, 2 de haut »), et le placement commence par son nom et sa taille.
+- **Placer ou déplacer un bâtiment** : la position dit ce qui la bloque (« bloqué par Forêt »). I dit si les ouvriers atteignent l'emplacement et à quels bâtiments il couperait l'accès ou qu'il ne laisserait atteindre qu'en rebondissant sur un mur. Début trouve le meilleur emplacement libre, que les ouvriers touchent en ligne droite et qui ne coupe l'accès à personne, et tourne le bâtiment pour qu'il tienne. Après R, la nouvelle forme est annoncée : certains bâtiments, comme la maison hantée, ne sont pas des rectangles (« coin ouvert en haut à gauche »). En réorganisant, on peut aussi tourner les bâtiments.
+- **Exploration** : Page suivante / Page précédente sautent au bâtiment suivant / précédent et disent où il est, sa taille et sa forme.
 
 ## Combat {#battle}
 

@@ -66,6 +66,13 @@ namespace BallPitAccess.Game
 
         internal static Vector3 World(int x, int y) => new Vector3(_origin.x + x * _dx, _origin.y + y * _dy, 0f);
 
+        /// <summary>
+        /// The centre of a tile: GetWorldPos(x, y). The game snaps a preview (BaseGridMgr.ClampBuildingPreview) to
+        /// multiples of the tile size for an odd width or height and to multiples plus half a tile for an even one,
+        /// so tile centres are the multiples (read from the disassembly, 2026-11-22).
+        /// </summary>
+        internal static Vector2 Center(int x, int y) => new Vector2(_origin.x + x * _dx, _origin.y + y * _dy);
+
         internal static Vector2Int CellOf(Vector3 world) =>
             new Vector2Int(Mathf.RoundToInt((world.x - _origin.x) / _dx), Mathf.RoundToInt((world.y - _origin.y) / _dy));
 

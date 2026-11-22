@@ -66,6 +66,7 @@ namespace BallPitAccess.Game
                     if (building > 0) Speech.Event(Loc.F("construct_n", building));
                 }
                 _was = active;
+                if (active) { var hp = PlayerPos(); if (hp != Vector3.zero) RememberOrigin(hp); }
                 WatchFinished();
                 WatchEnd();
                 if (!active || Keys.Consumed || !Keys.GameHasFocus() || Keys.Ctrl || Keys.Alt || ModKeys.ListOpen || Navigator.Blocking) return;
@@ -120,7 +121,7 @@ namespace BallPitAccess.Game
             catch { return false; }
         }
 
-        private static string PlainName(BuildingInst b)
+        internal static string PlainName(BuildingInst b)
         {
             string name = Readers.Tr(b.GetInfo()?.GetNameSlug());
             return name.Length > 0 ? name : b.Type.ToString().TrimStart('k');
@@ -240,18 +241,78 @@ namespace BallPitAccess.Game
         private static float _launchedAt = -10f;
         private static bool _loggedStart;
 
-        private static Vector2 LaunchPos()
+        private static Vector2 _aimOrigin;
+        private static bool _haveAimOrigin;
+
+        /// <summary>
+        /// Where the workers will start, for the placement paths outside the harvest: the hero stands there only while
+        /// aiming (in the base's normal view the hero object is elsewhere: (0, -3.5) on the test save, which made every
+        /// building "reachable only off a wall"). Seen in this session's aim, else the game's worker start positions,
+        /// else the hero.
+        /// </summary>
+        internal static Vector2 AimOrigin()
+        {
+            if (Active) return LaunchPos();
+            if (!_haveAimOrigin) LoadOrigin();
+            if (_haveAimOrigin) return _aimOrigin;
+            try { var ws = BaseMgr.I?.WorkerStartPos; if (ws != null && ws.Count > 0 && ws[0] != Vector3.zero) return ws[0]; } catch { }
+            // Never aimed on this install yet: below the middle of the base's entrance tiles (the test save's hero aimed
+            // from 0.7 tile below the bottom row, in front of the entrance).
+            try
+            {
+                var g = BaseGridMgr.I;
+                BaseGrid.Refresh();
+                float sx = 0; int n = 0;
+                for (int x = BaseGrid.MinX - 2; x <= BaseGrid.MaxX + 2; x++)
+                    for (int y = BaseGrid.MinY - 3; y <= BaseGrid.MaxY; y++)
+                        if (g.IsEntrance(x, y)) { sx += BaseGrid.Center(x, y).x; n++; }
+                if (Config.Debug) Log.Info("AimOrigin: no aim seen yet; " + n + " entrance tiles" + (n > 0 ? ", middle x " + (sx / n) : ""));
+                if (n > 0) return new Vector2(sx / n, BaseGrid.Center(BaseGrid.MinX, BaseGrid.MinY).y - 0.75f * 1.125f);
+            }
+            catch { }
+            // The spot the hero aimed from on the test save (in front of the lift, which does not move as the base
+            // grows); the hero object itself stands elsewhere outside the harvest.
+            return new Vector2(22.75f, -0.84f);
+        }
+
+        private static bool _originLoaded;
+        private static string OriginFile => System.IO.Path.Combine(Log.Dir ?? "", "aim_origin.txt");
+
+        /// <summary>Keep the last aiming spot across restarts (the paths of a building being placed start there).</summary>
+        private static void RememberOrigin(Vector3 p)
+        {
+            bool changed = !_haveAimOrigin || ((Vector2)p - _aimOrigin).sqrMagnitude > 0.01f;
+            _aimOrigin = p; _haveAimOrigin = true; _originLoaded = true;
+            if (!changed) return;
+            try { System.IO.File.WriteAllText(OriginFile, p.x.ToString(System.Globalization.CultureInfo.InvariantCulture) + " " + p.y.ToString(System.Globalization.CultureInfo.InvariantCulture)); } catch { }
+        }
+
+        private static void LoadOrigin()
+        {
+            if (_originLoaded) return;
+            _originLoaded = true;
+            try
+            {
+                if (!System.IO.File.Exists(OriginFile)) return;
+                var parts = System.IO.File.ReadAllText(OriginFile).Trim().Split(' ');
+                _aimOrigin = new Vector2(float.Parse(parts[0], System.Globalization.CultureInfo.InvariantCulture), float.Parse(parts[1], System.Globalization.CultureInfo.InvariantCulture));
+                _haveAimOrigin = true;
+            }
+            catch { }
+        }
+
+        internal static Vector2 LaunchPos()
         {
             if (_haveLaunchPos) return _launchPos;
             return PlayerPos();
         }
 
-        private static Vector2 DirOf(float deg) => new Vector2(Mathf.Cos(deg * Mathf.Deg2Rad), Mathf.Sin(deg * Mathf.Deg2Rad));
+        internal static Vector2 DirOf(float deg) => new Vector2(Mathf.Cos(deg * Mathf.Deg2Rad), Mathf.Sin(deg * Mathf.Deg2Rad));
 
         /// <summary>The worker's pickup radius (BallObj.PickupRange), read from a live worker; a guess until then.</summary>
-        private static float _pickupR = 0.125f;   // measured 2026-11-21
+        internal static float _pickupR = 0.125f;   // measured 2026-11-21
 
-        private static BuildingInst BuildingOf(Collider2D col)
+        internal static BuildingInst BuildingOf(Collider2D col)
         {
             if (col == null) return null;
             var bo = col.GetComponentInParent<BuildingObj>();
@@ -306,7 +367,7 @@ namespace BallPitAccess.Game
         private static int _pickBoxesFrame = -1;
 
         /// <summary>Buildings workers pass over (collider on a kLayerMaskPickup layer), with their collider bounds; once per frame.</summary>
-        private static List<KeyValuePair<BuildingInst, Bounds>> PickupBoxes(int pickMask)
+        internal static List<KeyValuePair<BuildingInst, Bounds>> PickupBoxes(int pickMask)
         {
             if (_pickBoxesFrame == Time.frameCount) return _pickBoxes;
             _pickBoxesFrame = Time.frameCount;
@@ -328,7 +389,7 @@ namespace BallPitAccess.Game
         }
 
         /// <summary>Where the segment s to e enters the box grown by pad (0..1), or -1 when it misses it.</summary>
-        private static float Enter(Vector2 s, Vector2 e, Bounds b, float pad)
+        internal static float Enter(Vector2 s, Vector2 e, Bounds b, float pad)
         {
             Vector2 d = e - s, min = (Vector2)b.min - new Vector2(pad, pad), max = (Vector2)b.max + new Vector2(pad, pad);
             float t0 = 0f, t1 = 1f;
@@ -345,7 +406,7 @@ namespace BallPitAccess.Game
         }
 
         /// <summary>Workers pass over this building instead of bouncing off it (wheat fields).</summary>
-        private static bool PassOver(BuildingInst b)
+        internal static bool PassOver(BuildingInst b)
         {
             try
             {

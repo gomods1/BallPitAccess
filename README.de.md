@@ -5,7 +5,7 @@ Ein Mod, der **BALL x PIT** (Kenny Sun / Devolver Digital) ohne Sehen spielbar m
 Schlachtfeld in Klang: Gegner, deine Bälle, gegnerische Schüsse, EP-Juwelen und besondere Gegenstände haben
 jeweils ihr eigenes Geräusch, das von ihrer Seite aus zu dir kommt.
 
-Version 0.7.0, für die Spielversion 1.308, einschließlich des DLC Aufgestiegenes Ballbylon (Risen Ballbylon).
+Version 0.7.1, für die Spielversion 1.308, einschließlich des DLC Aufgestiegenes Ballbylon (Risen Ballbylon).
 Der Mod spricht **jede Sprache, die das Spiel anbietet**, und folgt der Spracheinstellung des Spiels.
 
 <!-- LANGS -->
@@ -129,6 +129,7 @@ Bildschirm gezeichnet sind.
 | H | Rohstoffe und Tag |
 | J | Ernte und Arbeiter |
 | K | Die Basis Feld für Feld erkunden |
+| I | Gebäude platzieren oder verschieben: wem dieser Platz im Weg ist |
 
 - **Bauen**: Die Pfeiltasten bewegen das Gebäude um ein Feld und sagen, ob es passt, Eingabe baut, R dreht,
   Pos1 springt zu einem freien Platz, Rücktaste bricht ab.
@@ -143,6 +144,8 @@ Bildschirm gezeichnet sind.
   ab.
 - **Erkunden** (K): Die Pfeiltasten gehen ein Feld weiter und sagen, was dort ist: frei (und wie viele freie Felder nach rechts und nach unten folgen), ein Gebäude mit seiner Größe oder noch nicht gekauftes Land. Tab / Umschalt+Tab springen zum nächsten / vorigen freien Feld. K, Rücktaste oder Escape beenden. Spalten und Reihen sind dieselben wie beim Platzieren eines Gebäudes.
 - Das Baumenü sagt, wie viel Platz jedes Gebäude braucht („3 breit, 2 hoch“), und beim Platzieren werden zuerst Name und Größe gesagt.
+- **Gebäude platzieren oder verschieben**: die Position sagt, was sie blockiert („blockiert durch Wald“). I sagt, ob die Arbeiter den Platz erreichen und welche Gebäude er abschneiden oder nur noch über eine Wand erreichbar lassen würde. Pos1 sucht den besten freien Platz, den die Arbeiter direkt treffen und der niemanden abschneidet, und dreht das Gebäude passend. Nach R wird die neue Form gesagt: manche Gebäude, wie das Spukhaus, sind keine Rechtecke („offene Ecke oben links“). Beim Umstellen lassen sich Gebäude ebenfalls drehen.
+- **Erkunden**: Bild ab / Bild auf springen zum nächsten / vorherigen Gebäude und sagen, wo es steht, wie groß es ist und welche Form es hat.
 
 ## Kampf {#battle}
 

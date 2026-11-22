@@ -5,7 +5,7 @@ przez twój czytnik ekranu, pozwala obsłużyć całą grę z klawiatury i zamie
 twoje kule, wrogie pociski, kryształy PD i przedmioty specjalne mają własne dźwięki, dochodzące z tej strony,
 po której się znajdują.
 
-Wersja 0.7.0, dla wersji gry 1.308, razem z DLC Wyniesione Kulopolis (Risen Ballbylon). Mod mówi **w każdym
+Wersja 0.7.1, dla wersji gry 1.308, razem z DLC Wyniesione Kulopolis (Risen Ballbylon). Mod mówi **w każdym
 języku, który oferuje gra**, i stosuje się do ustawienia języka w grze.
 
 <!-- LANGS -->
@@ -126,6 +126,7 @@ Kolejność nigdy nie zależy od tego, gdzie elementy są narysowane na ekranie.
 | H | Zasoby i dzień |
 | J | Zbiory i robotnicy |
 | K | Zwiedzanie bazy pole po polu |
+| I | Umieszczanie lub przenoszenie budynku: komu zawadza to miejsce |
 
 - **Budowanie**: strzałki przesuwają budowlę o jedno pole i mówią, czy się mieści, Enter buduje, R obraca,
   Home przeskakuje na wolne miejsce, Backspace anuluje.
@@ -138,6 +139,8 @@ Kolejność nigdy nie zależy od tego, gdzie elementy są narysowane na ekranie.
 - **Układanie**: Tab wybiera budowlę, Enter ją podnosi, strzałki ją przesuwają, Enter ją upuszcza.
 - **Eksploracja** (K): strzałki przechodzą o jedno pole i mówią, co tam jest: wolne (i ile wolnych pól jest dalej w prawo i w dół), budynek z rozmiarem albo teren niekupiony. Tab / Shift+Tab skaczą do następnego / poprzedniego wolnego pola. K, Backspace lub Escape wychodzą. Kolumny i rzędy są te same co przy stawianiu budynku.
 - Menu budowy mówi, ile miejsca zajmuje każdy budynek („3 szerokości, 2 wysokości”), a stawianie zaczyna się od nazwy i rozmiaru.
+- **Umieszczanie lub przenoszenie budynku**: pozycja mówi, co ją blokuje („zablokowane przez Las”). I mówi, czy robotnicy docierają do miejsca i które budynki by odcięło albo zostawiło osiągalne tylko odbiciem od ściany. Home znajduje najlepsze wolne miejsce, w które robotnicy trafiają prosto i które nikogo nie odcina, i obraca budynek, żeby się zmieścił. Po R podawany jest nowy kształt: niektóre budynki, jak nawiedzony dom, nie są prostokątami („otwarty róg w lewym górnym rogu”). Przy przestawianiu budynki też można obracać.
+- **Zwiedzanie**: Page Down / Page Up przeskakują do następnego / poprzedniego budynku i mówią, gdzie stoi, jaki ma rozmiar i kształt.
 
 ## Walka {#battle}
 
