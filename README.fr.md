@@ -5,7 +5,7 @@ avec votre lecteur d'écran, vous permet d'utiliser tout le jeu au clavier et tr
 bataille en sons : les ennemis, vos boules, les tirs ennemis, les cristaux d'EXP et les objets spéciaux
 ont chacun leur son, qui vient du côté où ils se trouvent par rapport à vous.
 
-Version 0.7.1, pour la version 1.308 du jeu, DLC Baboulone émergée compris. Le mod parle **toutes les
+Version 0.8.0, pour la version 1.308 du jeu, DLC Baboulone émergée compris. Le mod parle **toutes les
 langues proposées par le jeu** et suit la langue choisie dans le jeu.
 
 <!-- LANGS -->
@@ -176,6 +176,7 @@ Fermer. L'ordre ne dépend jamais de l'endroit où les éléments sont dessinés
 | P | Objets sur le terrain |
 | N | Dangers (tirs, lasers, bombes, sol) |
 | Q | Quel était ce son ? Les sons qui jouent maintenant et les derniers, avec le sens de chacun et son côté |
+| M | Carte du combat (pause) |
 | Num + / Num - | Vitesse du jeu plus rapide / plus lente, quelle que soit la disposition du clavier |
 
 Chaque touche du mod peut être changée : voir [Changer les touches](#changing-keys).
@@ -185,6 +186,8 @@ et les soins, les effets d'état, les objets spéciaux quand ils tombent, « gai
 sur E », la fin de l'expédition.
 
 **Boss** : J donne la vraie vie du boss, la même que sa barre dans le jeu. Certains boss ne prennent des dégâts que sur un point faible : le corps du Roi Squelette ne peut pas être blessé, seule la couronne sur sa tête le peut, et son corps la protège de face, donc les balles l'atteignent après avoir rebondi sur les murs. J dit où est le point faible, et l'aide à la visée le prend pour cible.
+
+**Carte du combat (pause)**: M ouvre la carte du combat et met le jeu en pause. Les flèches parcourent le terrain case par case et disent ce qui s'y trouve : ennemis avec leur vie, vos balles, tirs, lasers, bombes, dangers au sol et objets. Contrôle et flèche haut dit ce que fait un ennemi, son état et ses effets. Tab saute d'ennemi en ennemi, le plus proche d'abord ; Page suivante aux autres choses ; Début revient à vous ; Fin compte tout. Entrée verrouille la visée sur l'ennemi ; quand il meurt, la visée revient à l'ennemi le plus proche. Suppr libère la visée. M ou Échap ferme la carte et le combat reprend.
 
 ## Sons de combat {#battle-sounds}
 
@@ -307,6 +310,8 @@ ou le jeu ont besoin (flèches, Entrée, Tab, Échap, Retour arrière, Espace, W
 - En combat View avec la croix : en haut les dangers, en bas l'équipement, à gauche les objets, à droite le dernier son ; View avec LT et RT ralentit et accélère le jeu
 - À la base View avec la croix : en haut la récolte, en bas les ressources, à gauche le mode exploration
 - Dans les menus View avec LT et RT fait Page précédente et Page suivante
+
+En combat, cliquer le stick droit ouvre la carte du combat ; dans le menu pause, Affichage et croix droite. Sur la carte la croix se déplace, RB et LB sautent d'ennemi en ennemi, A verrouille la visée et B ferme.
 
 ## Conseils pour une première expédition {#tips-for-a-first-run}
 

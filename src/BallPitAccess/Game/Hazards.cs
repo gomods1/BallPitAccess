@@ -332,6 +332,15 @@ namespace BallPitAccess.Game
             Buffers.SetDetails(lines);
         }
 
+        /// <summary>Where the bombs in the air will land, with their blast radius (the battle map).</summary>
+        internal static List<KeyValuePair<Vector3, float>> BombTargets()
+        {
+            var o = new List<KeyValuePair<Vector3, float>>();
+            float now = Time.unscaledTime;
+            lock (Bombs) foreach (var b in Bombs) if (now <= b.Until) o.Add(new KeyValuePair<Vector3, float>(b.Target, b.Radius));
+            return o;
+        }
+
         internal static string Dump()
         {
             var sb = new StringBuilder();

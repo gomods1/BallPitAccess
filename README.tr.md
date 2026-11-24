@@ -5,7 +5,7 @@ menüleri ekran okuyucun aracılığıyla seslendirir, oyunun tamamını klavyey
 alanını sese dönüştürür: düşmanların, toplarının, düşman atışlarının, TP kristallerinin ve özel eşyaların
 her birinin kendi sesi vardır ve bu ses, senin hangi tarafındaysa oradan gelir.
 
-Sürüm 0.7.1, oyunun 1.308 sürümü için, Yükselen Babil'in Sekme Bahçeleri (Risen Ballbylon) DLC'si dahil.
+Sürüm 0.8.0, oyunun 1.308 sürümü için, Yükselen Babil'in Sekme Bahçeleri (Risen Ballbylon) DLC'si dahil.
 Mod **oyunun sunduğu tüm dilleri** konuşur ve oyunun dil ayarını izler.
 
 <!-- LANGS -->
@@ -174,6 +174,7 @@ Sıra hiçbir zaman ögelerin ekranda nereye çizildiğine bağlı değildir.
 | P | Sahadaki eşyalar |
 | N | Tehlikeler (atışlar, lazerler, bombalar, zemin) |
 | Q | O ses neydi? Şu an çalan sesler ve son birkaç ses, her birinin anlamı ve tarafıyla |
+| M | Savaş haritası (duraklatır) |
 | Num + / Num - | Oyun hızını artır / azalt, her klavye düzeninde |
 
 Her mod tuşu değiştirilebilir: bkz. [Tuşları değiştirme](#changing-keys).
@@ -182,6 +183,8 @@ Savaş sırasında seslendirilenler: başlangıçta seviye, patronlar ve yüzde 
 can, durum etkileri, düştüklerinde özel eşyalar, "seviye atlama hazır, E tuşuna bas" ve turun sonu.
 
 **Boss'lar**: J, boss'un gerçek canını söyler; oyundaki boss çubuğuyla aynıdır. Bazı boss'lar yalnızca zayıf noktalarından hasar alır: İskelet Kral'ın gövdesi yaralanamaz, yalnızca başındaki taç yaralanabilir ve gövdesi onu önden korur; toplar ona duvarlardan sekerek ulaşır. J zayıf noktanın nerede olduğunu söyler ve nişan yardımı onu hedefler.
+
+**Savaş haritası (duraklatır)**: M savaş haritasını açar ve oyunu duraklatır. Oklar alanı kare kare gezer ve orada ne olduğunu söyler: canlarıyla düşmanlar, topların, atışlar, lazerler, bombalar, zemin tehlikeleri ve eşyalar. Control ve yukarı ok bir düşmanın ne yaptığını, durumunu ve etkilerini söyler. Tab düşmandan düşmana atlar, önce en yakını; Page Down diğer şeylere; Home sana döner; End her şeyi sayar. Enter nişanı düşmana kilitler; düşman ölünce nişan en yakın düşmana döner. Delete kilidi açar. M veya Escape haritayı kapatır ve savaş devam eder.
 
 ## Savaş sesleri {#battle-sounds}
 
@@ -300,6 +303,8 @@ Backspace, Boşluk, W A S D F E R X) alınamaz. F1 yardımı, tuşların şu ank
 - Savaşta View ile yön tuşları: yukarı tehlikeler, aşağı ekipman, sol eşyalar, sağ son ses; View ile LT ve RT oyunu yavaşlatır ve hızlandırır
 - Üste View ile yön tuşları: yukarı hasat, aşağı kaynaklar, sol keşif modu
 - Menülerde View ile LT ve RT Page Up ve Page Down'dır
+
+Savaşta sağ çubuğa basmak savaş haritasını açar; duraklatma menüsünde Görünüm ve yön tuşu sağ. Haritada yön tuşu gezer, RB ve LB düşmanlar arasında atlar, A nişanı kilitler ve B kapatır.
 
 ## İlk tur için ipuçları {#tips-for-a-first-run}
 

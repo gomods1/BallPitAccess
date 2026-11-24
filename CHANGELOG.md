@@ -3,6 +3,33 @@
 Player-facing changes to BALL x PIT Access, newest first. The release notes on GitHub are taken from the
 section of each version.
 
+## 0.8.0
+
+From a player's report after beating the Skeleton King twice.
+
+* **Battle map (M)**: pauses the battle and lets you walk the field one tile at a time with the arrows. Each tile
+  says what is on it, and where it is from you ("Skeletal Brute, health 236 of 236, 100 percent. 2 left, 2 ahead,
+  column 2 of 7"): enemies with their health and what they are doing (about to attack, in the air, arriving),
+  you, your balls, enemy shots (ice, tar, fire, arrows…), lasers, bombs about to land, floor hazards and pickups.
+  Control Up reads the details of the first thing on the tile: what an enemy does in the game's own words ("Throws
+  icicles at the player which freeze the player on hit"), its status effects, how many rows it is from the attack
+  line, and whether a straight shot reaches it. Tab / Shift Tab jump from enemy to enemy, closest first; Page Down /
+  Page Up to everything else; Home back to you; End counts everything ("30 enemies: 24 Skeleton Warrior, 6 Skeletal
+  Brute"). It also opens from the pause menu and over a level up. M, Escape or Backspace close it and the battle
+  goes on. Controller: right stick click in a battle, View + D-pad right in the pause menu.
+* **Lock the aim on an enemy**: Enter on an enemy in the map keeps the aim assist on it until it dies ("Skeleton
+  Warrior down"), then the assist picks the closest enemy again. Delete in the map releases the lock; changing the
+  aim mode or turning the aim by hand releases it too. If the assist was off, locking turns it on.
+* **Encyclopedia**:
+  * Every evolution says what it is made of, all the ways ("made from Ghost + Poison, or Cell + Poison"), also the
+    ones not discovered yet.
+  * A ball or passive lists what it evolves into and with what ("with Iron, or Flesh it becomes Hemorrhage, not
+    discovered yet").
+  * Enemies are named as they look in that level, say the level they are found in, their size when bigger than one
+    tile, a faster or slower speed, and whether they are a boss. What they do is read with them when "Read
+    descriptions" is on.
+  * The panel's figures are read with their label ("Completed Runs 0", "Damage Dealt 71.7K"), not as two lines.
+
 ## 0.7.1
 
 From a player's report after building the Haunted House.

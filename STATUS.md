@@ -464,3 +464,33 @@ Eleven points from a player; all fixed and checked in the running game (test sav
 - New dev commands: `tilemap kType`, `rotate N`, `gamestate kX` (kPaused, kLevelUp, kPickTreasure = fuser),
   `bback`, `terms Text`, `findtext Name`, `evosetup N` (own both balls of N evolutions at max level).
   The game's `kAddBall` / `kAddPassive` / `kMaxOutItems` cheats do nothing in the shipped build; `kLevelUp` works.
+
+### Session 13 (2026-11-24): battle map, aim lock, encyclopedia recipes (verified in game, scripted, test save)
+A player beat the Skeleton King and asked for: a paused view of every enemy with health and "intent" (they heard
+sighted players see intents with damage numbers off), choosing an enemy to aim at, evolution recipes in the
+encyclopedia, more enemy info, and "the statistics are empty". Built as 0.8.0 (CHANGELOG), **not released**.
+- **Damage numbers setting**: `PlayerPrefsMgr.sDisableDamageNumbers` (static field at class offset 0x81) is read only
+  by `FXMgr.CreateNumberSprite` / `CreateCritNumber` (xref scan of the il2cpp section): it hides the numbers, nothing
+  else. The "intent" a sighted player reads is the enemy itself; the mod uses `GridPieceInfo.GetGameplayDescSlug()`
+  ("Throws icicles at the player…", 48 terms) plus `PieceState` (charging, attacking, flying, entering, falling).
+- **`Game/BattleMap.cs`** (M, binding `map`; pad R3 in battle, View+Right in menus): pauses with
+  `GameMgr.SetState(kPaused)` (what `InGameUI.OnPauseClicked` does) when playing; opens over any other stopped
+  battle state (pause, level up…). A snapshot of everything (threats, `BallMgr.ActiveBalls`, `ArrowObj`, `EnemyLaserObj`
+  as segments, `Hazards.BombTargets`, `ObstacleObj`, `BattleSaveData.Pickups`) on a grid of `ColW` columns from
+  `LeftX` and `RowH` rows centred on the hero. Closing resumes with `PauseUI.OnCloseClicked` only if the map paused;
+  `Navigator.Quiet()` drops the pause screen's announcement, and `TrackOverlay` holds announcements while a mod list or
+  the map is open. `ModKeys.ListOpen` now includes the map (`ModListOpen` = a mod list only).
+- **Aim lock**: `AimAssist.Lock/Unlock/Locked`; `Pick` aims only at the locked piece while it lives, then says
+  "X down. Aim: <mode>" and picks normally. Mode change, Up arrow, hand turn clear it.
+- **Encyclopedia**: `Names.Recipes` (every `MergeComponents` row), `Names.EvolvesInto` (`UpgradeInfo.Evolutions`, the
+  other components of the row containing the item), undiscovered = `EncyclopediaItem.IsLocked` on the page, else
+  `MetaSaveData.HeroStats/PassiveStats[type].NumObtained == 0`. Enemy names use `GetVizIdx(LvlInf.Type)` (was 0).
+  `Readers.PairValues` joins label + number lines. The game's enemy panel already shows "Health Scale" and "Killed".
+- **Statistics**: read fine on the test save (from the pause menu, on open and after Ctrl+Tab back): "Play Time …
+  Total Enemies Killed 1,309 …". Not reproduced: ask the player where they were (base encyclopedia? character "More
+  Stats"? run summary?) and for speech.log.
+- Verified: open/close/resume, Tab/Page Down/Home/End, Ctrl+Up details, lock until death then closest, level-up
+  screen, pad R3/RB/A/B and View+Right, help lines. Not verified: Spanish texts in game, bosses on the map (crown part,
+  boss percentage line), lasers / bombs / floor hazards on the map (none on the Bone Yard run).
+- Testing pitfall: the game window was minimized during one boot (UI laid out at size 0, every button off screen,
+  "0 usable"): restart the game. Autofire is a registry pref (`autofire_h4166777650`), not in the save: put it back.

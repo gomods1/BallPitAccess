@@ -24,6 +24,10 @@ namespace BallPitAccess.Game
         private static float _fixedDeg = 90f;
         private static GridPieceInst _target;
         internal static GridPieceInst Target => _target;
+        /// <summary>The enemy the player chose on the battle map: aimed at until it dies, whatever the mode would pick.</summary>
+        private static GridPieceInst _locked;
+        private static string _lockedName = "";
+        internal static GridPieceInst Locked => _locked;
         private static float _nextPick;
         private static int _calls;
         private static bool _loggedCalls;
@@ -92,7 +96,7 @@ namespace BallPitAccess.Game
                     Player.I?.SetAimDir(BallMgr.ClampAimDir(new Vector2(Mathf.Cos(r), Mathf.Sin(r)), GameAimMode(), 0));
                 }
                 catch { }
-            if (!Battle.InBattle || mode == Mode.Off || mode == Mode.Fixed) { _target = null; return; }
+            if (!Battle.InBattle || mode == Mode.Off || mode == Mode.Fixed) { _target = null; _locked = null; return; }
             // Dev (no mouse in a -batchmode game): push the assist's direction into the game's aim every frame.
             if (DevForce && Battle.Playing && DevDeg > 0f)
                 try { Player.I?.SetAimDir(new Vector2(Mathf.Cos(DevDeg * Mathf.Deg2Rad), Mathf.Sin(DevDeg * Mathf.Deg2Rad))); } catch { }
@@ -207,8 +211,64 @@ namespace BallPitAccess.Game
             return b.center;
         }
 
+        /// <summary>Lock the aim on one enemy (the battle map's Enter). With the assist off or on a fixed angle it
+        /// switches to the closest enemy, so the aim goes on by itself once the locked one dies.</summary>
+        internal static void Lock(GridPieceInst inst, string name)
+        {
+            if (inst == null) return;
+            string extra = "";
+            if (Current == Mode.Off || Current == Mode.Fixed)
+            {
+                Config.AimMode = (int)Mode.Lowest;
+                extra = ". " + Loc.F("aim_mode", Loc.Get("aim_" + Current));
+            }
+            _locked = inst;
+            _lockedName = name ?? "";
+            _target = inst;
+            _nextPick = 0f;
+            Log.Info("Aim locked on " + inst.Type);
+            Speech.SayMenu(Loc.F("lock_on", _lockedName) + extra);
+        }
+
+        internal static void Unlock(bool say)
+        {
+            bool had = _locked != null;
+            _locked = null;
+            _nextPick = 0f;
+            if (say) Speech.SayMenu(Loc.Get(had ? "lock_off" : "lock_none"));
+        }
+
+        private static bool LockedAlive()
+        {
+            var l = _locked;
+            if (l == null) return false;
+            try { return l.CurState != PieceState.kDead && l.Obj != null && l.Obj.IsActive; } catch { return false; }
+        }
+
         private static void Pick(Mode mode)
         {
+            if (_locked != null)
+            {
+                if (LockedAlive())
+                {
+                    CollectBoxes();
+                    _target = _locked;
+                    _aimOffset = Vector3.zero;
+                    foreach (var tb in Boxes)
+                        if (tb.T.Inst.Pointer == _locked.Pointer)
+                        {
+                            _aimOffset = AimPoint(tb, AimStart(), out _) - tb.T.Center;
+                            _targetX = tb.T.Center.x;
+                            break;
+                        }
+                    return;
+                }
+                // The locked enemy is gone: back to what the mode picks (the closest enemy by default).
+                Log.Info("Aim lock ended: target gone");
+                Speech.Battle(Loc.F("lock_gone", _lockedName, Loc.Get("aim_" + mode)), "lock", 3f);
+                _locked = null;
+                _target = null;
+            }
             CollectBoxes();
             Vector3 start = AimStart();
             var am = GameAimMode();
@@ -348,6 +408,7 @@ namespace BallPitAccess.Game
             int m = ((int)Current + 1) % (int)Mode.Count;
             Config.AimMode = m;
             _target = null;
+            _locked = null;
             Speech.SayMenu(Loc.F("aim_mode", Loc.Get("aim_" + (Mode)m)));
         }
 
@@ -371,6 +432,7 @@ namespace BallPitAccess.Game
                 }
                 catch { }
                 Config.AimMode = (int)Mode.Fixed;
+                _locked = null;
             }
             _fixedDeg = Mathf.Clamp(_fixedDeg + deg, 10f, 170f);
             Speech.SayMenu(Loc.F("aim_angle", Harvest.AngleWords(_fixedDeg)));
@@ -381,6 +443,7 @@ namespace BallPitAccess.Game
         {
             if (Current == Mode.Fixed || Current == Mode.Off) Config.AimMode = (int)_lastAuto;
             _target = null;
+            _locked = null;
             Speech.SayMenu(Loc.F("aim_mode", Loc.Get("aim_" + Current)));
         }
 
@@ -394,7 +457,9 @@ namespace BallPitAccess.Game
         {
             var t = _target;
             if (t == null) return null;
-            foreach (var th in Battle.Threats) if (th.Inst.Pointer == t.Pointer) return Battle.Describe(th);
+            foreach (var th in Battle.Threats)
+                if (th.Inst.Pointer == t.Pointer)
+                    return Battle.Describe(th) + (_locked != null && _locked.Pointer == t.Pointer ? ", " + Loc.Get("map_locked_mark") : "");
             return null;
         }
     }

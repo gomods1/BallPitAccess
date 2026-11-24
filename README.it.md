@@ -5,7 +5,7 @@ tramite il tuo screen reader, ti permette di usare tutto il gioco con la tastier
 battaglia in suono: i nemici, le tue palle, i colpi nemici, i cristalli di PX e gli oggetti speciali hanno
 ciascuno il proprio suono, che arriva dal loro lato rispetto a te.
 
-Versione 0.7.1, per la versione 1.308 del gioco, incluso il DLC Pallilonia Risorta (Risen Ballbylon). La
+Versione 0.8.0, per la versione 1.308 del gioco, incluso il DLC Pallilonia Risorta (Risen Ballbylon). La
 mod parla **tutte le lingue offerte dal gioco** e segue l'impostazione della lingua del gioco.
 
 <!-- LANGS -->
@@ -179,6 +179,7 @@ Chiudi. L'ordine non dipende mai da dove le cose sono disegnate sullo schermo.
 | P | Oggetti sul campo |
 | N | Pericoli (colpi, laser, bombe, terreno) |
 | Q | Cos'era quel suono? I suoni che si sentono ora e gli ultimi, con il significato di ciascuno e il suo lato |
+| M | Mappa della battaglia (pausa) |
 | Num + / Num - | Velocità di gioco più alta / più bassa, con qualsiasi layout di tastiera |
 
 Ogni tasto della mod si può cambiare: vedi [Cambiare i tasti](#changing-keys).
@@ -188,6 +189,8 @@ cento, i danni e la salute, gli effetti di stato, gli oggetti speciali quando ca
 pronti, premi E", la fine della spedizione.
 
 **Boss**: J dà la salute reale del boss, la stessa della sua barra nel gioco. Alcuni boss subiscono danni solo su un punto debole: il corpo del Re Scheletro non può essere ferito, solo la corona sulla sua testa, e il corpo la protegge davanti, quindi le palle la raggiungono dopo essere rimbalzate sulle pareti. J dice dov'è il punto debole, e l'assistenza alla mira lo prende di mira.
+
+**Mappa della battaglia (pausa)**: M apre la mappa della battaglia e mette in pausa. Le frecce percorrono il campo una casella alla volta e dicono cosa c'è: nemici con la loro vita, le tue palle, colpi, laser, bombe, pericoli a terra e oggetti. Ctrl e freccia su dice cosa fa un nemico, il suo stato e i suoi effetti. Tab salta da un nemico all'altro, il più vicino prima; Pagina giù alle altre cose; Home torna a te; Fine conta tutto. Invio blocca la mira sul nemico; quando muore la mira torna al nemico più vicino. Canc sblocca la mira. M o Esc chiude la mappa e la battaglia continua.
 
 ## Suoni di battaglia {#battle-sounds}
 
@@ -309,6 +312,8 @@ come sono impostati ora.
 - In battaglia View con la croce: su pericoli, giù equipaggiamento, sinistra oggetti, destra l'ultimo suono; View con LT e RT rallenta e accelera il gioco
 - Nella base View con la croce: su raccolto, giù risorse, sinistra modalità esplorazione
 - Nei menu View con LT e RT è Pagina su e Pagina giù
+
+In battaglia, premere lo stick destro apre la mappa della battaglia; nel menu di pausa, Visualizza e croce destra. Nella mappa la croce si muove, RB e LB saltano tra i nemici, A blocca la mira e B chiude.
 
 ## Consigli per la prima spedizione {#tips-for-a-first-run}
 

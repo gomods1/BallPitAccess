@@ -292,6 +292,7 @@ namespace BallPitAccess.Input
                         case Btn.Up: return Bind("enemies");
                         case Btn.Down: return Bind("health");
                         case Btn.Left: return Bind("position");
+                        case Btn.Right: if (Battle.InBattle) return Bind("map"); break;
                         case Btn.LT: return Keys1(Keys.VK_PRIOR);
                         case Btn.RT: return Keys1(Keys.VK_NEXT);
                     }
@@ -306,6 +307,7 @@ namespace BallPitAccess.Input
                     case Btn.Left: return Bind("status");
                     case Btn.Right: return Bind("progress");
                     case Btn.L3: return Bind("catch");
+                    case Btn.R3: return Bind("map");
                 }
                 return null;
             }

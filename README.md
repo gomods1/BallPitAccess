@@ -5,7 +5,7 @@ menu through your screen reader, lets you use the whole game with the keyboard, 
 into sound: enemies, your balls, enemy shots, XP crystals and special items all have their own sounds,
 coming from their side of you.
 
-Version 0.7.1, for game version 1.308, including the Risen Ballbylon DLC. The mod speaks **every language
+Version 0.8.0, for game version 1.308, including the Risen Ballbylon DLC. The mod speaks **every language
 the game offers** and follows the game's language setting.
 
 <!-- LANGS -->
@@ -174,6 +174,7 @@ order never depends on where things are drawn on the screen.
 | P | Pickups on the field |
 | N | Hazards (shots, lasers, bombs, floor) |
 | Q | What was that sound? The sounds playing now and the last few, with what each means and its side |
+| M | Battle map (pauses) |
 | Num + / Num - | Faster / slower game speed, on any keyboard layout |
 
 Every mod key can be changed: see [Changing the keys](#changing-keys).
@@ -182,6 +183,8 @@ Spoken during battle: the level at the start, bosses and their health at 75, 50 
 and health, status effects, special items when they drop, "level ups ready, press E", the end of the run.
 
 **Bosses**: J gives the boss's real health, the same as the game's boss bar. Some bosses only take damage on a weak spot: the Skeleton King's body cannot be hurt, only the crown on his head can, and his body shields it from the front, so balls reach it after bouncing off the walls. J says where the weak spot is, and the aim assist goes for it.
+
+**Battle map (pauses)**: M opens the battle map and pauses the game. The arrows walk the field one tile at a time and say what is there: enemies with their health, your balls, shots, lasers, bombs, floor hazards and pickups. Control and up arrow says what an enemy does, its state and its status effects. Tab jumps from enemy to enemy, closest first; Page Down to the other things; Home back to you; End counts everything. Enter locks the aim on the enemy; once it dies the aim goes back to the closest enemy. Delete releases the lock. M or Escape closes the map and the battle goes on.
 
 ## Battle sounds
 
@@ -298,6 +301,8 @@ cannot be taken. The F1 help ends with the keys as they are set now.
 - In a battle View with the D-pad: up hazards, down equipment, left pickups, right the last sound; View with LT and RT slows down and speeds up the game
 - In the base View with the D-pad: up harvest, down resources, left explore mode
 - In menus View with LT and RT is Page Up and Page Down
+
+In a battle, clicking the right stick opens the battle map; on the pause menu, View and D-pad right. In the map the D-pad walks, RB and LB jump between enemies, A locks the aim and B closes.
 
 ## Tips for a first run
 

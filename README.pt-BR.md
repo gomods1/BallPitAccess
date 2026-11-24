@@ -5,7 +5,7 @@ pelo seu leitor de tela, permite usar o jogo inteiro pelo teclado e transforma o
 inimigos, suas esferas, disparos inimigos, cristais de EXP e itens especiais têm cada um o seu som, que
 vem do lado em que estão em relação a você.
 
-Versão 0.7.1, para a versão 1.308 do jogo, incluindo o DLC Bolalônia Elevada (Risen Ballbylon). O mod fala
+Versão 0.8.0, para a versão 1.308 do jogo, incluindo o DLC Bolalônia Elevada (Risen Ballbylon). O mod fala
 **todos os idiomas que o jogo oferece** e segue o idioma configurado no jogo.
 
 <!-- LANGS -->
@@ -178,6 +178,7 @@ Fechar. A ordem nunca depende de onde as coisas estão desenhadas na tela.
 | P | Itens no campo |
 | N | Perigos (disparos, lasers, bombas, chão) |
 | Q | Que som foi esse? Os sons tocando agora e os últimos, com o que cada um significa e o seu lado |
+| M | Mapa da batalha (pausa) |
 | Num + / Num - | Velocidade do jogo mais rápida / mais lenta, em qualquer layout de teclado |
 
 Todas as teclas do mod podem ser mudadas: veja [Mudar as teclas](#changing-keys).
@@ -187,6 +188,8 @@ vida, efeitos de status, itens especiais quando caem, "subidas de nível prontas
 partida.
 
 **Chefes**: J dá a vida real do chefe, a mesma da barra dele no jogo. Alguns chefes só levam dano em um ponto fraco: o corpo do Rei Esqueleto não pode ser ferido, só a coroa na cabeça dele, e o corpo a protege pela frente, então as bolas chegam nela depois de rebater nas paredes. J diz onde está o ponto fraco, e a assistência de mira vai atrás dele.
+
+**Mapa da batalha (pausa)**: M abre o mapa da batalha e pausa o jogo. As setas percorrem o campo casa por casa e dizem o que há nela: inimigos com a vida deles, suas bolas, tiros, lasers, bombas, perigos no chão e itens. Control e seta para cima diz o que um inimigo faz, o estado dele e os efeitos. Tab pula de inimigo em inimigo, o mais próximo primeiro; Page Down para as outras coisas; Home volta para você; End conta tudo. Enter trava a mira no inimigo; quando ele morre, a mira volta para o inimigo mais próximo. Delete destrava a mira. M ou Esc fecha o mapa e a batalha continua.
 
 ## Sons de batalha {#battle-sounds}
 
@@ -309,6 +312,8 @@ agora.
 - Em uma batalha View com o direcional: para cima perigos, para baixo equipamento, para a esquerda itens, para a direita o último som; View com LT e RT deixa o jogo mais lento e mais rápido
 - Na base View com o direcional: para cima colheita, para baixo recursos, para a esquerda modo explorar
 - Nos menus View com LT e RT é Page Up e Page Down
+
+Na batalha, clicar o analógico direito abre o mapa da batalha; no menu de pausa, Exibir e direcional para a direita. No mapa o direcional anda, RB e LB pulam entre inimigos, A trava a mira e B fecha.
 
 ## Dicas para a primeira partida {#tips-for-a-first-run}
 

@@ -160,6 +160,9 @@ namespace BallPitAccess.UI
                 _pageSince = -1f;
                 if (top == null) { ScreenLines = new List<string>(); Buffers.SetDetails(null); }
             }
+            // A mod list or the battle map is open (the map pauses the battle, which opens the pause menu under it):
+            // the screen is announced once they close, if it is still there.
+            if (_overlayPending && ModKeys.ListOpen) { _overlaySince = now; return; }
             // Let the panel fill its texts first.
             if (_overlayPending && now - _overlaySince > 0.35f)
             {
@@ -172,6 +175,9 @@ namespace BallPitAccess.UI
                 AnnounceOverlay(o);
             }
         }
+
+        /// <summary>Forget the screen waiting to be announced (the battle map closed the pause menu it opened).</summary>
+        internal static void Quiet() => _overlayPending = false;
 
         private static void AnnounceOverlay(OverlayUI o)
         {

@@ -5,7 +5,7 @@ przez twój czytnik ekranu, pozwala obsłużyć całą grę z klawiatury i zamie
 twoje kule, wrogie pociski, kryształy PD i przedmioty specjalne mają własne dźwięki, dochodzące z tej strony,
 po której się znajdują.
 
-Wersja 0.7.1, dla wersji gry 1.308, razem z DLC Wyniesione Kulopolis (Risen Ballbylon). Mod mówi **w każdym
+Wersja 0.8.0, dla wersji gry 1.308, razem z DLC Wyniesione Kulopolis (Risen Ballbylon). Mod mówi **w każdym
 języku, który oferuje gra**, i stosuje się do ustawienia języka w grze.
 
 <!-- LANGS -->
@@ -174,6 +174,7 @@ Kolejność nigdy nie zależy od tego, gdzie elementy są narysowane na ekranie.
 | P | Przedmioty na polu |
 | N | Zagrożenia (pociski, lasery, bomby, ziemia) |
 | Q | Co to był za dźwięk? Dźwięki, które grają teraz, i kilka ostatnich, z tym, co każdy oznacza, i jego stroną |
+| M | Mapa walki (pauza) |
 | Num + / Num - | Szybsza / wolniejsza prędkość gry, przy każdym układzie klawiatury |
 
 Każdy klawisz moda można zmienić: zobacz [Zmiana klawiszy](#changing-keys).
@@ -183,6 +184,8 @@ i zdrowie, efekty statusu, przedmioty specjalne, gdy wypadną, „gotowe nowe po
 rozgrywki.
 
 **Bossowie**: J podaje prawdziwe zdrowie bossa, takie samo jak jego pasek w grze. Niektórzy bossowie przyjmują obrażenia tylko w słaby punkt: ciała Króla Szkieletów nie da się zranić, tylko koronę na jego głowie, a ciało osłania ją z przodu, więc kule docierają do niej po odbiciu od ścian. J mówi, gdzie jest słaby punkt, a pomoc w celowaniu w niego mierzy.
+
+**Mapa walki (pauza)**: M otwiera mapę walki i wstrzymuje grę. Strzałki przechodzą po polu pole po polu i mówią, co tam jest: wrogów z ich zdrowiem, twoje kule, pociski, lasery, bomby, zagrożenia na ziemi i przedmioty. Control i strzałka w górę mówi, co robi wróg, jego stan i efekty. Tab skacze od wroga do wroga, najbliższy pierwszy; Page Down do innych rzeczy; Home wraca do ciebie; End liczy wszystko. Enter blokuje celowanie na wrogu; gdy zginie, celowanie wraca do najbliższego wroga. Delete odblokowuje celowanie. M lub Escape zamyka mapę i walka trwa dalej.
 
 ## Dźwięki walki {#battle-sounds}
 
@@ -303,6 +306,8 @@ ustawieniu.
 - W walce View z krzyżakiem: w górę zagrożenia, w dół ekwipunek, w lewo przedmioty, w prawo ostatni dźwięk; View z LT i RT spowalnia i przyspiesza grę
 - W bazie View z krzyżakiem: w górę zbiory, w dół zasoby, w lewo tryb zwiedzania
 - W menu View z LT i RT to Page Up i Page Down
+
+W walce kliknięcie prawej gałki otwiera mapę walki; w menu pauzy Widok i krzyżak w prawo. Na mapie krzyżak chodzi, RB i LB skaczą między wrogami, A blokuje celowanie, a B zamyka.
 
 ## Wskazówki na pierwszą rozgrywkę {#tips-for-a-first-run}
 

@@ -164,6 +164,61 @@ namespace BallPitAccess.Game
             catch { return ""; }
         }
 
+        /// <summary>"A + B" for each way to make this evolution, joined with "or" ("" for a base item).</summary>
+        internal static string Recipes(UpgradeInfo inf)
+        {
+            var ways = new List<string>();
+            try
+            {
+                var all = inf != null ? inf.MergeComponents : null;
+                for (int r = 0; all != null && r < all.Length; r++)
+                {
+                    var comps = all[r];
+                    var names = new List<string>();
+                    for (int i = 0; comps != null && i < comps.Length; i++) if (comps[i] != null) names.Add(Upgrade(comps[i]));
+                    string w = string.Join(" + ", names);
+                    if (names.Count > 0 && !ways.Contains(w)) ways.Add(w);
+                }
+            }
+            catch { }
+            return string.Join(Loc.Get("or_join"), ways);
+        }
+
+        /// <summary>What this item evolves into and with what: "with Burn: Inferno" lines (from UpgradeInfo.Evolutions).</summary>
+        internal static List<string> EvolvesInto(UpgradeInfo inf, Func<UpgradeInfo, bool?> discovered = null)
+        {
+            var lines = new List<string>();
+            try
+            {
+                var evos = inf != null ? inf.Evolutions : null;
+                for (int e = 0; evos != null && e < evos.Count; e++)
+                {
+                    var evo = evos[e];
+                    if (evo == null) continue;
+                    var with = new List<string>();
+                    var all = evo.MergeComponents;
+                    for (int r = 0; all != null && r < all.Length; r++)
+                    {
+                        var comps = all[r];
+                        bool mine = false;
+                        for (int i = 0; comps != null && i < comps.Length; i++) if (comps[i] != null && comps[i].Pointer == inf.Pointer) mine = true;
+                        if (!mine) continue;
+                        var others = new List<string>();
+                        for (int i = 0; i < comps.Length; i++) if (comps[i] != null && comps[i].Pointer != inf.Pointer) others.Add(Upgrade(comps[i]));
+                        string w = string.Join(" + ", others);
+                        if (others.Count > 0 && !with.Contains(w)) with.Add(w);
+                    }
+                    string line = with.Count > 0 ? Loc.F("evo_into", Upgrade(evo), string.Join(Loc.Get("or_join"), with)) : Upgrade(evo);
+                    bool? known = null;
+                    try { if (discovered != null) known = discovered(evo); } catch { }
+                    if (known == false && line.Length > 0) line += ", " + Loc.Get("unknown_item");
+                    if (line.Length > 0 && !lines.Contains(line)) lines.Add(line);
+                }
+            }
+            catch { }
+            return lines;
+        }
+
         /// <summary>Description with its numbers removed (the game fills them per level); a fallback for panels.</summary>
         internal static string UpgradeDesc(UpgradeInfo inf)
         {

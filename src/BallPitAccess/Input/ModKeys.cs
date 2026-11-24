@@ -35,7 +35,10 @@ namespace BallPitAccess.Input
 
         private static bool _unmute;
 
-        internal static bool ListOpen => _open != null;
+        /// <summary>A mod list or the battle map owns the keyboard (cues and the game's menus wait).</summary>
+        internal static bool ListOpen => _open != null || BattleMap.Active;
+        /// <summary>A mod list (help, settings) is open, possibly over the battle map.</summary>
+        internal static bool ModListOpen => _open != null;
 
         internal static void Update()
         {
@@ -85,6 +88,9 @@ namespace BallPitAccess.Input
                     if (Keys.Pressed(Keys.VK_UP)) { AimAssist.BackToAuto(); return; }
                     if (Keys.Pressed(Keys.VK_DOWN)) { AimAssist.SayAim(); return; }
                 }
+                // The battle map: from play (it pauses) or from the pause menu.
+                if (Bindings.Pressed("map")) { Keys.Consume(); BattleMap.Toggle(); return; }
+                if (BattleMap.Active) return;
                 // Number keys: sound filters (the game binds none of them). Also in the pause and level up menus.
                 if (CueFilters.Update(false)) return;
                 if (Navigator.HasOverlay && !Battle.Playing) return;
@@ -315,7 +321,10 @@ namespace BallPitAccess.Input
                     lines.Add(Loc.F("help_speed_keys", Bindings.KeyOf("speed_up"), Bindings.KeyOf("speed_down")));
                     lines.Add(Loc.F("help_last_sound", Bindings.KeyOf("last_sound")));
                     lines.Add(Loc.F("help_status_key", Bindings.KeyOf("status")));
+                    foreach (var l in HelpLines(Loc.F("help_map_key", Bindings.KeyOf("map")))) lines.Add(l);
                 }
+                if (part == "help_pad")
+                    foreach (var l in HelpLines(Loc.Get("help_pad_map"))) lines.Add(l);
                 if (part == "help_base")
                 {
                     lines.Add(Loc.F("help_place_keys", Bindings.KeyOf("paths")));

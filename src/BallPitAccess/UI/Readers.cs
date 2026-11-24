@@ -662,15 +662,8 @@ namespace BallPitAccess.UI
             string evoName = Names.Upgrade(inf);
             var r = new FocusReadout(evoName.Length > 0 ? evoName : Loc.Get("unknown_item"), Loc.Get("kind_evolution"));
             // What it is made of: the two icons a sighted player sees on the card ("Iron x Burn").
-            string from = "";
-            try
-            {
-                var comps = inf != null && inf.MergeComponents != null && inf.MergeComponents.Length > 0 ? inf.MergeComponents[0] : null;
-                var names = new List<string>();
-                for (int i = 0; comps != null && i < comps.Length; i++) if (comps[i] != null) names.Add(Names.Upgrade(comps[i]));
-                if (names.Count > 0) from = Loc.F("evo_from", string.Join(" + ", names));
-            }
-            catch { }
+            string recipe = Names.Recipes(inf);
+            string from = recipe.Length > 0 ? Loc.F("evo_from", recipe) : "";
             if (from.Length > 0) r.Summary += ", " + from;
             // The description with its numbers: the card's info panel is only shown on a mouse hover, and the bare
             // translation lost its numbers ("Deals - damage", "Inflicts stacks of bleed"). Fill the game's panel for
@@ -976,15 +969,28 @@ namespace BallPitAccess.UI
                 lr.Summary += ". " + dlcLocked[0];
                 return lr.AddAll(dlcLocked);
             }
-            if (e.IsLocked) return new FocusReadout(Loc.Get("unknown_item"), Loc.Get("locked")).AddAll(ui != null ? Lines(ui.WrapperItemDetailsLocked) : null);
+            if (e.IsLocked)
+            {
+                // An evolution not found yet: what makes it (a player: "the evolutions need to mention what items combined create them").
+                string lockedRecipe = e.TgtInf != null ? Names.Recipes(e.TgtInf) : "";
+                var lr = new FocusReadout(Loc.Get("unknown_item"), Loc.Get("locked"), lockedRecipe.Length > 0 ? Loc.F("evo_from", lockedRecipe) : null);
+                return lr.AddAll(ui != null ? Lines(ui.WrapperItemDetailsLocked) : null);
+            }
             string name = "";
             if (e.TgtInf != null) name = Names.Upgrade(e.TgtInf);
             else if (e.PieceInf != null)
             {
-                name = Tr(e.PieceInf.GetNameSlug(0));
+                // An enemy entry belongs to a level, and the same enemy has another name in each level's look.
+                int viz = 0;
+                try { if (e.LvlInf != null) viz = e.PieceInf.GetVizIdx(e.LvlInf.Type); } catch { }
+                name = Tr(e.PieceInf.GetNameSlug(viz));
+                if (name.Length == 0 && viz != 0) name = Tr(e.PieceInf.GetNameSlug(0));
                 if (name.Length == 0) name = Speech.Clean(e.PieceInf.DisplayName);
             }
-            var r = new FocusReadout(name);
+            string recipeLine = "";
+            if (e.TgtInf != null) { string rc = Names.Recipes(e.TgtInf); if (rc.Length > 0) recipeLine = Loc.F("evo_from", rc); }
+            var r = new FocusReadout(name, recipeLine.Length > 0 ? recipeLine : null);
+            int panelLines = 0;
             // The details panel follows the hover a frame or two late (I2 fills its texts later), so the
             // buffer took the previous entry's details (user, 2026-11-16: "off by 1", at random). Until the
             // panel names this entry, MenuReader looks again shortly (at most 4 times).
@@ -1007,12 +1013,73 @@ namespace BallPitAccess.UI
                 var items = Lines(ui.WrapperItemDetailsUnlocked);
                 var enemies = Lines(ui.WrapperEnemyDetailsUnlocked);
                 if (PanelBehind(ui, e, Joined(items, enemies))) r.Retry = true;
-                r.AddAll(items);
-                r.AddAll(enemies);
+                r.AddAll(PairValues(items));
+                r.AddAll(PairValues(enemies));
+                panelLines = items.Count + enemies.Count;
             }
-            if (e.TgtInf != null) r.Add(Names.UpgradeDesc(e.TgtInf));
-            if (e.PieceInf != null) r.Add(Tr(e.PieceInf.GetGameplayDescSlug()));
+            if (e.TgtInf != null)
+            {
+                // The bare description has lost its numbers: only when the panel gave none.
+                if (panelLines == 0) r.Add(Names.UpgradeDesc(e.TgtInf));
+                r.Add(recipeLine);
+                // Evolutions the game counts as undiscovered say so (the panel says "8 Undiscovered Evolutions").
+                var found = new Dictionary<IntPtr, bool>();
+                try { if (ui != null) foreach (var it in ui.GetComponentsInChildren<EncyclopediaItem>(true)) if (it != null && it.TgtInf != null) found[it.TgtInf.Pointer] = !it.IsLocked; }
+                catch { }
+                foreach (var l in Names.EvolvesInto(e.TgtInf, evo => found.TryGetValue(evo.Pointer, out bool f) ? f : Obtained(evo))) r.Add(l);
+            }
+            if (e.PieceInf != null)
+            {
+                var p = e.PieceInf;
+                string does = Tr(p.GetGameplayDescSlug());
+                r.Add(does);
+                if (Config.ReadDescriptions && does.Length > 0) r.Summary += ". " + does;
+                try { if (e.LvlInf != null) r.Add(Loc.F("enc_level", Names.Level(e.LvlInf))); } catch { }
+                try
+                {
+                    if (p.GridWidth > 1.01f || p.GridHeight > 1.01f) r.Add(Loc.F("enc_size", Mathf.RoundToInt(p.GridWidth), Mathf.RoundToInt(p.GridHeight)));
+                    float sp = p.GetSpeedMult();
+                    if (Math.Abs(sp - 1f) > 0.01f && sp > 0f) r.Add(Loc.F("enc_speed", sp.ToString("0.##")));
+                }
+                catch { }
+                if (Battle.IsBoss(p.Type)) r.Add(Loc.Get("enc_boss"));
+            }
             return r;
+        }
+
+        /// <summary>An item of another encyclopedia set (not on this page): discovered once it was ever obtained.</summary>
+        private static bool? Obtained(UpgradeInfo inf)
+        {
+            try
+            {
+                var ms = MetaSaveData.I;
+                if (ms == null || inf == null) return null;
+                var h = inf.ToHero();
+                if (h != null && ms.HeroStats != null && (int)h.Type < ms.HeroStats.Length)
+                { var st = ms.HeroStats[(int)h.Type]; return st != null && st.NumObtained > 0; }
+                var p = inf.ToPassive();
+                if (p != null && ms.PassiveStats != null && (int)p.Type < ms.PassiveStats.Length)
+                { var st = ms.PassiveStats[(int)p.Type]; return st != null && st.NumObtained > 0; }
+            }
+            catch { }
+            return null;
+        }
+
+        private static readonly System.Text.RegularExpressions.Regex ValueOnly =
+            new System.Text.RegularExpressions.Regex(@"^[\d\s.,:%xX×+\-/KMB]+$");
+
+        /// <summary>A details panel's label and number come as two texts ("Completed Runs", "0"): one line each pair.</summary>
+        internal static List<string> PairValues(List<string> lines)
+        {
+            var o = new List<string>();
+            for (int i = 0; i < lines.Count; i++)
+            {
+                string l = lines[i];
+                if (i + 1 < lines.Count && !ValueOnly.IsMatch(l) && ValueOnly.IsMatch(lines[i + 1]) && l.Length < 40)
+                { o.Add(l + " " + lines[i + 1]); i++; }
+                else o.Add(l);
+            }
+            return o;
         }
 
         // ---------------- Settings ----------------

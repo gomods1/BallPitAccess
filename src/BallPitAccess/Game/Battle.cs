@@ -263,6 +263,13 @@ namespace BallPitAccess.Game
             catch (Exception ex) { Log.Warn("StepSpeed: " + ex.Message); }
         }
 
+        /// <summary>Collect the threats now, also while paused (the battle map takes its snapshot from them).</summary>
+        internal static void RefreshThreats()
+        {
+            try { var save = BattleSaveData.I; var grid = GridMgr.I; if (InBattle && save != null && grid != null) CollectThreats(save, grid); }
+            catch (Exception ex) { Log.Warn("RefreshThreats: " + ex.Message); }
+        }
+
         private static void CollectThreats(BattleSaveData save, GridMgr grid)
         {
             Threats.Clear();

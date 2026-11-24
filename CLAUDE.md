@@ -77,7 +77,8 @@ Blind accessibility mod for **BALL x PIT** (Kenny Sun / Devolver), following
     (enemy shots, lasers, bombs, floor), `Pickups`, `AimAssist` (postfix on `MousePosToAimDir`), `CatchAssist` (walks the hero under the next ball /
     to a pickup / out of a hit through `Player.IsOverridingInput` + `InputX/YOverride`),
     `BallPatches` (catch cue), `Names` (game names through I2), `BaseNav` (buildings, expansion,
-    rearrange, base HUD keys), `BaseGrid` (tile numbering, chunk grid), `Explore` (K in the base), `Placement`, `Harvest`, `Tutorial`, `Scenes` (boot, intro, credits), `Dump`.
+    rearrange, base HUD keys), `BaseGrid` (tile numbering, chunk grid), `Explore` (K in the base), `Placement`, `Harvest`, `Tutorial`, `Scenes` (boot, intro, credits), `Dump`,
+    `BattleMap` (M: pauses, walks a snapshot of the arena tile by tile, Enter = `AimAssist.Lock`; counts as `ModKeys.ListOpen`).
   - `UI/`: `MenuReader` (EventSystem focus → speech), `Navigator` (keyboard navigation: one ordered list
     per screen, groups, overlays, pages, FTUE, text fields), `Readers` (one reader per item type).
 - **Menu navigation never follows screen position** (user rule, 2026-11-14, after a playtest where the
@@ -100,7 +101,7 @@ Blind accessibility mod for **BALL x PIT** (Kenny Sun / Devolver), following
   frame; things that change in steps stay one-shots. CUES.md.
 - Assists are optional helpers, never the way to play (user, 2026-11-15: "not fun if all you do is
   shift shift shift"): every task an assist does must also be doable by ear from the cues alone.
-- Update order (`Main.cs`): Keys → ModKeys → Battle → AimAssist → Hazards → Pickups → CatchAssist → Scenes → Placement →
+- Update order (`Main.cs`): Keys → ModKeys → BattleMap → Battle → AimAssist → Hazards → Pickups → CatchAssist → Scenes → Placement →
   Harvest → Explore → BaseNav → Tutorial → Navigator → MenuReader → Speech.Pump. A handler that acts on a key calls
   `Keys.Consume()`; later handlers check `Keys.Consumed`.
 

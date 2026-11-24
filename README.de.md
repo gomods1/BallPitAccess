@@ -5,7 +5,7 @@ Ein Mod, der **BALL x PIT** (Kenny Sun / Devolver Digital) ohne Sehen spielbar m
 Schlachtfeld in Klang: Gegner, deine Bälle, gegnerische Schüsse, EP-Juwelen und besondere Gegenstände haben
 jeweils ihr eigenes Geräusch, das von ihrer Seite aus zu dir kommt.
 
-Version 0.7.1, für die Spielversion 1.308, einschließlich des DLC Aufgestiegenes Ballbylon (Risen Ballbylon).
+Version 0.8.0, für die Spielversion 1.308, einschließlich des DLC Aufgestiegenes Ballbylon (Risen Ballbylon).
 Der Mod spricht **jede Sprache, die das Spiel anbietet**, und folgt der Spracheinstellung des Spiels.
 
 <!-- LANGS -->
@@ -179,6 +179,7 @@ Bildschirm gezeichnet sind.
 | P | Gegenstände auf dem Feld |
 | N | Gefahren (Schüsse, Laser, Bomben, Boden) |
 | Q | Was war das für ein Geräusch? Die Geräusche, die gerade laufen, und die letzten, jeweils mit Bedeutung und Seite |
+| M | Kampfkarte (pausiert) |
 | Num + / Num - | Schnellere / langsamere Spielgeschwindigkeit, mit jedem Tastaturlayout |
 
 Jede Mod-Taste lässt sich ändern: siehe [Die Tasten ändern](#changing-keys).
@@ -188,6 +189,8 @@ Leben, Statuseffekte, besondere Gegenstände, wenn sie fallen, „Stufenaufstieg
 des Durchlaufs.
 
 **Bosse**: J nennt das echte Leben des Bosses, dasselbe wie seine Leiste im Spiel. Manche Bosse nehmen nur an einem Schwachpunkt Schaden: Der Körper des Skelettkönigs kann nicht verletzt werden, nur die Krone auf seinem Kopf, und sein Körper schützt sie von vorn, also erreichen Kugeln sie erst nach Abprallern an den Wänden. J sagt, wo der Schwachpunkt ist, und die Zielhilfe nimmt ihn ins Visier.
+
+**Kampfkarte (pausiert)**: M öffnet die Kampfkarte und pausiert das Spiel. Die Pfeile gehen das Feld Feld für Feld ab und sagen, was dort ist: Gegner mit ihrem Leben, deine Kugeln, Schüsse, Laser, Bomben, Bodengefahren und Gegenstände. Strg und Pfeil hoch sagt, was ein Gegner tut, seinen Zustand und seine Effekte. Tab springt von Gegner zu Gegner, der nächste zuerst; Bild ab zu den anderen Dingen; Pos1 zurück zu dir; Ende zählt alles. Eingabe fixiert das Zielen auf den Gegner; stirbt er, zielt die Hilfe wieder auf den nächsten Gegner. Entf löst die Fixierung. M oder Escape schließt die Karte und der Kampf geht weiter.
 
 ## Kampfgeräusche {#battle-sounds}
 
@@ -309,6 +312,8 @@ nicht belegt werden. Die F1-Hilfe endet mit den Tasten, wie sie gerade belegt si
 - Im Kampf View mit dem Steuerkreuz: oben Gefahren, unten Ausrüstung, links Gegenstände, rechts der letzte Ton; View mit LT und RT macht das Spiel langsamer und schneller
 - In der Basis View mit dem Steuerkreuz: oben Ernte, unten Ressourcen, links Erkundungsmodus
 - In Menüs ist View mit LT und RT Bild auf und Bild ab
+
+Im Kampf öffnet ein Klick auf den rechten Stick die Kampfkarte; im Pausenmenü Ansicht und Steuerkreuz rechts. Auf der Karte geht das Steuerkreuz, RB und LB springen zwischen Gegnern, A fixiert das Zielen und B schließt.
 
 ## Tipps für den ersten Durchlauf {#tips-for-a-first-run}
 

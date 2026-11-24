@@ -6,7 +6,7 @@ using BallPitAccess.UI;
 using MelonLoader;
 using UnityEngine;
 
-[assembly: MelonInfo(typeof(BallPitAccess.Main), "BALL x PIT Access", "0.7.1", "BALL x PIT Access")]
+[assembly: MelonInfo(typeof(BallPitAccess.Main), "BALL x PIT Access", "0.8.0", "BALL x PIT Access")]
 [assembly: MelonGame("Kenny Sun", "BALL x PIT")]
 
 namespace BallPitAccess
@@ -70,6 +70,7 @@ namespace BallPitAccess
                     Dump.Update();
                     if (Config.Debug) DevCommands.Update();
                     ModKeys.Update();
+                    BattleMap.Update();
                     if (!_gameLogged) Log.Info("game step battle");
                     Battle.Update();
                     AimAssist.Update();

@@ -294,6 +294,9 @@ namespace BallPitAccess.Game
                     prop.SetValue(gc, v);
                     return bits[0] + " = " + prop.GetValue(gc);
                 }
+                case "autofire":
+                    PlayerPrefsMgr.SetAutofire(arg != "off");
+                    return "autofire " + PlayerPrefsMgr.sAutofire;
                 case "speed":
                     PlayerPrefsMgr.SetGameSpeed((GameSpeed)Enum.Parse(typeof(GameSpeed), arg));
                     return "speed " + PlayerPrefsMgr.sGameSpeed;

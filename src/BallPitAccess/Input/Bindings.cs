@@ -57,6 +57,7 @@ namespace BallPitAccess.Input
             Add("hazards", 'N');
             Add("last_sound", 'Q');
             Add("paths", 'I');
+            Add("map", 'M');
             Add("speed_up", VK_ADD);
             Add("speed_down", VK_SUBTRACT);
             Add("catch", Keys.VK_SHIFT);

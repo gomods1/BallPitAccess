@@ -5,7 +5,7 @@ lector de pantalla, te deja usar todo el juego con el teclado y convierte el cam
 los enemigos, tus bolas, los disparos enemigos, los cristales de experiencia y los objetos especiales
 tienen cada uno su sonido, que viene de su lado respecto a ti.
 
-Versión 0.7.1, para la versión 1.308 del juego, incluido el DLC Bolabilonia Resurgida. El mod habla
+Versión 0.8.0, para la versión 1.308 del juego, incluido el DLC Bolabilonia Resurgida. El mod habla
 **todos los idiomas del juego** y sigue el idioma que tengas puesto en él.
 
 <!-- LANGS -->
@@ -175,6 +175,7 @@ Cerrar. El orden nunca depende de dónde se dibujan las cosas en la pantalla.
 | P | Objetos en el campo |
 | N | Peligros (disparos, láseres, bombas, suelo) |
 | Q | ¿Qué fue ese sonido? Los sonidos que suenan ahora y los últimos, con lo que significa cada uno y su lado |
+| M | Mapa del combate (pausa) |
 | Num + / Num - | Juego más rápido / más lento, con cualquier distribución de teclado |
 
 Todas las teclas del mod se pueden cambiar: mira [Cambiar las teclas](#changing-keys).
@@ -184,6 +185,8 @@ daño y la salud, los estados alterados, los objetos especiales cuando caen, "su
 pulsa E" y el final de la partida.
 
 **Jefes**: J da la salud real del jefe, la misma que su barra en el juego. Algunos jefes solo reciben daño en un punto débil: al Rey Esqueleto no se le puede herir el cuerpo, solo la corona de la cabeza, y su cuerpo la protege por delante, así que las bolas llegan rebotando en las paredes. J dice dónde está el punto débil, y la ayuda de puntería va a por él.
+
+**Mapa del combate (pausa)**: M abre el mapa del combate y pausa el juego. Las flechas recorren el campo casilla a casilla y dicen qué hay: enemigos con su vida, tus bolas, disparos, láseres, bombas, peligros en el suelo y objetos. Control y flecha arriba dice qué hace un enemigo, su estado y sus estados alterados. Tab salta de enemigo en enemigo, el más cercano primero; Av Pág a las demás cosas; Inicio vuelve a ti; Fin lo cuenta todo. Intro fija la puntería en el enemigo; cuando muere, la puntería vuelve al enemigo más cercano. Suprimir libera la puntería. M o Escape cierra el mapa y el combate sigue.
 
 ## Sonidos de combate
 
@@ -303,6 +306,8 @@ están ahora.
 - En una batalla View con la cruceta: arriba peligros, abajo equipo, izquierda objetos, derecha el último sonido; View con LT y RT baja y sube la velocidad del juego
 - En la base View con la cruceta: arriba recolección, abajo recursos, izquierda modo explorar
 - En los menús View con LT y RT es Re Pág y Av Pág
+
+En combate, pulsar el stick derecho abre el mapa del combate; en el menú de pausa, Vista y cruceta a la derecha. En el mapa la cruceta camina, RB y LB saltan entre enemigos, A fija la puntería y B cierra.
 
 ## Consejos para la primera partida
 
