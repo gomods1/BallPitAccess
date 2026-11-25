@@ -5,7 +5,7 @@ przez twój czytnik ekranu, pozwala obsłużyć całą grę z klawiatury i zamie
 twoje kule, wrogie pociski, kryształy PD i przedmioty specjalne mają własne dźwięki, dochodzące z tej strony,
 po której się znajdują.
 
-Wersja 0.8.0, dla wersji gry 1.308, razem z DLC Wyniesione Kulopolis (Risen Ballbylon). Mod mówi **w każdym
+Wersja 0.8.1, dla wersji gry 1.308, razem z DLC Wyniesione Kulopolis (Risen Ballbylon). Mod mówi **w każdym
 języku, który oferuje gra**, i stosuje się do ustawienia języka w grze.
 
 <!-- LANGS -->

@@ -3,6 +3,15 @@
 Player-facing changes to BALL x PIT Access, newest first. The release notes on GitHub are taken from the
 section of each version.
 
+## 0.8.1
+
+From a player's report after beating the Icebound Champion.
+
+* **Down arrow in a battle** is shorter: it says only the enemy the aim is on, its health and where it is from you
+  ("Icebound Champion, Health 300 of 450, 2 left, 6 ahead"), with "aim locked" when it is the locked one, and plays
+  the battle map's sound for it from where it is. The aim mode is no longer repeated (F5 says it). On a fixed angle
+  it says the angle.
+
 ## 0.8.0
 
 From a player's report after beating the Skeleton King twice.

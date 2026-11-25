@@ -5,7 +5,7 @@ tramite il tuo screen reader, ti permette di usare tutto il gioco con la tastier
 battaglia in suono: i nemici, le tue palle, i colpi nemici, i cristalli di PX e gli oggetti speciali hanno
 ciascuno il proprio suono, che arriva dal loro lato rispetto a te.
 
-Versione 0.8.0, per la versione 1.308 del gioco, incluso il DLC Pallilonia Risorta (Risen Ballbylon). La
+Versione 0.8.1, per la versione 1.308 del gioco, incluso il DLC Pallilonia Risorta (Risen Ballbylon). La
 mod parla **tutte le lingue offerte dal gioco** e segue l'impostazione della lingua del gioco.
 
 <!-- LANGS -->

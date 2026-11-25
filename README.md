@@ -5,7 +5,7 @@ menu through your screen reader, lets you use the whole game with the keyboard, 
 into sound: enemies, your balls, enemy shots, XP crystals and special items all have their own sounds,
 coming from their side of you.
 
-Version 0.8.0, for game version 1.308, including the Risen Ballbylon DLC. The mod speaks **every language
+Version 0.8.1, for game version 1.308, including the Risen Ballbylon DLC. The mod speaks **every language
 the game offers** and follows the game's language setting.
 
 <!-- LANGS -->
@@ -161,7 +161,7 @@ order never depends on where things are drawn on the screen.
 |---|---|
 | Left / Right arrow | Turn the aim 5 degrees by hand |
 | Up arrow | Give the aim back to the assist |
-| Down arrow | Say where you aim |
+| Down arrow | Say the enemy you aim at: its name, health and where it is, with its sound from there |
 | Shift (hold) | Catch assist (see [Assists](#assists)) |
 | 1 to 7, 0 | Sound filters (see [Sound filters](#sound-filters-number-keys)) |
 | H | Health and status effects |

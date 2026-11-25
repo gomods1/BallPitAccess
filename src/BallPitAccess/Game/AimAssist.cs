@@ -447,20 +447,28 @@ namespace BallPitAccess.Game
             Speech.SayMenu(Loc.F("aim_mode", Loc.Get("aim_" + Current)));
         }
 
+        /// <summary>Down arrow: the target's name, health and place from the hero, short, with the battle map's
+        /// sound for it from where it is (a player found the old line, mode first, too long; 2026-11-25).</summary>
         internal static void SayAim()
         {
-            string t = Current == Mode.Fixed ? Loc.F("aim_angle", Harvest.AngleWords(_fixedDeg)) : TargetText();
-            Speech.SayMenu(Loc.F("aim_mode", Loc.Get("aim_" + Current)) + (t != null ? ". " + t : ""));
-        }
-
-        internal static string TargetText()
-        {
+            var cur = Current;
+            if (cur == Mode.Fixed) { Speech.SayMenu(Loc.F("aim_angle", Harvest.AngleWords(_fixedDeg))); return; }
+            Battle.Threat th = null;
             var t = _target;
-            if (t == null) return null;
-            foreach (var th in Battle.Threats)
-                if (th.Inst.Pointer == t.Pointer)
-                    return Battle.Describe(th) + (_locked != null && _locked.Pointer == t.Pointer ? ", " + Loc.Get("map_locked_mark") : "");
-            return null;
+            if (t != null)
+                foreach (var x in Battle.Threats)
+                    if (x.Inst.Pointer == t.Pointer) { th = x; break; }
+            if (th == null) { Speech.SayMenu(Loc.F("aim_mode", Loc.Get("aim_" + cur))); return; }
+            Vector3 c = th.Center;
+            int row = Mathf.RoundToInt((c.y - Battle.PlayerPos.y) / Battle.RowH);
+            Cues.Play(BattleMap.EnemyCue(row), Battle.PanFor(c.x), 0.7f, Battle.Muffle(c.y));
+            string health;
+            if (th.Boss && !th.Sub && !th.Part)
+                health = Loc.F("boss_health", Mathf.RoundToInt(Battle.BossPct(th.Inst.Type, out _) * 100f));
+            else
+                health = Loc.F("health", th.Inst.CurHealth, Math.Max(1, th.Inst.MaxHealth));
+            bool locked = _locked != null && _locked.Pointer == t.Pointer;
+            Speech.SayMenu(UI.Readers.Join(Names.Enemy(th.Inst), health, Battle.Where(c), locked ? Loc.Get("map_locked_mark") : null));
         }
     }
 }

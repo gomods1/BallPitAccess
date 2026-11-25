@@ -5,7 +5,7 @@ Ein Mod, der **BALL x PIT** (Kenny Sun / Devolver Digital) ohne Sehen spielbar m
 Schlachtfeld in Klang: Gegner, deine Bälle, gegnerische Schüsse, EP-Juwelen und besondere Gegenstände haben
 jeweils ihr eigenes Geräusch, das von ihrer Seite aus zu dir kommt.
 
-Version 0.8.0, für die Spielversion 1.308, einschließlich des DLC Aufgestiegenes Ballbylon (Risen Ballbylon).
+Version 0.8.1, für die Spielversion 1.308, einschließlich des DLC Aufgestiegenes Ballbylon (Risen Ballbylon).
 Der Mod spricht **jede Sprache, die das Spiel anbietet**, und folgt der Spracheinstellung des Spiels.
 
 <!-- LANGS -->

@@ -5,7 +5,7 @@ lector de pantalla, te deja usar todo el juego con el teclado y convierte el cam
 los enemigos, tus bolas, los disparos enemigos, los cristales de experiencia y los objetos especiales
 tienen cada uno su sonido, que viene de su lado respecto a ti.
 
-Versión 0.8.0, para la versión 1.308 del juego, incluido el DLC Bolabilonia Resurgida. El mod habla
+Versión 0.8.1, para la versión 1.308 del juego, incluido el DLC Bolabilonia Resurgida. El mod habla
 **todos los idiomas del juego** y sigue el idioma que tengas puesto en él.
 
 <!-- LANGS -->

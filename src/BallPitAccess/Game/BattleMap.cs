@@ -480,7 +480,7 @@ namespace BallPitAccess.Game
             if (t != null)
                 switch (t.Kind)
                 {
-                    case Kind.Enemy: name = "enemy" + Mathf.Clamp(9 - Mathf.RoundToInt(Math.Max(0, _row) / 1.5f), 0, 9); break;
+                    case Kind.Enemy: name = EnemyCue(_row); break;
                     case Kind.Pickup: name = "pickup1"; break;
                     case Kind.Shot: name = "shot"; break;
                     case Kind.Laser: name = "beam"; break;
@@ -491,6 +491,9 @@ namespace BallPitAccess.Game
                 }
             Cues.Play(name, pan, 0.7f, muffle);
         }
+
+        /// <summary>The enemy drum for a thing this many rows ahead of the hero (higher = closer).</summary>
+        internal static string EnemyCue(int row) => "enemy" + Mathf.Clamp(9 - Mathf.RoundToInt(Math.Max(0, row) / 1.5f), 0, 9);
 
         private static string Describe(int c, int r, Thing first)
         {
